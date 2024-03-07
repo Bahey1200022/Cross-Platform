@@ -118,7 +118,7 @@ class SignupPage extends StatelessWidget {
                             };
                             print(data);
                             var url =
-                                Uri.parse('http://192.168.1.22:3000/data');
+                                Uri.parse('http://192.168.1.22:3000/users');
 
                             try {
                               var response = await http.post(
