@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http; // Import the http package
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -31,26 +32,30 @@ class _MyHomePageState extends State<CreatePost> {
   }
 
   // Load communities from the JSON file
-  void loadCommunities() async {
+  Future<void> loadCommunities() async {
     try {
-      String jsonContent = await rootBundle.loadString('assets/db.json');
-      Map<String, dynamic> jsonData = json.decode(jsonContent);
+      // Make a GET request to fetch the JSON data from the server
+      var response =
+          await http.get(Uri.parse('http://localhost:3000/communities'));
 
-      if (jsonData.containsKey('data')) {
-        List<dynamic> data = jsonData['data'];
-        for (var item in data) {
-          if (item.containsKey('communities')) {
-            List<dynamic> communityData = item['communities'];
-            appState.communities = communityData.map((community) {
-              return Community(
-                id: community['id'],
-                name: community['name'],
-                description: community['description'],
-                image: community['image'],
-              );
-            }).toList();
-          }
-        }
+      // Check if the request was successful (status code 200)
+      if (response.statusCode == 200) {
+        // Decode the JSON response into a list
+        List<dynamic> jsonData = json.decode(response.body);
+
+        // Map the community data to Community objects
+        List<Community> communities = jsonData.map((communityData) {
+          return Community(
+            id: communityData['id'],
+            name: communityData['name'],
+            description: communityData['description'],
+            image: communityData['image'],
+          );
+        }).toList();
+
+        // Assign the list of communities to appState.communities
+        appState.communities = communities;
+
         // Notify listeners when communities are loaded
         appState.notifyListeners();
       }
