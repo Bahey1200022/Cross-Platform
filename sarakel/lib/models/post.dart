@@ -5,6 +5,7 @@ class Post {
   final int comments;
   final int shares;
   final String content;
+  final String communityId;
 
   Post({
     required this.communityName,
@@ -13,5 +14,6 @@ class Post {
     required this.comments,
     required this.shares,
     required this.content,
+    required this.communityId,
   });
 }

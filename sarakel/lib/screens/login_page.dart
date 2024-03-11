@@ -1,7 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sarakel/models/user.dart';
 import '../widgets/google_signin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../providers/user_provider.dart';
+
+Future<bool> userExists(String email, String password) async {
+  final response = await http.get(Uri.parse('http://localhost:3000/users'));
+
+  if (response.statusCode == 200) {
+    // Decode the response body from JSON
+    final dynamic users = json.decode(response.body);
+    print(users);
+    // Iterate through the list of users
+    for (var user in users) {
+      // Check if the provided username matches any existing username
+      if (user['email'] == email && user['password'] == password) {
+        return true; // Username exists
+      }
+    }
+    return false; // Username doesn't exist
+  } else {
+    throw Exception('Failed to load user data');
+  }
+}
 
 class LoginPage extends StatelessWidget {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,8 +134,9 @@ class LoginPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: TextFormField(
+                        controller: _emailController,
                         decoration: InputDecoration(
-                          labelText: 'Email or Username',
+                          labelText: 'Email',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(16.0),
                         ),
@@ -119,6 +149,7 @@ class LoginPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: TextFormField(
+                        controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Password',
@@ -142,9 +173,36 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: 16.0),
                     ElevatedButton(
-                      onPressed: () {
-                        // Handle continue
-                        Navigator.pushNamed(context, '/home');
+                      onPressed: () async {
+                        String email = _emailController.text.trim();
+                        String password = _passwordController.text.trim();
+                        if (await userExists(email, password)) {
+                          await _updateHomescreen(true);
+
+                          Navigator.pushNamed(context, '/home');
+                          UserProvider userProvider =
+                              Provider.of<UserProvider>(context, listen: false);
+                          userProvider
+                              .setUser(User(email: email, password: password));
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Error'),
+                                content: Text('Incorrect email or password'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                       child: Text(
                         'Continue',
@@ -165,4 +223,10 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _updateHomescreen(bool newValue) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setBool(
+      'homescreen', newValue); // Update homescreen value in SharedPreferences
 }

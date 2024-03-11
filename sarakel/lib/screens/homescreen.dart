@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sarakel/models/user.dart';
+import 'package:sarakel/providers/user_provider.dart';
 import '../models/post.dart';
 
 class SarakelHomeScreen extends StatefulWidget {
@@ -8,15 +11,17 @@ class SarakelHomeScreen extends StatefulWidget {
 
 class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
   int _selectedIndex = 0;
+  String _selectedPage = 'Home';
 
-  final List<Post> _posts = [
+  final List<Post> _homePosts = [
     Post(
         communityName: 'flutter',
         duration: '4h',
         upVotes: 120,
         comments: 30,
         shares: 15,
-        content: 'Did you check out the brand new feature!!!!'),
+        content: 'Did you check out the brand new feature!!!!',
+        communityId: '1'),
     Post(
         communityName: 'dart',
         duration: '23h',
@@ -24,8 +29,28 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         comments: 12,
         shares: 5,
         content:
-            'Dart 2.12 brings sound null safety, improving your codes reliability and performance.'),
+            'Dart 2.12 brings sound null safety, improving your codes reliability and performance.',
+        communityId: '2'),
     // Add more posts here
+  ];
+  final List<Post> _popularPosts = [
+    Post(
+        communityName: 'android',
+        duration: '2d',
+        upVotes: 200,
+        comments: 50,
+        shares: 25,
+        content: 'Exploring the new Android 12 features.',
+        communityId: '3'),
+    Post(
+        communityName: 'ios',
+        duration: '1d',
+        upVotes: 150,
+        comments: 40,
+        shares: 20,
+        content: 'What\'s new in iOS 15? Let\'s dive in.',
+        communityId: '4'),
+    // Add more "Popular" posts here
   ];
 
   void _onItemTapped(int index) {
@@ -37,7 +62,11 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         Navigator.pushNamed(context, '/communities');
       } else if (index == 2) {
         Navigator.pushNamed(context, '/create_post');
-      } else if (index == 3) {}
+      } else if (index == 3) {
+        Navigator.pushNamed(context, '/chat');
+      } else if (index == 4) {
+        Navigator.pushNamed(context, '/inbox');
+      }
     });
   }
 
@@ -119,13 +148,49 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = Provider.of<UserProvider>(context).user;
+
+    final List<Post> _postsToShow =
+        _selectedPage == 'Home' ? _homePosts : _popularPosts;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: DropdownButton<String>(
+          value: _selectedPage,
+          items: [
+            DropdownMenuItem(
+              value: 'Home',
+              child: Text('Home',
+                  style: TextStyle(
+                      color: Colors
+                          .black)), // Ensures contrast against white AppBar
+            ),
+            DropdownMenuItem(
+              value: 'Popular',
+              child: Text('Popular',
+                  style: TextStyle(
+                      color: Colors
+                          .black)), // Ensures contrast against white AppBar
+            ),
+          ],
+          onChanged: (value) {
+            setState(() {
+              _selectedPage = value!;
+            });
+          },
+          underline: Container(), // Removes the underline
+          style: TextStyle(
+              color: Colors.deepOrange,
+              fontWeight: FontWeight
+                  .bold), // Default style for text, ensures contrast before dropdown is clicked
+          iconEnabledColor:
+              Colors.black, // Ensures the icon is visible against white AppBar
+          dropdownColor: Colors
+              .deepOrange, // Background color of the dropdown menu, ensure text color contrasts with this when active
+        ),
         leading: IconButton(
           icon: Icon(Icons.list),
           onPressed: () {
-            print('Communities navigation clicked');
+            print(user?.email);
           },
         ),
         actions: <Widget>[
@@ -144,12 +209,10 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         ],
       ),
       body: Center(
-        child: _selectedIndex == 0
-            ? ListView.builder(
-                itemCount: _posts.length,
-                itemBuilder: (context, index) => _buildPostCard(_posts[index]),
-              )
-            : Text('Page Placeholder'), // Placeholder for other pages
+        child: ListView.builder(
+          itemCount: _postsToShow.length,
+          itemBuilder: (context, index) => _buildPostCard(_postsToShow[index]),
+        ), // Placeholder for other pages
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -169,6 +232,10 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
             icon: Icon(Icons.chat),
             label: 'Chat',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.inbox),
+            label: 'Inbox',
+          )
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

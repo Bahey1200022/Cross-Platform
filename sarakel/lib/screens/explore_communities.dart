@@ -30,7 +30,7 @@ class _MyHomePageState extends State<ExploreCommunities> {
 
   void fetchData() async {
     final dio = Dio();
-    final response = await dio.get('http://192.168.1.22:3000/data');
+    final response = await dio.get('http://localhost:3000/communities');
     print(response.data);
     setState(() {
       posts = response.data; // Update the state with fetched data
