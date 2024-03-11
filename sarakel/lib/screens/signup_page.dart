@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'username_page.dart';
 
 class SignupPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -107,38 +107,16 @@ class SignupPage extends StatelessWidget {
                           // Navigator.pushNamed(context, '/username');
                           String email = _emailController.text.trim();
                           String password = _passwordController.text.trim();
-                          String type = 'User';
                           if (_validateEmail(email) &&
                               _validatePassword(password)) {
                             // Both email and password are valid, proceed
-                            var data = {
-                              "email": email,
-                              "password": password,
-                              "type": type
-                            };
-                            print(data);
-                            var url =
-                                Uri.parse('http://192.168.1.22:3000/users');
-
-                            try {
-                              var response = await http.post(
-                                url,
-                                body: json.encode(data),
-                                headers: {'Content-Type': 'application/json'},
-                              );
-                              if (response.statusCode == 200 ||
-                                  response.statusCode == 201) {
-                                Navigator.pushNamed(context, '/username');
-
-                                ////////////////
-                              } else {
-                                print('\x1B[33mThis is yellow text\x1B[0m');
-                                print(response.statusCode);
-                              }
-                            } catch (e) {
-                              // Handle network errors
-                              print('Error: $e');
-                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UsernamePage(
+                                    email: email, password: password),
+                              ),
+                            );
                           } else {
                             showDialog(
                               context: context,

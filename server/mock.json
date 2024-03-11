@@ -75,29 +75,40 @@
   ],
   "users": [
     {
-      "id": "1",
-      "name": "User 1",
-      "email": "user1@domain.com",
-      "pass": "123456789"
+      "id": "e830",
+      "email": "bah@gmail.com",
+      "password": "1234567890",
+      "token": "true",
+      "username": "u/trial"
     },
     {
-      "id": "2",
-      "name": "User 2",
-      "email": "user2@domain.com",
-      "pass": "123456789"
+      "id": "b92b",
+      "email": "b@gmail.com",
+      "password": "1111111111",
+      "token": "true",
+      "username": "u/t"
     },
     {
-      "id": "3",
-      "name": "User 3",
-      "email": "user3@domain.com",
-      "pass": "123456789"
+      "id": "a449",
+      "email": "ba@gmail.com",
+      "password": "1234567890",
+      "token": "true",
+      "username": "u/ti"
     },
     {
-      "id": "2a0a",
-      "email": "bahy@gmail.com",
-      "password": "987654321",
-      "type": "User"
+      "id": "f432",
+      "email": "b@gmail.com",
+      "password": "hhhhhhhhhhhhhh",
+      "token": "true",
+      "username": "u/ty"
     }
   ],
-  "posts":[]
+  "posts": [
+    {
+      "id": "6b5a",
+      "title": "demo",
+      "body": "demo",
+      "communityId": "4"
+    }
+  ]
 }

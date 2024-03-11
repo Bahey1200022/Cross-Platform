@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http; // Import the http package
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
 import '../models/community.dart';
 
 class CreatePost extends StatefulWidget {
@@ -204,7 +204,8 @@ class _MyHomePageState extends State<CreatePost> {
                 // Handle posting
                 print('Post to ${selectedCommunity.name}');
                 Navigator.of(context).pop();
-                // Add your post handling logic here
+                _addPost(selectedCommunity.id);
+                Navigator.pushNamed(context, '/home');
               },
               child: Text('Post'),
             ),
@@ -219,6 +220,44 @@ class _MyHomePageState extends State<CreatePost> {
         );
       },
     );
+  }
+
+  Future<void> _addPost(String communityId) async {
+    try {
+      final String title = titleController.text;
+      final String body = bodyController.text;
+
+      if (title.trim().isNotEmpty && body.trim().isNotEmpty) {
+        final String apiUrl = 'http://192.168.1.11:3000/posts';
+
+        final Map<String, String> headers = {
+          'Content-Type': 'application/json'
+        };
+
+        final Map<String, dynamic> postData = {
+          'title': title,
+          'body': body,
+          'communityId': communityId,
+        };
+
+        final String postJson = jsonEncode(postData);
+
+        final http.Response response = await http.post(
+          Uri.parse(apiUrl),
+          headers: headers,
+          body: postJson,
+        );
+
+        if (response.statusCode == 201) {
+          print('Post added successfully');
+        } else {
+          print('Failed to add post. Status code: ${response.statusCode}');
+          print('Response body: ${response.body}');
+        }
+      }
+    } catch (e) {
+      print('Error adding post: $e');
+    }
   }
 
   @override
