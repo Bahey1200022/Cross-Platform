@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:sarakel/providers/user_communities.dart';
 import 'package:sarakel/providers/user_provider.dart';
-import 'package:sarakel/screens/chat_page.dart';
-import 'package:sarakel/screens/inbox_page.dart';
-import './screens/login_page.dart';
-import './screens/signup_page.dart';
-import './screens/username_page.dart';
-import './screens/welcome_page.dart';
+import 'package:sarakel/screens/feed/chat_page.dart';
+import 'package:sarakel/screens/feed/inbox_page.dart';
+import './screens/entry/login_page.dart';
+import './screens/entry/signup_page.dart';
+import './screens/entry/username_page.dart';
+import './screens/entry/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import './screens/homescreen.dart';
-import './screens/create_post.dart';
-import './screens/explore_communities.dart';
+import './screens/feed/homescreen.dart';
+import './screens/feed/create_post.dart';
+import './screens/feed/explore_communities.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,8 +33,13 @@ class MyApp extends StatelessWidget {
         } else {
           bool homescreen = snapshot.data ??
               false; // Get homescreen value from snapshot, default to false
-          return ChangeNotifierProvider(
-            create: (context) => UserProvider(),
+          return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<UserProvider>(
+                  create: (_) => UserProvider()),
+              ChangeNotifierProvider<UserCommunitiesProvider>(
+                  create: (_) => UserCommunitiesProvider())
+            ],
             child: MaterialApp(
               title: 'Sarakel',
               theme: ThemeData(
