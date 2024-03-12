@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sarakel/models/user.dart';
-import '../widgets/google_signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../providers/user_provider.dart';
+import '../../providers/user_provider.dart';
 
 Future<bool> userExists(String email, String password) async {
   final response = await http.get(Uri.parse('http://localhost:3000/users'));
@@ -71,7 +70,6 @@ class LoginPage extends StatelessWidget {
                   children: [
                     Image.asset('assets/google_logo.png', height: 24.0),
                     SizedBox(width: 8.0),
-                    GoogleSignInButton(),
                   ],
                 ),
               ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
-import '../models/community.dart';
+import '../../models/community.dart';
 
 class CreatePost extends StatefulWidget {
   @override

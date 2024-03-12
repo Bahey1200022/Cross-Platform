@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/post.dart';
+import '../../models/post.dart';
 
 class ChatSection extends StatefulWidget {
   @override
