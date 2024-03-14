@@ -6,14 +6,14 @@ class Post {
   final int shares;
   final String content;
   final String communityId;
-
-  Post({
-    required this.communityName,
-    this.duration, // Initialize duration
-    required this.upVotes,
-    required this.comments,
-    required this.shares,
-    required this.content,
-    required this.communityId,
-  });
+  final String title;
+  Post(
+      {required this.communityName,
+      this.duration, // Initialize duration
+      required this.upVotes,
+      required this.comments,
+      required this.shares,
+      required this.content,
+      required this.communityId,
+      required this.title});
 }

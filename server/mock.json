@@ -101,6 +101,20 @@
       "password": "hhhhhhhhhhhhhh",
       "token": "true",
       "username": "u/ty"
+    },
+    {
+      "id": "818a",
+      "email": "rabie@gmail.com",
+      "password": "1234567890",
+      "token": "true",
+      "username": "u/rabie"
+    },
+    {
+      "id": "95a6",
+      "email": "k@gmail.com",
+      "password": "1234567890",
+      "token": "true",
+      "username": "u/lover"
     }
   ],
   "posts": [
@@ -108,6 +122,12 @@
       "id": "6b5a",
       "title": "demo",
       "body": "demo",
+      "communityId": "4"
+    },
+    {
+      "id": "68f1",
+      "title": "d",
+      "body": "d",
       "communityId": "4"
     }
   ]

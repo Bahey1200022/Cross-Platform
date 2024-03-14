@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:sarakel/providers/user_communities.dart';
 import '../../models/community.dart';
+import '../../controllers/add_post_controller.dart';
+import '../../models/post.dart';
+import '../../controllers/add_post_controller.dart';
 
 class CreatePost extends StatefulWidget {
   @override
@@ -13,7 +18,7 @@ class CreatePost extends StatefulWidget {
 }
 
 class MyAppState with ChangeNotifier {
-  List<Community> communities = [];
+  List<Community>? communities = [];
 }
 
 class _MyHomePageState extends State<CreatePost> {
@@ -21,47 +26,18 @@ class _MyHomePageState extends State<CreatePost> {
   TextEditingController bodyController = TextEditingController();
   List<File> attachments = [];
   MyAppState appState = MyAppState();
+  AddPostController addPostController = AddPostController();
 
   @override
   void initState() {
     super.initState();
     // Load communities from the JSON file
-    loadCommunities();
+    List<Community> fetchedCommunities =
+        Provider.of<UserCommunitiesProvider>(context, listen: false)
+            .communities;
+    appState.communities = fetchedCommunities;
     titleController.addListener(updateNextButtonState);
     bodyController.addListener(updateNextButtonState);
-  }
-
-  // Load communities from the JSON file
-  Future<void> loadCommunities() async {
-    try {
-      // Make a GET request to fetch the JSON data from the server
-      var response =
-          await http.get(Uri.parse('http://localhost:3000/communities'));
-
-      // Check if the request was successful (status code 200)
-      if (response.statusCode == 200) {
-        // Decode the JSON response into a list
-        List<dynamic> jsonData = json.decode(response.body);
-
-        // Map the community data to Community objects
-        List<Community> communities = jsonData.map((communityData) {
-          return Community(
-            id: communityData['id'],
-            name: communityData['name'],
-            description: communityData['description'],
-            image: communityData['image'],
-          );
-        }).toList();
-
-        // Assign the list of communities to appState.communities
-        appState.communities = communities;
-
-        // Notify listeners when communities are loaded
-        appState.notifyListeners();
-      }
-    } catch (e) {
-      print('Error loading communities: $e');
-    }
   }
 
   void updateNextButtonState() {
@@ -160,6 +136,9 @@ class _MyHomePageState extends State<CreatePost> {
     );
   }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Show community selection dialog
   void _showCommunityDialog() {
     showDialog(
@@ -171,7 +150,7 @@ class _MyHomePageState extends State<CreatePost> {
             width: double.maxFinite,
             child: ListView(
               shrinkWrap: true,
-              children: appState.communities
+              children: appState.communities!
                   .map(
                     (community) => ListTile(
                       title: Text(community.name),
@@ -204,7 +183,9 @@ class _MyHomePageState extends State<CreatePost> {
                 // Handle posting
                 print('Post to ${selectedCommunity.name}');
                 Navigator.of(context).pop();
-                _addPost(selectedCommunity.id);
+                final String title = titleController.text;
+                final String body = bodyController.text;
+                addPostController.addPost(selectedCommunity.id, title, body);
                 Navigator.pushNamed(context, '/home');
               },
               child: Text('Post'),
@@ -222,44 +203,9 @@ class _MyHomePageState extends State<CreatePost> {
     );
   }
 
-  Future<void> _addPost(String communityId) async {
-    try {
-      final String title = titleController.text;
-      final String body = bodyController.text;
-
-      if (title.trim().isNotEmpty && body.trim().isNotEmpty) {
-        final String apiUrl = 'http://192.168.1.11:3000/posts';
-
-        final Map<String, String> headers = {
-          'Content-Type': 'application/json'
-        };
-
-        final Map<String, dynamic> postData = {
-          'title': title,
-          'body': body,
-          'communityId': communityId,
-        };
-
-        final String postJson = jsonEncode(postData);
-
-        final http.Response response = await http.post(
-          Uri.parse(apiUrl),
-          headers: headers,
-          body: postJson,
-        );
-
-        if (response.statusCode == 201) {
-          print('Post added successfully');
-        } else {
-          print('Failed to add post. Status code: ${response.statusCode}');
-          print('Response body: ${response.body}');
-        }
-      }
-    } catch (e) {
-      print('Error adding post: $e');
-    }
-  }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
     return Scaffold(
