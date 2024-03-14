@@ -4,9 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:sarakel/models/community.dart';
 
 class UserCommunitiesProvider extends ChangeNotifier {
-  List<Community>? _communities = [];
+  List<Community> _communities = [];
 
-  List<Community>? get communities => _communities;
+  List<Community> get communities => _communities;
 
   //
   setCommunity(List<Community> community) {
@@ -15,7 +15,7 @@ class UserCommunitiesProvider extends ChangeNotifier {
   }
 
   removeUser(Community community) {
-    _communities?.remove(community);
+    _communities.remove(community);
     notifyListeners();
   }
 }

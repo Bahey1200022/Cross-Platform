@@ -7,54 +7,11 @@ import 'package:sarakel/models/community.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:sarakel/providers/user_communities.dart';
 import 'package:sarakel/providers/user_provider.dart';
+import '../../drawers/profile_drawer.dart';
 import '../../models/post.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-Future<List<Community>> loadCommunities() async {
-  try {
-    // Make a GET request to fetch the JSON data from the server
-    var response =
-        await http.get(Uri.parse('http://localhost:3000/communities'));
-
-    // Check if the request was successful (status code 200)
-    if (response.statusCode == 200) {
-      // Decode the JSON response into a list
-      List<dynamic> jsonData = json.decode(response.body);
-
-      // Map the community data to Community objects
-      List<Community> fetchedCommunities = jsonData.map((communityData) {
-        return Community(
-          id: communityData['id'],
-          name: communityData['name'],
-          description: communityData['description'],
-          image: communityData['image'],
-        );
-      }).toList();
-
-      return fetchedCommunities; // Return the fetched communities list
-    } else {
-      // Return an empty list if the response status code is not 200
-      return [];
-    }
-  } catch (e) {
-    print('Error loading communities: $e');
-    // Return an empty list if an error occurs
-    return [];
-  }
-}
-
-Future<void> fetchAndSetCommunities(BuildContext context) async {
-  try {
-    List<Community> fetchedCommunities = await loadCommunities();
-    print(fetchedCommunities);
-    Provider.of<UserCommunitiesProvider>(context, listen: false)
-        .setCommunity(fetchedCommunities);
-  } catch (e) {
-    print('Error loading communities: $e');
-    // Handle the error as needed
-  }
-}
+import '../../controllers/home_screen_controller.dart';
 
 class SarakelHomeScreen extends StatefulWidget {
   @override
@@ -71,6 +28,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         duration: '4h',
         upVotes: 120,
         comments: 30,
+        title: 'hi',
         shares: 15,
         content: 'Did you check out the brand new feature!!!!',
         communityId: '1'),
@@ -78,6 +36,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         communityName: 'dart',
         duration: '23h',
         upVotes: 75,
+        title: 'hi',
         comments: 12,
         shares: 5,
         content:
@@ -91,6 +50,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         duration: '2d',
         upVotes: 200,
         comments: 50,
+        title: 'hi',
         shares: 25,
         content: 'Exploring the new Android 12 features.',
         communityId: '3'),
@@ -99,6 +59,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         duration: '1d',
         upVotes: 150,
         comments: 40,
+        title: 'hi',
         shares: 20,
         content: 'What\'s new in iOS 15? Let\'s dive in.',
         communityId: '4'),
@@ -200,9 +161,9 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    HomescreenController homescreenController = HomescreenController();
     User? user = Provider.of<UserProvider>(context).user;
-
-    fetchAndSetCommunities(context);
+    homescreenController.fetchAndSetCommunities(context);
 
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -260,13 +221,19 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           IconButton(
             icon: Icon(Icons.account_circle),
             onPressed: () {
-              print('Profile clicked');
+              _scaffoldKey.currentState!.openEndDrawer();
             },
           ),
         ],
       ),
       drawer: communityDrawer(
         userID: user!.email,
+      ),
+      endDrawer: ProfileDrawer(
+        // Add end drawer
+        userName: 'Ziad Zaza', // Replace with user name
+        userImageUrl: 'assets/avatar_logo.jpeg', // Replace with user image URL
+        userID: user.email,
       ),
       body: Center(
         child: ListView.builder(

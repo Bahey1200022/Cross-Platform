@@ -2,32 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-Future<bool> usernameExists(String username) async {
-  final response = await http.get(Uri.parse('http://localhost:3000/users'));
-
-  if (response.statusCode == 200) {
-    // Decode the response body from JSON
-    final dynamic users = json.decode(response.body);
-    print(users);
-    // Iterate through the list of users
-    for (var user in users) {
-      // Check if the provided username matches any existing username
-      if (user['username'] == username) {
-        return true; // Username exists
-      }
-    }
-    return false; // Username doesn't exist
-  } else {
-    throw Exception('Failed to load user data');
-  }
-}
+import 'package:sarakel/controllers/user_entry_controller.dart';
 
 class UsernamePage extends StatelessWidget {
-  String email;
-  String password;
+  UserController userController;
   TextEditingController usernameController = TextEditingController();
-  UsernamePage({required this.email, required this.password});
+  UsernamePage({required this.userController});
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +68,8 @@ class UsernamePage extends StatelessWidget {
                         print(username);
                         String formattedUsername = "u/$username";
                         print(username);
-                        if (await usernameExists(formattedUsername)) {
+                        if (await userController
+                            .usernameExists(formattedUsername)) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -107,32 +88,8 @@ class UsernamePage extends StatelessWidget {
                             },
                           );
                         } else {
-                          var data = {
-                            "email": email,
-                            "password": password,
-                            "token": "true",
-                            "username": formattedUsername
-                          };
-                          var url = Uri.parse('http://localhost:3000/users');
-
-                          try {
-                            var response = await http.post(
-                              url,
-                              body: json.encode(data),
-                              headers: {'Content-Type': 'application/json'},
-                            );
-                            if (response.statusCode == 200 ||
-                                response.statusCode == 201) {
-                              Navigator.pushNamed(context, '/login');
-
-                              //     ////////////////
-                            } else {
-                              print(response.statusCode);
-                            }
-                          } catch (e) {
-                            // Handle network errors
-                            print('Error: $e');
-                          }
+                          userController.usernameScreen = formattedUsername;
+                          userController.passToServer(context);
                         }
                       },
                       child: Text(

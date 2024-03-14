@@ -1,35 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sarakel/controllers/user_entry_controller.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../providers/user_provider.dart';
 
-Future<bool> userExists(String email, String password) async {
-  final response = await http.get(Uri.parse('http://localhost:3000/users'));
-
-  if (response.statusCode == 200) {
-    // Decode the response body from JSON
-    final dynamic users = json.decode(response.body);
-    print(users);
-    // Iterate through the list of users
-    for (var user in users) {
-      // Check if the provided username matches any existing username
-      if (user['email'] == email && user['password'] == password) {
-        return true; // Username exists
-      }
-    }
-    return false; // Username doesn't exist
-  } else {
-    throw Exception('Failed to load user data');
-  }
-}
-
 class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,14 +154,16 @@ class LoginPage extends StatelessWidget {
                       onPressed: () async {
                         String email = _emailController.text.trim();
                         String password = _passwordController.text.trim();
-                        if (await userExists(email, password)) {
-                          await _updateHomescreen(true);
-
-                          Navigator.pushNamed(context, '/home');
+                        UserController oldUserController = UserController(
+                            emailScreen: 'emailScreen',
+                            passwordScreen: 'passwordScreen');
+                        if (await oldUserController.userExists(
+                            email, password)) {
                           UserProvider userProvider =
                               Provider.of<UserProvider>(context, listen: false);
                           userProvider
-                              .setUser(User(email: email, password: password));
+                              .setUser(oldUserController.setStateUser());
+                          Navigator.pushNamed(context, '/home');
                         } else {
                           showDialog(
                             context: context,
@@ -223,8 +205,8 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-Future<void> _updateHomescreen(bool newValue) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setBool(
-      'homescreen', newValue); // Update homescreen value in SharedPreferences
-}
+// Future<void> _updateHomescreen(bool newValue) async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   await prefs.setBool(
+//       'homescreen', newValue); // Update homescreen value in SharedPreferences
+// }

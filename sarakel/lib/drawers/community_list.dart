@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:sarakel/providers/user_communities.dart';
@@ -11,7 +10,7 @@ class communityDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<Community>? fetchedCommunities =
+    List<Community> fetchedCommunities =
         provider.Provider.of<UserCommunitiesProvider>(context, listen: false)
             .communities;
     return Drawer(
@@ -27,7 +26,7 @@ class communityDrawer extends ConsumerWidget {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: fetchedCommunities?.length,
+                itemCount: fetchedCommunities.length,
                 itemBuilder: (BuildContext context, int index) {
                   final community = fetchedCommunities?[index];
                   return ListTile(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sarakel/controllers/user_entry_controller.dart';
 import 'username_page.dart';
 
 class SignupPage extends StatelessWidget {
@@ -110,11 +111,15 @@ class SignupPage extends StatelessWidget {
                           if (_validateEmail(email) &&
                               _validatePassword(password)) {
                             // Both email and password are valid, proceed
+                            UserController userController = UserController(
+                                emailScreen: email, passwordScreen: password);
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => UsernamePage(
-                                    email: email, password: password),
+                                  userController: userController,
+                                ),
                               ),
                             );
                           } else {
