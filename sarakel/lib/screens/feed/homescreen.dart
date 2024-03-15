@@ -12,6 +12,8 @@ import '../../models/post.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../controllers/home_screen_controller.dart';
+import '../feed/widgets/post_card.dart';
+import '../feed/widgets/bottom_bar.dart';
 
 class SarakelHomeScreen extends StatefulWidget {
   @override
@@ -65,99 +67,6 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         communityId: '4'),
     // Add more "Popular" posts here
   ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-
-      if (index == 0) {
-      } else if (index == 1) {
-        Navigator.pushNamed(context, '/communities');
-      } else if (index == 2) {
-        Navigator.pushNamed(context, '/create_post');
-      } else if (index == 3) {
-        Navigator.pushNamed(context, '/chat');
-      } else if (index == 4) {
-        Navigator.pushNamed(context, '/inbox');
-      }
-    });
-  }
-
-  Widget _buildPostCard(Post post) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Align text to the start
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    'r/${post.communityName} ${post.duration != null ? '• ${post.duration}' : ''}',
-                    style: TextStyle(fontSize: 16),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Join'),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.deepOrange),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 8), // Add space between the header and content
-            Text(post.content,
-                style: TextStyle(fontSize: 14)), // Display post content
-            SizedBox(height: 8), // Add space before the bottom row
-            // Bottom row (votes, comments, shares) as previously implemented
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_upward),
-                      onPressed: () {},
-                    ),
-                    Text('${post.upVotes}'),
-                    IconButton(
-                      icon: Icon(Icons.arrow_downward),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.comment),
-                      onPressed: () {},
-                    ),
-                    Text('${post.comments}'),
-                  ],
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.share),
-                      onPressed: () {},
-                    ),
-                    Text('${post.shares}'),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -238,38 +147,11 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
       body: Center(
         child: ListView.builder(
           itemCount: _postsToShow.length,
-          itemBuilder: (context, index) => _buildPostCard(_postsToShow[index]),
+          itemBuilder: (context, index) => buildPostCard(_postsToShow[index]),
         ), // Placeholder for other pages
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Communities',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            label: 'Create',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.inbox),
-            label: 'Inbox',
-          )
-        ],
+      bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white70,
-        backgroundColor: Colors.deepOrange,
-        type: BottomNavigationBarType.fixed,
       ),
     );
   }

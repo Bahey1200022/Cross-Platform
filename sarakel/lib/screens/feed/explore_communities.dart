@@ -6,6 +6,7 @@ import 'package:sarakel/controllers/home_screen_controller.dart';
 
 import '../../models/community.dart';
 import '../../providers/user_communities.dart';
+import 'widgets/bottom_bar.dart';
 
 class ExploreCommunities extends StatefulWidget {
   const ExploreCommunities({Key? key});
@@ -14,6 +15,8 @@ class ExploreCommunities extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<ExploreCommunities> {
+  int _selectedIndex = 2;
+
   @override
   void initState() {
     super.initState();
@@ -80,6 +83,9 @@ class _MyHomePageState extends State<ExploreCommunities> {
             ],
           );
         },
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _selectedIndex,
       ),
     );
   }
