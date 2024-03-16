@@ -50,21 +50,12 @@ class LoginPage extends StatelessWidget {
                   children: [
                     Image.asset('assets/google_logo.png', height: 24.0),
                     SizedBox(width: 8.0),
-                  ],
-                ),
-              ),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/facebook_logo.png', height: 24.0),
-                    SizedBox(width: 8.0),
                     TextButton(
                       onPressed: () {
-                        // Handle continue with Facebook
+                        // Handle continue with googgle
                       },
                       child: Text(
-                        'Continue with Facebook',
+                        'Continue with google',
                         style: TextStyle(color: Colors.black),
                       ),
                       style: ButtonStyle(
@@ -76,6 +67,29 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
+              // Center(
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       Image.asset('assets/facebook_logo.png', height: 24.0),
+              //       SizedBox(width: 8.0),
+              //       TextButton(
+              //         onPressed: () {
+              //           // Handle continue with Facebook
+              //         },
+              //         child: Text(
+              //           'Continue with Facebook',
+              //           style: TextStyle(color: Colors.black),
+              //         ),
+              //         style: ButtonStyle(
+              //           backgroundColor: MaterialStateProperty.all<Color>(
+              //             const Color.fromARGB(255, 244, 236, 236),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SizedBox(height: 16.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -142,6 +156,8 @@ class LoginPage extends StatelessWidget {
                       child: TextButton(
                         onPressed: () {
                           // Handle forgot password
+                          Navigator.pushNamed(context,
+                              '/forgotpassword'); // Handle forgot password
                         },
                         child: Text(
                           'Forgot password?',

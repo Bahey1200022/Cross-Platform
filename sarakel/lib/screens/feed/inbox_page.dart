@@ -14,7 +14,7 @@ class _InboxSection extends State<InboxSection> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Inbox'),
+          title: Text('Notifications'),
           leading: IconButton(
             icon: Icon(Icons.list),
             onPressed: () {

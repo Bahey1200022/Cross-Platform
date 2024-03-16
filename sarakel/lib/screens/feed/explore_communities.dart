@@ -15,17 +15,7 @@ class ExploreCommunities extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<ExploreCommunities> {
-  int _selectedIndex = 2;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +24,27 @@ class _MyHomePageState extends State<ExploreCommunities> {
             .communities;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("communities"),
+        title: Text('Communities'),
+        leading: IconButton(
+          icon: Icon(Icons.list),
+          onPressed: () {
+            print('Communities navigation clicked');
+          },
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              print('Search clicked');
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.account_circle),
+            onPressed: () {
+              print('Profile clicked');
+            },
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: fetchedCommunities.length,
