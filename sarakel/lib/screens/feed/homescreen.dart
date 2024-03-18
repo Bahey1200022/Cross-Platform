@@ -21,26 +21,27 @@ class SarakelHomeScreen extends StatefulWidget {
 }
 
 class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
-  int _selectedIndex = 0;
+  final int _selectedIndex = 0;
   String _selectedPage = 'Home';
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   final List<Post> _homePosts = [
     Post(
         communityName: 'flutter',
         duration: '4h',
-        upVotes: 120,
-        comments: 30,
+        upVotes: '120',
+        comments: '30',
         title: 'hi',
-        shares: 15,
+        shares: '15',
         content: 'Did you check out the brand new feature!!!!',
         communityId: '1'),
     Post(
         communityName: 'dart',
         duration: '23h',
-        upVotes: 75,
+        upVotes: '75',
         title: 'hi',
-        comments: 12,
-        shares: 5,
+        comments: '12',
+        shares: '5',
         content:
             'Dart 2.12 brings sound null safety, improving your codes reliability and performance.',
         communityId: '2'),
@@ -50,19 +51,19 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
     Post(
         communityName: 'android',
         duration: '2d',
-        upVotes: 200,
-        comments: 50,
+        upVotes: '200',
+        comments: '50',
         title: 'hi',
-        shares: 25,
+        shares: '25',
         content: 'Exploring the new Android 12 features.',
         communityId: '3'),
     Post(
         communityName: 'ios',
         duration: '1d',
-        upVotes: 150,
-        comments: 40,
+        upVotes: '150',
+        comments: '40',
         title: 'hi',
-        shares: 20,
+        shares: '20',
         content: 'What\'s new in iOS 15? Let\'s dive in.',
         communityId: '4'),
     // Add more "Popular" posts here
@@ -74,16 +75,14 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
     User? user = Provider.of<UserProvider>(context).user;
     homescreenController.fetchAndSetCommunities(context);
 
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
     final List<Post> _postsToShow =
         _selectedPage == 'Home' ? _homePosts : _popularPosts;
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
       appBar: AppBar(
         title: DropdownButton<String>(
           value: _selectedPage,
-          items: [
+          items: const [
             DropdownMenuItem(
               value: 'Home',
               child: Text('Home',
@@ -105,7 +104,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
             });
           },
           underline: Container(), // Removes the underline
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.deepOrange,
               fontWeight: FontWeight
                   .bold), // Default style for text, ensures contrast before dropdown is clicked
@@ -117,7 +116,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         leading: IconButton(
           icon: Icon(Icons.list),
           onPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
+            scaffoldKey.currentState!.openDrawer();
           },
         ),
         actions: <Widget>[
@@ -130,25 +129,37 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           IconButton(
             icon: Icon(Icons.account_circle),
             onPressed: () {
-              _scaffoldKey.currentState!.openEndDrawer();
+              scaffoldKey.currentState!.openEndDrawer();
             },
           ),
         ],
       ),
-      drawer: communityDrawer(
-        userID: user!.email,
-      ),
+      drawer: communityDrawer(),
       endDrawer: ProfileDrawer(
         // Add end drawer
         userName: 'Ziad Zaza', // Replace with user name
         userImageUrl: 'assets/avatar_logo.jpeg', // Replace with user image URL
-        userID: user.email,
+        userID: user!.email,
       ),
-      body: Center(
-        child: ListView.builder(
-          itemCount: _postsToShow.length,
-          itemBuilder: (context, index) => buildPostCard(_postsToShow[index]),
-        ), // Placeholder for other pages
+      body: FutureBuilder<List<Post>>(
+        future: homescreenController.loadPosts(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text("Error loading posts"));
+          } else if (snapshot.hasData) {
+            final postsToShow =
+                _selectedPage == 'Home' ? snapshot.data! : snapshot.data!;
+            return ListView.builder(
+              itemCount: postsToShow.length,
+              itemBuilder: (context, index) =>
+                  buildPostCard(postsToShow[index]),
+            );
+          } else {
+            return const Center(child: Text('No posts found'));
+          }
+        },
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,

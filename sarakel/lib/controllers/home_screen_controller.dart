@@ -6,6 +6,7 @@ import 'package:sarakel/models/user.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/community.dart';
+import '../models/post.dart';
 import '../providers/user_communities.dart';
 
 class HomescreenController {
@@ -50,6 +51,36 @@ class HomescreenController {
     } catch (e) {
       print('Error loading communities: $e');
       // Handle the error as needed
+    }
+  }
+
+  Future<List<Post>> loadPosts() async {
+    try {
+      var response = await http.get(Uri.parse('http://localhost:3000/posts'));
+      if (response.statusCode == 200) {
+        List<dynamic> jsonData = json.decode(response.body);
+
+        List<Post> posts = jsonData.map((p) {
+          return Post(
+            communityName: p['communityName'],
+            duration: p['duration'],
+            upVotes: p['upVotes'],
+            downVotes: p['downVotes'],
+            comments: p['comments'],
+            shares: p['shares'],
+            content: p['content'],
+            communityId: p['communityId'],
+            title: p['title'],
+          );
+        }).toList();
+        return posts;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print('Error loading posts: $e');
+      // Return an empty list if an error occurs
+      return [];
     }
   }
 }

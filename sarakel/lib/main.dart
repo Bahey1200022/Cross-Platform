@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:sarakel/features/create_circle/create_circle.dart';
 import 'package:sarakel/providers/user_communities.dart';
 import 'package:sarakel/providers/user_provider.dart';
 import 'package:sarakel/screens/feed/chat_page.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
           '/inbox': (context) => InboxSection(),
           '/user_profile': (context) => UserProfile(),
           '/forgotpassword': (context) => ForgotPasswordPage(),
+          '/create_circle': (context) => CommunityForm()
         },
         debugShowCheckedModeBanner:
             false, // Set debugShowCheckedModeBanner to false
