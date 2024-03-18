@@ -6,7 +6,7 @@ class AddPostController {
   Future<void> addPost(String communityId, String title, String body) async {
     try {
       if (title.trim().isNotEmpty && body.trim().isNotEmpty) {
-        final String apiUrl = 'http://localhost:3000/posts';
+        final String apiUrl = 'http://192.168.1.17:3000/posts';
 
         final Map<String, String> headers = {
           'Content-Type': 'application/json'
