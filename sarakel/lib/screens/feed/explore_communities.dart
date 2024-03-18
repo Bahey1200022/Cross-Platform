@@ -4,8 +4,11 @@ import 'dart:async';
 
 import 'package:sarakel/controllers/home_screen_controller.dart';
 
+import '../../drawers/community_list.dart';
+import '../../drawers/profile_drawer.dart';
 import '../../models/community.dart';
 import '../../providers/user_communities.dart';
+import 'widgets/app_bar.dart';
 import 'widgets/bottom_bar.dart';
 
 class ExploreCommunities extends StatefulWidget {
@@ -16,6 +19,7 @@ class ExploreCommunities extends StatefulWidget {
 
 class _MyHomePageState extends State<ExploreCommunities> {
   int _selectedIndex = 1;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -23,28 +27,17 @@ class _MyHomePageState extends State<ExploreCommunities> {
         Provider.of<UserCommunitiesProvider>(context, listen: false)
             .communities;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Communities'),
-        leading: IconButton(
-          icon: Icon(Icons.list),
-          onPressed: () {
-            print('Communities navigation clicked');
-          },
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              print('Search clicked');
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.account_circle),
-            onPressed: () {
-              print('Profile clicked');
-            },
-          ),
-        ],
+      key: _scaffoldKey, // Assign key here
+
+      appBar: CustomAppBar(
+        title: 'Circles',
+        scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
+      ),
+      drawer: communityDrawer(),
+      endDrawer: const ProfileDrawer(
+        userName: 'Ziad Zaza',
+        userImageUrl: 'assets/avatar_logo.jpeg',
+        userID: 'user.email',
       ),
       body: ListView.builder(
         itemCount: fetchedCommunities.length,

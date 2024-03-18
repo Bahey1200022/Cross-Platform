@@ -1,45 +1,42 @@
 import 'package:flutter/material.dart';
-import '../../models/post.dart';
+import 'package:provider/provider.dart';
+import '../../controllers/home_screen_controller.dart';
+import '../../drawers/community_list.dart';
+import '../../drawers/profile_drawer.dart';
+import '../../models/user.dart';
+import '../../providers/user_provider.dart';
 import '../feed/widgets/bottom_bar.dart';
+import 'widgets/app_bar.dart';
 
 class InboxSection extends StatefulWidget {
   @override
-  State<InboxSection> createState() => _InboxSection();
+  State<InboxSection> createState() => _InboxSectionState();
 }
 
-class _InboxSection extends State<InboxSection> {
+class _InboxSectionState extends State<InboxSection> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
   int _selectedIndex = 4;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Notifications'),
-          leading: IconButton(
-            icon: Icon(Icons.list),
-            onPressed: () {
-              print('Communities navigation clicked');
-            },
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.more_vert),
-              onPressed: () {
-                print('more clicked');
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.account_circle),
-              onPressed: () {
-                print('Profile clicked');
-              },
-            ),
-          ],
-        ),
-        body: Center(
-          child: Text('Inbox Page is under construction'),
-        ),
-        bottomNavigationBar:
-            CustomBottomNavigationBar(currentIndex: _selectedIndex));
+      key: _scaffoldKey, // Assign key here
+      appBar: CustomAppBar(
+        title: 'Inbox',
+        scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
+      ),
+      drawer: communityDrawer(),
+      endDrawer: const ProfileDrawer(
+        userName: 'Ziad Zaza',
+        userImageUrl: 'assets/avatar_logo.jpeg',
+        userID: 'user.email',
+      ),
+      body: Center(
+        child: Text('Inbox Page is under construction'),
+      ),
+      bottomNavigationBar:
+          CustomBottomNavigationBar(currentIndex: _selectedIndex),
+    );
   }
 }

@@ -4,16 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/controllers/user_entry_controller.dart';
 
-class UsernamePage extends StatelessWidget {
-  UserController userController;
-  TextEditingController usernameController = TextEditingController();
+class UsernamePage extends StatefulWidget {
+  final UserController userController;
   UsernamePage({required this.userController});
+
+  @override
+  _UsernamePageState createState() => _UsernamePageState();
+}
+
+class _UsernamePageState extends State<UsernamePage> {
+  TextEditingController usernameController = TextEditingController();
+  String _errorText = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //title: Text('Create Username'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -54,42 +60,70 @@ class UsernamePage extends StatelessWidget {
                       ),
                       child: TextFormField(
                         controller: usernameController,
+                        onChanged: (value) async {
+                          value = value.trim();
+                          String formattedUsername = "u/$value";
+
+                          if (await widget.userController
+                              .usernameExists(formattedUsername)) {
+                            setState(() {
+                              _errorText =
+                                  'user with the name "$value" already exists. Please choose a different name.';
+                            });
+                          } else {
+                            setState(() {
+                              _errorText = '';
+                            });
+                          }
+                        },
                         decoration: InputDecoration(
                           labelText: 'Username',
+                          prefixText: 'u/',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(16.0),
                         ),
                       ),
                     ),
+                    if (_errorText
+                        .isNotEmpty) // Only show error message if there's an error
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          _errorText,
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                      ),
                     SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () async {
                         String username = usernameController.text.trim();
-                        print(username);
                         String formattedUsername = "u/$username";
-                        print(username);
-                        if (await userController
+                        if (await widget.userController
                             .usernameExists(formattedUsername)) {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Error'),
-                                content: Text('Username already taken'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                          // showDialog(
+                          //   context: context,
+                          //   builder: (BuildContext context) {
+                          //     return AlertDialog(
+                          //       title: Text('Error'),
+                          //       content: Text('Username already taken'),
+                          //       actions: [
+                          //         TextButton(
+                          //           onPressed: () {
+                          //             Navigator.of(context).pop();
+                          //           },
+                          //           child: Text('OK'),
+                          //         ),
+                          //       ],
+                          //     );
+                          //   },
+                          // );
                         } else {
-                          userController.usernameScreen = formattedUsername;
-                          userController.passToServer(context);
+                          widget.userController.usernameScreen =
+                              formattedUsername;
+                          widget.userController.passToServer(context);
                         }
                       },
                       child: Text(

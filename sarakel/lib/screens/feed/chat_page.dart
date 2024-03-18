@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../drawers/community_list.dart';
+import '../../drawers/profile_drawer.dart';
 import '../../models/post.dart';
+import 'widgets/app_bar.dart';
 import 'widgets/bottom_bar.dart';
 
 class ChatSection extends StatefulWidget {
@@ -9,38 +12,25 @@ class ChatSection extends StatefulWidget {
 
 class _ChatSection extends State<ChatSection> {
   int _selectedIndex = 3;
+  final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey(); // Create a GlobalKey
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Chats'),
-          leading: IconButton(
-            icon: Icon(Icons.list),
-            onPressed: () {
-              print('Communities navigation clicked');
-            },
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add_circle_outline),
-              onPressed: () {
-                print('Filter clicked');
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.filter_list_outlined),
-              onPressed: () {
-                print('Filter clicked');
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.account_circle),
-              onPressed: () {
-                print('Profile clicked');
-              },
-            ),
-          ],
+        key: _scaffoldKey, // Provide the GlobalKey to the Scaffold
+
+        appBar: CustomAppBar(
+          title: 'chat',
+          scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
+        ),
+        drawer: communityDrawer(),
+        endDrawer: ProfileDrawer(
+          // Add end drawer
+          userName: 'Ziad Zaza', // Replace with user name
+          userImageUrl:
+              'assets/avatar_logo.jpeg', // Replace with user image URL
+          userID: 'user.email',
         ),
         body: Center(
           child: Text('Chat Page is under construction'),
