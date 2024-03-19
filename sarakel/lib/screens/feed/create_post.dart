@@ -185,7 +185,8 @@ class _MyHomePageState extends State<CreatePost> {
                 Navigator.of(context).pop();
                 final String title = titleController.text;
                 final String body = bodyController.text;
-                addPostController.addPost(selectedCommunity.id, title, body);
+                addPostController.addPost(
+                    selectedCommunity.name, selectedCommunity.id, title, body);
                 Navigator.pushNamed(context, '/home');
               },
               child: Text('Post'),

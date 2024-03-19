@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AddPostController {
-  Future<void> addPost(String communityId, String title, String body) async {
+  Future<void> addPost(String communityName, String communityId, String title,
+      String body) async {
     try {
       if (title.trim().isNotEmpty && body.trim().isNotEmpty) {
         final String apiUrl = 'http://192.168.1.17:3000/posts';
@@ -14,8 +15,14 @@ class AddPostController {
 
         final Map<String, dynamic> postData = {
           'title': title,
-          'body': body,
+          'content': body,
           'communityId': communityId,
+          'duration': "0",
+          'upVotes': '0',
+          'shares': '0',
+          'downvotes': '0',
+          'comments': "0",
+          'communityName': communityName
         };
 
         final String postJson = jsonEncode(postData);

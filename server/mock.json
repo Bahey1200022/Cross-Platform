@@ -72,7 +72,6 @@
       "description": "topic",
       "image": "https://th.bing.com/th/id/R.607b9f69862d76af04b474113c0c7ff5?rik=lfnOsbv7mhDNbQ&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2fb%2fbc%2fFlag_of_India.png&ehk=Pk5lH0C%2fhstFahWfb15vLjtrJb3DslIU4%2fAQneo9IIM%3d&risl=&pid=ImgRaw&r=0"
     }
-    
   ],
   "users": [
     {
@@ -119,7 +118,6 @@
     }
   ],
   "posts": [
-    
     {
       "communityName": "flutter",
       "duration": "4h",
@@ -129,7 +127,8 @@
       "title": "hi",
       "shares": "15",
       "content": "Did you check out the brand new feature!!!!",
-      "communityId": "1"
+      "communityId": "1",
+      "id": "cbc3"
     },
     {
       "communityName": "dart",
@@ -140,7 +139,8 @@
       "title": "hi",
       "shares": "5",
       "content": "Dart 2.12 brings sound null safety, improving your codes reliability and performance.",
-      "communityId": "2"
+      "communityId": "2",
+      "id": "ab84"
     },
     {
       "communityName": "android",
@@ -151,7 +151,8 @@
       "title": "hi",
       "shares": "25",
       "content": "Exploring the new Android 12 features.",
-      "communityId": "3"
+      "communityId": "3",
+      "id": "38e7"
     },
     {
       "communityName": "ios",
@@ -162,7 +163,32 @@
       "title": "hi",
       "shares": "20",
       "content": "What's new in iOS 15? Let's dive in.",
-      "communityId": "4"
+      "communityId": "4",
+      "id": "82ca"
+    },
+    {
+      "id": "b2c0",
+      "title": "dd",
+      "content": "hi",
+      "communityId": "5",
+      "duration": "0",
+      "upVotes": "0",
+      "shares": "0",
+      "downvotes": "0",
+      "comments": "0",
+      "communityName": "batman"
+    },
+    {
+      "id": "0578",
+      "title": "LIVE POST ",
+      "content": "HELIIIIIIIIII",
+      "communityId": "1",
+      "duration": "0",
+      "upVotes": "0",
+      "shares": "0",
+      "downvotes": "0",
+      "comments": "0",
+      "communityName": "miami heat"
     }
   ]
 }
