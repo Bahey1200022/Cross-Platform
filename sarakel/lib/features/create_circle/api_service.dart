@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -26,12 +27,15 @@ class ApiService {
     }
   }
 
-  static Future<void> createCircle(String communityName, String circleType, bool is18Plus) async {
+  static Future<void> createCircle(
+      String communityName, String circleType, bool is18Plus) async {
     bool circleExists = await checkCircleExists(communityName);
-    bool idExists = await checkCircleIdExists(communityName.toLowerCase().replaceAll(' ', '_'));
+    bool idExists = await checkCircleIdExists(
+        communityName.toLowerCase().replaceAll(' ', '_'));
 
     if (circleExists || idExists) {
-      print('Circle with the name "$communityName" already exists. Please choose a different name.');
+      print(
+          'Circle with the name "$communityName" already exists. Please choose a different name.');
       return;
     }
 
@@ -42,7 +46,10 @@ class ApiService {
       "id": communityId,
       "name": formattedCommunityName,
       "type": circleType,
-      "is18Plus": is18Plus // Include 18+ flag in circle data
+      "is18Plus": is18Plus, // Include 18+ flag in circle data
+      "image":
+          "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
+      "description": "new circle"
     };
 
     final response = await http.post(

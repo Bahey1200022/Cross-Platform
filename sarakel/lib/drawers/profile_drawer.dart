@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sarakel/screens/user/user_profile.dart';
 
 import '../models/user.dart';
 import '../providers/user_provider.dart';
 
 class ProfileDrawer extends StatelessWidget {
-  final String userName;
-  final String userImageUrl;
-  final String userID;
+  final User? user;
 
   const ProfileDrawer({
-    required this.userName,
-    required this.userImageUrl,
-    required this.userID,
+    this.user,
   });
 
   @override
@@ -20,17 +17,17 @@ class ProfileDrawer extends StatelessWidget {
     return Consumer<UserProvider>(
       builder:
           (BuildContext context, UserProvider userProvider, Widget? child) {
-        User? user = userProvider.user;
+        // User? user = userProvider.user;
 
         return Drawer(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               UserAccountsDrawerHeader(
-                accountName: Text(userName),
-                accountEmail: Text(userID),
+                accountName: Text(user!.username!),
+                accountEmail: Text(user!.email),
                 currentAccountPicture: CircleAvatar(
-                  backgroundImage: AssetImage(userImageUrl),
+                  backgroundImage: AssetImage('assets/avatar_logo.jpeg'),
                 ),
                 decoration: BoxDecoration(
                   color:
@@ -42,8 +39,9 @@ class ProfileDrawer extends StatelessWidget {
                 leading: Icon(Icons.account_circle),
                 title: Text('My Profile'),
                 onTap: () {
-                  // Handle My Profile tap
-                  Navigator.pushNamed(context, '/user_profile');
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                    return UserProfile(user: user);
+                  }));
                 },
               ),
               ListTile(
@@ -71,7 +69,7 @@ class ProfileDrawer extends StatelessWidget {
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
                 onTap: () {
-                  // Handle Settings tap
+                  Navigator.pushNamed(context, '/settings');
                 },
               ),
             ],

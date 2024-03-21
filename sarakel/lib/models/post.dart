@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class Post {
   final String communityName;
   final String? duration; // Added duration property
@@ -8,6 +10,7 @@ class Post {
   final String communityId;
   final String title;
   final String? downVotes;
+  final Image? image;
   Post(
       {required this.communityName,
       this.duration, // Initialize duration
@@ -17,5 +20,6 @@ class Post {
       required this.content,
       required this.communityId,
       required this.title,
-      this.downVotes});
+      this.downVotes,
+      this.image});
 }

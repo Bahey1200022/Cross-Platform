@@ -7,7 +7,9 @@ import 'package:sarakel/controllers/home_screen_controller.dart';
 import '../../drawers/community_list.dart';
 import '../../drawers/profile_drawer.dart';
 import '../../models/community.dart';
+import '../../models/user.dart';
 import '../../providers/user_communities.dart';
+import '../../providers/user_provider.dart';
 import 'widgets/app_bar.dart';
 import 'widgets/bottom_bar.dart';
 
@@ -23,6 +25,8 @@ class _MyHomePageState extends State<ExploreCommunities> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = Provider.of<UserProvider>(context).user;
+
     List<Community> fetchedCommunities =
         Provider.of<UserCommunitiesProvider>(context, listen: false)
             .communities;
@@ -33,11 +37,9 @@ class _MyHomePageState extends State<ExploreCommunities> {
         title: 'Circles',
         scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
       ),
-      drawer: communityDrawer(),
-      endDrawer: const ProfileDrawer(
-        userName: 'Ziad Zaza',
-        userImageUrl: 'assets/avatar_logo.jpeg',
-        userID: 'user.email',
+      drawer: CommunityDrawer(),
+      endDrawer: ProfileDrawer(
+        user: user,
       ),
       body: ListView.builder(
         itemCount: fetchedCommunities.length,

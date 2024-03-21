@@ -20,17 +20,17 @@ class _InboxSectionState extends State<InboxSection> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = Provider.of<UserProvider>(context).user;
+
     return Scaffold(
       key: _scaffoldKey, // Assign key here
       appBar: CustomAppBar(
         title: 'Inbox',
         scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
       ),
-      drawer: communityDrawer(),
-      endDrawer: const ProfileDrawer(
-        userName: 'Ziad Zaza',
-        userImageUrl: 'assets/avatar_logo.jpeg',
-        userID: 'user.email',
+      drawer: CommunityDrawer(),
+      endDrawer: ProfileDrawer(
+        user: user,
       ),
       body: Center(
         child: Text('Inbox Page is under construction'),

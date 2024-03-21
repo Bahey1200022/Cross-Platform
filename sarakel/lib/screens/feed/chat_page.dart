@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sarakel/models/user.dart';
 import '../../drawers/community_list.dart';
 import '../../drawers/profile_drawer.dart';
 import '../../models/post.dart';
+import '../../providers/user_provider.dart';
 import 'widgets/app_bar.dart';
 import 'widgets/bottom_bar.dart';
 
@@ -17,6 +20,8 @@ class _ChatSection extends State<ChatSection> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = Provider.of<UserProvider>(context).user;
+
     return Scaffold(
         key: _scaffoldKey, // Provide the GlobalKey to the Scaffold
 
@@ -24,13 +29,10 @@ class _ChatSection extends State<ChatSection> {
           title: 'chat',
           scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
         ),
-        drawer: communityDrawer(),
+        drawer: CommunityDrawer(),
         endDrawer: ProfileDrawer(
           // Add end drawer
-          userName: 'Ziad Zaza', // Replace with user name
-          userImageUrl:
-              'assets/avatar_logo.jpeg', // Replace with user image URL
-          userID: 'user.email',
+          user: user,
         ),
         body: Center(
           child: Text('Chat Page is under construction'),

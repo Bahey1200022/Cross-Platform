@@ -7,9 +7,15 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../providers/user_provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool showPassword = false; // Track password visibility
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,13 +146,26 @@ class LoginPage extends StatelessWidget {
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(8.0),
                       ),
+                      // ...
                       child: TextFormField(
                         controller: _passwordController,
-                        obscureText: true,
+                        obscureText:
+                            !showPassword, // Hide password if showPassword is false
                         decoration: InputDecoration(
                           labelText: 'Password',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(16.0),
+                          suffixIcon: IconButton(
+                            icon: Icon(showPassword
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            onPressed: () {
+                              setState(() {
+                                showPassword =
+                                    !showPassword; // Toggle password visibility
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ),

@@ -5,8 +5,8 @@ import 'package:sarakel/models/community.dart';
 import 'package:sarakel/providers/user_communities.dart';
 import 'package:provider/provider.dart' as provider;
 
-class communityDrawer extends ConsumerWidget {
-  communityDrawer({super.key});
+class CommunityDrawer extends ConsumerWidget {
+  CommunityDrawer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
