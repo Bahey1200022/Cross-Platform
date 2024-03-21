@@ -3,14 +3,11 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sarakel/drawers/community_list.dart';
-import 'package:sarakel/models/community.dart';
+import 'package:sarakel/features/search_bar/search_screen.dart';
 import 'package:sarakel/models/user.dart';
-import 'package:sarakel/providers/user_communities.dart';
 import 'package:sarakel/providers/user_provider.dart';
 import '../../drawers/profile_drawer.dart';
 import '../../models/post.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import '../../controllers/home_screen_controller.dart';
 import '../feed/widgets/post_card.dart';
 import '../feed/widgets/bottom_bar.dart';
@@ -123,7 +120,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              print('Search clicked');
+              showSearch(context: context, delegate: sarakelSearch());
             },
           ),
           IconButton(
@@ -134,12 +131,10 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           ),
         ],
       ),
-      drawer: communityDrawer(),
+      drawer: CommunityDrawer(),
       endDrawer: ProfileDrawer(
         // Add end drawer
-        userName: 'Ziad Zaza', // Replace with user name
-        userImageUrl: 'assets/avatar_logo.jpeg', // Replace with user image URL
-        userID: user!.email,
+        user: user,
       ),
       body: FutureBuilder<List<Post>>(
         future: homescreenController.loadPosts(),

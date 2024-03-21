@@ -1,100 +1,34 @@
 {
   "communities": [
     {
-      "id": "1",
-      "name": "miami heat",
-      "description": "basketball",
-      "image": "https://wallpapercave.com/wp/5L7rDlY.jpg"
+      "id": "demoooo",
+      "name": "c/demoooo",
+      "type": "Public",
+      "is18Plus": false,
+      "description": "hii",
+      "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0"
     },
     {
-      "id": "2",
-      "name": "FCB",
-      "description": "football",
-      "image": "https://th.bing.com/th/id/OIP.bVqIsOmTQf9y3KxMevE-7QHaEo?rs=1&pid=ImgDetMain"
+      "id": "demo2",
+      "name": "c/demo2",
+      "type": "Public",
+      "is18Plus": false,
+      "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
+      "description": "new circle"
     },
     {
-      "id": "3",
-      "name": "Mclaren",
-      "description": "Formula 1",
-      "image": "https://brandlogos.net/wp-content/uploads/2022/04/mclaren_formula_1_team-logo-brandlogos.net_.png"
-    },
-    {
-      "id": "5",
-      "name": "batman",
-      "description": "movie",
-      "image": "https://th.bing.com/th/id/R.893fce91a195f8c5cd77e60bcedc5b0f?rik=I0KTeJ5Fw2S6EA&pid=ImgRaw&r=0"
-    },
-    {
-      "id": "4",
-      "name": "india",
-      "description": "country",
-      "image": "https://th.bing.com/th/id/R.607b9f69862d76af04b474113c0c7ff5?rik=lfnOsbv7mhDNbQ&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2fb%2fbc%2fFlag_of_India.png&ehk=Pk5lH0C%2fhstFahWfb15vLjtrJb3DslIU4%2fAQneo9IIM%3d&risl=&pid=ImgRaw&r=0"
-    },
-    {
-      "id": "6",
-      "name": "love",
-      "description": "topic",
-      "image": "https://th.bing.com/th/id/R.607b9f69862d76af04b474113c0c7ff5?rik=lfnOsbv7mhDNbQ&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2fb%2fbc%2fFlag_of_India.png&ehk=Pk5lH0C%2fhstFahWfb15vLjtrJb3DslIU4%2fAQneo9IIM%3d&risl=&pid=ImgRaw&r=0"
-    },
-    {
-      "id": "1",
-      "name": "miami heat",
-      "description": "basketball",
-      "image": "https://wallpapercave.com/wp/5L7rDlY.jpg"
-    },
-    {
-      "id": "2",
-      "name": "FCB",
-      "description": "football",
-      "image": "https://th.bing.com/th/id/OIP.bVqIsOmTQf9y3KxMevE-7QHaEo?rs=1&pid=ImgDetMain"
-    },
-    {
-      "id": "3",
-      "name": "Mclaren",
-      "description": "Formula 1",
-      "image": "https://brandlogos.net/wp-content/uploads/2022/04/mclaren_formula_1_team-logo-brandlogos.net_.png"
-    },
-    {
-      "id": "5",
-      "name": "batman",
-      "description": "movie",
-      "image": "https://th.bing.com/th/id/R.893fce91a195f8c5cd77e60bcedc5b0f?rik=I0KTeJ5Fw2S6EA&pid=ImgRaw&r=0"
-    },
-    {
-      "id": "4",
-      "name": "india",
-      "description": "country",
-      "image": "https://th.bing.com/th/id/R.607b9f69862d76af04b474113c0c7ff5?rik=lfnOsbv7mhDNbQ&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2fb%2fbc%2fFlag_of_India.png&ehk=Pk5lH0C%2fhstFahWfb15vLjtrJb3DslIU4%2fAQneo9IIM%3d&risl=&pid=ImgRaw&r=0"
-    },
-    {
-      "id": "6",
-      "name": "love",
-      "description": "topic",
-      "image": "https://th.bing.com/th/id/R.607b9f69862d76af04b474113c0c7ff5?rik=lfnOsbv7mhDNbQ&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2fb%2fbc%2fFlag_of_India.png&ehk=Pk5lH0C%2fhstFahWfb15vLjtrJb3DslIU4%2fAQneo9IIM%3d&risl=&pid=ImgRaw&r=0"
+      "id": "yalahwi",
+      "name": "c/yalahwi",
+      "type": "Public",
+      "is18Plus": false,
+      "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
+      "description": "new circle"
     }
   ],
   "users": [
-    {
-      "id": "e830",
-      "email": "bah@gmail.com",
-      "password": "1234567890",
-      "token": "true",
-      "username": "u/trial"
-    },
-    {
-      "id": "b92b",
-      "email": "b@gmail.com",
-      "password": "1111111111",
-      "token": "true",
-      "username": "u/t"
-    },
-    {
-      "id": "a449",
-      "email": "ba@gmail.com",
-      "password": "1234567890",
-      "token": "true",
-      "username": "u/ti"
-    },
+   
+    
+  
     {
       "id": "f432",
       "email": "b@gmail.com",
@@ -115,6 +49,13 @@
       "password": "1234567890",
       "token": "true",
       "username": "u/lover"
+    },
+    {
+      "id": "564a",
+      "email": "ashraf@gmail.com",
+      "password": "1234567890",
+      "token": "true",
+      "username": "u/killer"
     }
   ],
   "posts": [
@@ -189,6 +130,18 @@
       "downvotes": "0",
       "comments": "0",
       "communityName": "miami heat"
+    },
+    {
+      "id": "7087",
+      "title": "i want to diee",
+      "content": "life sucks",
+      "communityId": "yalahwi",
+      "duration": "0",
+      "upVotes": "0",
+      "shares": "0",
+      "downvotes": "0",
+      "comments": "0",
+      "communityName": "c/yalahwi"
     }
   ]
 }

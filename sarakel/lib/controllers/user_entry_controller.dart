@@ -14,7 +14,8 @@ class UserController {
       required this.passwordScreen});
 
   User setStateUser() {
-    return User(email: emailScreen, password: passwordScreen);
+    return User(
+        email: emailScreen, password: passwordScreen, username: usernameScreen);
   }
 
   Future<bool> userExists(String email, String password) async {

@@ -75,6 +75,7 @@ flutter:
    - assets/facebook_logo.png
    - assets/avatar_logo.jpeg
    - assets/logo_2d.png
+   - assets/serkel.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

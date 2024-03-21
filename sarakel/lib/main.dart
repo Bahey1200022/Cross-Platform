@@ -15,6 +15,7 @@ import './screens/feed/explore_communities.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/entry/forgot_password.dart';
+import 'screens/settings/settings_page.dart';
 import 'screens/user/user_profile.dart';
 
 void main() async {
@@ -48,9 +49,9 @@ class MyApp extends StatelessWidget {
           '/communities': (context) => ExploreCommunities(),
           '/chat': (context) => ChatSection(),
           '/inbox': (context) => InboxSection(),
-          '/user_profile': (context) => UserProfile(),
           '/forgotpassword': (context) => ForgotPasswordPage(),
-          '/create_circle': (context) => CommunityForm()
+          '/create_circle': (context) => CommunityForm(),
+          '/settings': (context) => SettingsPage(),
         },
         debugShowCheckedModeBanner:
             false, // Set debugShowCheckedModeBanner to false

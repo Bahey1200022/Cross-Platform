@@ -24,11 +24,12 @@ class HomescreenController {
         // Map the community data to Community objects
         List<Community> fetchedCommunities = jsonData.map((communityData) {
           return Community(
-            id: communityData['id'],
-            name: communityData['name'],
-            description: communityData['description'],
-            image: communityData['image'],
-          );
+              id: communityData['id'],
+              name: communityData['name'],
+              description: communityData['description'],
+              image: communityData['image'],
+              is18Plus: communityData['is18Plus'],
+              type: communityData['type']);
         }).toList();
 
         return fetchedCommunities; // Return the fetched communities list

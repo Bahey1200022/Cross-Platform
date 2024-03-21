@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sarakel/features/search_bar/search_screen.dart';
 import 'package:sarakel/providers/user_provider.dart';
 
 import '../../../models/user.dart';
@@ -34,7 +35,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              print('Search clicked');
+              showSearch(context: context, delegate: sarakelSearch());
             },
           ),
           IconButton(
