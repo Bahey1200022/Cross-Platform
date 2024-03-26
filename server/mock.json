@@ -61,11 +61,18 @@
       "password": "1234567890",
       "token": "true",
       "username": "u/killer"
+    },
+    {
+      "id": "0d4f",
+      "email": "hafez@gmail.com",
+      "password": "12345678",
+      "token": "true",
+      "username": "u/hafez"
     }
   ],
   "posts": [
     {
-      "communityName": "flutter",
+      "communityName": "c/flutter",
       "duration": "4h",
       "upVotes": 120,
       "downVotes": 10,
@@ -78,7 +85,7 @@
       "imagePath": "assets/flutter.jpeg"
     },
     {
-      "communityName": "dart",
+      "communityName": "c/dart",
       "duration": "23h",
       "upVotes": 75,
       "downVotes": 5,
@@ -91,7 +98,7 @@
       "imagePath": null
     },
     {
-      "communityName": "Football",
+      "communityName": "c/Football",
       "duration": "2d",
       "upVotes": 200,
       "downVotes": 20,
@@ -104,7 +111,7 @@
       "imagePath": "assets/Liverpool_FC.jpg"
     },
     {
-      "communityName": "ios",
+      "communityName": "c/ios",
       "duration": "1d",
       "upVotes": 150,
       "downVotes": 15,
@@ -126,7 +133,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "batman",
+      "communityName": "c/batman",
       "imagePath": "assets/batman.jpeg"
     },
     {
@@ -139,7 +146,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "miami heat",
+      "communityName": "c/miami heat",
       "imagePath": null
     },
     {
@@ -152,7 +159,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "BeFit",
+      "communityName": "c/BeFit",
       "imagePath": "assets/gym.jpg"
     },
     {
@@ -166,6 +173,18 @@
       "downvotes": 1,
       "comments": "0",
       "communityName": "c/demoooo"
+    },
+    {
+      "id": "e62c",
+      "title": "hi",
+      "content": "hi",
+      "communityId": "demo2",
+      "duration": "0",
+      "upVotes": 0,
+      "shares": "0",
+      "downvotes": 0,
+      "comments": "0",
+      "communityName": "c/demo2"
     }
   ]
 }

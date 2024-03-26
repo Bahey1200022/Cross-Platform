@@ -78,7 +78,7 @@ class _PostCardState extends State<PostCard> {
               children: [
                 Expanded(
                   child: Text(
-                    'r/${widget.post.communityName} ${widget.post.duration != null ? '• ${widget.post.duration}' : ''}',
+                    '${widget.post.communityName} ${widget.post.duration != null ? '• ${widget.post.duration}' : ''}',
                     style: TextStyle(fontSize: 16),
                     overflow: TextOverflow.ellipsis,
                   ),
