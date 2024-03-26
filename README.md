@@ -8,3 +8,4 @@ flutter run
 enter with an email and pass from the mock.json or sign up and create your username
 
 tests in the test folder 
+documentation in doc folder
