@@ -18,69 +18,81 @@ class WelcomePage extends StatelessWidget {
               style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16.0),
-            Center(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.email),
                   SizedBox(width: 8.0),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
-                    },
-                    child: Text(
-                      'Continue with email',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 244, 236, 236),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signup');
+                      },
+                      child: Text(
+                        'Continue with email',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 244, 236, 236),
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            Center(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset('assets/google_logo.png', height: 24.0),
                   SizedBox(width: 8.0),
-                  TextButton(
-                    onPressed: () {
-                      // Handle continue with Google
-                    },
-                    child: Text(
-                      'Continue with Google',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 244, 236, 236),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: TextButton(
+                      onPressed: () {
+                        // Handle continue with Google
+                      },
+                      child: Text(
+                        'Continue with Google',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 244, 236, 236),
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            Center(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/facebook_logo.png', height: 24.0),
+                  Icon(Icons.facebook,color: Colors.blue,),
                   SizedBox(width: 8.0),
-                  TextButton(
-                    onPressed: () {
-                      // Handle continue with Facebook
-                    },
-                    child: Text(
-                      'Continue with Facebook',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 244, 236, 236),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: TextButton(
+                      onPressed: () {
+                        // Handle continue with Facebook
+                      },
+                      child: Text(
+                        'Continue with Facebook',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 244, 236, 236),
+                        ),
                       ),
                     ),
                   ),
