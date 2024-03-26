@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:async';
 
-import 'package:sarakel/controllers/home_screen_controller.dart';
-
-import '../../drawers/community_list.dart';
-import '../../drawers/profile_drawer.dart';
+import '../drawers/community_list.dart';
+import '../drawers/profile_drawer.dart';
 import '../../models/community.dart';
 import '../../models/user.dart';
 import '../../providers/user_communities.dart';
 import '../../providers/user_provider.dart';
-import 'widgets/app_bar.dart';
-import 'widgets/bottom_bar.dart';
+import '../profiles/communityprofile_page.dart';
+import '../home/widgets/app_bar.dart';
+import '../home/widgets/bottom_bar.dart';
 
 class ExploreCommunities extends StatefulWidget {
   const ExploreCommunities({Key? key});
@@ -81,6 +79,13 @@ class _MyHomePageState extends State<ExploreCommunities> {
                           color: Colors.white), // Set the text color to white
                     ),
                   ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) {
+                        return CommunityProfilePage(community: item);
+                      }),
+                    );
+                  },
                 ),
               ),
               SizedBox(height: 5), // Add spacing between each card

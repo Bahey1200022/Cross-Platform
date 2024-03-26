@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:sarakel/features/create_circle/create_circle.dart';
 import 'package:sarakel/providers/user_communities.dart';
 import 'package:sarakel/providers/user_provider.dart';
-import 'package:sarakel/screens/feed/chat_page.dart';
-import 'package:sarakel/screens/feed/inbox_page.dart';
-import './screens/entry/login_page.dart';
-import './screens/entry/signup_page.dart';
-import './screens/entry/username_page.dart';
-import './screens/entry/welcome_page.dart';
-import './screens/feed/homescreen.dart';
-import './screens/feed/create_post.dart';
-import './screens/feed/explore_communities.dart';
+import 'package:sarakel/Widgets/chatting/chat_page.dart';
+import 'package:sarakel/Widgets/inbox/inbox_page.dart';
+import 'Widgets/entry/login_page.dart';
+import 'Widgets/entry/signup_page.dart';
+import 'Widgets/entry/welcome_page.dart';
+import 'Widgets/home/homescreen.dart';
+import 'Widgets/home/create_post.dart';
+import 'Widgets/explore_communities/explore_communities.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'screens/entry/forgot_password.dart';
-import 'screens/settings/settings_page.dart';
-import 'screens/user/user_profile.dart';
+import 'Widgets/entry/forgot_password.dart';
+import 'Widgets/settings/settings_page.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -29,9 +25,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+        ChangeNotifierProvider<UserProvider>(
+            create: (_) => UserProvider()), //for mock api
         ChangeNotifierProvider<UserCommunitiesProvider>(
-            create: (_) => UserCommunitiesProvider())
+            create: (_) =>
+                UserCommunitiesProvider()) // Add UserCommunitiesProvider
       ],
       child: MaterialApp(
         title: 'Sarakel',

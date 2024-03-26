@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sarakel/screens/user/user_profile.dart';
+import 'package:sarakel/Widgets/profiles/user_profile.dart';
 
-import '../models/user.dart';
-import '../providers/user_provider.dart';
+import '../../models/user.dart';
+import '../../providers/user_provider.dart';
 
+///consumer widget to nosume user data
 class ProfileDrawer extends StatelessWidget {
   final User? user;
 

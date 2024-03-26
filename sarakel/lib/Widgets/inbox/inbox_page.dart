@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../controllers/home_screen_controller.dart';
-import '../../drawers/community_list.dart';
-import '../../drawers/profile_drawer.dart';
+import '../drawers/community_list.dart';
+import '../drawers/profile_drawer.dart';
 import '../../models/user.dart';
 import '../../providers/user_provider.dart';
-import '../feed/widgets/bottom_bar.dart';
-import 'widgets/app_bar.dart';
+import '../home/widgets/bottom_bar.dart';
+import '../home/widgets/app_bar.dart';
 
 class InboxSection extends StatefulWidget {
   @override

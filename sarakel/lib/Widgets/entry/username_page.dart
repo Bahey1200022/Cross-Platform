@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:sarakel/controllers/user_entry_controller.dart';
+import 'package:sarakel/Widgets/entry/controllers/user_entry_controller.dart';
 
 class UsernamePage extends StatefulWidget {
   final UserController userController;
