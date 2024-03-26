@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sarakel/controllers/user_entry_controller.dart';
-import 'package:sarakel/models/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:sarakel/Widgets/entry/controllers/user_entry_controller.dart';
+
 import '../../providers/user_provider.dart';
 
 class LoginPage extends StatefulWidget {

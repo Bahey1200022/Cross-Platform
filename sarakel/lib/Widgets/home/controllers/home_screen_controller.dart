@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sarakel/models/user.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/community.dart';
-import '../models/post.dart';
-import '../providers/user_communities.dart';
+import '../../../models/community.dart';
+import '../../../models/post.dart';
+import '../../../providers/user_communities.dart';
 
 class HomescreenController {
   Future<List<Community>> loadCommunities() async {
@@ -66,11 +65,12 @@ class HomescreenController {
           return Post(
             communityName: p['communityName'],
             duration: p['duration'],
-            upVotes: p['upVotes'],
-            downVotes: p['downVotes'],
+            upVotes: p['upVotes'] ?? 0, // Provide a default value if null
+            downVotes: p['downVotes'] ?? 0, // Provide a default value if null
             comments: p['comments'],
             shares: p['shares'],
             content: p['content'],
+            imagePath: p['imagePath'],
             communityId: p['communityId'],
             title: p['title'],
           );

@@ -18,9 +18,9 @@ class AddPostController {
           'content': body,
           'communityId': communityId,
           'duration': "0",
-          'upVotes': '0',
+          'upVotes': 0,
           'shares': '0',
-          'downvotes': '0',
+          'downvotes': 0,
           'comments': "0",
           'communityName': communityName
         };

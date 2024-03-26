@@ -1,16 +1,11 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:sarakel/providers/user_communities.dart';
 import '../../models/community.dart';
-import '../../controllers/add_post_controller.dart';
-import '../../models/post.dart';
-import '../../controllers/add_post_controller.dart';
+import 'controllers/add_post_controller.dart';
 
 class CreatePost extends StatefulWidget {
   @override

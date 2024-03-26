@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sarakel/models/user.dart';
-import '../../drawers/community_list.dart';
-import '../../drawers/profile_drawer.dart';
-import '../../models/post.dart';
+import '../drawers/community_list.dart';
+import '../drawers/profile_drawer.dart';
 import '../../providers/user_provider.dart';
-import 'widgets/app_bar.dart';
-import 'widgets/bottom_bar.dart';
+import '../home/widgets/app_bar.dart';
+import '../home/widgets/bottom_bar.dart';
 
 class ChatSection extends StatefulWidget {
   @override

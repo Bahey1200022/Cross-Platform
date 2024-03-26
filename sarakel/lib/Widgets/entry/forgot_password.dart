@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
-  TextEditingController emailOrUsernameController = TextEditingController();
+  final TextEditingController emailOrUsernameController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {

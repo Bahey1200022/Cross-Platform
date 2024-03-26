@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sarakel/controllers/user_entry_controller.dart';
+import 'package:sarakel/Widgets/entry/controllers/user_entry_controller.dart';
 import 'username_page.dart';
 
 class SignupPage extends StatelessWidget {

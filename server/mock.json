@@ -23,12 +23,17 @@
       "is18Plus": false,
       "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
       "description": "new circle"
+    },
+    {
+      "id": "heloooo",
+      "name": "c/heloooo",
+      "type": "Public",
+      "is18Plus": false,
+      "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
+      "description": "new circle"
     }
   ],
   "users": [
-   
-    
-  
     {
       "id": "f432",
       "email": "b@gmail.com",
@@ -62,62 +67,67 @@
     {
       "communityName": "flutter",
       "duration": "4h",
-      "upVotes": "120",
-      "downVotes": "10",
+      "upVotes": 120,
+      "downVotes": 10,
       "comments": "30",
       "title": "hi",
       "shares": "15",
       "content": "Did you check out the brand new feature!!!!",
       "communityId": "1",
-      "id": "cbc3"
+      "id": "cbc3",
+      "imagePath": "assets/flutter.jpeg"
     },
     {
       "communityName": "dart",
       "duration": "23h",
-      "upVotes": "75",
-      "downVotes": "5",
+      "upVotes": 75,
+      "downVotes": 5,
       "comments": "10",
       "title": "hi",
       "shares": "5",
       "content": "Dart 2.12 brings sound null safety, improving your codes reliability and performance.",
       "communityId": "2",
-      "id": "ab84"
+      "id": "ab84",
+      "imagePath": null
     },
     {
-      "communityName": "android",
+      "communityName": "Football",
       "duration": "2d",
-      "upVotes": "200",
-      "downVotes": "20",
+      "upVotes": 200,
+      "downVotes": 20,
       "comments": "50",
-      "title": "hi",
+      "title": "Liverpool",
       "shares": "25",
-      "content": "Exploring the new Android 12 features.",
+      "content": "Liverpool is the best team in England.",
       "communityId": "3",
-      "id": "38e7"
+      "id": "38e7",
+      "imagePath": "assets/Liverpool_FC.jpg"
     },
     {
       "communityName": "ios",
       "duration": "1d",
-      "upVotes": "150",
-      "downVotes": "15",
+      "upVotes": 150,
+      "downVotes": 15,
       "comments": "40",
       "title": "hi",
       "shares": "20",
       "content": "What's new in iOS 15? Let's dive in.",
       "communityId": "4",
-      "id": "82ca"
+      "id": "82ca",
+      "imagePath": "assets/apple.jpg"
     },
     {
       "id": "b2c0",
-      "title": "dd",
-      "content": "hi",
+      "title": "The Dark Knight",
+      "content": "The Dark Knight is a 2008 superhero film directed, produced, and co-written by Christopher Nolan.",
       "communityId": "5",
       "duration": "0",
-      "upVotes": "0",
+      "upVotes": 1,
       "shares": "0",
-      "downvotes": "0",
+      "downvotes": 1,
       "comments": "0",
-      "communityName": "batman"
+      "communityName": "batman",
+      "imagePath": "assets/batman.jpeg"
     },
     {
       "id": "0578",
@@ -125,23 +135,37 @@
       "content": "HELIIIIIIIIII",
       "communityId": "1",
       "duration": "0",
-      "upVotes": "0",
+      "upVotes": 1,
       "shares": "0",
-      "downvotes": "0",
+      "downvotes": 1,
       "comments": "0",
-      "communityName": "miami heat"
+      "communityName": "miami heat",
+      "imagePath": null
     },
     {
       "id": "7087",
-      "title": "i want to diee",
-      "content": "life sucks",
-      "communityId": "yalahwi",
+      "title": "Gym",
+      "content": "Gym is good for health, everyone should go to the gym. You can go to the gym to lose weight, gain muscle, or just to improve your overall health.",
+      "communityId": "goTrain",
       "duration": "0",
-      "upVotes": "0",
+      "upVotes": 1,
       "shares": "0",
-      "downvotes": "0",
+      "downvotes": 1,
       "comments": "0",
-      "communityName": "c/yalahwi"
+      "communityName": "BeFit",
+      "imagePath": "assets/gym.jpg"
+    },
+    {
+      "id": "a110",
+      "title": "dmkdk",
+      "content": "dmdkkd",
+      "communityId": "demoooo",
+      "duration": "0",
+      "upVotes": 1,
+      "shares": "0",
+      "downvotes": 1,
+      "comments": "0",
+      "communityName": "c/demoooo"
     }
   ]
 }

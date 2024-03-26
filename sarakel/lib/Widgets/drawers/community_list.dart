@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sarakel/features/create_circle/create_circle.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:sarakel/providers/user_communities.dart';
 import 'package:provider/provider.dart' as provider;
+import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 
+///////drawer of communities
 class CommunityDrawer extends ConsumerWidget {
   CommunityDrawer({super.key});
 
@@ -28,10 +29,16 @@ class CommunityDrawer extends ConsumerWidget {
               child: ListView.builder(
                 itemCount: fetchedCommunities.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final community = fetchedCommunities?[index];
+                  final community = fetchedCommunities[index];
                   return ListTile(
-                    title: Text('${community?.name}'),
-                    onTap: () {},
+                    title: Text('${community.name}'),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) {
+                          return CommunityProfilePage(community: community);
+                        }),
+                      );
+                    },
                   );
                 },
               ),

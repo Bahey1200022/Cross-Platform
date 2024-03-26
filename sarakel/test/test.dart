@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sarakel/screens/entry/signup_page.dart';
-import 'package:sarakel/screens/entry/welcome_page.dart'; // Add missing import statement for 'flutter/material.dart'
+import 'package:sarakel/Widgets/entry/signup_page.dart';
+import 'package:sarakel/Widgets/entry/welcome_page.dart'; // Add missing import statement for 'flutter/material.dart'
 import 'package:sarakel/main.dart';
 
 void main() {

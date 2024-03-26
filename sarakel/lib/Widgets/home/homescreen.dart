@@ -2,15 +2,15 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sarakel/drawers/community_list.dart';
+import 'package:sarakel/Widgets/drawers/community_list.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:sarakel/providers/user_provider.dart';
-import '../../drawers/profile_drawer.dart';
+import '../drawers/profile_drawer.dart';
 import '../../models/post.dart';
-import '../../controllers/home_screen_controller.dart';
-import '../feed/widgets/post_card.dart';
-import '../feed/widgets/bottom_bar.dart';
+import 'controllers/home_screen_controller.dart';
+import 'widgets/post_card.dart';
+import 'widgets/bottom_bar.dart';
 
 class SarakelHomeScreen extends StatefulWidget {
   @override
@@ -22,58 +22,12 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
   String _selectedPage = 'Home';
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
-  final List<Post> _homePosts = [
-    Post(
-        communityName: 'flutter',
-        duration: '4h',
-        upVotes: '120',
-        comments: '30',
-        title: 'hi',
-        shares: '15',
-        content: 'Did you check out the brand new feature!!!!',
-        communityId: '1'),
-    Post(
-        communityName: 'dart',
-        duration: '23h',
-        upVotes: '75',
-        title: 'hi',
-        comments: '12',
-        shares: '5',
-        content:
-            'Dart 2.12 brings sound null safety, improving your codes reliability and performance.',
-        communityId: '2'),
-    // Add more posts here
-  ];
-  final List<Post> _popularPosts = [
-    Post(
-        communityName: 'android',
-        duration: '2d',
-        upVotes: '200',
-        comments: '50',
-        title: 'hi',
-        shares: '25',
-        content: 'Exploring the new Android 12 features.',
-        communityId: '3'),
-    Post(
-        communityName: 'ios',
-        duration: '1d',
-        upVotes: '150',
-        comments: '40',
-        title: 'hi',
-        shares: '20',
-        content: 'What\'s new in iOS 15? Let\'s dive in.',
-        communityId: '4'),
-    // Add more "Popular" posts here
-  ];
-
   @override
   Widget build(BuildContext context) {
     HomescreenController homescreenController = HomescreenController();
     User? user = Provider.of<UserProvider>(context).user;
     homescreenController.fetchAndSetCommunities(context);
 
-    final List<Post> _postsToShow =
-        _selectedPage == 'Home' ? _homePosts : _popularPosts;
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -149,7 +103,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
             return ListView.builder(
               itemCount: postsToShow.length,
               itemBuilder: (context, index) =>
-                  buildPostCard(postsToShow[index]),
+                  PostCard(post: postsToShow[index]), // Corrected line
             );
           } else {
             return const Center(child: Text('No posts found'));
