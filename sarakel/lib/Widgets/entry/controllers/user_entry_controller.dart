@@ -20,7 +20,7 @@ class UserController {
 
   Future<bool> userExists(String email, String password) async {
     final response =
-        await http.get(Uri.parse('http://192.168.1.17:3000/users'));
+        await http.get(Uri.parse('http://192.168.34.134:3000/users'));
 
     if (response.statusCode == 200) {
       // Decode the response body from JSON
@@ -43,7 +43,7 @@ class UserController {
 
   Future<bool> usernameExists(String username) async {
     final response =
-        await http.get(Uri.parse('http://192.168.1.17:3000/users'));
+        await http.get(Uri.parse('http://192.168.34.134:3000/users'));
 
     if (response.statusCode == 200) {
       // Decode the response body from JSON
@@ -68,7 +68,7 @@ class UserController {
       "token": "true",
       "username": usernameScreen
     };
-    var url = Uri.parse('http://192.168.1.17:3000/users');
+    var url = Uri.parse('http://192.168.34.134:3000/users');
 
     try {
       var response = await http.post(
