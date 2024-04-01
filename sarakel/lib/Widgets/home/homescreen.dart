@@ -13,6 +13,10 @@ import 'widgets/post_card.dart';
 import 'widgets/bottom_bar.dart';
 
 class SarakelHomeScreen extends StatefulWidget {
+  HomescreenController homescreenController;
+
+  SarakelHomeScreen({required this.homescreenController, super.key});
+
   @override
   State<SarakelHomeScreen> createState() => _SarakelHomeScreenState();
 }
@@ -24,9 +28,8 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    HomescreenController homescreenController = HomescreenController();
     User? user = Provider.of<UserProvider>(context).user;
-    homescreenController.fetchAndSetCommunities(context);
+    widget.homescreenController.fetchAndSetCommunities(context);
 
     return Scaffold(
       key: scaffoldKey,
@@ -91,7 +94,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         user: user,
       ),
       body: FutureBuilder<List<Post>>(
-        future: homescreenController.loadPosts(),
+        future: widget.homescreenController.loadPosts(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

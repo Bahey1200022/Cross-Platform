@@ -60,18 +60,18 @@ class _UsernamePageState extends State<UsernamePage> {
                         onChanged: (value) async {
                           value = value.trim();
                           String formattedUsername = "u/$value";
+                          bool usernameExists = await widget.userController
+                              .usernameExists(formattedUsername);
+                          print(usernameExists);
 
-                          if (await widget.userController
-                              .usernameExists(formattedUsername)) {
-                            setState(() {
+                          setState(() {
+                            if (usernameExists) {
                               _errorText =
                                   'user with the name "$value" already exists. Please choose a different name.';
-                            });
-                          } else {
-                            setState(() {
-                              _errorText = '';
-                            });
-                          }
+                            } else if (value.isEmpty || value.length < 3) {
+                              _errorText = 'please enter a valid username';
+                            }
+                          });
                         },
                         decoration: InputDecoration(
                           labelText: 'Username',
@@ -81,18 +81,18 @@ class _UsernamePageState extends State<UsernamePage> {
                         ),
                       ),
                     ),
-                    if (_errorText
-                        .isNotEmpty) // Only show error message if there's an error
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Text(
-                          _errorText,
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12.0,
-                          ),
+                    // if (_errorText
+                    //     .isNotEmpty) // Only show error message if there's an error
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text(
+                        _errorText,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12.0,
                         ),
                       ),
+                    ),
                     SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () async {

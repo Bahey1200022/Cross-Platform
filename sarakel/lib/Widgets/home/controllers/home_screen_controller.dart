@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +10,14 @@ import '../../../models/post.dart';
 import '../../../providers/user_communities.dart';
 
 class HomescreenController {
+  final token; // Initialize the token variable with an empty string or provide an appropriate value
+  HomescreenController({required this.token});
+
+  String getEmail() {
+    Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(token);
+    return jwtdecodedtoken['email'];
+  }
+
   Future<List<Community>> loadCommunities() async {
     try {
       // Make a GET request to fetch the JSON data from the server

@@ -1,13 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../home/controllers/home_screen_controller.dart';
 
 class UserController {
   String? usernameScreen;
   String emailScreen;
   String passwordScreen;
+  SharedPreferences? prefs;
   UserController(
       {this.usernameScreen,
       required this.emailScreen,
@@ -42,22 +47,13 @@ class UserController {
   }
 
   Future<bool> usernameExists(String username) async {
-    final response =
-        await http.get(Uri.parse('http://192.168.34.134:3000/users'));
+    final response = await http
+        .get(Uri.parse('http://192.168.34.134:3000/users?username=$username'));
 
     if (response.statusCode == 200) {
-      // Decode the response body from JSON
-      final dynamic users = json.decode(response.body);
-      // Iterate through the list of users
-      for (var user in users) {
-        // Check if the provided username matches any existing username
-        if (user['username'] == username) {
-          return true; // Username exists
-        }
-      }
-      return false; // Username doesn't exist
+      return jsonDecode(response.body).isNotEmpty;
     } else {
-      throw Exception('Failed to load user data');
+      return false;
     }
   }
 
@@ -86,6 +82,36 @@ class UserController {
     } catch (e) {
       // Handle network errors
       print('Error: $e');
+    }
+  }
+
+  void loginUser(BuildContext context) async {
+    var data = {
+      "email": emailScreen,
+      "password": passwordScreen,
+      "token": "true",
+      "username": usernameScreen
+    };
+    var response = await http.post(
+      Uri.parse('http://192.168.34.134:3000/users'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(data),
+    );
+
+    var jsonData = json.decode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      prefs = await SharedPreferences.getInstance();
+      var token = jsonData['token'];
+      prefs!.setString('token', token);
+      print(jsonData);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SarakelHomeScreen(
+                  homescreenController: HomescreenController(token: token))));
+    } else {
+      print(response.statusCode);
     }
   }
 }
