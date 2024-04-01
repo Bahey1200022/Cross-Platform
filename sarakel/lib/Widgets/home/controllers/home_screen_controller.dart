@@ -10,7 +10,7 @@ import '../../../models/post.dart';
 import '../../../providers/user_communities.dart';
 
 class HomescreenController {
-  final token; // Initialize the token variable with an empty string or provide an appropriate value
+  final token; //
   HomescreenController({required this.token});
 
   String getEmail() {
