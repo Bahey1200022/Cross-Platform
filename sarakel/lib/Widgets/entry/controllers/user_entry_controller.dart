@@ -20,29 +20,6 @@ class UserController {
       required this.emailScreen,
       required this.passwordScreen});
 
-  Future<bool> userExists(String email, String password) async {
-    final response =
-        await http.get(Uri.parse('http://192.168.34.134:3000/users'));
-
-    if (response.statusCode == 200) {
-      // Decode the response body from JSON
-      final dynamic users = json.decode(response.body);
-      // Iterate through the list of users
-      for (var user in users) {
-        // Check if the provided username matches any existing username
-        if (user['email'] == email && user['password'] == password) {
-          usernameScreen = user['username'];
-          emailScreen = user['email'];
-          passwordScreen = user['password'];
-          return true; // Username exists
-        }
-      }
-      return false; // Username doesn't exist
-    } else {
-      throw Exception('Failed to load user data');
-    }
-  }
-
   Future<bool> usernameExists(String username) async {
     final response = await http
         .get(Uri.parse('http://192.168.34.134:3000/users?username=$username'));
@@ -82,6 +59,7 @@ class UserController {
     }
   }
 
+  ///loginUser function post req to /login endpoint
   Future<bool> loginUser(
       BuildContext context, String email, String password) async {
     var data = {"username": email, "password": password};
