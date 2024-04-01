@@ -100,23 +100,23 @@ class _UsernamePageState extends State<UsernamePage> {
                         String formattedUsername = "u/$username";
                         if (await widget.userController
                             .usernameExists(formattedUsername)) {
-                          // showDialog(
-                          //   context: context,
-                          //   builder: (BuildContext context) {
-                          //     return AlertDialog(
-                          //       title: Text('Error'),
-                          //       content: Text('Username already taken'),
-                          //       actions: [
-                          //         TextButton(
-                          //           onPressed: () {
-                          //             Navigator.of(context).pop();
-                          //           },
-                          //           child: Text('OK'),
-                          //         ),
-                          //       ],
-                          //     );
-                          //   },
-                          // );
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Error'),
+                                content: Text('Username already taken'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         } else {
                           widget.userController.usernameScreen =
                               formattedUsername;
