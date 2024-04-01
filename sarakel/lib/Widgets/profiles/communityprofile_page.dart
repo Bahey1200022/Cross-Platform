@@ -66,7 +66,7 @@ class CommunityProfilePage extends StatelessWidget {
                     Text(
                       '100 members, 10 online',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 12,
                         color: Colors.grey,
                       ),
                     ),
@@ -81,7 +81,7 @@ class CommunityProfilePage extends StatelessWidget {
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: EdgeInsets.symmetric(horizontal: 7, vertical: 7),
                   ),
                 ),
               ],

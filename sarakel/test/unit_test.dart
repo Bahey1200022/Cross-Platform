@@ -7,7 +7,7 @@ void main() {
   test('Test API call for communities', () async {
     // Make the API call
     var response =
-        await http.get(Uri.parse('http://192.168.1.17:3000/communities'));
+        await http.get(Uri.parse('http://192.168.34.134:3000/communities'));
 
     // Verify the response status code
     expect(response.statusCode, 200);
@@ -19,7 +19,8 @@ void main() {
 
   test('Test API call for user', () async {
     // Make the API call
-    var response = await http.get(Uri.parse('http://192.168.1.17:3000/users'));
+    var response =
+        await http.get(Uri.parse('http://192.168.34.134:3000/users'));
 
     // Verify the response status code
     expect(response.statusCode, 200);
@@ -31,7 +32,8 @@ void main() {
 
   test('Test API call for posts', () async {
     // Make the API call
-    var response = await http.get(Uri.parse('http://192.168.1.17:3000/posts'));
+    var response =
+        await http.get(Uri.parse('http://192.168.34.134:3000/posts'));
 
     // Verify the response status code
     expect(response.statusCode, 200);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sarakel/Widgets/entry/controllers/user_entry_controller.dart';
+import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
 
 import '../../providers/user_provider.dart';
 
@@ -196,6 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                           userProvider
                               .setUser(oldUserController.setStateUser());
                           Navigator.pushNamed(context, '/home');
+                          //oldUserController.loginUser(context);
                         } else {
                           showDialog(
                             context: context,

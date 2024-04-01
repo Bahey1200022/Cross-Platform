@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/create_circle/create_circle.dart';
+import 'package:sarakel/features/create_post/create_post.dart';
 import 'package:sarakel/providers/user_communities.dart';
 import 'package:sarakel/providers/user_provider.dart';
 import 'package:sarakel/Widgets/chatting/chat_page.dart';
@@ -7,8 +8,6 @@ import 'package:sarakel/Widgets/inbox/inbox_page.dart';
 import 'Widgets/entry/login_page.dart';
 import 'Widgets/entry/signup_page.dart';
 import 'Widgets/entry/welcome_page.dart';
-import 'Widgets/home/homescreen.dart';
-import 'Widgets/home/create_post.dart';
 import 'Widgets/explore_communities/explore_communities.dart';
 import 'package:provider/provider.dart';
 import 'Widgets/entry/forgot_password.dart';
@@ -42,7 +41,6 @@ class MyApp extends StatelessWidget {
           '/welcome': (context) => WelcomePage(),
           '/login': (context) => LoginPage(),
           '/signup': (context) => SignupPage(),
-          '/home': (context) => SarakelHomeScreen(),
           '/create_post': (context) => CreatePost(),
           '/communities': (context) => ExploreCommunities(),
           '/chat': (context) => ChatSection(),
@@ -57,14 +55,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// Future<bool> _getHomescreenFromCache() async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   bool? homescreen = prefs.getBool('homescreen');
-//   if (homescreen == null) {
-//     // Perform one-time initialization if homescreen value is not stored
-//     await prefs.setBool('homescreen', false); // Initialize homescreen as false
-//     return false; // Return false as initial value
-//   }
-//   return false; // Return stored homescreen value
-// }
