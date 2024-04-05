@@ -12,7 +12,13 @@ class ProfileDrawer extends StatelessWidget {
   const ProfileDrawer({
     this.user,
   });
-
+//  UserProvider userProvider =
+  //         Provider.of<UserProvider>(context, listen: false);
+  //     userProvider.setUser(User(
+  //         email: email,
+  //         password: password,
+  //         username: usernameScreen,
+  //         token: token));
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(

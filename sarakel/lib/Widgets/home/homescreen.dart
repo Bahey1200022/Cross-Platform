@@ -1,21 +1,18 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sarakel/Widgets/drawers/community_list.dart';
+import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
-import 'package:sarakel/models/user.dart';
-import 'package:sarakel/providers/user_provider.dart';
-import '../drawers/profile_drawer.dart';
 import '../../models/post.dart';
 import 'controllers/home_screen_controller.dart';
 import 'widgets/post_card.dart';
 import 'widgets/bottom_bar.dart';
 
 class SarakelHomeScreen extends StatefulWidget {
-  HomescreenController homescreenController;
+  final HomescreenController homescreenController;
 
-  SarakelHomeScreen({required this.homescreenController, super.key});
+  const SarakelHomeScreen({required this.homescreenController, super.key});
 
   @override
   State<SarakelHomeScreen> createState() => _SarakelHomeScreenState();
@@ -28,8 +25,9 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    User? user = Provider.of<UserProvider>(context).user;
-    widget.homescreenController.fetchAndSetCommunities(context);
+    //User? user = Provider.of<UserProvider>(context).user;
+    String email = widget.homescreenController.getusername();
+    print(email);
 
     return Scaffold(
       key: scaffoldKey,
@@ -90,8 +88,8 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
       ),
       drawer: CommunityDrawer(),
       endDrawer: ProfileDrawer(
-        // Add end drawer
-        user: user,
+        // Add end drawer ////to be fixed
+        user: widget.homescreenController.getUser(),
       ),
       body: FutureBuilder<List<Post>>(
         future: widget.homescreenController.loadPosts(),

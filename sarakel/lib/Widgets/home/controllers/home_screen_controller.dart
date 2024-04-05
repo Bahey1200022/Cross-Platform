@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:sarakel/models/user.dart';
 
 import '../../../models/community.dart';
 import '../../../models/post.dart';
@@ -13,9 +14,20 @@ class HomescreenController {
   final token; //
   HomescreenController({required this.token});
 
-  String getEmail() {
+  String getusername() {
     Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(token);
-    return jwtdecodedtoken['email'];
+    return jwtdecodedtoken['username'];
+  }
+
+  User getUser() {
+    Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(token);
+
+    return User(
+      email: 'email',
+      username: jwtdecodedtoken['username'],
+      password: 'hi',
+      token: token,
+    );
   }
 
   Future<List<Community>> loadCommunities() async {
