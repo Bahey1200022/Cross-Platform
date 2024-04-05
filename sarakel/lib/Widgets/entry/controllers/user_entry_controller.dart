@@ -1,13 +1,10 @@
 import 'dart:convert';
-
+import 'package:sarakel/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../models/user.dart';
-import '../../../providers/user_provider.dart';
 import '../../home/controllers/home_screen_controller.dart';
 
 class UserController {
@@ -62,15 +59,13 @@ class UserController {
   ///loginUser function post req to /login endpoint
   Future<bool> loginUser(
       BuildContext context, String email, String password) async {
-    var data = {"username": email, "password": password};
-    print(data);
+    var data = {"emailOrUsername": email, "password": password};
     try {
       var response = await http.post(
-        Uri.parse('http://localhost:5000/login'),
+        Uri.parse('$BASE_URL/login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(data),
       );
-      print(response.statusCode);
       var jsonData = json.decode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -78,13 +73,6 @@ class UserController {
         var token = jsonData['token'];
         print(jsonData);
 
-        UserProvider userProvider =
-            Provider.of<UserProvider>(context, listen: false);
-        userProvider.setUser(User(
-            email: email,
-            password: password,
-            username: usernameScreen,
-            token: token));
         prefs!.setString('token', token);
         print(jsonData);
 
