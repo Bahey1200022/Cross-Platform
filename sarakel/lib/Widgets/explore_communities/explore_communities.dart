@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
 import '../drawers/community_list.dart';
@@ -12,7 +13,9 @@ import '../home/widgets/app_bar.dart';
 import '../home/widgets/bottom_bar.dart';
 
 class ExploreCommunities extends StatefulWidget {
-  const ExploreCommunities({Key? key});
+  final token;
+
+  const ExploreCommunities({required this.token});
   @override
   State<ExploreCommunities> createState() => _MyHomePageState();
 }
@@ -23,7 +26,7 @@ class _MyHomePageState extends State<ExploreCommunities> {
 
   @override
   Widget build(BuildContext context) {
-    User? user = Provider.of<UserProvider>(context).user;
+    Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(widget.token);
 
     List<Community> fetchedCommunities =
         Provider.of<UserCommunitiesProvider>(context, listen: false)
@@ -37,7 +40,7 @@ class _MyHomePageState extends State<ExploreCommunities> {
       ),
       drawer: CommunityDrawer(),
       endDrawer: ProfileDrawer(
-        user: user,
+        user: User(username: jwtdecodedtoken['username']),
       ),
       body: ListView.builder(
         itemCount: fetchedCommunities.length,

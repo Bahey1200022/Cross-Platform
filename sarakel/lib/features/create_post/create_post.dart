@@ -8,6 +8,10 @@ import '../../models/community.dart';
 import 'add_post_controller.dart';
 
 class CreatePost extends StatefulWidget {
+  final token;
+
+  const CreatePost({required this.token}); //
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
