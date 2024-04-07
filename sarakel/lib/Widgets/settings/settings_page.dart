@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/models/user.dart';
 
-import '../../providers/user_provider.dart';
-
 class SettingsPage extends StatefulWidget {
+  final token;
+
+  const SettingsPage({required this.token});
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -14,7 +16,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    User? user = Provider.of<UserProvider>(context, listen: false).user;
+    Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(widget.token);
 
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         children: [
           ListTile(
-            title: Text('Account Settings for ${user!.username!}'),
+            title: Text('Account Settings for ${jwtdecodedtoken['username']}'),
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(

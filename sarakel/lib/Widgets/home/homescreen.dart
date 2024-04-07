@@ -1,13 +1,16 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sarakel/Widgets/drawers/community_list.dart';
 import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
 import '../../models/post.dart';
+import '../../providers/user_provider.dart';
 import 'controllers/home_screen_controller.dart';
 import 'widgets/post_card.dart';
 import 'widgets/bottom_bar.dart';
+import '../../models/user.dart';
 
 class SarakelHomeScreen extends StatefulWidget {
   final HomescreenController homescreenController;
@@ -26,8 +29,6 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
   @override
   Widget build(BuildContext context) {
     //User? user = Provider.of<UserProvider>(context).user;
-    String email = widget.homescreenController.getusername();
-    print(email);
 
     return Scaffold(
       key: scaffoldKey,

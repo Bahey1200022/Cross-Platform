@@ -5,6 +5,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/models/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/community.dart';
 import '../../../models/post.dart';
@@ -20,14 +21,15 @@ class HomescreenController {
   }
 
   User getUser() {
-    Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(token);
-
+    saveUsername(getusername());
     return User(
-      email: 'email',
-      username: jwtdecodedtoken['username'],
-      password: 'hi',
-      token: token,
+      username: getusername(),
     );
+  }
+
+  Future<void> saveUsername(String username) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('username', username);
   }
 
   Future<List<Community>> loadCommunities() async {

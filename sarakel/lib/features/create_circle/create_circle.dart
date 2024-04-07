@@ -10,6 +10,10 @@ class CommunityType {
 }
 
 class CommunityForm extends StatefulWidget {
+  final token;
+
+  const CommunityForm({required this.token});
+
   @override
   _CommunityFormState createState() => _CommunityFormState();
 }
