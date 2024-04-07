@@ -5,7 +5,7 @@ bool _validateEmail(String email) {
   // Regular expression for email validation
   RegExp emailRegex =
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-  return emailRegex.hasMatch(email);
+  return emailRegex.hasMatch(email) || email.startsWith('u/');
 }
 
 bool _validatePassword(String password) {
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
-                          labelText: 'Email',
+                          labelText: 'Email or username',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(16.0),
                         ),
@@ -186,7 +186,8 @@ class _LoginPageState extends State<LoginPage> {
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   title: Text('Error'),
-                                  content: Text('Incorrect email or password'),
+                                  content: Text(
+                                      'Incorrect username,email or password'),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
