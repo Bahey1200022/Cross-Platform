@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sarakel/Widgets/chatting/chat_card.dart';
 import 'package:sarakel/models/user.dart';
 import '../drawers/community_list.dart';
 import '../drawers/profile_drawer.dart';
@@ -34,8 +35,9 @@ class _ChatSection extends State<ChatSection> {
           user: user,
         ),
         body: Center(
-          child: Text('Chat Page is under construction'),
-        ),
+            child: ListView.builder(
+          itemBuilder: (context, index) => ButtonCard(),
+        )),
         bottomNavigationBar:
             CustomBottomNavigationBar(currentIndex: _selectedIndex));
   }

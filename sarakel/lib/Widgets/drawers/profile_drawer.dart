@@ -32,7 +32,7 @@ class ProfileDrawer extends StatelessWidget {
             children: [
               UserAccountsDrawerHeader(
                 accountName: Text(user!.username!),
-                accountEmail: Text(user!.email),
+                accountEmail: Text('user!.email!'),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage('assets/avatar_logo.jpeg'),
                 ),
