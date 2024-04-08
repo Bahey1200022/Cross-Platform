@@ -12,7 +12,13 @@ class ProfileDrawer extends StatelessWidget {
   const ProfileDrawer({
     this.user,
   });
-
+//  UserProvider userProvider =
+  //         Provider.of<UserProvider>(context, listen: false);
+  //     userProvider.setUser(User(
+  //         email: email,
+  //         password: password,
+  //         username: usernameScreen,
+  //         token: token));
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(
@@ -26,7 +32,7 @@ class ProfileDrawer extends StatelessWidget {
             children: [
               UserAccountsDrawerHeader(
                 accountName: Text(user!.username!),
-                accountEmail: Text(user!.email),
+                accountEmail: Text('user!.email!'),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage('assets/avatar_logo.jpeg'),
                 ),

@@ -5,9 +5,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sarakel/providers/user_communities.dart';
 import '../../models/community.dart';
-import 'controllers/add_post_controller.dart';
+import 'add_post_controller.dart';
 
 class CreatePost extends StatefulWidget {
+  final token;
+
+  const CreatePost({required this.token}); //
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }

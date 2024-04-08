@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-import 'api_service.dart';
+import 'circle_controller.dart';
 
 class CommunityType {
   final String name;
@@ -12,6 +10,10 @@ class CommunityType {
 }
 
 class CommunityForm extends StatefulWidget {
+  final token;
+
+  const CommunityForm({required this.token});
+
   @override
   _CommunityFormState createState() => _CommunityFormState();
 }
@@ -83,8 +85,9 @@ class _CommunityFormState extends State<CommunityForm> {
   }
 
   void _checkCommunityExists(String communityName) async {
-    bool circleExists = await ApiService.checkCircleExists(communityName);
-    bool idExists = await ApiService.checkCircleIdExists(
+    bool circleExists =
+        await CreateCircleController.checkCircleExists(communityName);
+    bool idExists = await CreateCircleController.checkCircleIdExists(
         communityName.toLowerCase().replaceAll(' ', '_'));
 
     setState(() {
@@ -106,7 +109,8 @@ class _CommunityFormState extends State<CommunityForm> {
       return;
     }
 
-    await ApiService.createCircle(communityName, circleType, _is18Plus);
+    await CreateCircleController.createCircle(
+        communityName, circleType, _is18Plus);
   }
 
   @override

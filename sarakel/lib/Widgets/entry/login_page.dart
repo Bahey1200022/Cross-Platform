@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sarakel/Widgets/entry/controllers/user_entry_controller.dart';
 
-import '../../providers/user_provider.dart';
+bool _validateEmail(String email) {
+  // Regular expression for email validation
+  RegExp emailRegex =
+      RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+  return emailRegex.hasMatch(email);
+}
+
+bool _validatePassword(String password) {
+  // Password validation criteria: At least 8 characters
+  return password.length >= 8;
+}
 
 class LoginPage extends StatefulWidget {
   @override
@@ -57,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         // Handle continue with googgle
                       },
-                      child: Text(
+                      child: const Text(
                         'Continue with google',
                         style: TextStyle(color: Colors.black),
                       ),
@@ -70,31 +79,8 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              // Center(
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       Image.asset('assets/facebook_logo.png', height: 24.0),
-              //       SizedBox(width: 8.0),
-              //       TextButton(
-              //         onPressed: () {
-              //           // Handle continue with Facebook
-              //         },
-              //         child: Text(
-              //           'Continue with Facebook',
-              //           style: TextStyle(color: Colors.black),
-              //         ),
-              //         style: ButtonStyle(
-              //           backgroundColor: MaterialStateProperty.all<Color>(
-              //             const Color.fromARGB(255, 244, 236, 236),
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               SizedBox(height: 16.0),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
@@ -104,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       'OR',
                       style: TextStyle(fontSize: 16.0, color: Colors.grey),
@@ -131,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
-                          labelText: 'Email',
+                          labelText: 'Email or username',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(16.0),
                         ),
@@ -189,32 +175,34 @@ class _LoginPageState extends State<LoginPage> {
                         UserController oldUserController = UserController(
                             emailScreen: 'emailScreen',
                             passwordScreen: 'passwordScreen');
-                        if (await oldUserController.userExists(
-                            email, password)) {
-                          UserProvider userProvider =
-                              Provider.of<UserProvider>(context, listen: false);
-                          userProvider
-                              .setUser(oldUserController.setStateUser());
-                          Navigator.pushNamed(context, '/home');
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Error'),
-                                content: Text('Incorrect email or password'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+
+                        if (_validateEmail(email) &&
+                            _validatePassword(password)) {
+                          if (await oldUserController.loginUser(
+                              context, email, password)) {
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Error'),
+                                  content: Text(
+                                      'Incorrect username,email or password'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
                         }
+
+                        ///all if
                       },
                       child: Text(
                         'Continue',
@@ -236,9 +224,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-// Future<void> _updateHomescreen(bool newValue) async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   await prefs.setBool(
-//       'homescreen', newValue); // Update homescreen value in SharedPreferences
-// }

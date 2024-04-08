@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class ApiService {
+class CreateCircleController {
   static Future<bool> checkCircleExists(String communityName) async {
     final response = await http.get(
-      Uri.parse('http://localhost:3000/communities?name=$communityName'),
+      Uri.parse('http://192.168.34.134:3000/communities?name=$communityName'),
     );
 
     if (response.statusCode == 200) {
@@ -16,7 +16,7 @@ class ApiService {
 
   static Future<bool> checkCircleIdExists(String communityId) async {
     final response = await http.get(
-      Uri.parse('http://localhost:3000/communities?id=$communityId'),
+      Uri.parse('http://192.168.34.134:3000/communities?id=$communityId'),
     );
 
     if (response.statusCode == 200) {
@@ -52,7 +52,7 @@ class ApiService {
     };
 
     final response = await http.post(
-      Uri.parse('http://localhost:3000/communities'),
+      Uri.parse('http://192.168.34.134:3000/communities'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

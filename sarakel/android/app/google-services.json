@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "74358882817",
+    "project_id": "final-sarakel",
+    "storage_bucket": "final-sarakel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74358882817:android:59ec22b0bcc2fe5471b600",
+        "android_client_info": {
+          "package_name": "com.example.sarakel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74358882817-vn8bnjdjcilvc42jot6q7e247sfthpum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrDSDbs3mSoRDxyU7Hs847y8tucbr9pFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "74358882817-vn8bnjdjcilvc42jot6q7e247sfthpum.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "74358882817-09dhvq9okbd0pi69kgrv11oovb864fdn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sarakel"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

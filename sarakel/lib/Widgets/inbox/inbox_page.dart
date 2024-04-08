@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import '../drawers/community_list.dart';
 import '../drawers/profile_drawer.dart';
@@ -8,6 +9,10 @@ import '../home/widgets/bottom_bar.dart';
 import '../home/widgets/app_bar.dart';
 
 class InboxSection extends StatefulWidget {
+  final token;
+
+  const InboxSection({required this.token});
+
   @override
   State<InboxSection> createState() => _InboxSectionState();
 }
@@ -19,7 +24,7 @@ class _InboxSectionState extends State<InboxSection> {
 
   @override
   Widget build(BuildContext context) {
-    User? user = Provider.of<UserProvider>(context).user;
+    Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(widget.token);
 
     return Scaffold(
       key: _scaffoldKey, // Assign key here
@@ -29,7 +34,7 @@ class _InboxSectionState extends State<InboxSection> {
       ),
       drawer: CommunityDrawer(),
       endDrawer: ProfileDrawer(
-        user: user,
+        user: User(username: jwtdecodedtoken['username']),
       ),
       body: Center(
         child: Text('Inbox Page is under construction'),

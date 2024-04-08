@@ -59,19 +59,20 @@ class _UsernamePageState extends State<UsernamePage> {
                         controller: usernameController,
                         onChanged: (value) async {
                           value = value.trim();
-                          String formattedUsername = "u/$value";
+                          String formattedUsername = value;
+                          bool usernameExists = await widget.userController
+                              .usernameExists(formattedUsername);
 
-                          if (await widget.userController
-                              .usernameExists(formattedUsername)) {
-                            setState(() {
+                          setState(() {
+                            if (usernameExists) {
                               _errorText =
                                   'user with the name "$value" already exists. Please choose a different name.';
-                            });
-                          } else {
-                            setState(() {
-                              _errorText = '';
-                            });
-                          }
+                            } else if (value.isEmpty || value.length < 3) {
+                              _errorText = 'please enter a valid username';
+                            } else {
+                              _errorText = '"$value" available';
+                            }
+                          });
                         },
                         decoration: InputDecoration(
                           labelText: 'Username',
@@ -81,42 +82,42 @@ class _UsernamePageState extends State<UsernamePage> {
                         ),
                       ),
                     ),
-                    if (_errorText
-                        .isNotEmpty) // Only show error message if there's an error
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Text(
-                          _errorText,
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12.0,
-                          ),
+                    // if (_errorText
+                    //     .isNotEmpty) // Only show error message if there's an error
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text(
+                        _errorText,
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12.0,
                         ),
                       ),
+                    ),
                     SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () async {
                         String username = usernameController.text.trim();
-                        String formattedUsername = "u/$username";
+                        String formattedUsername = username;
                         if (await widget.userController
                             .usernameExists(formattedUsername)) {
-                          // showDialog(
-                          //   context: context,
-                          //   builder: (BuildContext context) {
-                          //     return AlertDialog(
-                          //       title: Text('Error'),
-                          //       content: Text('Username already taken'),
-                          //       actions: [
-                          //         TextButton(
-                          //           onPressed: () {
-                          //             Navigator.of(context).pop();
-                          //           },
-                          //           child: Text('OK'),
-                          //         ),
-                          //       ],
-                          //     );
-                          //   },
-                          // );
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Error'),
+                                content: Text('Username already taken'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         } else {
                           widget.userController.usernameScreen =
                               formattedUsername;

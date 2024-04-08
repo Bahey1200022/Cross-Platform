@@ -1,74 +1,42 @@
 import 'dart:convert';
-
+import 'package:sarakel/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:sarakel/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:sarakel/Widgets/home/homescreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../home/controllers/home_screen_controller.dart';
 
 class UserController {
   String? usernameScreen;
   String emailScreen;
   String passwordScreen;
+  SharedPreferences? prefs;
   UserController(
       {this.usernameScreen,
       required this.emailScreen,
       required this.passwordScreen});
 
-  User setStateUser() {
-    return User(
-        email: emailScreen, password: passwordScreen, username: usernameScreen);
-  }
-
-  Future<bool> userExists(String email, String password) async {
-    final response =
-        await http.get(Uri.parse('http://192.168.1.17:3000/users'));
-
-    if (response.statusCode == 200) {
-      // Decode the response body from JSON
-      final dynamic users = json.decode(response.body);
-      // Iterate through the list of users
-      for (var user in users) {
-        // Check if the provided username matches any existing username
-        if (user['email'] == email && user['password'] == password) {
-          usernameScreen = user['username'];
-          emailScreen = user['email'];
-          passwordScreen = user['password'];
-          return true; // Username exists
-        }
-      }
-      return false; // Username doesn't exist
-    } else {
-      throw Exception('Failed to load user data');
-    }
-  }
-
   Future<bool> usernameExists(String username) async {
     final response =
-        await http.get(Uri.parse('http://192.168.1.17:3000/users'));
+        await http.get(Uri.parse('$BASE_URL/api/username_available/$username'));
 
-    if (response.statusCode == 200) {
-      // Decode the response body from JSON
-      final dynamic users = json.decode(response.body);
-      // Iterate through the list of users
-      for (var user in users) {
-        // Check if the provided username matches any existing username
-        if (user['username'] == username) {
-          return true; // Username exists
-        }
-      }
-      return false; // Username doesn't exist
+    if (response.statusCode == 400) {
+      return false;
     } else {
-      throw Exception('Failed to load user data');
+      return true;
     }
   }
 
-  void passToServer(BuildContext context) async {
+  // signUpUser function sends a POST request to the backend endpoint for user signup
+  Future<bool> passToServer(BuildContext context) async {
     var data = {
+      "username": usernameScreen,
       "email": emailScreen,
-      "password": passwordScreen,
-      "token": "true",
-      "username": usernameScreen
+      "password": passwordScreen
     };
-    var url = Uri.parse('http://192.168.1.17:3000/users');
+
+    var url = Uri.parse('$BASE_URL/signup');
 
     try {
       var response = await http.post(
@@ -77,15 +45,56 @@ class UserController {
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Navigator.pushNamed(context, '/login');
+        // User signed up successfully
+        // Optionally, you can navigate to the login screen or any other screen
 
-        //     ////////////////
+        Navigator.pushNamed(context, '/login');
+        return true;
       } else {
-        print(response.statusCode);
+        // Signup failed, handle the error
+        print('Signup failed with status code: ${response.statusCode}');
+        return false;
       }
     } catch (e) {
       // Handle network errors
       print('Error: $e');
+      return false;
+    }
+  }
+
+  ///loginUser function post req to /login endpoint
+  Future<bool> loginUser(
+      BuildContext context, String email, String password) async {
+    var data = {"emailOrUsername": email, "password": password};
+    try {
+      var response = await http.post(
+        Uri.parse('$BASE_URL/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(data),
+      );
+      var jsonData = json.decode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        prefs = await SharedPreferences.getInstance();
+        var token = jsonData['token'];
+        print(jsonData);
+
+        prefs!.setString('token', token);
+        print(jsonData);
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SarakelHomeScreen(
+                    homescreenController: HomescreenController(token: token))));
+        return true;
+      } else {
+        print(response.statusCode);
+        return false;
+      }
+    } catch (e) {
+      print('Caught error: $e');
+      return false;
     }
   }
 }
