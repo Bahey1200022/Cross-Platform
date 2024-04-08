@@ -59,10 +59,9 @@ class _UsernamePageState extends State<UsernamePage> {
                         controller: usernameController,
                         onChanged: (value) async {
                           value = value.trim();
-                          String formattedUsername = "u/$value";
+                          String formattedUsername = value;
                           bool usernameExists = await widget.userController
                               .usernameExists(formattedUsername);
-                          print(usernameExists);
 
                           setState(() {
                             if (usernameExists) {
@@ -70,6 +69,8 @@ class _UsernamePageState extends State<UsernamePage> {
                                   'user with the name "$value" already exists. Please choose a different name.';
                             } else if (value.isEmpty || value.length < 3) {
                               _errorText = 'please enter a valid username';
+                            } else {
+                              _errorText = '"$value" available';
                             }
                           });
                         },
@@ -97,7 +98,7 @@ class _UsernamePageState extends State<UsernamePage> {
                     ElevatedButton(
                       onPressed: () async {
                         String username = usernameController.text.trim();
-                        String formattedUsername = "u/$username";
+                        String formattedUsername = username;
                         if (await widget.userController
                             .usernameExists(formattedUsername)) {
                           showDialog(
