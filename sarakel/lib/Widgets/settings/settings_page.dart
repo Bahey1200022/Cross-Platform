@@ -3,7 +3,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/models/user.dart';
 
 class SettingsPage extends StatefulWidget {
-  final token;
+  final String token;
 
   const SettingsPage({required this.token});
 

@@ -9,7 +9,7 @@ import '../home/widgets/bottom_bar.dart';
 import '../home/widgets/app_bar.dart';
 
 class InboxSection extends StatefulWidget {
-  final token;
+  final String token;
 
   const InboxSection({required this.token});
 

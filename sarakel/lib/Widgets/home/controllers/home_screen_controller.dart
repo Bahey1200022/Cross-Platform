@@ -12,12 +12,18 @@ import '../../../models/post.dart';
 import '../../../providers/user_communities.dart';
 
 class HomescreenController {
-  final token; //
+  final String token; //
   HomescreenController({required this.token});
 
   String getusername() {
+    print('test');
+    print(token);
     Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(token);
-    return jwtdecodedtoken['username'];
+    if (jwtdecodedtoken['username'] == null) {
+      return 'hi';
+    } else {
+      return jwtdecodedtoken['username'];
+    }
   }
 
   User getUser() {

@@ -10,7 +10,7 @@ class CommunityType {
 }
 
 class CommunityForm extends StatefulWidget {
-  final token;
+  final String token;
 
   const CommunityForm({required this.token});
 
