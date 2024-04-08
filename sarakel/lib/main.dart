@@ -15,9 +15,14 @@ import 'package:provider/provider.dart';
 import 'Widgets/entry/forgot_password.dart';
 import 'Widgets/settings/settings_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString('token');
   runApp(MyApp(
