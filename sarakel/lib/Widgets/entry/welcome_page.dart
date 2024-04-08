@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/entry/controllers/google.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -55,41 +56,12 @@ class WelcomePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         // Handle continue with Google
+                        await GoogleService().signInWithGoogle();
                       },
                       child: Text(
                         'Continue with Google',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 244, 236, 236),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.facebook,
-                    color: Colors.blue,
-                  ),
-                  SizedBox(width: 8.0),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: TextButton(
-                      onPressed: () {
-                        // Handle continue with Facebook
-                      },
-                      child: Text(
-                        'Continue with Facebook',
                         style: TextStyle(color: Colors.black),
                       ),
                       style: ButtonStyle(
