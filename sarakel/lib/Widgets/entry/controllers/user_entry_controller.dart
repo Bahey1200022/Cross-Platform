@@ -18,24 +18,25 @@ class UserController {
       required this.passwordScreen});
 
   Future<bool> usernameExists(String username) async {
-    final response = await http
-        .get(Uri.parse('http://192.168.34.134:3000/users?username=$username'));
+    final response =
+        await http.get(Uri.parse('$BASE_URL/api/username_available/$username'));
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body).isNotEmpty;
-    } else {
+    if (response.statusCode == 400) {
       return false;
+    } else {
+      return true;
     }
   }
 
-  void passToServer(BuildContext context) async {
+  // signUpUser function sends a POST request to the backend endpoint for user signup
+  Future<bool> passToServer(BuildContext context) async {
     var data = {
+      "username": usernameScreen,
       "email": emailScreen,
-      "password": passwordScreen,
-      "token": "true",
-      "username": usernameScreen
+      "password": passwordScreen
     };
-    var url = Uri.parse('http://192.168.34.134:3000/users');
+
+    var url = Uri.parse('$BASE_URL/signup');
 
     try {
       var response = await http.post(
@@ -44,15 +45,20 @@ class UserController {
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Navigator.pushNamed(context, '/login');
+        // User signed up successfully
+        // Optionally, you can navigate to the login screen or any other screen
 
-        //     ////////////////
+        Navigator.pushNamed(context, '/login');
+        return true;
       } else {
-        print(response.statusCode);
+        // Signup failed, handle the error
+        print('Signup failed with status code: ${response.statusCode}');
+        return false;
       }
     } catch (e) {
       // Handle network errors
       print('Error: $e');
+      return false;
     }
   }
 

@@ -5,7 +5,7 @@ bool _validateEmail(String email) {
   // Regular expression for email validation
   RegExp emailRegex =
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-  return emailRegex.hasMatch(email) || email.startsWith('u/');
+  return emailRegex.hasMatch(email);
 }
 
 bool _validatePassword(String password) {
