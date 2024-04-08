@@ -15,7 +15,8 @@ class GoogleService {
         accessToken: googleSignInAuthentication?.accessToken,
         idToken: googleSignInAuthentication?.idToken,
       );
-
+      print('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+      print(credential.accessToken);
       await FirebaseAuth.instance.signInWithCredential(credential);
     } catch (error, stackTrace) {
       print('Error signing in with Google: $error');
