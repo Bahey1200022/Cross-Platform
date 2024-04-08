@@ -8,7 +8,7 @@ import '../../models/community.dart';
 import 'add_post_controller.dart';
 
 class CreatePost extends StatefulWidget {
-  final token;
+  final String token;
 
   const CreatePost({required this.token}); //
 

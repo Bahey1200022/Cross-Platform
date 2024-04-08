@@ -10,7 +10,7 @@ import '../home/widgets/app_bar.dart';
 import '../home/widgets/bottom_bar.dart';
 
 class ChatSection extends StatefulWidget {
-  final token;
+  final String token;
 
   const ChatSection({required this.token});
 

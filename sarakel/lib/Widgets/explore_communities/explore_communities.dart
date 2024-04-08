@@ -7,13 +7,12 @@ import '../drawers/profile_drawer.dart';
 import '../../models/community.dart';
 import '../../models/user.dart';
 import '../../providers/user_communities.dart';
-import '../../providers/user_provider.dart';
 import '../profiles/communityprofile_page.dart';
 import '../home/widgets/app_bar.dart';
 import '../home/widgets/bottom_bar.dart';
 
 class ExploreCommunities extends StatefulWidget {
-  final token;
+  final String token;
 
   const ExploreCommunities({required this.token});
   @override
