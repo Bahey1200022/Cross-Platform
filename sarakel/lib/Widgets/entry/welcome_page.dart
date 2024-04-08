@@ -56,50 +56,14 @@ class WelcomePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: TextButton(
-<<<<<<< HEAD
-                      onPressed: () {
-                        // Handle continue with Google
-=======
                       onPressed: () async {
                         // Handle continue with Google
                         await GoogleService().signInWithGoogle();
->>>>>>> d9dbe1d13d0b59d67d7a8717c229929dc61b551f
                       },
                       child: Text(
                         'Continue with Google',
                         style: TextStyle(color: Colors.black),
-<<<<<<< HEAD
                       ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 244, 236, 236),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.facebook,color: Colors.blue,),
-                  SizedBox(width: 8.0),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: TextButton(
-                      onPressed: () {
-                        // Handle continue with Facebook
-                      },
-                      child: Text(
-                        'Continue with Facebook',
-                        style: TextStyle(color: Colors.black),
-                      ),
-=======
-                      ),
->>>>>>> d9dbe1d13d0b59d67d7a8717c229929dc61b551f
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                           const Color.fromARGB(255, 244, 236, 236),
