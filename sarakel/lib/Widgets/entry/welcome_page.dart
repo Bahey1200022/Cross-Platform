@@ -58,7 +58,7 @@ class WelcomePage extends StatelessWidget {
                     child: TextButton(
                       onPressed: () async {
                         // Handle continue with Google
-                        await GoogleService().signInWithGoogle();
+                        await GoogleService().signInWithGoogle(context);
                       },
                       child: Text(
                         'Continue with Google',

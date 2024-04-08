@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
           '/create_circle': (context) => CommunityForm(token: token),
           '/settings': (context) => SettingsPage(token: token),
           '/home': (context) => SarakelHomeScreen(
-                homescreenController: HomescreenController(token: token),
+                homescreenController: HomescreenController(token: token!),
               ),
         },
         debugShowCheckedModeBanner:

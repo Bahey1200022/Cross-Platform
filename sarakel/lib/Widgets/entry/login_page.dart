@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/entry/controllers/google.dart';
 import 'package:sarakel/Widgets/entry/controllers/user_entry_controller.dart';
 
 bool _validateEmail(String email) {
@@ -63,8 +64,9 @@ class _LoginPageState extends State<LoginPage> {
                     Image.asset('assets/google_logo.png', height: 24.0),
                     SizedBox(width: 8.0),
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         // Handle continue with googgle
+                        await GoogleService().signInWithGoogle(context);
                       },
                       child: const Text(
                         'Continue with google',
