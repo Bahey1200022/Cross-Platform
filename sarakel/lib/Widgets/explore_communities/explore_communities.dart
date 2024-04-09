@@ -37,9 +37,9 @@ class _MyHomePageState extends State<ExploreCommunities> {
         title: 'Circles',
         scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
       ),
-      drawer: CommunityDrawer(),
+      drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(
-        user: User(username: jwtdecodedtoken['username']),
+        user: User(username: jwtdecodedtoken['username'], token: widget.token),
       ),
       body: ListView.builder(
         itemCount: fetchedCommunities.length,
@@ -97,6 +97,7 @@ class _MyHomePageState extends State<ExploreCommunities> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
+        token: widget.token,
       ),
     );
   }

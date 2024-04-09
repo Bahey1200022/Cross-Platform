@@ -32,15 +32,17 @@ class _InboxSectionState extends State<InboxSection> {
         title: 'Inbox',
         scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
       ),
-      drawer: CommunityDrawer(),
+      drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(
-        user: User(username: jwtdecodedtoken['username']),
+        user: User(username: jwtdecodedtoken['username'], token: widget.token),
       ),
       body: Center(
         child: Text('Inbox Page is under construction'),
       ),
-      bottomNavigationBar:
-          CustomBottomNavigationBar(currentIndex: _selectedIndex),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _selectedIndex,
+        token: widget.token,
+      ),
     );
   }
 }

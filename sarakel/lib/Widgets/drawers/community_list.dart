@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sarakel/features/create_circle/create_circle.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:sarakel/providers/user_communities.dart';
 import 'package:provider/provider.dart' as provider;
@@ -7,7 +8,8 @@ import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 
 ///////drawer of communities
 class CommunityDrawer extends ConsumerWidget {
-  CommunityDrawer({super.key});
+  final String token;
+  CommunityDrawer({super.key, required this.token});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +24,10 @@ class CommunityDrawer extends ConsumerWidget {
               title: Text('Create a circle'),
               leading: Icon(Icons.add),
               onTap: () {
-                Navigator.pushNamed(context, '/create_circle');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CommunityForm(token: token)));
               },
             ),
             Expanded(

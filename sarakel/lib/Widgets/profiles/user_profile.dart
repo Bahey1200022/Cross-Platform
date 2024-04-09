@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
+import 'package:sarakel/Widgets/home/homescreen.dart';
 
 import '../../models/user.dart';
 
@@ -80,7 +82,13 @@ class _UserProfile extends State<UserProfile> {
                         icon: const Icon(Icons.arrow_back),
                         color: Colors.white,
                         onPressed: () {
-                          Navigator.pushNamed(context, '/home');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SarakelHomeScreen(
+                                      homescreenController:
+                                          HomescreenController(
+                                              token: widget.user!.token!))));
                         },
                       ),
                       SizedBox(

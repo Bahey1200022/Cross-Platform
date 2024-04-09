@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sarakel/Widgets/profiles/user_profile.dart';
+import 'package:sarakel/Widgets/settings/settings_page.dart';
+import 'package:sarakel/features/create_circle/circle_controller.dart';
+import 'package:sarakel/features/create_circle/create_circle.dart';
 
 import '../../models/user.dart';
 import '../../providers/user_provider.dart';
@@ -12,13 +15,7 @@ class ProfileDrawer extends StatelessWidget {
   const ProfileDrawer({
     this.user,
   });
-//  UserProvider userProvider =
-  //         Provider.of<UserProvider>(context, listen: false);
-  //     userProvider.setUser(User(
-  //         email: email,
-  //         password: password,
-  //         username: usernameScreen,
-  //         token: token));
+
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(
@@ -55,7 +52,11 @@ class ProfileDrawer extends StatelessWidget {
                 leading: Icon(Icons.group),
                 title: Text('Create a circle'),
                 onTap: () {
-                  Navigator.pushNamed(context, '/create_circle');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              CommunityForm(token: user!.token!)));
                 },
               ),
               ListTile(
@@ -76,7 +77,11 @@ class ProfileDrawer extends StatelessWidget {
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
                 onTap: () {
-                  Navigator.pushNamed(context, '/settings');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SettingsPage(token: user!.token!)));
                 },
               ),
             ],

@@ -28,9 +28,7 @@ class HomescreenController {
 
   User getUser() {
     saveUsername(getusername());
-    return User(
-      username: getusername(),
-    );
+    return User(username: getusername(), token: token);
   }
 
   Future<void> saveUsername(String username) async {
