@@ -31,7 +31,9 @@ class _ChatSection extends State<ChatSection> {
           title: 'chat',
           scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
         ),
-        drawer: CommunityDrawer(),
+        drawer: CommunityDrawer(
+          token: widget.token,
+        ),
         endDrawer: ProfileDrawer(
           // Add end drawer
           user:

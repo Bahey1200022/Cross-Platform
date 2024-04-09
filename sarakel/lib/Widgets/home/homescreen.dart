@@ -84,7 +84,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           ),
         ],
       ),
-      drawer: CommunityDrawer(),
+      drawer: CommunityDrawer(token: widget.homescreenController.token),
       endDrawer: ProfileDrawer(
         // Add end drawer ////to be fixed
         user: widget.homescreenController.getUser(),

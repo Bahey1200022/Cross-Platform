@@ -37,7 +37,7 @@ class _MyHomePageState extends State<ExploreCommunities> {
         title: 'Circles',
         scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
       ),
-      drawer: CommunityDrawer(),
+      drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(
         user: User(username: jwtdecodedtoken['username'], token: widget.token),
       ),
