@@ -17,8 +17,6 @@ class HomescreenController {
   HomescreenController({required this.token});
 
   String getusername() {
-    print('test');
-    print(token);
     Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(token);
     if (jwtdecodedtoken['username'] == null) {
       return 'hi';
