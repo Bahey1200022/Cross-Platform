@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
-import '../drawers/community_list.dart';
+import '../drawers/community_drawer/community_list.dart';
 import '../drawers/profile_drawer.dart';
 import '../../models/community.dart';
 import '../../models/user.dart';
@@ -84,7 +84,8 @@ class _MyHomePageState extends State<ExploreCommunities> {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) {
-                        return CommunityProfilePage(community: item);
+                        return CommunityProfilePage(
+                            community: item, token: widget.token);
                       }),
                     );
                   },

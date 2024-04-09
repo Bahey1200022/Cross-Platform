@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:sarakel/constants.dart';
 
 class CreateCircleController {
   static Future<bool> checkCircleExists(String communityName) async {
     final response = await http.get(
-      Uri.parse('http://192.168.34.134:3000/communities?name=$communityName'),
+      Uri.parse('$MOCK_URL/communities?name=$communityName'),
     );
 
     if (response.statusCode == 200) {
@@ -16,7 +17,7 @@ class CreateCircleController {
 
   static Future<bool> checkCircleIdExists(String communityId) async {
     final response = await http.get(
-      Uri.parse('http://192.168.34.134:3000/communities?id=$communityId'),
+      Uri.parse('$MOCK_URL/communities?id=$communityId'),
     );
 
     if (response.statusCode == 200) {
@@ -38,7 +39,7 @@ class CreateCircleController {
       return;
     }
 
-    String formattedCommunityName = 'c/$communityName';
+    String formattedCommunityName = communityName;
     String communityId = communityName.toLowerCase().replaceAll(' ', '_');
 
     Map<String, dynamic> circleData = {
@@ -52,7 +53,7 @@ class CreateCircleController {
     };
 
     final response = await http.post(
-      Uri.parse('http://192.168.34.134:3000/communities'),
+      Uri.parse('$MOCK_URL/communities'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

@@ -2,7 +2,7 @@
   "communities": [
     {
       "id": "demoooo",
-      "name": "c/demoooo",
+      "name": "demoooo",
       "type": "Public",
       "is18Plus": false,
       "description": "hii",
@@ -10,15 +10,15 @@
     },
     {
       "id": "demo2",
-      "name": "c/demo2",
+      "name": "demo2",
       "type": "Public",
-      "is18Plus": false,
+      "is18Plus": true,
       "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
       "description": "new circle"
     },
     {
       "id": "yalahwi",
-      "name": "c/yalahwi",
+      "name": "yalahwi",
       "type": "Public",
       "is18Plus": false,
       "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
@@ -26,16 +26,24 @@
     },
     {
       "id": "heloooo",
-      "name": "c/heloooo",
+      "name": "heloooo",
       "type": "Public",
-      "is18Plus": false,
+      "is18Plus": true,
       "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
       "description": "new circle"
     },
     {
       "id": "demo6",
-      "name": "c/demo6",
+      "name": "demo6",
       "type": "Restricted",
+      "is18Plus": true,
+      "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
+      "description": "new circle"
+    },
+    {
+      "id": "cufe",
+      "name": "cufe",
+      "type": "Public",
       "is18Plus": true,
       "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
       "description": "new circle"
@@ -47,68 +55,68 @@
       "email": "b@gmail.com",
       "password": "hhhhhhhhhhhhhh",
       "token": "true",
-      "username": "u/ty"
+      "username": "ty"
     },
     {
       "id": "818a",
       "email": "rabie@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "u/rabie"
+      "username": "rabie"
     },
     {
       "id": "95a6",
       "email": "k@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "u/lover"
+      "username": "lover"
     },
     {
       "id": "564a",
       "email": "ashraf@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "u/killer"
+      "username": "killer"
     },
     {
       "id": "0d4f",
       "email": "hafez@gmail.com",
       "password": "12345678",
       "token": "true",
-      "username": "u/hafez"
+      "username": "hafez"
     },
     {
       "id": "855b",
       "email": "k@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "u/tony"
+      "username": "tony"
     },
     {
       "id": "cf14",
       "email": "hafez@gmail.com",
       "password": "12345678",
       "token": "true",
-      "username": "u/hafez2"
+      "username": "hafez2"
     },
     {
       "id": "e1c2",
       "email": "h@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "u/demo2"
+      "username": "demo2"
     },
     {
       "id": "ff78",
       "email": "h@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "u/kkk"
+      "username": "kkk"
     }
   ],
   "posts": [
     {
-      "communityName": "c/flutter",
+      "communityName": "flutter",
       "duration": "4h",
       "upVotes": 120,
       "downVotes": 10,
@@ -121,7 +129,7 @@
       "imagePath": "assets/flutter.jpeg"
     },
     {
-      "communityName": "c/dart",
+      "communityName": "dart",
       "duration": "23h",
       "upVotes": 75,
       "downVotes": 5,
@@ -134,7 +142,7 @@
       "imagePath": null
     },
     {
-      "communityName": "c/Football",
+      "communityName": "Football",
       "duration": "2d",
       "upVotes": 200,
       "downVotes": 20,
@@ -147,7 +155,7 @@
       "imagePath": "assets/Liverpool_FC.jpg"
     },
     {
-      "communityName": "c/ios",
+      "communityName": "ios",
       "duration": "1d",
       "upVotes": 150,
       "downVotes": 15,
@@ -169,7 +177,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "c/batman",
+      "communityName": "batman",
       "imagePath": "assets/batman.jpeg"
     },
     {
@@ -182,7 +190,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "c/miami heat",
+      "communityName": "miami heat",
       "imagePath": null
     },
     {
@@ -195,7 +203,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "c/BeFit",
+      "communityName": "BeFit",
       "imagePath": "assets/gym.jpg"
     },
     {
@@ -208,7 +216,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "c/demoooo"
+      "communityName": "demoooo"
     },
     {
       "id": "e62c",
@@ -220,7 +228,7 @@
       "shares": "0",
       "downvotes": 0,
       "comments": "0",
-      "communityName": "c/demo2"
+      "communityName": "demo2"
     },
     {
       "id": "57a3",
@@ -232,7 +240,7 @@
       "shares": "0",
       "downvotes": 0,
       "comments": "0",
-      "communityName": "c/demoooo"
+      "communityName": "demoooo"
     }
   ]
 }

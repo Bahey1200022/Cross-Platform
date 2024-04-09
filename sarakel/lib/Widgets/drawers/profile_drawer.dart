@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sarakel/Widgets/profiles/user_profile.dart';
 import 'package:sarakel/Widgets/settings/settings_page.dart';
-import 'package:sarakel/features/create_circle/circle_controller.dart';
 import 'package:sarakel/features/create_circle/create_circle.dart';
 
 import '../../models/user.dart';
