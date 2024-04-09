@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:provider/provider.dart';
-import 'package:sarakel/Widgets/chatting/chat_card.dart';
 import 'package:sarakel/models/user.dart';
 import '../drawers/community_list.dart';
 import '../drawers/profile_drawer.dart';
-import '../../providers/user_provider.dart';
 import '../home/widgets/app_bar.dart';
 import '../home/widgets/bottom_bar.dart';
 
@@ -37,10 +34,13 @@ class _ChatSection extends State<ChatSection> {
         drawer: CommunityDrawer(),
         endDrawer: ProfileDrawer(
           // Add end drawer
-          user: User(username: jwtdecodedtoken['username']),
+          user:
+              User(username: jwtdecodedtoken['username'], token: widget.token),
         ),
         body: const Center(child: Text('hi')),
-        bottomNavigationBar:
-            CustomBottomNavigationBar(currentIndex: _selectedIndex));
+        bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: _selectedIndex,
+          token: widget.token,
+        ));
   }
 }

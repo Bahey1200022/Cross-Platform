@@ -111,6 +111,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
+        token: widget.homescreenController.token,
       ),
     );
   }

@@ -39,7 +39,7 @@ class _MyHomePageState extends State<ExploreCommunities> {
       ),
       drawer: CommunityDrawer(),
       endDrawer: ProfileDrawer(
-        user: User(username: jwtdecodedtoken['username']),
+        user: User(username: jwtdecodedtoken['username'], token: widget.token),
       ),
       body: ListView.builder(
         itemCount: fetchedCommunities.length,
@@ -97,6 +97,7 @@ class _MyHomePageState extends State<ExploreCommunities> {
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
+        token: widget.token,
       ),
     );
   }

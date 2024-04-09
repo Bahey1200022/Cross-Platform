@@ -34,13 +34,15 @@ class _InboxSectionState extends State<InboxSection> {
       ),
       drawer: CommunityDrawer(),
       endDrawer: ProfileDrawer(
-        user: User(username: jwtdecodedtoken['username']),
+        user: User(username: jwtdecodedtoken['username'], token: widget.token),
       ),
       body: Center(
         child: Text('Inbox Page is under construction'),
       ),
-      bottomNavigationBar:
-          CustomBottomNavigationBar(currentIndex: _selectedIndex),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _selectedIndex,
+        token: widget.token,
+      ),
     );
   }
 }

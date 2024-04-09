@@ -67,16 +67,7 @@ class MyApp extends StatelessWidget {
           '/welcome': (context) => WelcomePage(),
           '/login': (context) => LoginPage(),
           '/signup': (context) => SignupPage(),
-          '/create_post': (context) => CreatePost(token: token!),
-          '/communities': (context) => ExploreCommunities(token: token!),
-          '/chat': (context) => ChatSection(token: token!),
-          '/inbox': (context) => InboxSection(token: token!),
           '/forgotpassword': (context) => ForgotPasswordPage(),
-          '/create_circle': (context) => CommunityForm(token: token!),
-          '/settings': (context) => SettingsPage(token: token!),
-          '/home': (context) => SarakelHomeScreen(
-                homescreenController: HomescreenController(token: token!),
-              ),
         },
         debugShowCheckedModeBanner:
             false, // Set debugShowCheckedModeBanner to false
