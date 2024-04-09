@@ -42,7 +42,7 @@ class HomescreenController {
     try {
       // Make a GET request to fetch the JSON data from the server
       var response =
-          await http.get(Uri.parse('http://192.168.34.134:3000/communities'));
+          await http.get(Uri.parse('http://192.168.1.10:3000/communities'));
 
       // Check if the request was successful (status code 200)
       if (response.statusCode == 200) {
@@ -86,13 +86,14 @@ class HomescreenController {
   Future<List<Post>> loadPosts() async {
     try {
       var response =
-          await http.get(Uri.parse('http://192.168.34.134:3000/posts'));
+          await http.get(Uri.parse('http://192.168.1.10:3000/posts'));
       if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
 
         List<Post> posts = jsonData.map((p) {
           return Post(
             communityName: p['communityName'],
+            id: p['id'],
             duration: p['duration'],
             upVotes: p['upVotes'] ?? 0, // Provide a default value if null
             downVotes: p['downVotes'] ?? 0, // Provide a default value if null

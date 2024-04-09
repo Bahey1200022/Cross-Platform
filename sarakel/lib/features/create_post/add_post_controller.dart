@@ -7,7 +7,7 @@ class AddPostController {
       String body) async {
     try {
       if (title.trim().isNotEmpty && body.trim().isNotEmpty) {
-        final String apiUrl = 'http://192.168.34.134:3000/posts';
+        final String apiUrl = 'http://192.168.1.10:3000/posts';
 
         final Map<String, String> headers = {
           'Content-Type': 'application/json'

@@ -4,8 +4,10 @@ import '../../../models/post.dart';
 
 class PostCard extends StatefulWidget {
   final Post post;
+  final VoidCallback onHide;
 
-  const PostCard({Key? key, required this.post}) : super(key: key);
+  const PostCard({Key? key, required this.post, required this.onHide})
+      : super(key: key);
 
   @override
   State<PostCard> createState() => _PostCardState();
@@ -52,6 +54,13 @@ class _PostCardState extends State<PostCard> {
     });
   }
 
+  void _toggleSave() {
+    setState(() {
+      widget.post.isSaved =
+          !widget.post.isSaved; // Directly toggle the post's saved state
+    });
+  }
+
   void _showImage(BuildContext context, String imagePath) {
     showDialog(
       context: context,
@@ -65,6 +74,7 @@ class _PostCardState extends State<PostCard> {
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
@@ -83,14 +93,77 @@ class _PostCardState extends State<PostCard> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Join'),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.deepOrange),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                  ),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text('Join'),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.deepOrange),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                      ),
+                    ),
+                    PopupMenuButton<String>(
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuEntry<String>>[
+                        PopupMenuItem<String>(
+                          value: 'save',
+                          child: ListTile(
+                            leading: Icon(widget.post.isSaved
+                                ? Icons.bookmark
+                                : Icons.bookmark_border), // Icon for Save
+                            title: Text('Save'),
+                          ),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'report',
+                          child: ListTile(
+                            leading: Icon(Icons.flag), // Icon for Report
+                            title: Text('Report'),
+                          ),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'block_account',
+                          child: ListTile(
+                            leading:
+                                Icon(Icons.block), // Icon for Block Account
+                            title: Text('Block Account'),
+                          ),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'hide',
+                          child: ListTile(
+                            leading:
+                                Icon(Icons.visibility_off), // Icon for Hide
+                            title: Text('Hide'),
+                          ),
+                        ),
+                      ],
+                      onSelected: (String value) {
+                        // Handle menu item selection
+                        switch (value) {
+                          case 'save':
+                            _toggleSave();
+                            // Handle save action
+                            break;
+                          case 'report':
+                            // Handle report action
+                            break;
+                          case 'block_account':
+                            // Handle blocked account action
+                            break;
+                          case 'hide':
+                            widget.onHide();
+                            // Handle hide action
+                            break;
+                          default:
+                            break;
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

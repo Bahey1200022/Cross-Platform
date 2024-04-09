@@ -22,6 +22,17 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
   final int _selectedIndex = 0;
   String _selectedPage = 'Home';
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  List<Post>? postsToShow;
+  Set<String> hiddenPostIds = Set();
+  @override
+  void initState() {
+    super.initState();
+    widget.homescreenController.loadPosts().then((posts) {
+      if (mounted) {
+        setState(() => postsToShow = posts);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,26 +100,40 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         // Add end drawer ////to be fixed
         user: widget.homescreenController.getUser(),
       ),
-      body: FutureBuilder<List<Post>>(
-        future: widget.homescreenController.loadPosts(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text("Error loading posts"));
-          } else if (snapshot.hasData) {
-            final postsToShow =
-                _selectedPage == 'Home' ? snapshot.data! : snapshot.data!;
-            return ListView.builder(
-              itemCount: postsToShow.length,
-              itemBuilder: (context, index) =>
-                  PostCard(post: postsToShow[index]), // Corrected line
-            );
-          } else {
-            return const Center(child: Text('No posts found'));
-          }
-        },
-      ),
+      body: postsToShow == null
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: postsToShow!.length,
+              itemBuilder: (context, index) {
+                final post = postsToShow![index];
+                if (hiddenPostIds.contains(post.id)) {
+                  // If post is hidden, show an Undo button
+                  return Card(
+                    child: ListTile(
+                      title: Text('Post hidden'),
+                      trailing: IconButton(
+                        icon: Icon(Icons.undo),
+                        onPressed: () {
+                          setState(() {
+                            hiddenPostIds.remove(post.id); // Unhide the post
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                } else {
+                  // Show the post
+                  return PostCard(
+                    post: post,
+                    onHide: () {
+                      setState(() {
+                        hiddenPostIds.add(post.id); // Hide the post
+                      });
+                    },
+                  );
+                }
+              },
+            ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
       ),
