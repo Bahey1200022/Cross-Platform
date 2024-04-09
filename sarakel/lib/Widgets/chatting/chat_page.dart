@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/models/user.dart';
-import '../drawers/community_list.dart';
+import '../drawers/community_drawer/community_list.dart';
 import '../drawers/profile_drawer.dart';
 import '../home/widgets/app_bar.dart';
 import '../home/widgets/bottom_bar.dart';

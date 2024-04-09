@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:sarakel/constants.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,8 +40,7 @@ class HomescreenController {
   Future<List<Community>> loadCommunities() async {
     try {
       // Make a GET request to fetch the JSON data from the server
-      var response =
-          await http.get(Uri.parse('http://192.168.34.134:3000/communities'));
+      var response = await http.get(Uri.parse('$MOCK_URL/communities'));
 
       // Check if the request was successful (status code 200)
       if (response.statusCode == 200) {
@@ -83,8 +83,7 @@ class HomescreenController {
 
   Future<List<Post>> loadPosts() async {
     try {
-      var response =
-          await http.get(Uri.parse('http://192.168.34.134:3000/posts'));
+      var response = await http.get(Uri.parse('$MOCK_URL/posts'));
       if (response.statusCode == 200) {
         List<dynamic> jsonData = json.decode(response.body);
 

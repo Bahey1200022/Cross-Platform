@@ -3,8 +3,8 @@ import 'package:sarakel/models/community.dart';
 
 class CommunityProfilePage extends StatelessWidget {
   final Community community;
-
-  CommunityProfilePage({required this.community});
+  final String token;
+  CommunityProfilePage({required this.community, required this.token});
 
   @override
   Widget build(BuildContext context) {

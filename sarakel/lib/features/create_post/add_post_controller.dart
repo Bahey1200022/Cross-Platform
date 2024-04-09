@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:sarakel/constants.dart';
 
 class AddPostController {
   Future<void> addPost(String communityName, String communityId, String title,
       String body) async {
     try {
       if (title.trim().isNotEmpty && body.trim().isNotEmpty) {
-        final String apiUrl = 'http://192.168.34.134:3000/posts';
+        final String apiUrl = '$MOCK_URL/posts';
 
         final Map<String, String> headers = {
           'Content-Type': 'application/json'

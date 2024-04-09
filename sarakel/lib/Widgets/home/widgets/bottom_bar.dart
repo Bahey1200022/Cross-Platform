@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/chatting/chat_page.dart';
-import 'package:sarakel/Widgets/chatting/one_on_one.dart';
 import 'package:sarakel/Widgets/explore_communities/explore_communities.dart';
 import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
 import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/Widgets/inbox/inbox_page.dart';
-import 'package:sarakel/features/create_circle/create_circle.dart';
 import 'package:sarakel/features/create_post/create_post.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
