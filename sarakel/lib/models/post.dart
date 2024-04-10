@@ -2,6 +2,7 @@ import 'dart:ui';
 
 class Post {
   final String communityName;
+  final String id;
   final String? duration; // Added duration property
   int upVotes;
   final String? imagePath;
@@ -14,10 +15,13 @@ class Post {
   final Image? image;
   bool isUpvoted;
   bool isDownvoted;
+  bool isSaved;
   Post(
       {required this.communityName,
+      required this.id,
       this.duration, // Initialize duration
       this.upVotes = 0,
+      this.isSaved = false,
       this.isUpvoted = false,
       this.isDownvoted = false,
       this.comments,

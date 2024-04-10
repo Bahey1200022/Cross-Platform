@@ -88,6 +88,7 @@ class HomescreenController {
         List<Post> posts = jsonData.map((p) {
           return Post(
             communityName: p['communityName'],
+            id: p['id'],
             duration: p['duration'],
             upVotes: p['upVotes'] ?? 0, // Provide a default value if null
             downVotes: p['downVotes'] ?? 0, // Provide a default value if null
