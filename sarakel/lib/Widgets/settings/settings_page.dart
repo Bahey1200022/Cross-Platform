@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'settings_controller.dart';
 
 class SettingsPage extends StatefulWidget {
   final String token;
-
-  const SettingsPage({required this.token});
+  final Settings settings;
+  const SettingsPage({required this.token, required this.settings});
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -32,16 +33,20 @@ class _SettingsPageState extends State<SettingsPage> {
             onTap: () {},
           ),
           ListTile(
-            title: Text('Add password'),
+            title: Text('Change password'),
             onTap: () {},
           ),
           ListTile(
             title: Text('Country'),
-            onTap: () {},
+            onTap: () {
+              widget.settings.country(context);
+            },
           ),
           ListTile(
             title: Text('Gender'),
-            onTap: () {},
+            onTap: () {
+              widget.settings.gender(context, widget.token);
+            },
           ),
           ListTile(
             title: Text('Connected accounts'),
@@ -49,7 +54,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             title: Text('Google'),
-            trailing: swicthval
+            trailing: widget.settings.googleConnected(widget.token)
                 ? Icon(
                     Icons.check,
                     color: Colors.green,
@@ -77,9 +82,6 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             title: Text('Manage 18+ content'),
             tileColor: Colors.grey[200], // Set tile color to light grey
-          ),
-          ListTile(
-            title: Text('Show NSFW content'),
             trailing: Switch(
               value: swicthval,
               onChanged: (bool value) {
@@ -87,6 +89,18 @@ class _SettingsPageState extends State<SettingsPage> {
                   swicthval = value;
                 });
                 print(swicthval);
+              },
+            ),
+          ),
+          ListTile(
+            title: Text('Show NSFW content'),
+            trailing: Switch(
+              value: widget.settings.prefs?.showNSFW ?? false,
+              onChanged: (bool value) {
+                setState(() {
+                  widget.settings.NSFW();
+                  swicthval = value;
+                });
               },
             ),
           ),
@@ -119,7 +133,16 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             title: Text('Logout'),
             onTap: () {
-              // Navigate to about page
+              widget.settings.logout(context);
+            },
+          ),
+          ListTile(
+            tileColor: Colors.grey[200], // Set tile color to light grey
+          ),
+          ListTile(
+            title: Text('Delete account'),
+            onTap: () {
+              widget.settings.deleteAccount(context, widget.token);
             },
           ),
         ],

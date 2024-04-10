@@ -50,6 +50,7 @@ dependencies:
   socket_io_client: ^2.0.3+1
   flutter_typeahead: ^3.2.1
   search_autocomplete: ^0.0.6
+  country_list_pick: ^1.0.1+6
   
 dev_dependencies:
   flutter_test:
