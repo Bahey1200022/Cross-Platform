@@ -234,5 +234,40 @@
       "comments": "0",
       "communityName": "c/demoooo"
     }
+  ],
+  "savedPosts": [
+    {
+      "id": "472d",
+      "title": "hi",
+      "content": "Did you check out the brand new feature!!!!",
+      "communityId": "1",
+      "duration": "4h",
+      "upVotes": 120,
+      "downvotes": 10,
+      "comments": "30",
+      "communityName": "c/flutter"
+    },
+    {
+      "id": "9067",
+      "title": "hi",
+      "content": "Dart 2.12 brings sound null safety, improving your codes reliability and performance.",
+      "communityId": "2",
+      "duration": "23h",
+      "upVotes": 75,
+      "downvotes": 5,
+      "comments": "10",
+      "communityName": "c/dart"
+    },
+    {
+      "id": "da56",
+      "title": "Liverpool",
+      "content": "Liverpool is the best team in England.",
+      "communityId": "3",
+      "duration": "2d",
+      "upVotes": 200,
+      "downvotes": 20,
+      "comments": "50",
+      "communityName": "c/Football"
+    }
   ]
 }
