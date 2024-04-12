@@ -89,20 +89,21 @@ class Settings {
       if (response.statusCode == 200) {
         // Decode the JSON response into a list
         var jsonData = json.decode(response.body);
+        var settings = jsonData['settings'];
+        print(settings['showMatureContent']);
 
         // Map the community data to Community objects
-
         return UserPreferences(
-          showNSFW: jsonData['showMatureContent'],
-          showInSearch: jsonData['showInSearch'],
-          personalizeAds: jsonData['personalizeAds'],
-          dating: jsonData['dating'],
-          alcahol: jsonData['alcahol'],
-          gambling: jsonData['gambling'],
-          pregnancyAndParenting: jsonData['pregnancyAndParenting'],
-          weightLoss: jsonData['weightLoss'],
-          privateMessagesEmail: jsonData['privateMessagesEmail'],
-          chatMessages: jsonData['chatMessages'],
+          showNSFW: settings['showMatureContent'],
+          showInSearch: settings['showInSearch'],
+          personalizeAds: settings['personalizeAds'],
+          dating: settings['dating'],
+          alcahol: settings['alcohol'],
+          gambling: settings['gambling'],
+          pregnancyAndParenting: settings['pregnancyAndParenting'],
+          weightLoss: settings['weightLoss'],
+          privateMessagesEmail: settings['privateMessagesEmail'],
+          chatMessages: settings['chatMessages'],
         );
       } else {
         // Return an empty list if the response status code is not 200
@@ -137,5 +138,33 @@ class Settings {
     }
   }
 
-  void NSFW() {}
+  // Make a patch request to update the user's preferences
+  void change(String prefe, bool v) async {
+    try {
+      // Create a map of the preferences you want to update
+      var updatedPrefs = {
+        prefe: v,
+        // Add other preferences here
+      };
+      var data = json.encode(updatedPrefs);
+      print(data);
+      // Make a PATCH request to update the user's preferences
+      var response = await http.patch(
+        Uri.parse('$BASE_URL/api/v1/me/prefs/?'),
+        headers: {'Authorization': 'Bearer $token'},
+        body: data,
+      );
+      // Check if the request was successful (status code 200)
+      if (response.statusCode == 200) {
+        // Preferences updated successfully
+        print(response.body);
+        print('Preferences updated successfully');
+      } else {
+        // Failed to update preferences
+        print('Failed to update preferences');
+      }
+    } catch (e) {
+      print('Error updating prefs: $e');
+    }
+  }
 }

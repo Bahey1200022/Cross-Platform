@@ -12,7 +12,18 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  var swicthval = true;
+  List swicthval = [
+    false,
+    true,
+    true,
+    false,
+    true,
+    true,
+    false,
+    true,
+    true,
+    false
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +85,31 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
-            title: Text('Notifications'),
+            title: Text('Chat messages'),
+            trailing: Switch(
+              value: swicthval[0],
+              onChanged: (bool value) {
+                setState(() {
+                  swicthval[0] = value;
+                });
+                widget.settings.change("chatMessages", swicthval[0]);
+              },
+            ),
+            onTap: () {
+              // Navigate to notifications settings page
+            },
+          ),
+          ListTile(
+            title: Text('Private emails'),
+            trailing: Switch(
+              value: swicthval[1],
+              onChanged: (bool value) {
+                setState(() {
+                  swicthval[1] = value;
+                });
+                widget.settings.change("privateMessagesEmail", swicthval[1]);
+              },
+            ),
             onTap: () {
               // Navigate to notifications settings page
             },
@@ -82,25 +117,110 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             title: Text('Manage 18+ content'),
             tileColor: Colors.grey[200], // Set tile color to light grey
-            trailing: Switch(
-              value: swicthval,
-              onChanged: (bool value) {
-                setState(() {
-                  swicthval = value;
-                });
-                print(swicthval);
-              },
-            ),
           ),
           ListTile(
             title: Text('Show NSFW content'),
             trailing: Switch(
-              value: widget.settings.prefs?.showNSFW ?? false,
+              value: swicthval[2],
               onChanged: (bool value) {
                 setState(() {
-                  widget.settings.NSFW();
-                  swicthval = value;
+                  swicthval[2] = value;
                 });
+                widget.settings.change("showMatureContent", swicthval[2]);
+              },
+            ),
+          ),
+          ListTile(
+            title: Text('General Preferences'),
+            tileColor: Colors.grey[200], // Set tile color to light grey
+            onTap: () {},
+          ),
+          ListTile(
+            title: Text('Show in search results'),
+            trailing: Switch(
+              value: swicthval[3],
+              onChanged: (bool value) {
+                setState(() {
+                  swicthval[3] = value;
+                });
+                widget.settings.change("showInSearch", swicthval[3]);
+              },
+            ),
+          ),
+          ListTile(
+            title: Text('Personalize ads'),
+            trailing: Switch(
+              value: swicthval[4],
+              onChanged: (bool value) {
+                setState(() {
+                  swicthval[4] = value;
+                });
+                widget.settings.change("personalizeAds", swicthval[4]);
+              },
+            ),
+          ),
+          ListTile(
+            title: Text('Topics Preferences'),
+            tileColor: Colors.grey[200], // Set tile color to light grey
+            onTap: () {},
+          ),
+          ListTile(
+            title: Text('Dating'),
+            trailing: Switch(
+              value: swicthval[5],
+              onChanged: (bool value) {
+                setState(() {
+                  swicthval[5] = value;
+                });
+                widget.settings.change("dating", swicthval[5]);
+              },
+            ),
+          ),
+          ListTile(
+            title: Text('Alcahol'),
+            trailing: Switch(
+              value: swicthval[6],
+              onChanged: (bool value) {
+                setState(() {
+                  swicthval[6] = value;
+                });
+                widget.settings.change("alcohol", swicthval[6]);
+              },
+            ),
+          ),
+          ListTile(
+            title: Text('Gambling'),
+            trailing: Switch(
+              value: swicthval[7],
+              onChanged: (bool value) {
+                setState(() {
+                  swicthval[7] = value;
+                });
+                widget.settings.change("gambling", swicthval[7]);
+              },
+            ),
+          ),
+          ListTile(
+            title: Text('Pregnancy and Parenting'),
+            trailing: Switch(
+              value: swicthval[8],
+              onChanged: (bool value) {
+                setState(() {
+                  swicthval[8] = value;
+                });
+                widget.settings.change("pregnancyAndParenting", swicthval[8]);
+              },
+            ),
+          ),
+          ListTile(
+            title: Text('Weight Loss'),
+            trailing: Switch(
+              value: swicthval[9],
+              onChanged: (bool value) {
+                setState(() {
+                  swicthval[9] = value;
+                });
+                widget.settings.change("weightLoss", swicthval[9]);
               },
             ),
           ),
