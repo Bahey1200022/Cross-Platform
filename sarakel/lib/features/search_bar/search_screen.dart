@@ -40,8 +40,8 @@ class sarakelSearch extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final List<String> suggestionList = query.isEmpty
-        ? searchSerkel.demo
-        : searchSerkel.demo.where((p) => p.startsWith(query)).toList();
+        ? searchSerkel.suggestions
+        : searchSerkel.suggestions.where((p) => p.startsWith(query)).toList();
 
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(

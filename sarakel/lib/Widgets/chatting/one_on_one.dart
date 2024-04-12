@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/constants.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatPage extends StatefulWidget {
   final String token;
@@ -13,8 +15,29 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  late IO.Socket socket;
   final List messages = [];
+
   final TextEditingController _controller = TextEditingController();
+
+  void Connect() {
+    socket = IO.io('$SOCKET_URL', <String, dynamic>{
+      "transports": ['websocket'],
+      'autoConnect': false,
+    });
+    socket.connect();
+    socket.onConnect((data) {
+      print('Connected');
+    });
+    socket.emit('/test', widget.sender);
+  }
+
+  @override
+  void initState() {
+    Connect();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

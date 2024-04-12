@@ -1,13 +1,4 @@
 class SearchSerkel {
-  List<String> demo = [
-    'Apple',
-    'Banana',
-    'Orange',
-    'Mango',
-    'Grape',
-    'Pineapple',
-    'Blueberry',
-    'Lemon',
-    'Coconut'
-  ];
+  List<String> suggestions;
+  SearchSerkel({this.suggestions = const []});
 }
