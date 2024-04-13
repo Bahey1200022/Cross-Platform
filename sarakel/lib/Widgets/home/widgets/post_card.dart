@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
 import '../../../models/post.dart';
+import 'package:flutter/services.dart';
 
 class PostCard extends StatefulWidget {
   final Post post;
@@ -58,6 +59,19 @@ class _PostCardState extends State<PostCard> {
     setState(() {
       widget.post.isSaved =
           !widget.post.isSaved; // Directly toggle the post's saved state
+    });
+  }
+
+  void _sharePost() {
+    setState(() {
+      widget.post.shares++; // Increment the share count
+    });
+    String link =
+        "http://192.168.1.10:3000/post/${widget.post.id}"; // Generate your link
+    Clipboard.setData(ClipboardData(text: link)).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Link copied to clipboard!")),
+      );
     });
   }
 
@@ -223,7 +237,7 @@ class _PostCardState extends State<PostCard> {
                   children: [
                     IconButton(
                       icon: Icon(Icons.share),
-                      onPressed: () {},
+                      onPressed: _sharePost,
                     ),
                     Text('${widget.post.shares}'),
                   ],

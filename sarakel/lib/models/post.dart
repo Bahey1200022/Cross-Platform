@@ -7,7 +7,7 @@ class Post {
   int upVotes;
   final String? imagePath;
   final String? comments;
-  final String? shares;
+  int shares;
   final String content;
   final String communityId;
   final String title;
@@ -25,7 +25,7 @@ class Post {
       this.isUpvoted = false,
       this.isDownvoted = false,
       this.comments,
-      this.shares,
+      this.shares = 0,
       this.imagePath,
       required this.content,
       required this.communityId,
