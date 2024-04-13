@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sarakel/Widgets/inbox/compose.dart';
 import '../drawers/community_drawer/community_list.dart';
 import '../drawers/profile_drawer.dart';
 import '../../models/user.dart';
@@ -35,7 +36,17 @@ class _InboxSectionState extends State<InboxSection> {
         user: User(username: jwtdecodedtoken['username'], token: widget.token),
       ),
       body: Center(
-        child: Text('Inbox Page is under construction'),
+        child: ElevatedButton.icon(
+          onPressed: () {
+            // Add your button click logic here
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Compose(token: widget.token)));
+          },
+          icon: Icon(Icons.add),
+          label: Text('Compose Message'),
+        ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,

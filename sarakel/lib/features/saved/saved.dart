@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/models/post.dart';
-import '../../Widgets/home/controllers/saved_controller.dart';
-import '../../Widgets/home/widgets/post_card.dart'; 
+import 'saved_controller.dart';
+import '../../Widgets/home/widgets/post_card.dart';
 
 class SavedScreen extends StatefulWidget {
   @override
@@ -38,11 +38,14 @@ class _SavedScreenState extends State<SavedScreen> {
                 // Display both the post title and the PostCard widget
                 return Column(
                   children: [
-                    ListTile(
-                      title: Text(snapshot.data![index].title),
-                      // Add onTap handler to view full post details if needed
-                    ),
-                    PostCard(post: snapshot.data![index], onHide: () {  },), // Display PostCard
+                    // ListTile(
+                    //   title: Text(snapshot.data![index].title),
+                    //   // Add onTap handler to view full post details if needed
+                    // ),
+                    PostCard(
+                      post: snapshot.data![index],
+                      onHide: () {},
+                    ), // Display PostCard
                     Divider(), // Add a divider between posts
                   ],
                 );

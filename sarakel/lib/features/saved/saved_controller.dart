@@ -9,9 +9,10 @@ class SavedController {
       var response = await http.get(Uri.parse('$BASE_URL/subreddit/getBest'));
 
       if (response.statusCode == 200) {
-        List<dynamic> jsonData = json.decode(response.body);
+        var jsonData = json.decode(response.body);
+        List<dynamic> fetchedPosts = jsonData['data'];
 
-        List<Post> savedPosts = jsonData.map((p) {
+        List<Post> savedPosts = fetchedPosts.map((p) {
           return Post(
               communityName: p['communityName'],
               id: p['postId'],

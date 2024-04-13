@@ -82,7 +82,10 @@ class Settings {
       // Make a GET request to fetch the JSON data from the server
       var response = await http.get(
         Uri.parse('$BASE_URL/api/v1/me/prefs'),
-        headers: {'Authorization': 'Bearer $token'},
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
       );
 
       // Check if the request was successful (status code 200)
@@ -151,7 +154,10 @@ class Settings {
       // Make a PATCH request to update the user's preferences
       var response = await http.patch(
         Uri.parse('$BASE_URL/api/v1/me/prefs/?'),
-        headers: {'Authorization': 'Bearer $token'},
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
         body: data,
       );
       // Check if the request was successful (status code 200)
