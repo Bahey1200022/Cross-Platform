@@ -29,7 +29,12 @@ class _ChatPageState extends State<ChatPage> {
     socket.onConnect((data) {
       print('Connected');
     });
-    socket.emit('/test', widget.sender);
+    socket.emit('/signin', widget.sender);
+  }
+
+  void sendMessage(String message, String sender, String receiver) {
+    socket.emit('/message',
+        {"message": message, "sender": sender, "receiver": receiver});
   }
 
   @override
@@ -72,6 +77,8 @@ class _ChatPageState extends State<ChatPage> {
                             if (value.isNotEmpty) {
                               setState(() {
                                 messages.add(value);
+                                sendMessage(
+                                    value, widget.sender, widget.receiver);
                               });
                               _controller.clear(); // Clear the text field
                             }

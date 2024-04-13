@@ -17,10 +17,13 @@ io.on("connection", (socket) => {
     // clients[id] = socket;
     // console.log(clients);
   });
-  socket.on("message", (msg) => {
+  socket.on("/signin", (msg) => {
     console.log(msg);
     let targetId = msg.targetId;
     if (clients[targetId]) clients[targetId].emit("message", msg);
+  });
+  socket.on("/message", (msg) => {
+    console.log(msg);
   });
 });
 

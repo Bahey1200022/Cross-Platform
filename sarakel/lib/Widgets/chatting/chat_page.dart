@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sarakel/Widgets/chatting/chat_card.dart';
 import 'package:sarakel/Widgets/chatting/one_on_one.dart';
 import 'package:sarakel/models/user.dart';
 import '../drawers/community_drawer/community_list.dart';
@@ -24,7 +25,7 @@ class _ChatSection extends State<ChatSection> {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(widget.token);
-
+    print(jwtdecodedtoken);
     return Scaffold(
         key: _scaffoldKey, // Provide the GlobalKey to the Scaffold
 
@@ -40,20 +41,11 @@ class _ChatSection extends State<ChatSection> {
           user:
               User(username: jwtdecodedtoken['username'], token: widget.token),
         ),
-        body: const Center(child: Text('Live chat under construction')),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // Add your button's onPressed logic here
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ChatPage(
-                          sender: 'bahey',
-                          receiver: 'zyad',
-                          token: widget.token,
-                        )));
-          },
-          child: Icon(Icons.add),
+        body: ButtonCard(
+          receiver: 'zyad',
+          icon: Icon(Icons.person),
+          sender: jwtdecodedtoken['username'],
+          token: widget.token,
         ),
         bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: _selectedIndex,
