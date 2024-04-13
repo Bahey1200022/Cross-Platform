@@ -2,7 +2,7 @@
   "communities": [
     {
       "id": "demoooo",
-      "name": "demoooo",
+      "name": "c/demoooo",
       "type": "Public",
       "is18Plus": false,
       "description": "hii",
@@ -10,15 +10,15 @@
     },
     {
       "id": "demo2",
-      "name": "demo2",
+      "name": "c/demo2",
       "type": "Public",
-      "is18Plus": true,
+      "is18Plus": false,
       "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
       "description": "new circle"
     },
     {
       "id": "yalahwi",
-      "name": "yalahwi",
+      "name": "c/yalahwi",
       "type": "Public",
       "is18Plus": false,
       "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
@@ -26,24 +26,16 @@
     },
     {
       "id": "heloooo",
-      "name": "heloooo",
+      "name": "c/heloooo",
       "type": "Public",
-      "is18Plus": true,
+      "is18Plus": false,
       "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
       "description": "new circle"
     },
     {
       "id": "demo6",
-      "name": "demo6",
+      "name": "c/demo6",
       "type": "Restricted",
-      "is18Plus": true,
-      "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
-      "description": "new circle"
-    },
-    {
-      "id": "cufe",
-      "name": "cufe",
-      "type": "Public",
       "is18Plus": true,
       "image": "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
       "description": "new circle"
@@ -55,68 +47,68 @@
       "email": "b@gmail.com",
       "password": "hhhhhhhhhhhhhh",
       "token": "true",
-      "username": "ty"
+      "username": "u/ty"
     },
     {
       "id": "818a",
       "email": "rabie@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "rabie"
+      "username": "u/rabie"
     },
     {
       "id": "95a6",
       "email": "k@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "lover"
+      "username": "u/lover"
     },
     {
       "id": "564a",
       "email": "ashraf@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "killer"
+      "username": "u/killer"
     },
     {
       "id": "0d4f",
       "email": "hafez@gmail.com",
       "password": "12345678",
       "token": "true",
-      "username": "hafez"
+      "username": "u/hafez"
     },
     {
       "id": "855b",
       "email": "k@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "tony"
+      "username": "u/tony"
     },
     {
       "id": "cf14",
       "email": "hafez@gmail.com",
       "password": "12345678",
       "token": "true",
-      "username": "hafez2"
+      "username": "u/hafez2"
     },
     {
       "id": "e1c2",
       "email": "h@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "demo2"
+      "username": "u/demo2"
     },
     {
       "id": "ff78",
       "email": "h@gmail.com",
       "password": "1234567890",
       "token": "true",
-      "username": "kkk"
+      "username": "u/kkk"
     }
   ],
   "posts": [
     {
-      "communityName": "flutter",
+      "communityName": "c/flutter",
       "duration": "4h",
       "upVotes": 120,
       "downVotes": 10,
@@ -129,7 +121,7 @@
       "imagePath": "assets/flutter.jpeg"
     },
     {
-      "communityName": "dart",
+      "communityName": "c/dart",
       "duration": "23h",
       "upVotes": 75,
       "downVotes": 5,
@@ -142,7 +134,7 @@
       "imagePath": null
     },
     {
-      "communityName": "Football",
+      "communityName": "c/Football",
       "duration": "2d",
       "upVotes": 200,
       "downVotes": 20,
@@ -155,7 +147,7 @@
       "imagePath": "assets/Liverpool_FC.jpg"
     },
     {
-      "communityName": "ios",
+      "communityName": "c/ios",
       "duration": "1d",
       "upVotes": 150,
       "downVotes": 15,
@@ -177,7 +169,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "batman",
+      "communityName": "c/batman",
       "imagePath": "assets/batman.jpeg"
     },
     {
@@ -190,7 +182,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "miami heat",
+      "communityName": "c/miami heat",
       "imagePath": null
     },
     {
@@ -203,7 +195,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "BeFit",
+      "communityName": "c/BeFit",
       "imagePath": "assets/gym.jpg"
     },
     {
@@ -216,7 +208,7 @@
       "shares": "0",
       "downvotes": 1,
       "comments": "0",
-      "communityName": "demoooo"
+      "communityName": "c/demoooo"
     },
     {
       "id": "e62c",
@@ -228,7 +220,7 @@
       "shares": "0",
       "downvotes": 0,
       "comments": "0",
-      "communityName": "demo2"
+      "communityName": "c/demo2"
     },
     {
       "id": "57a3",
@@ -240,7 +232,42 @@
       "shares": "0",
       "downvotes": 0,
       "comments": "0",
-      "communityName": "demoooo"
+      "communityName": "c/demoooo"
+    }
+  ],
+  "savedPosts": [
+    {
+      "id": "472d",
+      "title": "hi",
+      "content": "Did you check out the brand new feature!!!!",
+      "communityId": "1",
+      "duration": "4h",
+      "upVotes": 120,
+      "downvotes": 10,
+      "comments": "30",
+      "communityName": "c/flutter"
+    },
+    {
+      "id": "9067",
+      "title": "hi",
+      "content": "Dart 2.12 brings sound null safety, improving your codes reliability and performance.",
+      "communityId": "2",
+      "duration": "23h",
+      "upVotes": 75,
+      "downvotes": 5,
+      "comments": "10",
+      "communityName": "c/dart"
+    },
+    {
+      "id": "da56",
+      "title": "Liverpool",
+      "content": "Liverpool is the best team in England.",
+      "communityId": "3",
+      "duration": "2d",
+      "upVotes": 200,
+      "downvotes": 20,
+      "comments": "50",
+      "communityName": "c/Football"
     }
   ]
 }
