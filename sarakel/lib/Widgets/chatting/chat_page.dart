@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/Widgets/chatting/chat_card.dart';
-import 'package:sarakel/Widgets/chatting/one_on_one.dart';
 import 'package:sarakel/models/user.dart';
 import '../drawers/community_drawer/community_list.dart';
 import '../drawers/profile_drawer.dart';
@@ -46,6 +45,7 @@ class _ChatSection extends State<ChatSection> {
           icon: Icon(Icons.person),
           sender: jwtdecodedtoken['username'],
           token: widget.token,
+          live: true,
         ),
         bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: _selectedIndex,
