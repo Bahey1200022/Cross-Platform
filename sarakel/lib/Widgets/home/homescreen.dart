@@ -23,7 +23,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
   String _selectedPage = 'Home';
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   List<Post>? postsToShow;
-  Set<String> hiddenPostIds = Set();
+  Set<int> hiddenPostIds = Set();
   @override
   void initState() {
     super.initState();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sarakel/Widgets/chatting/one_on_one.dart';
 import 'package:sarakel/models/user.dart';
 import '../drawers/community_drawer/community_list.dart';
 import '../drawers/profile_drawer.dart';
@@ -39,7 +40,21 @@ class _ChatSection extends State<ChatSection> {
           user:
               User(username: jwtdecodedtoken['username'], token: widget.token),
         ),
-        body: const Center(child: Text('hi')),
+        body: const Center(child: Text('Live chat under construction')),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Add your button's onPressed logic here
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ChatPage(
+                          sender: 'bahey',
+                          receiver: 'zyad',
+                          token: widget.token,
+                        )));
+          },
+          child: Icon(Icons.add),
+        ),
         bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: _selectedIndex,
           token: widget.token,

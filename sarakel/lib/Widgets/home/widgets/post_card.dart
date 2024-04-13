@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
 import '../../../models/post.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http; //modified Hafez
+import 'dart:convert'; //modified Hafez
 
 class PostCard extends StatefulWidget {
   final Post post;
@@ -161,6 +163,7 @@ class _PostCardState extends State<PostCard> {
                           case 'save':
                             _toggleSave();
                             // Handle save action
+                            _savePost();
                             break;
                           case 'report':
                             // Handle report action
@@ -248,5 +251,44 @@ class _PostCardState extends State<PostCard> {
         ),
       ),
     );
+  }
+
+  //Save post function
+  void _savePost() async {
+    try {
+      final String apiUrl = 'http://localhost:3000/savedPosts';
+
+      final Map<String, String> headers = {'Content-Type': 'application/json'};
+
+      final Map<String, dynamic> postData = {
+        'title': widget.post.title,
+        'content': widget.post.content,
+        'communityId': widget.post.communityId,
+        'duration': widget.post.duration,
+        'upVotes': widget.post.upVotes,
+        'downvotes': widget.post.downVotes,
+        'comments': widget.post.comments,
+        'communityName': widget.post.communityName
+
+        // Include other necessary data
+      };
+
+      final String postJson = jsonEncode(postData);
+
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: postJson,
+      );
+
+      if (response.statusCode == 201) {
+        print('Post saved successfully');
+      } else {
+        print('Failed to save post. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Error saving post: $e');
+    }
   }
 }
