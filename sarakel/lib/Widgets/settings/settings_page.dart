@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sarakel/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'settings_controller.dart';
+import 'package:http/http.dart' as http;
 
 class SettingsPage extends StatefulWidget {
   final String token;
@@ -12,18 +17,40 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  List swicthval = [
-    false,
-    true,
-    true,
-    false,
-    true,
-    true,
-    false,
-    true,
-    true,
-    false
-  ];
+  var swicthval1 = {};
+  List swicthval = [true, true, true, true, true, true, true, true, true, true];
+  Future<void> fetchSwitchValues() async {
+    // Make an API call to fetch the switch values from the backend
+    // Replace 'apiEndpoint' with the actual endpoint URL
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    var response = await http.get(
+      Uri.parse('$BASE_URL/api/v1/me/prefs'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      // Parse the response body and assign the switch values to the 'swicthval' list
+      final data = jsonDecode(response.body);
+      setState(() {
+        swicthval1 = data['settings'];
+      });
+      print(swicthval1);
+      print(swicthval1.length);
+      print(swicthval1['showMatureContent']);
+    } else {
+      // Handle the error case when the API call fails
+      print('Failed to fetch switch values: ${response.statusCode}');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSwitchValues();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,12 +114,13 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             title: Text('Chat messages'),
             trailing: Switch(
-              value: swicthval[0],
+              value: swicthval1['chatMessages'] ?? false,
               onChanged: (bool value) {
                 setState(() {
-                  swicthval[0] = value;
+                  swicthval1['chatMessages'] = value;
                 });
-                widget.settings.change("chatMessages", swicthval[0]);
+                widget.settings
+                    .change("chatMessages", swicthval1['chatMessages']);
               },
             ),
             onTap: () {
@@ -102,12 +130,13 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             title: Text('Private emails'),
             trailing: Switch(
-              value: swicthval[1],
+              value: swicthval1['privateMessagesEmail'] ?? false,
               onChanged: (bool value) {
                 setState(() {
-                  swicthval[1] = value;
+                  swicthval1['privateMessagesEmail'] = value;
                 });
-                widget.settings.change("privateMessagesEmail", swicthval[1]);
+                widget.settings.change(
+                    "privateMessagesEmail", swicthval1['privateMessagesEmail']);
               },
             ),
             onTap: () {
@@ -121,12 +150,13 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             title: Text('Show NSFW content'),
             trailing: Switch(
-              value: swicthval[2],
+              value: swicthval1['showMatureContent'] ?? false,
               onChanged: (bool value) {
                 setState(() {
-                  swicthval[2] = value;
+                  swicthval1['showMatureContent'] = value;
                 });
-                widget.settings.change("showMatureContent", swicthval[2]);
+                widget.settings.change(
+                    "showMatureContent", swicthval1['showMatureContent']);
               },
             ),
           ),
@@ -138,24 +168,26 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             title: Text('Show in search results'),
             trailing: Switch(
-              value: swicthval[3],
+              value: swicthval1['showInSearch'] ?? false,
               onChanged: (bool value) {
                 setState(() {
-                  swicthval[3] = value;
+                  swicthval1['showInSearch'] = value;
                 });
-                widget.settings.change("showInSearch", swicthval[3]);
+                widget.settings
+                    .change("showInSearch", swicthval1['showInSearch']);
               },
             ),
           ),
           ListTile(
             title: Text('Personalize ads'),
             trailing: Switch(
-              value: swicthval[4],
+              value: swicthval1['personalizeAds'] ?? false,
               onChanged: (bool value) {
                 setState(() {
-                  swicthval[4] = value;
+                  swicthval1['personalizeAds'] = value;
                 });
-                widget.settings.change("personalizeAds", swicthval[4]);
+                widget.settings
+                    .change("personalizeAds", swicthval1['personalizeAds']);
               },
             ),
           ),
@@ -167,60 +199,61 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             title: Text('Dating'),
             trailing: Switch(
-              value: swicthval[5],
+              value: swicthval1['dating'] ?? false,
               onChanged: (bool value) {
                 setState(() {
-                  swicthval[5] = value;
+                  swicthval1['dating'] = value;
                 });
-                widget.settings.change("dating", swicthval[5]);
+                widget.settings.change("dating", swicthval1['dating']);
               },
             ),
           ),
           ListTile(
             title: Text('Alcahol'),
             trailing: Switch(
-              value: swicthval[6],
+              value: swicthval1['alcohol'] ?? false,
               onChanged: (bool value) {
                 setState(() {
-                  swicthval[6] = value;
+                  swicthval1['alcohol'] = value;
                 });
-                widget.settings.change("alcohol", swicthval[6]);
+                widget.settings.change("alcohol", swicthval1['alcohol']);
               },
             ),
           ),
           ListTile(
             title: Text('Gambling'),
             trailing: Switch(
-              value: swicthval[7],
+              value: swicthval1['gambling'] ?? false,
               onChanged: (bool value) {
                 setState(() {
-                  swicthval[7] = value;
+                  swicthval1['gambling'] = value;
                 });
-                widget.settings.change("gambling", swicthval[7]);
+                widget.settings.change("gambling", swicthval1['gambling']);
               },
             ),
           ),
           ListTile(
             title: Text('Pregnancy and Parenting'),
             trailing: Switch(
-              value: swicthval[8],
+              value: swicthval1['pregnancyAndParenting'] ?? false,
               onChanged: (bool value) {
                 setState(() {
-                  swicthval[8] = value;
+                  swicthval1['pregnancyAndParenting'] = value;
                 });
-                widget.settings.change("pregnancyAndParenting", swicthval[8]);
+                widget.settings.change("pregnancyAndParenting",
+                    swicthval1['pregnancyAndParenting']);
               },
             ),
           ),
           ListTile(
             title: Text('Weight Loss'),
             trailing: Switch(
-              value: swicthval[9],
+              value: swicthval1['weightLoss'] ?? false,
               onChanged: (bool value) {
                 setState(() {
-                  swicthval[9] = value;
+                  swicthval1['weightLoss'] = value;
                 });
-                widget.settings.change("weightLoss", swicthval[9]);
+                widget.settings.change("weightLoss", swicthval1['weightLoss']);
               },
             ),
           ),
