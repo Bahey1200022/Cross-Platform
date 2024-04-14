@@ -21,7 +21,7 @@ class UserController {
     final response =
         await http.get(Uri.parse('$BASE_URL/api/username_available/$username'));
 
-    if (response.statusCode == 400) {
+    if (response.statusCode == 200) {
       return false;
     } else {
       return true;
