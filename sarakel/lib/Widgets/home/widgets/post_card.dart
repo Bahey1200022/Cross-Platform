@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/explore_communities/join_button.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
 import '../../../models/post.dart';
 import 'package:http/http.dart' as http; //modified Hafez
-import 'dart:convert';  //modified Hafez
+import 'dart:convert'; //modified Hafez
 
 class PostCard extends StatefulWidget {
   final Post post;
@@ -97,15 +98,10 @@ class _PostCardState extends State<PostCard> {
                 ),
                 Row(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Join'),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.deepOrange),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                      ),
+                    JoinButton(
+                      onPressed: () {
+                        // Add your logic here for joining or leaving the community
+                      },
                     ),
                     PopupMenuButton<String>(
                       itemBuilder: (BuildContext context) =>
@@ -174,7 +170,8 @@ class _PostCardState extends State<PostCard> {
             Text(widget.post.content,
                 style: TextStyle(fontSize: 14)), // Display post content
             SizedBox(height: 8), // Add space for the image
-            if (widget.post.imagePath != null) // Conditional image display
+            if (widget.post.imagePath != null &&
+                widget.post.imagePath != "") // Conditional image display
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(
@@ -187,7 +184,7 @@ class _PostCardState extends State<PostCard> {
                     ),
                   );
                 },
-                child: Image.asset(widget.post.imagePath!),
+                child: Image(image: NetworkImage(widget.post.imagePath!)),
               ),
 
             SizedBox(height: 8), // Add space before the bottom row
@@ -239,44 +236,42 @@ class _PostCardState extends State<PostCard> {
     );
   }
 
-    //Save post function
+  //Save post function
   void _savePost() async {
-  try {
-    final String apiUrl = 'http://localhost:3000/savedPosts';
+    try {
+      final String apiUrl = 'http://localhost:3000/savedPosts';
 
-    final Map<String, String> headers = {
-      'Content-Type': 'application/json'
-    };
+      final Map<String, String> headers = {'Content-Type': 'application/json'};
 
-    final Map<String, dynamic> postData = {
-      'title': widget.post.title,
-      'content': widget.post.content,
-      'communityId': widget.post.communityId,
-      'duration': widget.post.duration,
-      'upVotes': widget.post.upVotes,
-      'downvotes': widget.post.downVotes,
-      'comments': widget.post.comments,
-      'communityName': widget.post.communityName
+      final Map<String, dynamic> postData = {
+        'title': widget.post.title,
+        'content': widget.post.content,
+        'communityId': widget.post.communityId,
+        'duration': widget.post.duration,
+        'upVotes': widget.post.upVotes,
+        'downvotes': widget.post.downVotes,
+        'comments': widget.post.comments,
+        'communityName': widget.post.communityName
 
-      // Include other necessary data
-    };
+        // Include other necessary data
+      };
 
-    final String postJson = jsonEncode(postData);
+      final String postJson = jsonEncode(postData);
 
-    final http.Response response = await http.post(
-      Uri.parse(apiUrl),
-      headers: headers,
-      body: postJson,
-    );
+      final http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: postJson,
+      );
 
-    if (response.statusCode == 201) {
-      print('Post saved successfully');
-    } else {
-      print('Failed to save post. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      if (response.statusCode == 201) {
+        print('Post saved successfully');
+      } else {
+        print('Failed to save post. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Error saving post: $e');
     }
-  } catch (e) {
-    print('Error saving post: $e');
   }
-}
 }
