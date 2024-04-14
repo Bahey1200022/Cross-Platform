@@ -30,12 +30,10 @@ class _ChatPageState extends State<ChatPage> {
     socket.onConnect((data) {
       print('Connected');
     });
-    socket.emit('/signin', widget.sender);
+    socket.emit("/signin", widget.sender);
     socket.on("/chat", (data) {
       print(data);
-      setState(() {
-        messages.add({"sender": data["receiver"], "message": data['message']});
-      });
+      messages.add({"sender": data["receiver"], "message": data['message']});
     });
   }
 

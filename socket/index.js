@@ -22,7 +22,8 @@ io.on("connection", (socket) => {
   socket.on("/chat", (msg) => {
     console.log(msg);
     let target=msg.receiver;
-    if (clients[target]) clients[target].emit("/chat",msg);
+    console.log(clients[target]);
+    if (clients[target]) io.to(clients[target]).emit("/chat",msg);
   });
 });
 
