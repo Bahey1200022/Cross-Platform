@@ -29,7 +29,7 @@ class ButtonCard extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ChatPage(
                 sender: sender,
-                receiver: 'zyad',
+                receiver: 'habiba',
                 token: token,
               ),
             ),

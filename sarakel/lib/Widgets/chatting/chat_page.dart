@@ -41,7 +41,7 @@ class _ChatSection extends State<ChatSection> {
               User(username: jwtdecodedtoken['username'], token: widget.token),
         ),
         body: ButtonCard(
-          receiver: 'zyad',
+          receiver: 'habiba',
           icon: Icon(Icons.person),
           sender: jwtdecodedtoken['username'],
           token: widget.token,

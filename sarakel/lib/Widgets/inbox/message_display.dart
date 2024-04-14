@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class inboxMessage extends StatelessWidget {
   final String recipient;
   String? title;
@@ -21,16 +22,19 @@ class inboxMessage extends StatelessWidget {
         body: Column(
           children: [
             ListTile(
-              title: Text('From: $sender'),
+              title: Text('From: $recipient'),
             ),
             ListTile(
-              title: Text('To: $recipient'),
+              title: Text('To: $sender'),
             ),
             ListTile(
-              title: Text('Title: $title'),
+              title: Text(
+                ' $title',
+                style: TextStyle(fontSize: 20),
+              ),
             ),
             ListTile(
-              title: Text('Content: $content'),
+              title: Text(' $content'),
             ),
           ],
         ));
