@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/chatting/card.dart';
 import 'package:sarakel/constants.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -29,7 +30,19 @@ class _ChatPageState extends State<ChatPage> {
     socket.onConnect((data) {
       print('Connected');
     });
-    socket.emit('/test', widget.sender);
+    socket.emit("/signin", widget.sender);
+    socket.on("/chat", (data) {
+      print(data);
+      messages.add({"sender": data["receiver"], "message": data['message']});
+    });
+  }
+
+  void sendMessage(String messages, String senders, String receivers) {
+    print(messages);
+    print(senders);
+    print(receivers);
+    socket.emit("/chat",
+        {"message": messages, "sender": senders, "receiver": receivers});
   }
 
   @override
@@ -50,9 +63,9 @@ class _ChatPageState extends State<ChatPage> {
             child: ListView.builder(
               itemCount: messages.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(widget.sender),
-                  subtitle: Text(messages[index]),
+                return ChatTile(
+                  person: messages[index]['sender'],
+                  content: messages[index]['message'],
                 );
               },
             ),
@@ -70,8 +83,13 @@ class _ChatPageState extends State<ChatPage> {
                           onPressed: () {
                             String value = _controller.text;
                             if (value.isNotEmpty) {
+                              sendMessage(
+                                  value, widget.sender, widget.receiver);
                               setState(() {
-                                messages.add(value);
+                                messages.add({
+                                  'message': value,
+                                  'sender': widget.sender,
+                                });
                               });
                               _controller.clear(); // Clear the text field
                             }
@@ -79,9 +97,16 @@ class _ChatPageState extends State<ChatPage> {
                           icon: const Icon(Icons.send)),
                     ),
                     onSubmitted: (value) {
+                      sendMessage(value, widget.sender, widget.receiver);
                       setState(() {
-                        if (value.isNotEmpty) messages.add(value);
-                        _controller.clear(); // Clear the text field
+                        if (value.isNotEmpty) {
+                          messages.add({
+                            'message': value,
+                            'sender': widget.sender,
+                          });
+
+                          _controller.clear();
+                        } // Clear the text field
                       });
                     },
                   ),

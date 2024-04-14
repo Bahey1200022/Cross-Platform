@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/models/community.dart';
+import 'package:sarakel/Widgets/explore_communities/join_button.dart';
 
 class CommunityProfilePage extends StatelessWidget {
   final Community community;
   final String token;
-  CommunityProfilePage({required this.community, required this.token});
+  final bool showModToolsButton;
+  final bool showJoinButton;
+
+  CommunityProfilePage({
+    required this.community,
+    required this.token,
+    this.showModToolsButton = false,
+    this.showJoinButton = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,28 +71,32 @@ class CommunityProfilePage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
-                    Text(
-                      '100 members, 10 online',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
                   ],
                 ),
-                Spacer(), // Add Spacer to push Mod Tools button to the right
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Mod Tools',
-                    style: TextStyle(color: Colors.white),
+                Spacer(),
+                if (showJoinButton) ...[
+                  SizedBox(height: 16),
+                  JoinButton(
+                    onPressed: () {
+                      // Add your logic here for joining or leaving the community
+                    },
                   ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding: EdgeInsets.symmetric(horizontal: 7, vertical: 7),
+                ],
+                if (showModToolsButton) ...[
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add your logic for Mod Tools here
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                    ),
+                    child: Text(
+                      'Mod Tools',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
             SizedBox(height: 16),

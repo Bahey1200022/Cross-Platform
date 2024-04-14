@@ -2,7 +2,7 @@ import 'dart:ui';
 
 class Post {
   final String communityName;
-  final int id;
+  final String id;
   final String? duration; // Added duration property
   int upVotes;
   final String? imagePath;
