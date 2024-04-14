@@ -6,12 +6,12 @@ bool _validateEmail(String email) {
   // Regular expression for email validation
   RegExp emailRegex =
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-  return emailRegex.hasMatch(email);
+  return emailRegex.hasMatch(email) || email.isNotEmpty;
 }
 
 bool _validatePassword(String password) {
   // Password validation criteria: At least 8 characters
-  return password.length >= 8;
+  return password.length >= 3;
 }
 
 class LoginPage extends StatefulWidget {

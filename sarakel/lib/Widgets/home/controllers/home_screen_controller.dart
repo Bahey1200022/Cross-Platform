@@ -35,6 +35,15 @@ class HomescreenController {
     await prefs.setString('username', username);
   }
 
+  String extractUrl(String s) {
+    RegExp exp =
+        RegExp(r'\[(.*?)\]'); // Regex pattern to match text within brackets
+    Match? match = exp.firstMatch(s);
+    return match != null
+        ? match.group(1)!
+        : s; // Return the URL without brackets, or the original string if no match is found
+  }
+
   Future<List<Community>> loadCommunities() async {
     try {
       // Make a GET request to fetch the JSON data from the server
@@ -86,25 +95,29 @@ class HomescreenController {
         var jsonData = json.decode(response.body);
         List<dynamic> fetchedPosts = jsonData['data'];
         print(fetchedPosts);
-
         List<Post> posts = fetchedPosts.map((p) {
           return Post(
               communityName: p['communityName'],
-              id: p['postId'],
-              duration: p['duration'],
-              upVotes: p['upvotes'] ?? 0, // Provide a default value if null
-              downVotes: p['downvotes'] ?? 0, // Provide a default value if null
+              id: p['_id'],
+              imagePath: p['media'] != null
+                  ? (p['media'] is List
+                      ? (p['media'] as List).join(', ')
+                      : extractUrl(p['media'].toString()))
+                  : null,
+              upVotes: p['upvotes'] ?? 0,
+              downVotes: p['downvotes'] ?? 0,
               comments: p['numComments'],
               shares: p['shares'],
               content: p['content'],
               communityId: p['communityId'],
               title: p['title'],
               username: p['userId'],
-              views: p['numViews']);
+              views: p['numViews'] ?? 0);
         }).toList();
+        print(posts);
         return posts;
       } else {
-        return [];
+        return <Post>[];
       }
     } catch (e) {
       print('Error loading posts: $e');

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/explore_communities/join_button.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
 import '../../../models/post.dart';
 import 'package:flutter/services.dart';
@@ -119,15 +120,10 @@ class _PostCardState extends State<PostCard> {
                 ),
                 Row(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Join'),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.deepOrange),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                      ),
+                    JoinButton(
+                      onPressed: () {
+                        // Add your logic here for joining or leaving the community
+                      },
                     ),
                     PopupMenuButton<String>(
                       itemBuilder: (BuildContext context) =>
@@ -202,7 +198,8 @@ class _PostCardState extends State<PostCard> {
 
             // Display post content
             SizedBox(height: 8), // Add space for the image
-            if (widget.post.imagePath != null) // Conditional image display
+            if (widget.post.imagePath != null &&
+                widget.post.imagePath != "") // Conditional image display
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(
@@ -215,7 +212,7 @@ class _PostCardState extends State<PostCard> {
                     ),
                   );
                 },
-                child: Image.asset(widget.post.imagePath!),
+                child: Image(image: NetworkImage(widget.post.imagePath!)),
               ),
 
             SizedBox(height: 8), // Add space before the bottom row

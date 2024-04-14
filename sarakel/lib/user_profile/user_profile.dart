@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
 import 'package:sarakel/Widgets/home/homescreen.dart';
+import 'package:sarakel/Widgets/home/widgets/post_card.dart';
+import 'package:sarakel/models/post.dart';
+import 'package:sarakel/user_profile/user_controller.dart';
 
-import '../../models/user.dart';
+import '../models/user.dart';
 
 class UserProfile extends StatefulWidget {
   final User? user;
@@ -17,28 +20,22 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfile extends State<UserProfile> {
+  List<Post> postsToShow = [];
   List<Widget> getTabWidgets(String tabName) {
     switch (tabName) {
       case "Posts":
         return [
-          Text("posts"),
-          Text("post2"),
-          Text("posts"),
-          Text("post2"),
-          Text("posts"),
-          Text("post2"),
-          Text("posts"),
-          Text("post2"),
-          Text("posts"),
-          Text("post2"),
-          Text("posts"),
-          Text("post2"),
-          Text("posts"),
-          Text("post2"),
-          Text("posts"),
-          Text("post2"),
-          Text("posts"),
-          Text("post2"),
+          ListView.builder(
+              itemCount: postsToShow.length ?? 0,
+              itemBuilder: (context, index) {
+                final post = postsToShow[index];
+
+                // Show the post
+                return PostCard(
+                  post: post,
+                  onHide: () {},
+                );
+              }),
 
           // Add more widgets as needed
         ];
@@ -55,6 +52,15 @@ class _UserProfile extends State<UserProfile> {
           // Add more widgets as needed
         ];
     }
+  }
+
+  void initState() {
+    super.initState();
+    loadUserPosts().then((posts) {
+      if (mounted) {
+        setState(() => postsToShow = posts);
+      }
+    });
   }
 
   @override
@@ -255,7 +261,7 @@ class _UserProfile extends State<UserProfile> {
                         SliverPadding(
                           padding: const EdgeInsets.all(8.0),
                           sliver: SliverFixedExtentList(
-                            itemExtent: 48.0,
+                            itemExtent: 400.0,
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 return tabsWidgets[index];
