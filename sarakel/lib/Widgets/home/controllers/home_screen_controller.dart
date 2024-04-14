@@ -95,7 +95,7 @@ class HomescreenController {
               upVotes: p['upvotes'] ?? 0, // Provide a default value if null
               downVotes: p['downvotes'] ?? 0, // Provide a default value if null
               comments: p['numComments'],
-              shares: p['numComments'],
+              shares: p['shares'],
               content: p['content'],
               communityId: p['communityId'],
               title: p['title'],

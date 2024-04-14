@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
 import '../../../models/post.dart';
 import 'package:flutter/services.dart';
+import '../../../Widgets/home/post_details_page.dart';
 import 'package:http/http.dart' as http; //modified Hafez
 import 'dart:convert'; //modified Hafez
 
@@ -92,7 +93,14 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => PostDetailsPage(post: widget.post),
+          ),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -185,8 +193,14 @@ class _PostCardState extends State<PostCard> {
               ],
             ),
             SizedBox(height: 8), // Add space between the header and content
-            Text(widget.post.content,
-                style: TextStyle(fontSize: 14)), // Display post content
+            Text(
+              widget.post.content,
+              style: TextStyle(fontSize: 14),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+
+            // Display post content
             SizedBox(height: 8), // Add space for the image
             if (widget.post.imagePath != null) // Conditional image display
               GestureDetector(

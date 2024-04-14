@@ -112,12 +112,12 @@
       "duration": "4h",
       "upVotes": 120,
       "downVotes": 10,
-      "comments": "30",
+      "comments": 30,
       "title": "hi",
       "shares": 15,
       "content": "Did you check out the brand new feature!!!!",
       "communityId": "1",
-      "id": "cbc3",
+      "id": 3,
       "imagePath": "assets/flutter.jpeg"
     },
     {
@@ -125,12 +125,12 @@
       "duration": "23h",
       "upVotes": 75,
       "downVotes": 5,
-      "comments": "10",
+      "comments": 10,
       "title": "hi",
       "shares": 5,
       "content": "Dart 2.12 brings sound null safety, improving your codes reliability and performance.",
       "communityId": "2",
-      "id": "ab84",
+      "id": 84,
       "imagePath": null
     },
     {
@@ -138,12 +138,12 @@
       "duration": "2d",
       "upVotes": 200,
       "downVotes": 20,
-      "comments": "50",
+      "comments": 50,
       "title": "Liverpool",
       "shares": 25,
       "content": "Liverpool is the best team in England.",
       "communityId": "3",
-      "id": "38e7",
+      "id": 387,
       "imagePath": "assets/Liverpool_FC.jpg"
     },
     {
@@ -151,16 +151,16 @@
       "duration": "1d",
       "upVotes": 150,
       "downVotes": 15,
-      "comments": "40",
+      "comments": 40,
       "title": "hi",
       "shares": 20,
       "content": "What's new in iOS 15? Let's dive in.",
       "communityId": "4",
-      "id": "82ca",
+      "id": 82,
       "imagePath": "assets/apple.jpg"
     },
     {
-      "id": "b2c0",
+      "id": 2,
       "title": "The Dark Knight",
       "content": "The Dark Knight is a 2008 superhero film directed, produced, and co-written by Christopher Nolan.",
       "communityId": "5",
@@ -168,12 +168,12 @@
       "upVotes": 1,
       "shares": 0,
       "downvotes": 1,
-      "comments": "0",
+      "comments": 0,
       "communityName": "c/batman",
       "imagePath": "assets/batman.jpeg"
     },
     {
-      "id": "0578",
+      "id": 578,
       "title": "LIVE POST ",
       "content": "HELIIIIIIIIII",
       "communityId": "1",
@@ -181,25 +181,25 @@
       "upVotes": 1,
       "shares": 0,
       "downvotes": 1,
-      "comments": "0",
+      "comments": 0,
       "communityName": "c/miami heat",
       "imagePath": null
     },
     {
-      "id": "7087",
+      "id": 7087,
       "title": "Gym",
-      "content": "Gym is good for health, everyone should go to the gym. You can go to the gym to lose weight, gain muscle, or just to improve your overall health.",
+      "content": "Basketball is a high-energy sport that captivates players and spectators alike with its dynamic pace and exhilarating moments. Played on a rectangular court, the primary objective is to score points by shooting the basketball through the opponent's hoop, which is a netted ring positioned ten feet above the ground. Players showcase a variety of skills including dribbling, passing, and shooting, often displaying impressive athletic abilities through jumps and sprints. Defensive strategies are equally important, with teams working meticulously to block shots and intercept passes to prevent scoring. The sport was invented by Dr. James Naismith in 1891, originally with peach baskets for hoops, and has since evolved into a global phenomenon, celebrated through major events like the NBA championships. The camaraderie and competitive spirit that basketball fosters make it not only a game but also a way to develop teamwork, discipline, and resilience among its participants.",
       "communityId": "goTrain",
       "duration": "0",
       "upVotes": 1,
       "shares": 0,
       "downvotes": 1,
-      "comments": "0",
+      "comments": 0,
       "communityName": "c/BeFit",
       "imagePath": "assets/gym.jpg"
     },
     {
-      "id": "a110",
+      "id": 110,
       "title": "dmkdk",
       "content": "dmdkkd",
       "communityId": "demoooo",
@@ -207,11 +207,11 @@
       "upVotes": 1,
       "shares": 0,
       "downvotes": 1,
-      "comments": "0",
+      "comments": 0,
       "communityName": "c/demoooo"
     },
     {
-      "id": "e62c",
+      "id": 62,
       "title": "hi",
       "content": "hi",
       "communityId": "demo2",
@@ -219,11 +219,11 @@
       "upVotes": 0,
       "shares": 0,
       "downvotes": 0,
-      "comments": "0",
+      "comments": 0,
       "communityName": "c/demo2"
     },
     {
-      "id": "57a3",
+      "id": 573,
       "title": "ghh",
       "content": "sfuifdfy",
       "communityId": "demoooo",
@@ -231,42 +231,42 @@
       "upVotes": 0,
       "shares": 0,
       "downvotes": 0,
-      "comments": "0",
+      "comments": 0,
       "communityName": "c/demoooo"
     }
   ],
   "savedPosts": [
     {
-      "id": "472d",
+      "id": 472,
       "title": "hi",
       "content": "Did you check out the brand new feature!!!!",
       "communityId": "1",
       "duration": "4h",
       "upVotes": 120,
       "downvotes": 10,
-      "comments": "30",
+      "comments": 30,
       "communityName": "c/flutter"
     },
     {
-      "id": "9067",
+      "id": 9067,
       "title": "hi",
       "content": "Dart 2.12 brings sound null safety, improving your codes reliability and performance.",
       "communityId": "2",
       "duration": "23h",
       "upVotes": 75,
       "downvotes": 5,
-      "comments": "10",
+      "comments": 10,
       "communityName": "c/dart"
     },
     {
-      "id": "da56",
+      "id": 56,
       "title": "Liverpool",
       "content": "Liverpool is the best team in England.",
       "communityId": "3",
       "duration": "2d",
       "upVotes": 200,
       "downvotes": 20,
-      "comments": "50",
+      "comments": 50,
       "communityName": "c/Football"
     }
   ]

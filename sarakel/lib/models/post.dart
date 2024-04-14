@@ -9,7 +9,7 @@ class Post {
   final int? comments;
   int shares;
   final String content;
-  final int communityId;
+  final String communityId;
   final String title;
   final String username;
   int downVotes;
