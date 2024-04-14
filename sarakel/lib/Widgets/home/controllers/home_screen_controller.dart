@@ -85,13 +85,11 @@ class HomescreenController {
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         List<dynamic> fetchedPosts = jsonData['data'];
-        print(fetchedPosts);
-
         List<Post> posts = fetchedPosts.map((p) {
           return Post(
               communityName: p['communityName'],
-              id: p['postId'],
-              duration: p['duration'],
+              imagePath: p['media'] is List ? p['media'][0] : p['media'],
+              id: p['_id'],
               upVotes: p['upvotes'] ?? 0, // Provide a default value if null
               downVotes: p['downvotes'] ?? 0, // Provide a default value if null
               comments: p['numComments'],

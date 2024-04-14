@@ -14,7 +14,6 @@ Future<List<Community>> loadCircles() async {
       // Decode the JSON response into a list
       var jsonData = json.decode(response.body);
       List<dynamic> Data = jsonData['data'];
-      print(Data[0]);
       // Map the community data to Community objects
       List<Community> fetchedCircles = Data.map((circleData) {
         return Community(
