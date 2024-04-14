@@ -54,7 +54,7 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
         user: User(username: jwtdecodedtoken['username'], token: widget.token),
       ),
       body: ListView.builder(
-        itemCount: fetchedCommunities?.length,
+        itemCount: fetchedCommunities?.length ?? 0,
         itemBuilder: (context, index) {
           final item = fetchedCommunities?[index];
           return Column(
