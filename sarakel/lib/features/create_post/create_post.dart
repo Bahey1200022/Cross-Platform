@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:provider/provider.dart';
 import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
-import 'package:sarakel/providers/user_communities.dart';
 import '../../models/community.dart';
 import 'add_post_controller.dart';
 

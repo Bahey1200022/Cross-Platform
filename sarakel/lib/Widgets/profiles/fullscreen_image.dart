@@ -33,7 +33,7 @@ class FullScreenImagePage extends StatelessWidget {
           Expanded(
             child: Center(
               child: PinchZoom(
-                child: Image.asset(imagePath),
+                child: Image(image: NetworkImage(imagePath)),
                 maxScale: 2.5,
                 onZoomStart: () {
                   print('Start zooming');
