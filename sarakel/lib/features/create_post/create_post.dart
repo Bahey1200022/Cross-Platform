@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
 import 'package:sarakel/providers/user_communities.dart';
 import '../../models/community.dart';
 import 'add_post_controller.dart';
@@ -30,11 +31,10 @@ class _MyHomePageState extends State<CreatePost> {
   @override
   void initState() {
     super.initState();
-    // Load communities from the JSON file
-    List<Community> fetchedCommunities =
-        Provider.of<UserCommunitiesProvider>(context, listen: false)
-            .communities;
-    appState.communities = fetchedCommunities;
+    loadCircles().then((fetchedCommunities) {
+      appState.communities = fetchedCommunities;
+      print('Communities loaded: ${appState.communities!.length}');
+    });
     titleController.addListener(updateNextButtonState);
     bodyController.addListener(updateNextButtonState);
   }
