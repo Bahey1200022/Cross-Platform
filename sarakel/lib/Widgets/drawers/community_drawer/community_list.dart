@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sarakel/features/create_circle/create_circle.dart';
+import 'package:sarakel/features/create_community/create_community.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/models/community.dart';
 import 'list_controller.dart';
