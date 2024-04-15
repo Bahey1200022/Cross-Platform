@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/community.dart';
 import 'add_post_controller.dart';
 
@@ -25,6 +26,7 @@ class _MyHomePageState extends State<CreatePost> {
   List<File> attachments = [];
   MyAppState appState = MyAppState();
   AddPostController addPostController = AddPostController();
+  
 
   @override
   void initState() {
@@ -142,7 +144,7 @@ class _MyHomePageState extends State<CreatePost> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select Circle'),
+          title: Text('Select Community'),
           content: SizedBox(
             width: double.maxFinite,
             child: ListView(
@@ -176,15 +178,22 @@ class _MyHomePageState extends State<CreatePost> {
           content: Text('Do you want to post to ${selectedCommunity.name}?'),
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
+      if (token == null) {
+        print('No token found');
+        return;
+        }
+        print('Token retrieved: $token');
                 // Handle posting
                 print('Post to ${selectedCommunity.name}');
                 Navigator.of(context).pop();
                 final String title = titleController.text;
                 final String body = bodyController.text;
                 addPostController.addPost(
-                    selectedCommunity.name, selectedCommunity.id, title, body);
-                Navigator.pushNamed(context, '/home');
+                    selectedCommunity.name, selectedCommunity.id, title, body,token);
+                //Navigator.pushNamed(context, '/home');
               },
               child: Text('Post'),
             ),
