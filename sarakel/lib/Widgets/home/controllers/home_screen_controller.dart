@@ -112,7 +112,7 @@ class HomescreenController {
               content: p['content'] ?? "",
               communityId: p['communityId'] ?? "",
               title: p['title'] ?? "",
-              shares: p['shares'],
+              shares: p['numComments'],
               username: p['userId'],
               views: p['numViews'] ?? 0);
         }).toList();

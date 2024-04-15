@@ -4,48 +4,20 @@ import '../../../models/post.dart';
 
 class PostDetailsPage extends StatefulWidget {
   final Post post;
-
-  const PostDetailsPage({Key? key, required this.post}) : super(key: key);
+  final VoidCallback onUpvote;
+  final VoidCallback onDownvote;
+  const PostDetailsPage({
+    Key? key,
+    required this.post,
+    required this.onUpvote,
+    required this.onDownvote,
+  }) : super(key: key);
 
   @override
   _PostDetailsPageState createState() => _PostDetailsPageState();
 }
 
 class _PostDetailsPageState extends State<PostDetailsPage> {
-  void _toggleUpvote() {
-    setState(() {
-      widget.post.isUpvoted = !widget.post.isUpvoted;
-      if (widget.post.isUpvoted) {
-        if (!widget.post.isDownvoted) {
-          widget.post.upVotes++;
-        } else {
-          widget.post.isDownvoted = false;
-          widget.post.downVotes--;
-          widget.post.upVotes++;
-        }
-      } else {
-        widget.post.upVotes--;
-      }
-    });
-  }
-
-  void _toggleDownvote() {
-    setState(() {
-      widget.post.isDownvoted = !widget.post.isDownvoted;
-      if (widget.post.isDownvoted) {
-        if (!widget.post.isUpvoted) {
-          widget.post.downVotes++;
-        } else {
-          widget.post.isUpvoted = false;
-          widget.post.upVotes--;
-          widget.post.downVotes++;
-        }
-      } else {
-        widget.post.downVotes--;
-      }
-    });
-  }
-
   void _sharePost() {
     String link = "http://192.168.1.10:3000/post/${widget.post.id}";
     Clipboard.setData(ClipboardData(text: link)).then((_) {
@@ -83,18 +55,30 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
               children: [
                 IconButton(
                   icon: Icon(widget.post.isUpvoted
-                      ? Icons.thumb_up
-                      : Icons.thumb_up_alt_outlined),
-                  color: widget.post.isUpvoted ? Colors.blue : null,
-                  onPressed: _toggleUpvote,
+                      ? Icons.arrow_upward
+                      : Icons.arrow_upward_outlined),
+                  color: widget.post.isUpvoted
+                      ? Color.fromARGB(255, 255, 152, 0)
+                      : Colors.grey,
+                  onPressed: () {
+                    setState(() {
+                      widget.onUpvote();
+                    });
+                  },
                 ),
                 Text('${widget.post.upVotes}'),
                 IconButton(
                   icon: Icon(widget.post.isDownvoted
-                      ? Icons.thumb_down
-                      : Icons.thumb_down_alt_outlined),
-                  color: widget.post.isDownvoted ? Colors.red : null,
-                  onPressed: _toggleDownvote,
+                      ? Icons.arrow_downward
+                      : Icons.arrow_downward_outlined),
+                  color: widget.post.isDownvoted
+                      ? Color.fromARGB(255, 156, 39, 176)
+                      : Colors.grey,
+                  onPressed: () {
+                    setState(() {
+                      widget.onDownvote();
+                    });
+                  },
                 ),
                 Text('${widget.post.downVotes}'),
                 Spacer(),

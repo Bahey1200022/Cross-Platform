@@ -98,7 +98,11 @@ class _PostCardState extends State<PostCard> {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => PostDetailsPage(post: widget.post),
+            builder: (context) => PostDetailsPage(
+              post: widget.post,
+              onUpvote: _toggleUpvote,
+              onDownvote: _toggleDownvote,
+            ),
           ),
         );
       },
@@ -224,15 +228,17 @@ class _PostCardState extends State<PostCard> {
                   children: [
                     IconButton(
                       icon: Icon(Icons.arrow_upward),
-                      color:
-                          widget.post.isUpvoted ? Colors.orange : Colors.grey,
+                      color: widget.post.isUpvoted
+                          ? Color.fromARGB(255, 255, 152, 0)
+                          : Colors.grey,
                       onPressed: _toggleUpvote,
                     ),
                     Text('${widget.post.upVotes}'),
                     IconButton(
                       icon: Icon(Icons.arrow_downward),
-                      color:
-                          widget.post.isDownvoted ? Colors.purple : Colors.grey,
+                      color: widget.post.isDownvoted
+                          ? Color.fromARGB(255, 156, 39, 176)
+                          : Colors.grey,
                       onPressed: _toggleDownvote,
                     ),
                     Text('${widget.post.downVotes}'),
