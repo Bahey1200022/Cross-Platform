@@ -3,6 +3,8 @@ import 'package:sarakel/models/post.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:sarakel/user_profile/user_controller.dart';
+
 class SavedController {
   Future<List<Post>> fetchSavedPosts() async {
     try {
@@ -14,18 +16,24 @@ class SavedController {
 
         List<Post> savedPosts = fetchedPosts.map((p) {
           return Post(
-              communityName: p['communityName'],
-              id: p['postId'],
-              duration: p['duration'],
-              upVotes: p['upvotes'] ?? 0, // Provide a default value if null
-              downVotes: p['downvotes'] ?? 0, // Provide a default value if null
+              communityName: p['communityName'] ?? "",
+              id: p['_id'],
+              imagePath: p['media'] != null
+                  ? (p['media'] is List
+                      ? (p['media'] as List).join(', ')
+                      : extractUrl(p['media'].toString()))
+                  : null,
+              upVotes: p['upvotes'] ?? 0,
+              downVotes: p['downvotes'] ?? 0,
               comments: p['numComments'],
               shares: p['numComments'],
-              content: p['content'],
-              communityId: p['communityId'],
-              title: p['title'],
+              isNSFW: false,
+              isSpoiler: p['isSpoiler'],
+              content: p['content'] ?? "",
+              communityId: p['communityId'] ?? "",
+              title: p['title'] ?? "",
               username: p['userId'],
-              views: p['numViews']);
+              views: p['numViews'] ?? 0);
         }).toList();
 
         return savedPosts;

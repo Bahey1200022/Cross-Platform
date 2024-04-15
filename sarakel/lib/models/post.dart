@@ -12,12 +12,14 @@ class Post {
   final String communityId;
   final String title;
   final String username;
+  bool? isNSFW;
   int downVotes;
   final Image? image;
   bool isUpvoted;
   bool isDownvoted;
   bool isSaved;
   int views;
+  bool? isSpoiler;
   Post(
       {required this.communityName,
       required this.id,
@@ -35,5 +37,7 @@ class Post {
       this.downVotes = 0,
       this.image,
       required this.username,
-      this.views = 0});
+      this.views = 0,
+      this.isNSFW,
+      this.isSpoiler});
 }

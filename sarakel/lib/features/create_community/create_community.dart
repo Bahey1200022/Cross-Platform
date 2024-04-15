@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'circle_controller.dart';
+import 'community_controller.dart';
 
 class CommunityType {
   final String name;
@@ -22,22 +22,22 @@ class _CommunityFormState extends State<CommunityForm> {
   final TextEditingController _communityNameController =
       TextEditingController();
   CommunityType? _selectedCommunityType;
-  bool _is18Plus = false; // Added: Flag for 18+ circle
+  bool _is18Plus = false; 
   String _errorText = '';
-  bool _circleExists = false;
+  //bool _circleExists = false;
   bool _isValidCommunityName = false;
 
   List<CommunityType> communityTypes = [
     CommunityType(
-      'Public',
+      'public',
       'Anyone can view, post, and comment in this community.',
     ),
     CommunityType(
-      'Restricted',
+      'restricted',
       'Anyone can view, but only approved users can post.',
     ),
     CommunityType(
-      'Private',
+      'private',
       'Only approved users can view and submit to this community.',
     ),
   ];
@@ -57,7 +57,7 @@ class _CommunityFormState extends State<CommunityForm> {
       _isValidCommunityName = RegExp(r'^[a-zA-Z0-9_]{3,21}$').hasMatch(name);
       _errorText = _isValidCommunityName
           ? ''
-          : 'Circle names must be between 3-21 characters, and can only contain letters, numbers, or underscores.';
+          : 'Community names must be between 3-21 characters, and can only contain letters, numbers, or underscores.';
     });
   }
 
@@ -70,8 +70,8 @@ class _CommunityFormState extends State<CommunityForm> {
     }
 
     return _isValidCommunityName &&
-        _selectedCommunityType != null &&
-        !_circleExists;
+        _selectedCommunityType != null ;
+        //!_circleExists;
   }
 
   void _showErrorSnackbar(String message) {
@@ -84,33 +84,33 @@ class _CommunityFormState extends State<CommunityForm> {
     );
   }
 
-  void _checkCommunityExists(String communityName) async {
-    bool circleExists =
-        await CreateCircleController.checkCircleExists(communityName);
-    bool idExists = await CreateCircleController.checkCircleIdExists(
-        communityName.toLowerCase().replaceAll(' ', '_'));
+  //void _checkCommunityExists(String communityName) async {
+    //bool circleExists =
+        //await CreateCircleController.checkCircleExists(communityName);
+    //bool idExists = await CreateCircleController.checkCircleIdExists(
+        //communityName.toLowerCase().replaceAll(' ', '_'));
 
-    setState(() {
-      _circleExists = circleExists || idExists;
-      if (_circleExists) {
-        _errorText =
-            'Circle with the name "$communityName" already exists. Please choose a different name.';
-      }
-    });
-  }
+    //setState(() {
+      //_circleExists = circleExists || idExists;
+      //if (_circleExists) {
+        //_errorText =
+            //'Circle with the name "$communityName" already exists. Please choose a different name.';
+      //}
+    //});
+  //}
 
-  void _createCircle() async {
+  void _createCommunity() async {
     String communityName = _communityNameController.text.trim();
-    String circleType = _selectedCommunityType!.name;
+    String communityType = _selectedCommunityType!.name;
 
-    if (_circleExists) {
-      _showErrorSnackbar(
-          'Circle with the name "$communityName" already exists. Please choose a different name.');
-      return;
-    }
+    //if (_communityExists) {
+      //_showErrorSnackbar(
+          //'Circle with the name "$communityName" already exists. Please choose a different name.');
+      //return;
+    //}
 
-    await CreateCircleController.createCircle(
-        communityName, circleType, _is18Plus);
+    await CreateCommunityController.createCommunity(
+        communityName, communityType, _is18Plus);
   }
 
   @override
@@ -120,7 +120,7 @@ class _CommunityFormState extends State<CommunityForm> {
         title: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Create Circles',
+            'Create Community',
           ),
         ),
         centerTitle: true,
@@ -137,11 +137,11 @@ class _CommunityFormState extends State<CommunityForm> {
                     controller: _communityNameController,
                     onChanged: (value) {
                       _validateCommunityName(value);
-                      _checkCommunityExists(value);
+                      //_checkCommunityExists(value);
                     },
                     maxLength: 21,
                     decoration: InputDecoration(
-                      labelText: 'Circle name',
+                      labelText: 'Community name',
                       prefixText: 'c/',
                       counterText: '',
                       border: OutlineInputBorder(
@@ -179,7 +179,7 @@ class _CommunityFormState extends State<CommunityForm> {
               ),
               SizedBox(height: 16.0),
               Text(
-                'Circle type',
+                'Community type',
                 style: TextStyle(
                   fontSize: 18.0,
                 ),
@@ -213,10 +213,10 @@ class _CommunityFormState extends State<CommunityForm> {
               ),
               SizedBox(height: 24.0),
               Row(
-                // Added: Toggle switch for 18+ circle
+                // Added: Toggle switch for 18+ community
                 children: [
                   Text(
-                    '18+ circle',
+                    '18+ community',
                     style: TextStyle(fontSize: 18.0),
                   ),
                   Switch(
@@ -241,9 +241,9 @@ class _CommunityFormState extends State<CommunityForm> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
-                onPressed: _isCreateButtonEnabled() ? _createCircle : null,
+                onPressed: _isCreateButtonEnabled() ? _createCommunity : null,
                 child: Text(
-                  'Create circle',
+                  'Create community',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,

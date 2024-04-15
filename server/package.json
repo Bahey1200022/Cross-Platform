@@ -7,7 +7,7 @@
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "run-server": "json-server --host 192.168.1.13 mock.json"
+    "run-server": "json-server --host 192.168.1.9 mock.json"
   },
   "author": "",
   "license": "ISC",

@@ -97,7 +97,7 @@ class HomescreenController {
         print(fetchedPosts);
         List<Post> posts = fetchedPosts.map((p) {
           return Post(
-              communityName: p['communityName'],
+              communityName: p['communityName'] ?? "",
               id: p['_id'],
               imagePath: p['media'] != null
                   ? (p['media'] is List
@@ -107,14 +107,16 @@ class HomescreenController {
               upVotes: p['upvotes'] ?? 0,
               downVotes: p['downvotes'] ?? 0,
               comments: p['numComments'],
+              isNSFW: false,
+              isSpoiler: p['isSpoiler'],
+              content: p['content'] ?? "",
+              communityId: p['communityId'] ?? "",
+              title: p['title'] ?? "",
               shares: p['shares'],
-              content: p['content'],
-              communityId: p['communityId'],
-              title: p['title'],
               username: p['userId'],
               views: p['numViews'] ?? 0);
         }).toList();
-        print(posts);
+
         return posts;
       } else {
         return <Post>[];

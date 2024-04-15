@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sarakel/user_profile/user_profile.dart';
 import 'package:sarakel/Widgets/settings/settings_controller.dart';
 import 'package:sarakel/Widgets/settings/settings_page.dart';
-import 'package:sarakel/features/create_circle/create_circle.dart';
+import 'package:sarakel/features/create_community/create_community.dart';
 import 'package:sarakel/features/saved/saved.dart';
 
 import '../../models/user.dart';
