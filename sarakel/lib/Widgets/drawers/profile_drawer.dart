@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sarakel/features/history/history.dart';
 import 'package:sarakel/user_profile/user_profile.dart';
 import 'package:sarakel/Widgets/settings/settings_controller.dart';
 import 'package:sarakel/Widgets/settings/settings_page.dart';
@@ -30,7 +31,7 @@ class ProfileDrawer extends StatelessWidget {
             children: [
               UserAccountsDrawerHeader(
                 accountName: Text(user!.username!),
-                accountEmail: Text('user!.email!'),
+                accountEmail: Text('Sarakel developer'),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage('assets/avatar_logo.jpeg'),
                 ),
@@ -74,7 +75,10 @@ class ProfileDrawer extends StatelessWidget {
                 leading: Icon(Icons.history),
                 title: Text('History'),
                 onTap: () {
-                  // Handle History tap
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => History(token: user!.token!)));
                 },
               ),
               ListTile(

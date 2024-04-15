@@ -16,23 +16,24 @@ class SavedController {
 
         List<Post> savedPosts = fetchedPosts.map((p) {
           return Post(
-              communityName: p['communityName'] ?? "",
-              id: p['_id'],
+              communityName: p['communityName']?.toString() ?? "",
+              id: p['_id']?.toString() ?? "",
               imagePath: p['media'] != null
-                  ? (p['media'] is List
-                      ? (p['media'] as List).join(', ')
-                      : extractUrl(p['media'].toString()))
+                  ? (p['media'] is List && (p['media'] as List).isNotEmpty
+                      ? Uri.encodeFull(
+                          extractUrl((p['media'] as List).first.toString()))
+                      : Uri.encodeFull(extractUrl(p['media'].toString())))
                   : null,
               upVotes: p['upvotes'] ?? 0,
               downVotes: p['downvotes'] ?? 0,
-              comments: p['numComments'],
-              shares: p['numComments'],
+              comments: p['numComments'] ?? 0,
+              shares: p['numComments'] ?? 0,
               isNSFW: false,
-              isSpoiler: p['isSpoiler'],
-              content: p['content'] ?? "",
-              communityId: p['communityId'] ?? "",
-              title: p['title'] ?? "",
-              username: p['userId'],
+              isSpoiler: p['isSpoiler'] ?? false,
+              content: p['content']?.toString() ?? "",
+              communityId: p['communityId']?.toString() ?? "",
+              title: p['title']?.toString() ?? "",
+              username: p['userId']?.toString() ?? "",
               views: p['numViews'] ?? 0);
         }).toList();
 

@@ -34,8 +34,6 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //User? user = Provider.of<UserProvider>(context).user;
-
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
