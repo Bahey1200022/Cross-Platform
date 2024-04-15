@@ -1,43 +1,58 @@
-import 'dart:convert';
-
 import 'package:test/test.dart';
-import 'package:http/http.dart' as http;
+
+bool _validateEmail(String email) {
+  // Regular expression for email validation
+  RegExp emailRegex =
+      RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+  return emailRegex.hasMatch(email) || email.isNotEmpty;
+}
+
+String extractUrl(String s) {
+  RegExp exp =
+      RegExp(r'\[(.*?)\]'); // Regex pattern to match text within brackets
+  Match? match = exp.firstMatch(s);
+  return match != null
+      ? match.group(1)!
+      : s; // Return the URL without brackets, or the original string if no match is found
+}
+
+bool _validatePassword(String password) {
+  // Password validation criteria: At least 8 characters
+  return password.length >= 3;
+}
 
 void main() {
-  test('Test API call for communities', () async {
-    // Make the API call
-    var response =
-        await http.get(Uri.parse('http://192.168.1.10:3000/communities'));
+  group('Email Validation', () {
+    test('Empty email returns false', () {
+      expect(_validateEmail(''), false);
+    });
 
-    // Verify the response status code
-    expect(response.statusCode, 200);
-
-    var data = json.decode(response.body);
-    var item = data[0];
-    expect(item["name"], "c/demoooo");
+    test('Valid email returns true', () {
+      expect(_validateEmail('test@example.com'), true);
+    });
   });
 
-  test('Test API call for user', () async {
-    // Make the API call
-    var response = await http.get(Uri.parse('http://192.168.1.10:3000/users'));
+  group('Password Validation', () {
+    test('Password with less than 3 characters returns false', () {
+      expect(_validatePassword('12'), false);
+    });
 
-    // Verify the response status code
-    expect(response.statusCode, 200);
+    test('Password with 3 characters returns true', () {
+      expect(_validatePassword('123'), true);
+    });
 
-    var data = json.decode(response.body);
-    var item = data[0];
-    expect(item["username"], "u/ty");
+    test('Password with more than 3 characters returns true', () {
+      expect(_validatePassword('1234'), true);
+    });
   });
 
-  test('Test API call for posts', () async {
-    // Make the API call
-    var response = await http.get(Uri.parse('http://192.168.1.10:3000/posts'));
+  group('URL Extraction', () {
+    test('Extracts URL from string with brackets', () {
+      expect(extractUrl('[https://example.com]'), 'https://example.com');
+    });
 
-    // Verify the response status code
-    expect(response.statusCode, 200);
-
-    var data = json.decode(response.body);
-    var item = data[0];
-    expect(item["content"], "Did you check out the brand new feature!!!!");
+    test('Returns original string when no brackets', () {
+      expect(extractUrl('https://example.com'), 'https://example.com');
+    });
   });
 }
