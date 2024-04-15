@@ -6,7 +6,7 @@ import 'package:sarakel/constants.dart';
 
 class AddPostController {
   Future<void> addPost(String communityName, String communityId, String title,
-      String body,String token) async {
+      String body, String token) async {
     try {
       if (title.trim().isNotEmpty && body.trim().isNotEmpty) {
         final String apiUrl = '$BASE_URL/createPost/create';
@@ -18,11 +18,11 @@ class AddPostController {
         print('Token: $token');
         Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
         print('Decoded Token: $decodedToken');
-        String username = decodedToken['username']; 
+        String username = decodedToken['username'];
         print('Username: $username');
         final Map<String, dynamic> postData = {
           'title': title,
-          'Content': body,
+          'content': body,
           'communityId': communityName,
           //'duration': "0",
           //'upVotes': 0,
@@ -31,7 +31,7 @@ class AddPostController {
           //'comments': "0",
           'communityName': communityName,
           'userId': username,
-          'parentId':"0",
+          'parentId': "0",
           'isLocked': false,
         };
 
