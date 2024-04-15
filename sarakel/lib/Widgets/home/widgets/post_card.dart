@@ -216,7 +216,24 @@ class _PostCardState extends State<PostCard> {
                     ),
                   );
                 },
-                child: Image(image: NetworkImage(widget.post.imagePath!)),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => FullScreenImagePage(
+                          imagePath: widget.post.imagePath!,
+                          communityName: widget.post.communityName,
+                          title: widget.post.title,
+                        ),
+                      ),
+                    );
+                  },
+                  child: widget.post.imagePath != null &&
+                          widget.post.imagePath != ""
+                      ? Image.network(widget.post.imagePath!)
+                      : Image.asset(
+                          'apple.jpg'), // Add default image asset path here
+                ),
               ),
 
             SizedBox(height: 8), // Add space before the bottom row

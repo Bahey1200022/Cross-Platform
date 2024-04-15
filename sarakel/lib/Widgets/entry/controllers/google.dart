@@ -29,7 +29,7 @@ class GoogleService {
       await FirebaseAuth.instance.signInWithCredential(credential);
       final accessToken = credential.accessToken;
       var data = {'token': accessToken};
-      const url = '$BASE_URL/verifyToken';
+      const url = '$BASE_URL/api/verifyToken';
       final response = await http.post(
         Uri.parse(url),
         body: json.encode(data),

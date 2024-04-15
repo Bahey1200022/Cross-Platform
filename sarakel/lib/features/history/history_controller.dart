@@ -2,18 +2,10 @@ import 'dart:convert';
 
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/models/post.dart';
+import 'package:sarakel/user_profile/user_controller.dart';
 import 'package:http/http.dart' as http;
 
-String extractUrl(String s) {
-  RegExp exp =
-      RegExp(r'\[(.*?)\]'); // Regex pattern to match text within brackets
-  Match? match = exp.firstMatch(s);
-  return match != null
-      ? match.group(1)!
-      : s; // Return the URL without brackets, or the original string if no match is found
-}
-
-Future<List<Post>> loadUserPosts() async {
+Future<List<Post>> loadRecentHistory() async {
   try {
     var response = await http.get(Uri.parse('$BASE_URL/subreddit/getBest'));
     if (response.statusCode == 200) {

@@ -36,7 +36,7 @@ class UserController {
       "password": passwordScreen
     };
 
-    var url = Uri.parse('$BASE_URL/signup');
+    var url = Uri.parse('$BASE_URL/api/signup');
 
     try {
       var response = await http.post(
@@ -68,7 +68,7 @@ class UserController {
     var data = {"emailOrUsername": email, "password": password};
     try {
       var response = await http.post(
-        Uri.parse('$BASE_URL/login'),
+        Uri.parse('$BASE_URL/api/login'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(data),
       );
