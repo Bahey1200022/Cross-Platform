@@ -33,6 +33,7 @@ class AddPostController {
           'userId': username,
           'parentId': "0",
           'isLocked': false,
+          'numViews': 0
         };
 
         final String postJson = jsonEncode(postData);

@@ -28,7 +28,7 @@ class _InboxSectionState extends State<InboxSection> {
 
   Future<void> initiateMessageCard() async {
     // Make an HTTP request to the API
-    var response = await http.get(Uri.parse('$BASE_URL/message/inbox'),
+    var response = await http.get(Uri.parse('$BASE_URL/api/message/inbox'),
         headers: {
           'Authorization': 'Bearer ${widget.token}',
           'Content-Type': 'application/json'

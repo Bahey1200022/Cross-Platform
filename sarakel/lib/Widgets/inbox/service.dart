@@ -8,7 +8,7 @@ void message(BuildContext context, String token, String title, String body,
     String recipients) async {
   var data = {"recipient": recipients, "title": title, "content": body};
   var response = await http.post(
-    Uri.parse('$BASE_URL/message/compose'),
+    Uri.parse('$BASE_URL/api/message/compose'),
     headers: {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
