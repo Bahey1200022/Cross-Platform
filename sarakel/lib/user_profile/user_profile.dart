@@ -261,7 +261,7 @@ class _UserProfile extends State<UserProfile> {
                         SliverPadding(
                           padding: const EdgeInsets.all(8.0),
                           sliver: SliverFixedExtentList(
-                            itemExtent: 400.0,
+                            itemExtent: 600.0,
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 return tabsWidgets[index];

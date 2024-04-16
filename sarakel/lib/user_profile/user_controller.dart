@@ -15,7 +15,7 @@ String extractUrl(String s) {
 
 Future<List<Post>> loadUserPosts() async {
   try {
-    var response = await http.get(Uri.parse('$BASE_URL/subreddit/getBest'));
+    var response = await http.get(Uri.parse('$BASE_URL/api/subreddit/getBest'));
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
       List<dynamic> fetchedPosts = jsonData['data'];
