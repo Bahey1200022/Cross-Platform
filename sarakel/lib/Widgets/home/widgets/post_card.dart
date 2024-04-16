@@ -19,6 +19,8 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
+  bool hasBeenShared = false;
+
   void _toggleUpvote() {
     setState(() {
       widget.post.isUpvoted = !widget.post.isUpvoted;
@@ -67,9 +69,12 @@ class _PostCardState extends State<PostCard> {
   }
 
   void _sharePost() {
-    setState(() {
-      widget.post.shares++; // Increment the share count
-    });
+    if (!hasBeenShared) {
+      setState(() {
+        widget.post.shares++;
+        hasBeenShared = true; // Increment the share count
+      });
+    }
     String link =
         "http://192.168.1.10:3000/post/${widget.post.id}"; // Generate your link
     Clipboard.setData(ClipboardData(text: link)).then((_) {
@@ -99,10 +104,11 @@ class _PostCardState extends State<PostCard> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => PostDetailsPage(
-              post: widget.post,
-              onUpvote: _toggleUpvote,
-              onDownvote: _toggleDownvote,
-            ),
+                post: widget.post,
+                onUpvote: _toggleUpvote,
+                onDownvote: _toggleDownvote,
+                onShare: _sharePost,
+                onImageTap: () => _showImage(context, widget.post.imagePath!)),
           ),
         );
       },
@@ -216,24 +222,12 @@ class _PostCardState extends State<PostCard> {
                     ),
                   );
                 },
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => FullScreenImagePage(
-                          imagePath: widget.post.imagePath!,
-                          communityName: widget.post.communityName,
-                          title: widget.post.title,
-                        ),
-                      ),
-                    );
-                  },
-                  child: widget.post.imagePath != null &&
-                          widget.post.imagePath != ""
-                      ? Image.network(widget.post.imagePath!)
-                      : Image.asset(
-                          'apple.jpg'), // Add default image asset path here
-                ),
+
+                child:
+                    widget.post.imagePath != null && widget.post.imagePath != ""
+                        ? Image.network(widget.post.imagePath!)
+                        : Image.asset(
+                            'apple.jpg'), // Add default image asset path here
               ),
 
             SizedBox(height: 8), // Add space before the bottom row
