@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
+import 'package:sarakel/Widgets/explore_communities/join_button.dart'; // Import the JoinButton widget
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
+import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/models/community.dart';
-import 'package:sarakel/widgets/explore_communities/join_button.dart'; // Import the JoinButton widget
 
 class ExploreCommunities extends StatefulWidget {
   final String token;
@@ -18,20 +18,7 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
   int _selectedIndex = 1;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List<Community>? fetchedCommunities;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchCommunities();
-  }
-
-  void fetchCommunities() {
-    loadCircles().then((communities) {
-      setState(() {
-        fetchedCommunities = communities;
-      });
-    });
-  }
+  bool _isJoined = false; // Track if the user has joined the community
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +54,20 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
                   title: Text(item.name),
                   subtitle: Text(item.description),
                   trailing: JoinButton(
+                    isJoined: _isJoined,
                     onPressed: () async {
-                      // Call the joinCommunity function from the controller
-                      await JoinCommunityController.joinCommunity(
-                          item.name, widget.token);
+                      if (_isJoined) {
+                        // If already joined, leave the community
+                        await LeaveCommunityController.leaveCommunity(
+                            item.name, widget.token);
+                      } else {
+                        // If not joined, join the community
+                        await JoinCommunityController.joinCommunity(
+                            item.name, widget.token);
+                      }
+                      setState(() {
+                        _isJoined = !_isJoined; // Toggle the join status
+                      });
                     },
                   ),
                   onTap: () {

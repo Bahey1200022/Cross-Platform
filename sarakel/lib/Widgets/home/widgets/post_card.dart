@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
+import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
+import 'package:sarakel/Widgets/home/post_details_page.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../models/post.dart';
 import 'package:flutter/services.dart';
-import '../../../Widgets/home/post_details_page.dart';
-import 'package:http/http.dart' as http; //modified Hafez
-import 'dart:convert'; //modified Hafez
+import '../../../models/post.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class PostCard extends StatefulWidget {
   final Post post;
@@ -22,22 +23,20 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool hasBeenShared = false;
+  bool _isJoined = false;
 
   void _toggleUpvote() {
     setState(() {
       widget.post.isUpvoted = !widget.post.isUpvoted;
       if (widget.post.isUpvoted) {
         if (!widget.post.isDownvoted) {
-          // Increment upvotes only if the post was not downvoted before
           widget.post.upVotes++;
         } else {
-          // If downvoted before, decrement downvotes and reset downvote status
           widget.post.isDownvoted = false;
           widget.post.downVotes--;
           widget.post.upVotes++;
         }
       } else {
-        // Decrement upvotes if un-upvoting
         widget.post.upVotes--;
       }
     });
@@ -48,16 +47,13 @@ class _PostCardState extends State<PostCard> {
       widget.post.isDownvoted = !widget.post.isDownvoted;
       if (widget.post.isDownvoted) {
         if (!widget.post.isUpvoted) {
-          // Increment downvotes only if the post was not upvoted before
           widget.post.downVotes++;
         } else {
-          // If upvoted before, decrement upvotes and reset upvote status
           widget.post.isUpvoted = false;
           widget.post.upVotes--;
           widget.post.downVotes++;
         }
       } else {
-        // Decrement downvotes if un-downvoting
         widget.post.downVotes--;
       }
     });
@@ -65,8 +61,7 @@ class _PostCardState extends State<PostCard> {
 
   void _toggleSave() {
     setState(() {
-      widget.post.isSaved =
-          !widget.post.isSaved; // Directly toggle the post's saved state
+      widget.post.isSaved = !widget.post.isSaved;
     });
   }
 
@@ -74,11 +69,10 @@ class _PostCardState extends State<PostCard> {
     if (!hasBeenShared) {
       setState(() {
         widget.post.shares++;
-        hasBeenShared = true; // Increment the share count
+        hasBeenShared = true;
       });
     }
-    String link =
-        "http://192.168.1.10:3000/post/${widget.post.id}"; // Generate your link
+    String link = "http://192.168.1.10:3000/post/${widget.post.id}";
     Clipboard.setData(ClipboardData(text: link)).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Link copied to clipboard!")),
@@ -92,7 +86,7 @@ class _PostCardState extends State<PostCard> {
       builder: (BuildContext context) {
         return Dialog(
           child: Container(
-            child: Image.asset(imagePath), // Display the image in a dialog
+            child: Image.asset(imagePath),
           ),
         );
       },
@@ -117,8 +111,7 @@ class _PostCardState extends State<PostCard> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Align text to the start
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,14 +126,22 @@ class _PostCardState extends State<PostCard> {
                 Row(
                   children: [
                     JoinButton(
+                      isJoined: _isJoined,
                       onPressed: () async {
-                        // Add your logic here for joining or leaving the community
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         var token = prefs.getString('token');
-
-                        await JoinCommunityController.joinCommunity(
-                            widget.post.communityName, token!);
+                        setState(() {
+                          _isJoined = !_isJoined;
+                        });
+                        if (_isJoined) {
+                          await JoinCommunityController.joinCommunity(
+                              widget.post.communityName, token!);
+                        } else {
+                          // Add logic to leave the community
+                          await LeaveCommunityController.leaveCommunity(
+                              widget.post.communityName, token!);
+                        }
                       },
                     ),
                     PopupMenuButton<String>(
@@ -151,51 +152,44 @@ class _PostCardState extends State<PostCard> {
                           child: ListTile(
                             leading: Icon(widget.post.isSaved
                                 ? Icons.bookmark
-                                : Icons.bookmark_border), // Icon for Save
+                                : Icons.bookmark_border),
                             title: Text('Save'),
                           ),
                         ),
                         PopupMenuItem<String>(
                           value: 'report',
                           child: ListTile(
-                            leading: Icon(Icons.flag), // Icon for Report
+                            leading: Icon(Icons.flag),
                             title: Text('Report'),
                           ),
                         ),
                         PopupMenuItem<String>(
                           value: 'block_account',
                           child: ListTile(
-                            leading:
-                                Icon(Icons.block), // Icon for Block Account
+                            leading: Icon(Icons.block),
                             title: Text('Block Account'),
                           ),
                         ),
                         PopupMenuItem<String>(
                           value: 'hide',
                           child: ListTile(
-                            leading:
-                                Icon(Icons.visibility_off), // Icon for Hide
+                            leading: Icon(Icons.visibility_off),
                             title: Text('Hide'),
                           ),
                         ),
                       ],
                       onSelected: (String value) {
-                        // Handle menu item selection
                         switch (value) {
                           case 'save':
                             _toggleSave();
-                            // Handle save action
                             _savePost();
                             break;
                           case 'report':
-                            // Handle report action
                             break;
                           case 'block_account':
-                            // Handle blocked account action
                             break;
                           case 'hide':
                             widget.onHide();
-                            // Handle hide action
                             break;
                           default:
                             break;
@@ -206,18 +200,15 @@ class _PostCardState extends State<PostCard> {
                 ),
               ],
             ),
-            SizedBox(height: 8), // Add space between the header and content
+            SizedBox(height: 8),
             Text(
               widget.post.content,
               style: TextStyle(fontSize: 14),
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
-
-            // Display post content
-            SizedBox(height: 8), // Add space for the image
-            if (widget.post.imagePath != null &&
-                widget.post.imagePath != "") // Conditional image display
+            SizedBox(height: 8),
+            if (widget.post.imagePath != null && widget.post.imagePath != "")
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(
@@ -230,16 +221,12 @@ class _PostCardState extends State<PostCard> {
                     ),
                   );
                 },
-
                 child:
                     widget.post.imagePath != null && widget.post.imagePath != ""
                         ? Image.network(widget.post.imagePath!)
-                        : Image.asset(
-                            'apple.jpg'), // Add default image asset path here
+                        : Image.asset('apple.jpg'),
               ),
-
-            SizedBox(height: 8), // Add space before the bottom row
-            // Bottom row (votes, comments, shares) as previously implemented
+            SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -289,7 +276,6 @@ class _PostCardState extends State<PostCard> {
     );
   }
 
-  //Save post function
   void _savePost() async {
     try {
       final String apiUrl = 'http://localhost:3000/savedPosts';
@@ -305,8 +291,6 @@ class _PostCardState extends State<PostCard> {
         'downvotes': widget.post.downVotes,
         'comments': widget.post.comments,
         'communityName': widget.post.communityName
-
-        // Include other necessary data
       };
 
       final String postJson = jsonEncode(postData);
