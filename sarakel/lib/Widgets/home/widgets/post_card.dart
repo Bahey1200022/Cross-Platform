@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
+import 'package:sarakel/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
 import 'package:flutter/services.dart';
 import '../../../Widgets/home/post_details_page.dart';
@@ -59,6 +61,72 @@ class _PostCardState extends State<PostCard> {
         widget.post.downVotes--;
       }
     });
+  }
+
+//function to save post to the database
+  void _savePost() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.getString('token');
+      var response = await http.post(
+        Uri.parse('$BASE_URL/api/save'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'type': 'post',
+          'entityId': widget.post.id,
+        }),
+      );
+      print(response.body);
+    } catch (e) {
+      print('Error saving post: $e');
+    }
+  }
+
+  void _unSavePost() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.getString('token');
+      var response = await http.post(
+        Uri.parse('$BASE_URL/api/unsave'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'type': 'post',
+          'entityId': widget.post.id,
+        }),
+      );
+      print(response.body);
+    } catch (e) {
+      print('Error saving post: $e');
+    }
+  }
+
+  void _report() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.getString('token');
+      print(widget.post.username);
+      var response = await http.post(
+        Uri.parse('$BASE_URL/api/report'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'type': 'user',
+          'reason': 'spam',
+          'reportedUsername': widget.post.username,
+        }),
+      );
+      print(response.body);
+    } catch (e) {
+      print('Error saving post: $e');
+    }
   }
 
   void _toggleSave() {
@@ -177,10 +245,15 @@ class _PostCardState extends State<PostCard> {
                           case 'save':
                             _toggleSave();
                             // Handle save action
-                            _savePost();
+                            if (widget.post.isSaved) {
+                              _unSavePost();
+                            } else {
+                              _savePost();
+                            }
                             break;
                           case 'report':
                             // Handle report action
+                            _report();
                             break;
                           case 'block_account':
                             // Handle blocked account action
@@ -282,41 +355,41 @@ class _PostCardState extends State<PostCard> {
   }
 
   //Save post function
-  void _savePost() async {
-    try {
-      final String apiUrl = 'http://localhost:3000/savedPosts';
+  // void _savePost() async {
+  //   try {
+  //     final String apiUrl = 'http://localhost:3000/savedPosts';
 
-      final Map<String, String> headers = {'Content-Type': 'application/json'};
+  //     final Map<String, String> headers = {'Content-Type': 'application/json'};
 
-      final Map<String, dynamic> postData = {
-        'title': widget.post.title,
-        'content': widget.post.content,
-        'communityId': widget.post.communityId,
-        'duration': widget.post.duration,
-        'upVotes': widget.post.upVotes,
-        'downvotes': widget.post.downVotes,
-        'comments': widget.post.comments,
-        'communityName': widget.post.communityName
+  //     final Map<String, dynamic> postData = {
+  //       'title': widget.post.title,
+  //       'content': widget.post.content,
+  //       'communityId': widget.post.communityId,
+  //       'duration': widget.post.duration,
+  //       'upVotes': widget.post.upVotes,
+  //       'downvotes': widget.post.downVotes,
+  //       'comments': widget.post.comments,
+  //       'communityName': widget.post.communityName
 
-        // Include other necessary data
-      };
+  //       // Include other necessary data
+  //     };
 
-      final String postJson = jsonEncode(postData);
+  //     final String postJson = jsonEncode(postData);
 
-      final http.Response response = await http.post(
-        Uri.parse(apiUrl),
-        headers: headers,
-        body: postJson,
-      );
+  //     final http.Response response = await http.post(
+  //       Uri.parse(apiUrl),
+  //       headers: headers,
+  //       body: postJson,
+  //     );
 
-      if (response.statusCode == 201) {
-        print('Post saved successfully');
-      } else {
-        print('Failed to save post. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
-      }
-    } catch (e) {
-      print('Error saving post: $e');
-    }
-  }
+  //     if (response.statusCode == 201) {
+  //       print('Post saved successfully');
+  //     } else {
+  //       print('Failed to save post. Status code: ${response.statusCode}');
+  //       print('Response body: ${response.body}');
+  //     }
+  //   } catch (e) {
+  //     print('Error saving post: $e');
+  //   }
+  // }
 }
