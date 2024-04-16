@@ -69,7 +69,40 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             leading: Icon(Icons.email_outlined),
             title: Text('Update email address'),
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        actions: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Add your logic for the continue button here
+                                },
+                                child: const Text('Continue'),
+                              ),
+                            ],
+                          ),
+                        ],
+                        title: const Text('Update email address'),
+                        contentPadding: const EdgeInsets.all(20.0),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                                'To change change yout email address, you need to create a reddit password firs'),
+                          ],
+                        ),
+                      ));
+            },
           ),
           ListTile(
             leading: Icon(Icons.lock_outlined),
