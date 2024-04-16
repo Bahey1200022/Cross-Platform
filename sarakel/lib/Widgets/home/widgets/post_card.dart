@@ -28,6 +28,7 @@ class _PostCardState extends State<PostCard> {
   bool _isJoined = false;
 
   void _toggleUpvote() {
+    bool wasUpvoted = widget.post.isUpvoted; // Store previous state
     setState(() {
       widget.post.isUpvoted = !widget.post.isUpvoted;
       if (widget.post.isUpvoted) {
@@ -38,13 +39,18 @@ class _PostCardState extends State<PostCard> {
           widget.post.downVotes--;
           widget.post.upVotes++;
         }
+        _makeVote(1); // Make an upvote API call
       } else {
         widget.post.upVotes--;
+        _makeVote(wasUpvoted
+            ? 0
+            : -1); // Revert to neutral if was upvoted, else downvote
       }
     });
   }
 
   void _toggleDownvote() {
+    bool wasDownvoted = widget.post.isDownvoted; // Store previous state
     setState(() {
       widget.post.isDownvoted = !widget.post.isDownvoted;
       if (widget.post.isDownvoted) {
@@ -55,8 +61,12 @@ class _PostCardState extends State<PostCard> {
           widget.post.upVotes--;
           widget.post.downVotes++;
         }
+        _makeVote(-1); // Make a downvote API call
       } else {
         widget.post.downVotes--;
+        _makeVote(wasDownvoted
+            ? 0
+            : 1); // Revert to neutral if was downvoted, else upvote
       }
     });
   }
@@ -96,6 +106,28 @@ class _PostCardState extends State<PostCard> {
         body: jsonEncode({
           'type': 'post',
           'entityId': widget.post.id,
+        }),
+      );
+      print(response.body);
+    } catch (e) {
+      print('Error saving post: $e');
+    }
+  }
+
+  void _makeVote(int voteType) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.getString('token');
+      var response = await http.post(
+        Uri.parse('$BASE_URL/api/vote'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'type': 'post',
+          'entityId': widget.post.id,
+          'rank': voteType,
         }),
       );
       print(response.body);
@@ -172,6 +204,7 @@ class _PostCardState extends State<PostCard> {
                 onUpvote: _toggleUpvote,
                 onDownvote: _toggleDownvote,
                 onShare: _sharePost,
+                onMakeVote: _makeVote,
                 onImageTap: () => _showImage(context, widget.post.imagePath!)),
           ),
         );
@@ -312,17 +345,19 @@ class _PostCardState extends State<PostCard> {
                       color: widget.post.isUpvoted
                           ? Color.fromARGB(255, 255, 152, 0)
                           : Colors.grey,
-                      onPressed: _toggleUpvote,
+                      onPressed: () {
+                        _toggleUpvote();
+                      },
                     ),
                     Text('${widget.post.upVotes}'),
                     IconButton(
-                      icon: Icon(Icons.arrow_downward),
-                      color: widget.post.isDownvoted
-                          ? Color.fromARGB(255, 156, 39, 176)
-                          : Colors.grey,
-                      onPressed: _toggleDownvote,
-                    ),
-                    Text('${widget.post.downVotes}'),
+                        icon: Icon(Icons.arrow_downward),
+                        color: widget.post.isDownvoted
+                            ? Color.fromARGB(255, 156, 39, 176)
+                            : Colors.grey,
+                        onPressed: () {
+                          _toggleDownvote();
+                        }),
                   ],
                 ),
                 Row(
