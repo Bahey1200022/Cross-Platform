@@ -20,41 +20,55 @@ class _SavedScreenState extends State<SavedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Saved Posts'),
-      ),
-      body: FutureBuilder<List<Post>>(
-        future: _savedPostsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                // Display both the post title and the PostCard widget
-                return Column(
-                  children: [
-                    // ListTile(
-                    //   title: Text(snapshot.data![index].title),
-                    //   // Add onTap handler to view full post details if needed
-                    // ),
-                    PostCard(
-                      post: snapshot.data![index],
-                      onHide: () {},
-                    ), // Display PostCard
-                    Divider(), // Add a divider between posts
-                  ],
-                );
+    return DefaultTabController(
+      length: 2, // Number of tabs (posts and comments)
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Saved'),
+          bottom: TabBar(
+            labelStyle: TextStyle(color: Colors.black),
+            tabs: [
+              Tab(text: 'Posts'), // Tab for saved posts
+              Tab(text: 'Comments'), // Tab for saved comments
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            // View for saved posts
+            FutureBuilder<List<Post>>(
+              future: _savedPostsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          PostCard(
+                            post: snapshot.data![index],
+                            onHide: () {},
+                          ),
+                          Divider(),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  return Center(child: Text('No saved posts'));
+                }
               },
-            );
-          } else {
-            return Center(child: Text('No saved posts'));
-          }
-        },
+            ),
+            // View for saved comments (placeholder for now)
+            Center(
+              child: Text('Saved Comments View'),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -67,20 +67,83 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
-            title: Text('Update email Address'),
-            onTap: () {},
+            leading: Icon(Icons.email_outlined),
+            title: Text('Update email address'),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        actions: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Add your logic for the continue button here
+                                },
+                                child: const Text('Continue'),
+                              ),
+                            ],
+                          ),
+                        ],
+                        title: const Text('Update email address'),
+                        contentPadding: const EdgeInsets.all(20.0),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                                'To change change yout email address, you need to create a reddit password firs'),
+                          ],
+                        ),
+                      ));
+            },
           ),
           ListTile(
+            leading: Icon(Icons.lock_outlined),
             title: Text('Change password'),
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Close')),
+                        ],
+                        title: const Text('Check your email'),
+                        contentPadding: const EdgeInsets.all(20.0),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                                'We have sent a password reset link to your email address.'),
+                            const SizedBox(height: 20.0),
+                            ElevatedButton(
+                              onPressed: () {},
+                              child: const Text('Resend email'),
+                            ),
+                          ],
+                        ),
+                      ));
+            },
           ),
           ListTile(
+            leading: Icon(Icons.public_outlined),
             title: Text('Country'),
             onTap: () {
               widget.settings.country(context);
             },
           ),
           ListTile(
+            leading: Icon(Icons.person_outline),
             title: Text('Gender'),
             onTap: () {
               widget.settings.gender(context, widget.token);
@@ -91,6 +154,7 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
+            leading: Icon(Icons.alternate_email_outlined),
             title: Text('Google'),
             trailing: widget.settings.googleConnected(widget.token)
                 ? Icon(
@@ -104,6 +168,7 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
+            leading: Icon(Icons.block_outlined),
             title: Text('Blocked accounts'),
             onTap: () {},
           ),
@@ -112,8 +177,10 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
+            leading: Icon(Icons.chat_bubble_outline),
             title: Text('Chat messages'),
             trailing: Switch(
+              activeColor: Colors.blue,
               value: swicthval1['chatMessages'] ?? false,
               onChanged: (bool value) {
                 setState(() {
@@ -128,8 +195,10 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
+            leading: Icon(Icons.lock_outline),
             title: Text('Private emails'),
             trailing: Switch(
+              activeColor: Colors.blue,
               value: swicthval1['privateMessagesEmail'] ?? false,
               onChanged: (bool value) {
                 setState(() {
@@ -148,8 +217,10 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
+            leading: Icon(Icons.no_adult_content_outlined),
             title: Text('Show NSFW content'),
             trailing: Switch(
+              activeColor: Colors.blue,
               value: swicthval1['showMatureContent'] ?? false,
               onChanged: (bool value) {
                 setState(() {
@@ -166,8 +237,10 @@ class _SettingsPageState extends State<SettingsPage> {
             onTap: () {},
           ),
           ListTile(
+            leading: Icon(Icons.search_outlined),
             title: Text('Show in search results'),
             trailing: Switch(
+              activeColor: Colors.blue,
               value: swicthval1['showInSearch'] ?? false,
               onChanged: (bool value) {
                 setState(() {
@@ -179,8 +252,10 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.ads_click_outlined),
             title: Text('Personalize ads'),
             trailing: Switch(
+              activeColor: Colors.blue,
               value: swicthval1['personalizeAds'] ?? false,
               onChanged: (bool value) {
                 setState(() {
@@ -197,8 +272,10 @@ class _SettingsPageState extends State<SettingsPage> {
             onTap: () {},
           ),
           ListTile(
+            leading: Icon(Icons.date_range_outlined),
             title: Text('Dating'),
             trailing: Switch(
+              activeColor: Colors.blue,
               value: swicthval1['dating'] ?? false,
               onChanged: (bool value) {
                 setState(() {
@@ -209,8 +286,10 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.no_drinks_outlined),
             title: Text('Alcahol'),
             trailing: Switch(
+              activeColor: Colors.blue,
               value: swicthval1['alcohol'] ?? false,
               onChanged: (bool value) {
                 setState(() {
@@ -221,8 +300,10 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.casino_outlined),
             title: Text('Gambling'),
             trailing: Switch(
+              activeColor: Colors.blue,
               value: swicthval1['gambling'] ?? false,
               onChanged: (bool value) {
                 setState(() {
@@ -233,8 +314,10 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.family_restroom_outlined),
             title: Text('Pregnancy and Parenting'),
             trailing: Switch(
+              activeColor: Colors.blue,
               value: swicthval1['pregnancyAndParenting'] ?? false,
               onChanged: (bool value) {
                 setState(() {
@@ -246,8 +329,10 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.monitor_weight_outlined),
             title: Text('Weight Loss'),
             trailing: Switch(
+              activeColor: Colors.blue,
               value: swicthval1['weightLoss'] ?? false,
               onChanged: (bool value) {
                 setState(() {
@@ -263,18 +348,21 @@ class _SettingsPageState extends State<SettingsPage> {
             onTap: () {},
           ),
           ListTile(
+            leading: Icon(Icons.key_outlined),
             title: Text('Privacy Policy'),
             onTap: () {
               // Navigate to privacy settings page
             },
           ),
           ListTile(
+            leading: Icon(Icons.privacy_tip_outlined),
             title: Text('Terms and conditions'),
             onTap: () {
               // Navigate to appearance settings page
             },
           ),
           ListTile(
+            leading: Icon(Icons.help_outlined),
             title: Text('Help center'),
             onTap: () {
               // Navigate to about page
@@ -284,6 +372,8 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
+            leading: Icon(Icons.logout_outlined),
+            textColor: Colors.red,
             title: Text('Logout'),
             onTap: () {
               widget.settings.logout(context);
@@ -293,6 +383,8 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
+            leading: Icon(Icons.delete_forever_outlined),
+            textColor: Colors.red,
             title: Text('Delete account'),
             onTap: () {
               widget.settings.deleteAccount(context, widget.token);

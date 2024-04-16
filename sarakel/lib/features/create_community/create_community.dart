@@ -112,7 +112,29 @@ class _CommunityFormState extends State<CommunityForm> {
     await CreateCommunityController.createCommunity(
         communityName, communityType, _is18Plus);
   }
+  Widget _getIconForCommunityType(String communityTypeName) {
+  IconData iconData;
 
+  switch (communityTypeName) {
+    case 'public':
+      iconData = Icons.public;
+      break;
+    case 'restricted':
+      iconData = Icons.remove_red_eye_outlined;
+      break;
+    case 'private':
+      iconData = Icons.lock_outline;
+      break;
+    default:
+      iconData = Icons.error;
+      break;
+  }
+
+  return Icon(
+    iconData,
+    color: Colors.black,
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,6 +156,7 @@ class _CommunityFormState extends State<CommunityForm> {
               Stack(
                 children: [
                   TextField(
+                    cursorColor: Colors.black,
                     controller: _communityNameController,
                     onChanged: (value) {
                       _validateCommunityName(value);
@@ -141,6 +164,7 @@ class _CommunityFormState extends State<CommunityForm> {
                     },
                     maxLength: 21,
                     decoration: InputDecoration(
+                      labelStyle: TextStyle(color: Colors.black),
                       labelText: 'Community name',
                       prefixText: 'c/',
                       counterText: '',
@@ -185,26 +209,33 @@ class _CommunityFormState extends State<CommunityForm> {
                 ),
               ),
               SizedBox(height: 8.0),
-              DropdownButton<CommunityType>(
+              DropdownButtonHideUnderline(
+              child: DropdownButton<CommunityType>(
                 value: _selectedCommunityType,
+                //autofocus: false,
                 onChanged: (CommunityType? newValue) {
                   setState(() {
                     _selectedCommunityType = newValue;
                   });
+                  //FocusManager.instance.primaryFocus?.unfocus();
                 },
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 16.0,
                 ),
+                elevation: 8,
+                dropdownColor: Colors.white,
+                borderRadius: BorderRadius.circular(12.0),
                 items: communityTypes
                     .map<DropdownMenuItem<CommunityType>>(
                       (CommunityType communityType) =>
                           DropdownMenuItem<CommunityType>(
                         value: communityType,
-                        child: Text(communityType.name),
+                        child: Row(children: [_getIconForCommunityType(communityType.name),SizedBox(width: 8.0,),Text(communityType.name)],)
                       ),
                     )
                     .toList(),
+              ),
               ),
               SizedBox(height: 16.0),
               Text(
@@ -226,6 +257,7 @@ class _CommunityFormState extends State<CommunityForm> {
                         _is18Plus = value;
                       });
                     },
+                    activeColor: Colors.blue,
                   ),
                 ],
               ),
