@@ -24,13 +24,14 @@ class ProfileDrawer extends StatelessWidget {
       builder:
           (BuildContext context, UserProvider userProvider, Widget? child) {
         // User? user = userProvider.user;
+        String username = user!.username!;//Hafez
 
         return Drawer(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               UserAccountsDrawerHeader(
-                accountName: Text(user!.username!),
+                accountName: Text('u/$username'),
                 accountEmail: Text('Sarakel developer'),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: AssetImage('assets/avatar_logo.jpeg'),
@@ -42,8 +43,8 @@ class ProfileDrawer extends StatelessWidget {
               ),
               Divider(),
               ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('My Profile'),
+                leading: Icon(Icons.account_circle_outlined),
+                title: Text('Profile'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                     return UserProfile(user: user);
@@ -51,8 +52,8 @@ class ProfileDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.group),
-                title: Text('Create a circle'),
+                leading: Icon(Icons.group_outlined),
+                title: Text('Create a community'),
                 onTap: () {
                   Navigator.push(
                       context,
@@ -62,7 +63,7 @@ class ProfileDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.save),
+                leading: const Icon(Icons.save_outlined),
                 title: const Text('Saved'),
                 onTap: () {
                   // Handle Saved tap
@@ -72,7 +73,7 @@ class ProfileDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.history),
+                leading: Icon(Icons.history_outlined),
                 title: Text('History'),
                 onTap: () {
                   Navigator.push(
@@ -82,7 +83,7 @@ class ProfileDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.settings),
+                leading: Icon(Icons.settings_outlined),
                 title: Text('Settings'),
                 onTap: () {
                   Navigator.push(

@@ -77,11 +77,13 @@ class SignupPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: TextFormField(
+                          cursorColor: Colors.black, //Hafez
                           controller: _emailController,
                           decoration: InputDecoration(
                             labelText: 'Email',
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(16.0),
+                            labelStyle: TextStyle(color: Colors.black) //Hafez
                           ),
                         ),
                       ),
@@ -92,12 +94,14 @@ class SignupPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: TextFormField(
+                          cursorColor: Colors.black, //Hafez
                           controller: _passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
                             labelText: 'Password',
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(16.0),
+                            labelStyle: TextStyle(color: Colors.black) //Hafez
                           ),
                         ),
                       ),

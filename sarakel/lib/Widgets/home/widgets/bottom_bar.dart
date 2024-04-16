@@ -48,31 +48,31 @@ class CustomBottomNavigationBar extends StatelessWidget {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(Icons.home_outlined),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.group),
-          label: 'Circles',
+          icon: Icon(Icons.group_outlined),
+          label: 'Communities',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.add_circle_outline),
           label: 'Create',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.chat),
+          icon: Icon(Icons.chat_bubble_outline),
           label: 'Chat',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.inbox),
+          icon: Icon(Icons.inbox_outlined),
           label: 'Inbox',
         )
       ],
       currentIndex: currentIndex,
       onTap: (index) => _onItemTapped(context, index),
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.white70,
-      backgroundColor: Colors.deepOrange,
+      selectedItemColor: Colors.black,
+      unselectedItemColor: Colors.grey,
+      //backgroundColor: Colors.deepOrange,
       type: BottomNavigationBarType.fixed,
     );
   }

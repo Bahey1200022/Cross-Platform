@@ -117,8 +117,10 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: TextFormField(
+                        cursorColor: Colors.black, //Hafez
                         controller: _emailController,
                         decoration: InputDecoration(
+                          labelStyle: TextStyle(color: Colors.black), //Hafez
                           labelText: 'Email or username',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(16.0),
@@ -133,10 +135,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       // ...
                       child: TextFormField(
+                        cursorColor: Colors.black, //Hafez
                         controller: _passwordController,
                         obscureText:
                             !showPassword, // Hide password if showPassword is false
                         decoration: InputDecoration(
+                          labelStyle: TextStyle(color: Colors.black), //Hafez
                           labelText: 'Password',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(16.0),
