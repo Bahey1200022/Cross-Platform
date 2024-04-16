@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:sarakel/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class PostDetailsPage extends StatefulWidget {
   final Post post;
@@ -25,6 +31,20 @@ class PostDetailsPage extends StatefulWidget {
 }
 
 class _PostDetailsPageState extends State<PostDetailsPage> {
+  TextEditingController _commentController =
+      TextEditingController(); // Add controller
+
+  @override
+  void dispose() {
+    _commentController.dispose(); // Dispose the controller when not needed
+    super.dispose();
+  }
+
+  void initState() {
+    super.initState();
+    //decodeJwt();
+  }
+
   void _sharePost() {
     String link = "http://192.168.1.10:3000/post/${widget.post.id}";
     Clipboard.setData(ClipboardData(text: link)).then((_) {
@@ -33,6 +53,49 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
       );
     });
   }
+
+  Future<void> sendComment(String postID, String content) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token')!;
+    print('Token: $token');
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+    print('Decoded Token: $decodedToken');
+    String username = decodedToken['username'];
+    print('Username: $username');
+    print('Post ID: ${widget.post.id}');
+    Map<String, String> commentData = {
+      'content': content,
+      'userID': username,
+      'postID': postID,
+      //'parentId': "0",
+      //'isLocked': "false",
+      //'numViews': "0"
+    };
+    String postJson = jsonEncode(commentData);
+    http.Response response = await http.post(
+      Uri.parse('$BASE_URL/api/comment'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: postJson,
+    );
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print(
+          'Comment added successfully to post $postID with content: $content');
+    } else {
+      print('Failed to add comment. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+  }
+  //void decodeJwt() async {
+  //SharedPreferences prefs = await SharedPreferences.getInstance();
+  //String token=prefs.getString('token')! ;
+  //Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+  //print('Token: $token');
+  //print('Decoded Token: $decodedToken');
+  //print('postID: ${widget.post.id}');
+  //}
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +228,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
             children: [
               Expanded(
                 child: TextField(
+                  controller: _commentController,
                   decoration: InputDecoration(
                     hintText: "Add comment...",
                     border: InputBorder.none,
@@ -175,6 +239,10 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                 icon: Icon(Icons.send),
                 onPressed: () {
                   // Send the comment
+                  String content = _commentController.text;
+                  String postID = widget.post.id;
+                  sendComment(postID, content);
+                  _commentController.clear();
                 },
               )
             ],
