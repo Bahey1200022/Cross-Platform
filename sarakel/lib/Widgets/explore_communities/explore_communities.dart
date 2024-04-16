@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sarakel/Widgets/drawers/community_drawer/community_list.dart';
+import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
+import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart'; // Import the JoinButton widget
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
+import 'package:sarakel/Widgets/home/widgets/bottom_bar.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/models/community.dart';
+import 'package:sarakel/models/user.dart';
 
 class ExploreCommunities extends StatefulWidget {
   final String token;
@@ -19,16 +25,33 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List<Community>? fetchedCommunities;
   bool _isJoined = false; // Track if the user has joined the community
+  @override
+  void initState() {
+    super.initState();
+    fetchCommunities();
+  }
+
+  void fetchCommunities() {
+    loadCircles().then((communities) {
+      setState(() {
+        fetchedCommunities = communities;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(widget.token);
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Circles'),
       ),
-      drawer: Drawer(), // Add your drawer widget here
-      endDrawer: Drawer(), // Add your profile drawer widget here
+      drawer: CommunityDrawer(token: widget.token),
+      endDrawer: ProfileDrawer(
+        user: User(username: jwtdecodedtoken['username'], token: widget.token),
+      ),
       body: ListView.builder(
         itemCount: fetchedCommunities?.length ?? 0,
         itemBuilder: (context, index) {
@@ -87,27 +110,9 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
           );
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        token: widget.token,
       ),
     );
   }
