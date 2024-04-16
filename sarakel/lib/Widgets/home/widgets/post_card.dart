@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
+import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
 import 'package:flutter/services.dart';
 import '../../../Widgets/home/post_details_page.dart';
@@ -131,8 +133,14 @@ class _PostCardState extends State<PostCard> {
                 Row(
                   children: [
                     JoinButton(
-                      onPressed: () {
+                      onPressed: () async {
                         // Add your logic here for joining or leaving the community
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        var token = prefs.getString('token');
+
+                        await JoinCommunityController.joinCommunity(
+                            widget.post.communityName, token!);
                       },
                     ),
                     PopupMenuButton<String>(

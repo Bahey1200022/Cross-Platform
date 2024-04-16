@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/models/community.dart';
-import 'package:sarakel/Widgets/explore_communities/join_button.dart';
+import 'package:sarakel/widgets/explore_communities/join_button.dart'; // Import the JoinButton widget
 
 class CommunityProfilePage extends StatelessWidget {
   final Community community;
@@ -77,8 +78,10 @@ class CommunityProfilePage extends StatelessWidget {
                 if (showJoinButton) ...[
                   SizedBox(height: 16),
                   JoinButton(
-                    onPressed: () {
-                      // Add your logic here for joining or leaving the community
+                    onPressed: () async {
+                      // Call the joinCommunity function from the controller
+                      await JoinCommunityController.joinCommunity(
+                          community.name, token);
                     },
                   ),
                 ],
