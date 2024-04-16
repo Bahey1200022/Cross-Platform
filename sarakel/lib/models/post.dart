@@ -7,7 +7,7 @@ class Post {
   int upVotes;
   final String? imagePath;
   final int? comments;
-  final int shares;
+  int shares;
   final String content;
   final String communityId;
   final String title;
