@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'settings_controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/Widgets/settings/muted_comunities.dart';
+import 'package:sarakel/Widgets/settings/chat_permissions.dart';
 
 class SettingsPage extends StatefulWidget {
   final String token;
@@ -95,19 +96,19 @@ class _SettingsPageState extends State<SettingsPage> {
                         ],
                         title: const Text('Update email address'),
                         contentPadding: const EdgeInsets.all(20.0),
-                        content: Column(
+                        content: const Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Text(
-                                'To change change yout email address, you need to create a reddit password firs'),
+                            Text(
+                                'To change change yout email address, you need to create a reddit password first'),
                           ],
                         ),
                       ));
             },
           ),
           ListTile(
-            leading: Icon(Icons.lock_outlined),
-            title: Text('Change password'),
+            leading: const Icon(Icons.lock_outlined),
+            title: const Text('Change password'),
             onTap: () {
               showDialog(
                   context: context,
@@ -165,26 +166,34 @@ class _SettingsPageState extends State<SettingsPage> {
                 : null,
           ),
           ListTile(
-            title: Text('Manage blocked accounts'),
+            title: Text('Safety'),
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
             leading: Icon(Icons.block_outlined),
-            title: Text('Blocked accounts'),
+            title: Text('Manage blocked accounts'),
             onTap: () {},
           ),
           ListTile(
+            leading: Icon(Icons.volume_off_outlined),
             title: Text('Manage muted comuninties'),
-            tileColor: Colors.grey[200], // Set tile color to light grey
-          ),
-          ListTile(
-            leading: Icon(Icons.block_outlined),
-            title: Text('muted communities'),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => MutedCommunities(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.chat_bubble),
+            title: const Text('Chat and messaging permisions'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatPermissions(),
                 ),
               );
             },
