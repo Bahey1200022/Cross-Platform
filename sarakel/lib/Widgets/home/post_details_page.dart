@@ -16,7 +16,7 @@ class PostDetailsPage extends StatefulWidget {
   final VoidCallback onDownvote;
   final VoidCallback onShare;
   final VoidCallback onImageTap;
-
+  final Function(int) onMakeVote;
   const PostDetailsPage({
     Key? key,
     required this.post,
@@ -24,6 +24,7 @@ class PostDetailsPage extends StatefulWidget {
     required this.onDownvote,
     required this.onShare,
     required this.onImageTap,
+    required this.onMakeVote,
   }) : super(key: key);
 
   @override
@@ -191,7 +192,6 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                         });
                       },
                     ),
-                    Text('${widget.post.downVotes}'),
                   ],
                 ),
                 Row(
