@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/models/community.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
+import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
+import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
+import 'package:sarakel/models/community.dart';
 
-class CommunityProfilePage extends StatelessWidget {
+class CommunityProfilePage extends StatefulWidget {
   final Community community;
   final String token;
   final bool showModToolsButton;
@@ -14,6 +16,28 @@ class CommunityProfilePage extends StatelessWidget {
     this.showModToolsButton = false,
     this.showJoinButton = true,
   });
+
+  @override
+  _CommunityProfilePageState createState() => _CommunityProfilePageState();
+}
+
+class _CommunityProfilePageState extends State<CommunityProfilePage> {
+  bool _isJoined = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfJoined();
+  }
+
+  void checkIfJoined() async {
+    // Check if the user is already joined to the community
+    // Implement your logic here to determine if the user is joined
+    // For demonstration, assuming the user is joined if showJoinButton is false
+    setState(() {
+      _isJoined = !widget.showJoinButton;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +89,7 @@ class CommunityProfilePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      community.name, // Use the community attribute here
+                      widget.community.name,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -74,15 +98,26 @@ class CommunityProfilePage extends StatelessWidget {
                   ],
                 ),
                 Spacer(),
-                if (showJoinButton) ...[
+                if (widget.showJoinButton) ...[
                   SizedBox(height: 16),
                   JoinButton(
-                    onPressed: () {
-                      // Add your logic here for joining or leaving the community
+                    isJoined: _isJoined,
+                    onPressed: () async {
+                      setState(() {
+                        _isJoined = !_isJoined;
+                      });
+                      if (_isJoined) {
+                        await JoinCommunityController.joinCommunity(
+                            widget.community.name, widget.token);
+                      } else {
+                        // Add logic to leave the community
+                        await LeaveCommunityController.leaveCommunity(
+                            widget.community.name, widget.token);
+                      }
                     },
                   ),
                 ],
-                if (showModToolsButton) ...[
+                if (widget.showModToolsButton) ...[
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
