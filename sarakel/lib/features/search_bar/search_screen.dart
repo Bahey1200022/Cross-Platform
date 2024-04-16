@@ -60,14 +60,21 @@ class sarakelSearch extends SearchDelegate {
               leading: Icon(Icons.history),
               title: RichText(
                 text: TextSpan(
-                  text: suggestionList[index].name.substring(0, query.length),
+                  text: suggestionList[index].name.substring(
+                      0,
+                      query.length <= suggestionList[index].name.length
+                          ? query.length
+                          : suggestionList[index].name.length),
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                   children: [
                     TextSpan(
-                      text: suggestionList[index].name.substring(query.length),
+                      text: suggestionList[index].name.substring(
+                          query.length <= suggestionList[index].name.length
+                              ? query.length
+                              : suggestionList[index].name.length),
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
