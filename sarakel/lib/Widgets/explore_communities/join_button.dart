@@ -66,16 +66,12 @@ class LeaveCommunityBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      width: double.infinity, // Ensure the bottom sheet occupies full width
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            'Are you sure you want to leave the community?',
-            style: TextStyle(fontSize: 18),
-          ),
           SizedBox(height: 20),
-          ElevatedButton(
+          ElevatedButton.icon(
             onPressed: () {
               Navigator.of(context).pop();
               onLeave();
@@ -86,7 +82,8 @@ class LeaveCommunityBottomSheet extends StatelessWidget {
                 ),
               );
             },
-            child: Text('Leave'),
+            icon: Icon(Icons.exit_to_app), // Add icon for leave
+            label: Text('Leave'),
           ),
         ],
       ),
