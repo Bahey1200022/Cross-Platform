@@ -181,7 +181,9 @@ class _SettingsPageState extends State<SettingsPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MutedCommunities(),
+                  builder: (context) => MutedCommunities(
+                    token: widget.token,
+                  ),
                 ),
               );
             },
@@ -193,7 +195,9 @@ class _SettingsPageState extends State<SettingsPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ChatPermissions(),
+                  builder: (context) => ChatPermissions(
+                    token: widget.token,
+                  ),
                 ),
               );
             },

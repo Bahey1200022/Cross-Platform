@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MutedCommunities extends StatefulWidget {
+class ModeratorTools extends StatefulWidget {
   final String token;
-
-  MutedCommunities({required this.token});
-
+  ModeratorTools({required this.token});
   @override
-  _MutedCommunitiesState createState() => _MutedCommunitiesState();
+  _ModeratorToolsState createState() => _ModeratorToolsState();
 }
 
-class _MutedCommunitiesState extends State<MutedCommunities> {
+class _ModeratorToolsState extends State<ModeratorTools> {
   TextEditingController _searchController = TextEditingController();
 
   @override

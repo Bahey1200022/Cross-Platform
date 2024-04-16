@@ -3,6 +3,7 @@ import 'package:sarakel/Widgets/explore_communities/join_button.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
 import 'package:sarakel/models/community.dart';
+import 'package:sarakel/mode_tools/moderator_tools.dart';
 
 class CommunityProfilePage extends StatefulWidget {
   final Community community;
@@ -13,7 +14,7 @@ class CommunityProfilePage extends StatefulWidget {
   CommunityProfilePage({
     required this.community,
     required this.token,
-    this.showModToolsButton = false,
+    this.showModToolsButton = true,
     this.showJoinButton = true,
   });
 
@@ -121,6 +122,15 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ModeratorTools(
+                            token: widget.token,
+                          ),
+                        ),
+                      );
+
                       // Add your logic for Mod Tools here
                     },
                     style: ElevatedButton.styleFrom(
