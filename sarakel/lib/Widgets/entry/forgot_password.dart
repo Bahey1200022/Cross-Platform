@@ -63,7 +63,8 @@ class ForgotPasswordPage extends StatelessWidget {
                         String emailOrUsername =
                             emailOrUsernameController.text.trim();
                         var data = {'emailOrUsername': emailOrUsername};
-                        var url = Uri.parse('$BASE_URL/login/forget_password');
+                        var url =
+                            Uri.parse('$BASE_URL/api/login/forget_password');
                         try {
                           var response = await http.post(
                             url,
