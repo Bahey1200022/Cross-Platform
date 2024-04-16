@@ -24,7 +24,8 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
   int _selectedIndex = 1;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List<Community>? fetchedCommunities;
-  bool _isJoined = false; // Track if the user has joined the community
+  List<bool> _isJoinedList = []; // List to track join status of each community
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +36,8 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
     loadCircles().then((communities) {
       setState(() {
         fetchedCommunities = communities;
+        _isJoinedList = List.generate(fetchedCommunities?.length ?? 0,
+            (index) => false); // Initialize join status for each community
       });
     });
   }
@@ -77,9 +80,10 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
                   title: Text(item.name),
                   subtitle: Text(item.description),
                   trailing: JoinButton(
-                    isJoined: _isJoined,
+                    isJoined: _isJoinedList[
+                        index], // Use individual join status for each community
                     onPressed: () async {
-                      if (_isJoined) {
+                      if (_isJoinedList[index]) {
                         // If already joined, leave the community
                         await LeaveCommunityController.leaveCommunity(
                             item.name, widget.token);
@@ -89,7 +93,8 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
                             item.name, widget.token);
                       }
                       setState(() {
-                        _isJoined = !_isJoined; // Toggle the join status
+                        _isJoinedList[index] = !_isJoinedList[
+                            index]; // Toggle the join status for the current community
                       });
                     },
                   ),
