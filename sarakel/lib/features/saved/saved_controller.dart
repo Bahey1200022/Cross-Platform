@@ -8,7 +8,8 @@ import 'package:sarakel/user_profile/user_controller.dart';
 class SavedController {
   Future<List<Post>> fetchSavedPosts() async {
     try {
-      var response = await http.get(Uri.parse('$BASE_URL/subreddit/getBest'));
+      var response =
+          await http.get(Uri.parse('$BASE_URL/api/subreddit/getBest'));
 
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
