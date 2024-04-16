@@ -27,7 +27,7 @@ class CommunityDrawer extends ConsumerWidget {
         child: Column(
           children: [
             ListTile(
-              title: Text('Create community'),
+              title: const Text('Create community'),
               leading: Icon(Icons.add),
               onTap: () {
                 Navigator.push(

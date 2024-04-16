@@ -62,8 +62,8 @@ class ProfileDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.save),
-                title: Text('Saved'),
+                leading: const Icon(Icons.save),
+                title: const Text('Saved'),
                 onTap: () {
                   // Handle Saved tap
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../models/post.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
-import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
 
 class PostDetailsPage extends StatefulWidget {

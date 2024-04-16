@@ -51,8 +51,8 @@ class SignupPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset('assets/logo_2d.png', height: 100.0),
-                SizedBox(height: 70.0),
-                Text.rich(
+                const SizedBox(height: 70.0),
+                const Text.rich(
                   TextSpan(
                     children: [
                       TextSpan(
@@ -66,7 +66,7 @@ class SignupPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
@@ -142,7 +142,7 @@ class SignupPage extends StatelessWidget {
                             );
                           }
                         },
-                        child: Text(
+                        child: const Text(
                           'Continue',
                           style: TextStyle(color: Colors.white),
                         ),

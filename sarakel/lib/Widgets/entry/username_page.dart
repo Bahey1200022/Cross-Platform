@@ -30,7 +30,7 @@ class _UsernamePageState extends State<UsernamePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/logo_2d.png', height: 100.0),
-              SizedBox(height: 50.0),
+              const SizedBox(height: 50.0),
               Text(
                 'Create your username',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
