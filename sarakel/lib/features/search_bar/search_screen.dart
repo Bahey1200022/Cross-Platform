@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/features/search_bar/search_control.dart';
 
 class sarakelSearch extends SearchDelegate {
