@@ -6,6 +6,7 @@ import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'settings_controller.dart';
 import 'package:http/http.dart' as http;
+import 'package:sarakel/Widgets/settings/muted_comunities.dart';
 
 class SettingsPage extends StatefulWidget {
   final String token;
@@ -171,6 +172,22 @@ class _SettingsPageState extends State<SettingsPage> {
             leading: Icon(Icons.block_outlined),
             title: Text('Blocked accounts'),
             onTap: () {},
+          ),
+          ListTile(
+            title: Text('Manage muted comuninties'),
+            tileColor: Colors.grey[200], // Set tile color to light grey
+          ),
+          ListTile(
+            leading: Icon(Icons.block_outlined),
+            title: Text('muted communities'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MutedCommunities(),
+                ),
+              );
+            },
           ),
           ListTile(
             title: Text('Manage notifications'),
