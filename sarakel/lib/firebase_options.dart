@@ -66,7 +66,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '74358882817',
     projectId: 'final-sarakel',
     storageBucket: 'final-sarakel.appspot.com',
-    iosClientId: '74358882817-09dhvq9okbd0pi69kgrv11oovb864fdn.apps.googleusercontent.com',
+    iosClientId:
+        '74358882817-09dhvq9okbd0pi69kgrv11oovb864fdn.apps.googleusercontent.com',
     iosBundleId: 'com.example.sarakel',
   );
 
@@ -76,7 +77,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '74358882817',
     projectId: 'final-sarakel',
     storageBucket: 'final-sarakel.appspot.com',
-    iosClientId: '74358882817-e78fa6krffcnib2ubtg6na5s651cvhjt.apps.googleusercontent.com',
+    iosClientId:
+        '74358882817-e78fa6krffcnib2ubtg6na5s651cvhjt.apps.googleusercontent.com',
     iosBundleId: 'com.example.sarakel.RunnerTests',
   );
 }

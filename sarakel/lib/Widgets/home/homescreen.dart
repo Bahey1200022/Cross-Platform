@@ -42,17 +42,35 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           items: const [
             DropdownMenuItem(
               value: 'Home',
-              child: Text('Home',
-                  style: TextStyle(
-                      color: Colors
-                          .black)), // Ensures contrast against white AppBar
+              child: Row(
+                children: [
+                  Icon(Icons.home),
+                  SizedBox(width: 5), // Adjust spacing between icon and text
+                  Text(
+                    'Home',
+                    style: TextStyle(
+                        color: Colors
+                            .black // Ensures contrast against white AppBar
+                        ),
+                  ),
+                ],
+              ),
             ),
             DropdownMenuItem(
               value: 'Popular',
-              child: Text('Popular',
-                  style: TextStyle(
-                      color: Colors
-                          .black)), // Ensures contrast against white AppBar
+              child: Row(
+                children: [
+                  Icon(Icons.whatshot),
+                  SizedBox(width: 5), // Adjust spacing between icon and text
+                  Text(
+                    'Popular',
+                    style: TextStyle(
+                        color: Colors
+                            .black // Ensures contrast against white AppBar
+                        ),
+                  ),
+                ],
+              ),
             ),
           ],
           onChanged: (value) {
@@ -62,13 +80,13 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           },
           underline: Container(), // Removes the underline
           style: const TextStyle(
-              color: Colors.deepOrange,
+              //color: Colors.deepOrange,
               fontWeight: FontWeight
                   .bold), // Default style for text, ensures contrast before dropdown is clicked
           iconEnabledColor:
               Colors.black, // Ensures the icon is visible against white AppBar
-          dropdownColor: Colors
-              .deepOrange, // Background color of the dropdown menu, ensure text color contrasts with this when active
+          //dropdownColor: Colors
+          //.deepOrange, // Background color of the dropdown menu, ensure text color contrasts with this when active
         ),
         leading: IconButton(
           icon: Icon(Icons.list),

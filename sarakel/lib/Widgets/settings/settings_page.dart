@@ -65,7 +65,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         children: [
           ListTile(
-            title: Text('Account Settings for ${jwtdecodedtoken['username']}'),
+            title: Text('Account settings for ${jwtdecodedtoken['username']}'),
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
@@ -189,7 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.chat_bubble),
+            leading: Icon(Icons.chat_outlined),
             title: const Text('Chat and messaging permisions'),
             onTap: () {
               Navigator.push(
@@ -379,7 +379,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             leading: Icon(Icons.key_outlined),
-            title: Text('Privacy Policy'),
+            title: Text('Privacy policy'),
             onTap: () {
               // Navigate to privacy settings page
             },

@@ -56,6 +56,7 @@ class _UsernamePageState extends State<UsernamePage> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: TextFormField(
+                        cursorColor: Colors.black, //Hafez,
                         controller: usernameController,
                         onChanged: (value) async {
                           value = value.trim();
@@ -75,6 +76,7 @@ class _UsernamePageState extends State<UsernamePage> {
                           });
                         },
                         decoration: InputDecoration(
+                          labelStyle: TextStyle(color: Colors.black), //Hafez
                           labelText: 'Username',
                           prefixText: 'u/',
                           border: InputBorder.none,

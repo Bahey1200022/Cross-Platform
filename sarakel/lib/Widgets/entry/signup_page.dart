@@ -80,11 +80,11 @@ class SignupPage extends StatelessWidget {
                           cursorColor: Colors.black, //Hafez
                           controller: _emailController,
                           decoration: InputDecoration(
-                            labelText: 'Email',
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.all(16.0),
-                            labelStyle: TextStyle(color: Colors.black) //Hafez
-                          ),
+                              labelText: 'Email',
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.all(16.0),
+                              labelStyle: TextStyle(color: Colors.black) //Hafez
+                              ),
                         ),
                       ),
                       SizedBox(height: 16.0),
@@ -98,11 +98,11 @@ class SignupPage extends StatelessWidget {
                           controller: _passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.all(16.0),
-                            labelStyle: TextStyle(color: Colors.black) //Hafez
-                          ),
+                              labelText: 'Password',
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.all(16.0),
+                              labelStyle: TextStyle(color: Colors.black) //Hafez
+                              ),
                         ),
                       ),
                       SizedBox(height: 16.0),

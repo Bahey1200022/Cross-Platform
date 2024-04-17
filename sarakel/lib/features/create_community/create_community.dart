@@ -22,7 +22,7 @@ class _CommunityFormState extends State<CommunityForm> {
   final TextEditingController _communityNameController =
       TextEditingController();
   CommunityType? _selectedCommunityType;
-  bool _is18Plus = false; 
+  bool _is18Plus = false;
   String _errorText = '';
   //bool _circleExists = false;
   bool _isValidCommunityName = false;
@@ -69,9 +69,8 @@ class _CommunityFormState extends State<CommunityForm> {
       return false;
     }
 
-    return _isValidCommunityName &&
-        _selectedCommunityType != null ;
-        //!_circleExists;
+    return _isValidCommunityName && _selectedCommunityType != null;
+    //!_circleExists;
   }
 
   void _showErrorSnackbar(String message) {
@@ -85,18 +84,18 @@ class _CommunityFormState extends State<CommunityForm> {
   }
 
   //void _checkCommunityExists(String communityName) async {
-    //bool circleExists =
-        //await CreateCircleController.checkCircleExists(communityName);
-    //bool idExists = await CreateCircleController.checkCircleIdExists(
-        //communityName.toLowerCase().replaceAll(' ', '_'));
+  //bool circleExists =
+  //await CreateCircleController.checkCircleExists(communityName);
+  //bool idExists = await CreateCircleController.checkCircleIdExists(
+  //communityName.toLowerCase().replaceAll(' ', '_'));
 
-    //setState(() {
-      //_circleExists = circleExists || idExists;
-      //if (_circleExists) {
-        //_errorText =
-            //'Circle with the name "$communityName" already exists. Please choose a different name.';
-      //}
-    //});
+  //setState(() {
+  //_circleExists = circleExists || idExists;
+  //if (_circleExists) {
+  //_errorText =
+  //'Circle with the name "$communityName" already exists. Please choose a different name.';
+  //}
+  //});
   //}
 
   void _createCommunity() async {
@@ -104,37 +103,39 @@ class _CommunityFormState extends State<CommunityForm> {
     String communityType = _selectedCommunityType!.name;
 
     //if (_communityExists) {
-      //_showErrorSnackbar(
-          //'Circle with the name "$communityName" already exists. Please choose a different name.');
-      //return;
+    //_showErrorSnackbar(
+    //'Circle with the name "$communityName" already exists. Please choose a different name.');
+    //return;
     //}
 
     await CreateCommunityController.createCommunity(
         communityName, communityType, _is18Plus);
   }
-  Widget _getIconForCommunityType(String communityTypeName) {
-  IconData iconData;
 
-  switch (communityTypeName) {
-    case 'public':
-      iconData = Icons.public;
-      break;
-    case 'restricted':
-      iconData = Icons.remove_red_eye_outlined;
-      break;
-    case 'private':
-      iconData = Icons.lock_outline;
-      break;
-    default:
-      iconData = Icons.error;
-      break;
+  Widget _getIconForCommunityType(String communityTypeName) {
+    IconData iconData;
+
+    switch (communityTypeName) {
+      case 'public':
+        iconData = Icons.public;
+        break;
+      case 'restricted':
+        iconData = Icons.remove_red_eye_outlined;
+        break;
+      case 'private':
+        iconData = Icons.lock_outline;
+        break;
+      default:
+        iconData = Icons.error;
+        break;
+    }
+
+    return Icon(
+      iconData,
+      color: Colors.black,
+    );
   }
 
-  return Icon(
-    iconData,
-    color: Colors.black,
-  );
-}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -210,32 +211,40 @@ class _CommunityFormState extends State<CommunityForm> {
               ),
               SizedBox(height: 8.0),
               DropdownButtonHideUnderline(
-              child: DropdownButton<CommunityType>(
-                value: _selectedCommunityType,
-                //autofocus: false,
-                onChanged: (CommunityType? newValue) {
-                  setState(() {
-                    _selectedCommunityType = newValue;
-                  });
-                  //FocusManager.instance.primaryFocus?.unfocus();
-                },
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
+                child: DropdownButton<CommunityType>(
+                  value: _selectedCommunityType,
+                  //autofocus: false,
+                  onChanged: (CommunityType? newValue) {
+                    setState(() {
+                      _selectedCommunityType = newValue;
+                    });
+                    //FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                  ),
+                  elevation: 8,
+                  dropdownColor: Colors.white,
+                  borderRadius: BorderRadius.circular(12.0),
+                  items: communityTypes
+                      .map<DropdownMenuItem<CommunityType>>(
+                        (CommunityType communityType) =>
+                            DropdownMenuItem<CommunityType>(
+                                value: communityType,
+                                child: Row(
+                                  children: [
+                                    _getIconForCommunityType(
+                                        communityType.name),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    Text(communityType.name)
+                                  ],
+                                )),
+                      )
+                      .toList(),
                 ),
-                elevation: 8,
-                dropdownColor: Colors.white,
-                borderRadius: BorderRadius.circular(12.0),
-                items: communityTypes
-                    .map<DropdownMenuItem<CommunityType>>(
-                      (CommunityType communityType) =>
-                          DropdownMenuItem<CommunityType>(
-                        value: communityType,
-                        child: Row(children: [_getIconForCommunityType(communityType.name),SizedBox(width: 8.0,),Text(communityType.name)],)
-                      ),
-                    )
-                    .toList(),
-              ),
               ),
               SizedBox(height: 16.0),
               Text(

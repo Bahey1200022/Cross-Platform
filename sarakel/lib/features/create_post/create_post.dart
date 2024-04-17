@@ -26,7 +26,6 @@ class _MyHomePageState extends State<CreatePost> {
   List<File> attachments = [];
   MyAppState appState = MyAppState();
   AddPostController addPostController = AddPostController();
-  
 
   @override
   void initState() {
@@ -180,19 +179,19 @@ class _MyHomePageState extends State<CreatePost> {
             TextButton(
               onPressed: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
-      if (token == null) {
-        print('No token found');
-        return;
-        }
-        print('Token retrieved: $token');
+                String? token = prefs.getString('token');
+                if (token == null) {
+                  print('No token found');
+                  return;
+                }
+                print('Token retrieved: $token');
                 // Handle posting
                 print('Post to ${selectedCommunity.name}');
                 Navigator.of(context).pop();
                 final String title = titleController.text;
                 final String body = bodyController.text;
-                addPostController.addPost(
-                    selectedCommunity.name, selectedCommunity.id, title, body,token);
+                addPostController.addPost(selectedCommunity.name,
+                    selectedCommunity.id, title, body, token);
                 //Navigator.pushNamed(context, '/home');
               },
               child: Text('Post'),

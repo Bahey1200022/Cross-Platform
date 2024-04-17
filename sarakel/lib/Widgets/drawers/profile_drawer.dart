@@ -24,7 +24,7 @@ class ProfileDrawer extends StatelessWidget {
       builder:
           (BuildContext context, UserProvider userProvider, Widget? child) {
         // User? user = userProvider.user;
-        String username = user!.username!;//Hafez
+        String username = user!.username!; //Hafez
 
         return Drawer(
           child: Column(
