@@ -3,14 +3,16 @@ import 'package:sarakel/Widgets/explore_communities/join_button.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
 import 'package:sarakel/Widgets/home/post_details_page.dart';
+import 'package:sarakel/Widgets/home/widgets/functions.dart';
+import 'package:sarakel/Widgets/home/widgets/video_player.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
 import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
 import 'package:flutter/services.dart';
-import '../../../models/post.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:video_player/video_player.dart';
 
 class PostCard extends StatefulWidget {
   final Post post;
@@ -218,10 +220,32 @@ class _PostCardState extends State<PostCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Text(
-                    '${widget.post.title} c/${widget.post.communityName} ${widget.post.duration != null ? '• ${widget.post.duration}' : ''}',
-                    style: TextStyle(fontSize: 16),
-                    overflow: TextOverflow.ellipsis,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'c/${widget.post.communityName}',
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            '${widget.post.duration != null ? '• ${widget.post.duration}' : '6h'}',
+                            style: TextStyle(fontSize: 12),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                      Text(
+                        '${widget.post.title}',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
                 Row(
@@ -329,10 +353,14 @@ class _PostCardState extends State<PostCard> {
                     ),
                   );
                 },
-                child:
-                    widget.post.imagePath != null && widget.post.imagePath != ""
-                        ? Image.network(widget.post.imagePath!)
-                        : Image.asset('apple.jpg'),
+                child: Center(
+                  child: widget.post.imagePath != null &&
+                          widget.post.imagePath != ""
+                      ? isVideo(widget.post.imagePath!)
+                          ? VideoPlayerWidget(videoLink: widget.post.imagePath!)
+                          : Image.network(widget.post.imagePath!)
+                      : Image.asset('assets/apple.jpg'),
+                ),
               ),
             SizedBox(height: 8),
             Row(
@@ -385,43 +413,4 @@ class _PostCardState extends State<PostCard> {
       ),
     );
   }
-
-  //Save post function
-  // void _savePost() async {
-  //   try {
-  //     final String apiUrl = 'http://localhost:3000/savedPosts';
-
-  //     final Map<String, String> headers = {'Content-Type': 'application/json'};
-
-  //     final Map<String, dynamic> postData = {
-  //       'title': widget.post.title,
-  //       'content': widget.post.content,
-  //       'communityId': widget.post.communityId,
-  //       'duration': widget.post.duration,
-  //       'upVotes': widget.post.upVotes,
-  //       'downvotes': widget.post.downVotes,
-  //       'comments': widget.post.comments,
-  //       'communityName': widget.post.communityName
-
-  //       // Include other necessary data
-  //     };
-
-  //     final String postJson = jsonEncode(postData);
-
-  //     final http.Response response = await http.post(
-  //       Uri.parse(apiUrl),
-  //       headers: headers,
-  //       body: postJson,
-  //     );
-
-  //     if (response.statusCode == 201) {
-  //       print('Post saved successfully');
-  //     } else {
-  //       print('Failed to save post. Status code: ${response.statusCode}');
-  //       print('Response body: ${response.body}');
-  //     }
-  //   } catch (e) {
-  //     print('Error saving post: $e');
-  //   }
-  // }
 }

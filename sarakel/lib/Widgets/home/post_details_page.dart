@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:sarakel/Widgets/home/widgets/functions.dart';
+import 'package:sarakel/Widgets/home/widgets/video_player.dart';
 import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
@@ -156,12 +158,14 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                     ),
                   );
                 },
-
-                child:
-                    widget.post.imagePath != null && widget.post.imagePath != ""
-                        ? Image.network(widget.post.imagePath!)
-                        : Image.asset(
-                            'apple.jpg'), // Add default image asset path here
+                child: Center(
+                  child: widget.post.imagePath != null &&
+                          widget.post.imagePath != ""
+                      ? isVideo(widget.post.imagePath!)
+                          ? VideoPlayerWidget(videoLink: widget.post.imagePath!)
+                          : Image.network(widget.post.imagePath!)
+                      : Image.asset('assets/apple.jpg'),
+                ),
               ),
             SizedBox(height: 20),
             Row(

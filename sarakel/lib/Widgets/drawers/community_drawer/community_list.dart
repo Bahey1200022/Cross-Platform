@@ -50,7 +50,10 @@ class CommunityDrawer extends ConsumerWidget {
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) {
                           return CommunityProfilePage(
-                              community: community!, token: token);
+                            community: community!,
+                            token: token,
+                            showJoinButton: false,
+                          );
                         }),
                       );
                     },

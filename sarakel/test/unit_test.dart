@@ -1,3 +1,4 @@
+import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:test/test.dart';
 
 bool _validateEmail(String email) {
@@ -53,6 +54,23 @@ void main() {
 
     test('Returns original string when no brackets', () {
       expect(extractUrl('https://example.com'), 'https://example.com');
+    });
+  });
+  group('Video URL Check', () {
+    test('Returns true for .mp4 URL', () {
+      expect(isVideo('https://example.com/video.mp4'), true);
+    });
+
+    test('Returns true for .avi URL', () {
+      expect(isVideo('https://example.com/video.avi'), true);
+    });
+
+    test('Returns false for .jpg URL', () {
+      expect(isVideo('https://example.com/image.jpg'), false);
+    });
+
+    test('Returns false for URL without extension', () {
+      expect(isVideo('https://example.com/video'), false);
     });
   });
 }
