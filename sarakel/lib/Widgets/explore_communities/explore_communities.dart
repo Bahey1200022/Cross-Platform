@@ -14,14 +14,14 @@ import 'package:sarakel/models/user.dart';
 class ExploreCommunities extends StatefulWidget {
   final String token;
 
-  ExploreCommunities({Key? key, required this.token}) : super(key: key);
+  const ExploreCommunities({Key? key, required this.token}) : super(key: key);
 
   @override
   State<ExploreCommunities> createState() => _ExploreCommunitiesState();
 }
 
 class _ExploreCommunitiesState extends State<ExploreCommunities> {
-  int _selectedIndex = 1;
+  final int _selectedIndex = 1;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List<Community>? fetchedCommunities;
   List<bool> _isJoinedList = []; // List to track join status of each community
@@ -49,7 +49,7 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Circles'),
+        title: const Text('Circles'),
       ),
       drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(
@@ -66,7 +66,7 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 elevation: 4,
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: ListTile(
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
@@ -112,7 +112,7 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
                   },
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
             ],
           );
         },

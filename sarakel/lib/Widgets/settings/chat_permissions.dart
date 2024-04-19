@@ -10,13 +10,14 @@ class ChatPermissions extends StatefulWidget {
 class _ChatPermissionsState extends State<ChatPermissions> {
   bool anyOneOnSarakel = true;
   bool acountOlderThan30Days = true;
+  // ignore: non_constant_identifier_names
   bool Nobody = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat Permissions'),
+        title: const Text('Chat Permissions'),
       ),
       body: ListView(
         children: [
@@ -29,7 +30,7 @@ class _ChatPermissionsState extends State<ChatPermissions> {
             ),
           ),
           ListTile(
-            title: Text('Anyone on Sarakel'),
+            title: const Text('Anyone on Sarakel'),
             trailing: Checkbox(
               value: anyOneOnSarakel,
               activeColor: Colors.blue,
@@ -41,7 +42,7 @@ class _ChatPermissionsState extends State<ChatPermissions> {
             ),
           ),
           ListTile(
-            title: Text('Acount older than 30 days'),
+            title: const Text('Acount older than 30 days'),
             trailing: Checkbox(
               value: acountOlderThan30Days,
               activeColor: Colors.blue,
@@ -53,7 +54,7 @@ class _ChatPermissionsState extends State<ChatPermissions> {
             ),
           ),
           ListTile(
-            title: Text('Nobody'),
+            title: const Text('Nobody'),
             trailing: Checkbox(
               value: Nobody,
               activeColor: Colors.blue,
@@ -73,7 +74,7 @@ class _ChatPermissionsState extends State<ChatPermissions> {
             ),
           ),
           ListTile(
-            title: Text('Anyone on Sarakel'),
+            title: const Text('Anyone on Sarakel'),
             trailing: Checkbox(
               value: anyOneOnSarakel,
               activeColor: Colors.blue,
@@ -85,7 +86,7 @@ class _ChatPermissionsState extends State<ChatPermissions> {
             ),
           ),
           ListTile(
-            title: Text('Nobody'),
+            title: const Text('Nobody'),
             trailing: Checkbox(
               value: Nobody,
               activeColor: Colors.blue,

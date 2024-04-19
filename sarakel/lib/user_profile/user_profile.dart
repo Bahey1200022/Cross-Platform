@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
 import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
@@ -26,7 +25,7 @@ class _UserProfile extends State<UserProfile> {
       case "Posts":
         return [
           ListView.builder(
-              itemCount: postsToShow.length ?? 0,
+              itemCount: postsToShow.length,
               itemBuilder: (context, index) {
                 final post = postsToShow[index];
 
@@ -41,19 +40,20 @@ class _UserProfile extends State<UserProfile> {
         ];
       case "Comments":
         return [
-          Text("Comments"),
+          const Text("Comments"),
 
           // Add more widgets as needed
         ];
 
       default:
         return [
-          Text("Default Widget"),
+          const Text("Default Widget"),
           // Add more widgets as needed
         ];
     }
   }
 
+  @override
   void initState() {
     super.initState();
     loadUserPosts().then((posts) {
@@ -160,7 +160,7 @@ class _UserProfile extends State<UserProfile> {
                             left: 20,
                             child: Text(
                               widget.user!.username!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'Raleway',
                                 fontSize: 25,
@@ -173,7 +173,6 @@ class _UserProfile extends State<UserProfile> {
                             child: InkWell(
                               onTap: () {
                                 // Action code when the icon is clicked
-                                print("The icon is clicked");
                               },
                               child: const Row(
                                 children: [
@@ -198,7 +197,6 @@ class _UserProfile extends State<UserProfile> {
                             child: ElevatedButton.icon(
                               onPressed: () {
                                 // Your action when the button is clicked
-                                print("Button clicked!");
                               },
                               label: const Text(
                                 'Add social link',
@@ -212,7 +210,7 @@ class _UserProfile extends State<UserProfile> {
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                  Color.fromARGB(255, 37, 37, 37),
+                                  const Color.fromARGB(255, 37, 37, 37),
                                 ),
                               ),
                             ),

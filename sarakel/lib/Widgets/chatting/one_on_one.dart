@@ -22,7 +22,7 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
 
   void Connect() {
-    socket = IO.io('$SOCKET_URL', <String, dynamic>{
+    socket = IO.io(SOCKET_URL, <String, dynamic>{
       "transports": ['websocket'],
       'autoConnect': false,
     });

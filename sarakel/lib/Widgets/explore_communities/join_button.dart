@@ -40,7 +40,7 @@ class _JoinButtonState extends State<JoinButton> {
             ? MaterialStateProperty.all(Colors.white)
             : MaterialStateProperty.all(Colors.blue),
         shape: MaterialStateProperty.all(
-          StadiumBorder(), // Oval shape
+          const StadiumBorder(), // Oval shape
         ),
       ),
       child: Padding(
@@ -70,20 +70,20 @@ class LeaveCommunityBottomSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton.icon(
             onPressed: () {
               Navigator.of(context).pop();
               onLeave();
               // Show a snack bar to inform the user about leaving the community
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text('Left community'),
                 ),
               );
             },
-            icon: Icon(Icons.exit_to_app), // Add icon for leave
-            label: Text('Leave'),
+            icon: const Icon(Icons.exit_to_app), // Add icon for leave
+            label: const Text('Leave'),
           ),
         ],
       ),

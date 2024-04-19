@@ -9,7 +9,7 @@ class sarakelSearch extends SearchDelegate {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
         },
@@ -53,11 +53,13 @@ class sarakelSearch extends SearchDelegate {
                   context,
                   MaterialPageRoute(
                     builder: (context) => CommunityProfilePage(
-                        community: suggestionList[index], token: token!),
+                        community: suggestionList[index],
+                        token: token!,
+                        showJoinButton: false),
                   ),
                 );
               },
-              leading: Icon(Icons.history),
+              leading: const Icon(Icons.history),
               title: RichText(
                 text: TextSpan(
                   text: suggestionList[index].name.substring(
@@ -65,7 +67,7 @@ class sarakelSearch extends SearchDelegate {
                       query.length <= suggestionList[index].name.length
                           ? query.length
                           : suggestionList[index].name.length),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -75,7 +77,7 @@ class sarakelSearch extends SearchDelegate {
                           query.length <= suggestionList[index].name.length
                               ? query.length
                               : suggestionList[index].name.length),
-                      style: TextStyle(color: Colors.grey),
+                      style: const TextStyle(color: Colors.grey),
                     ),
                   ],
                 ),
@@ -86,7 +88,9 @@ class sarakelSearch extends SearchDelegate {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return CircularProgressIndicator();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );

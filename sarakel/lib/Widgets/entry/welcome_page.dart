@@ -14,32 +14,32 @@ class WelcomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/logo_2d.png', height: 150.0),
-            Text(
+            const Text(
               'Welcome to Sarakel!',
               style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.email),
-                  SizedBox(width: 8.0),
+                  const Icon(Icons.email),
+                  const SizedBox(width: 8.0),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/signup');
                       },
-                      child: Text(
-                        'Continue with email',
-                        style: TextStyle(color: Colors.black),
-                      ),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                           const Color.fromARGB(255, 244, 236, 236),
                         ),
+                      ),
+                      child: const Text(
+                        'Continue with email',
+                        style: TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
@@ -52,7 +52,7 @@ class WelcomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset('assets/google_logo.png', height: 24.0),
-                  SizedBox(width: 8.0),
+                  const SizedBox(width: 8.0),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: TextButton(
@@ -60,34 +60,34 @@ class WelcomePage extends StatelessWidget {
                         // Handle continue with Google
                         await GoogleService().signInWithGoogle(context);
                       },
-                      child: Text(
-                        'Continue with Google',
-                        style: TextStyle(color: Colors.black),
-                      ),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                           const Color.fromARGB(255, 244, 236, 236),
                         ),
+                      ),
+                      child: const Text(
+                        'Continue with Google',
+                        style: TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 160.0),
-            Text('Already in Sarakel ?'),
+            const SizedBox(height: 160.0),
+            const Text('Already in Sarakel ?'),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/login');
               },
-              child: Text(
-                'Login',
-                style: TextStyle(color: Colors.white),
-              ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
                   Colors.orange,
                 ),
+              ),
+              child: const Text(
+                'Login',
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],

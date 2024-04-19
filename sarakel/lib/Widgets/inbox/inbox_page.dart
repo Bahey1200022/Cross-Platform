@@ -69,13 +69,13 @@ class _InboxSectionState extends State<InboxSection> {
         user: User(username: jwtdecodedtoken['username'], token: widget.token),
       ),
       body: ListView.builder(
-        itemCount: messageCard.length > 0 ? messageCard.length : 0,
+        itemCount: messageCard.isNotEmpty ? messageCard.length : 0,
         itemBuilder: (context, index) {
           return ButtonCard(
             sender: messageCard[index]['recipient'],
             receiver: messageCard[index]['username'],
             token: widget.token,
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             live: false,
             title: messageCard[index]['title'],
             content: messageCard[index]['content'],

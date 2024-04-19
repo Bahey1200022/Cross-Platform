@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -10,14 +12,13 @@ class JoinCommunityController {
       String username = decodedToken['username'];
       return username;
     } catch (e) {
-      print('Error decoding token: $e');
       return '';
     }
   }
 
   static Future<void> joinCommunity(String communityName, String token) async {
     try {
-      final String apiUrl = '$BASE_URL/api/community/join';
+      const String apiUrl = '$BASE_URL/api/community/join';
 
       final Map<String, String> headers = {
         'Authorization': 'Bearer $token',
@@ -26,7 +27,6 @@ class JoinCommunityController {
 
       String username = getUsernameFromToken(token);
       if (username.isEmpty) {
-        print('Failed to get username from token');
         return;
       }
 

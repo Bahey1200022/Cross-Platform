@@ -21,11 +21,11 @@ class FullScreenImagePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('$communityName: $title',
-            style: TextStyle(color: Colors.white)),
+            style: const TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
       body: Column(
@@ -33,7 +33,6 @@ class FullScreenImagePage extends StatelessWidget {
           Expanded(
             child: Center(
               child: PinchZoom(
-                child: Image(image: NetworkImage(imagePath)),
                 maxScale: 2.5,
                 onZoomStart: () {
                   print('Start zooming');
@@ -41,6 +40,7 @@ class FullScreenImagePage extends StatelessWidget {
                 onZoomEnd: () {
                   print('Stop zooming');
                 },
+                child: Image(image: NetworkImage(imagePath)),
               ),
             ),
           ),
@@ -49,25 +49,25 @@ class FullScreenImagePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                icon: Icon(Icons.arrow_upward, color: Colors.white),
+                icon: const Icon(Icons.arrow_upward, color: Colors.white),
                 onPressed: () {
                   // Handle upvote
                 },
               ),
               IconButton(
-                icon: Icon(Icons.arrow_downward, color: Colors.white),
+                icon: const Icon(Icons.arrow_downward, color: Colors.white),
                 onPressed: () {
                   // Handle downvote
                 },
               ),
               IconButton(
-                icon: Icon(Icons.comment, color: Colors.white),
+                icon: const Icon(Icons.comment, color: Colors.white),
                 onPressed: () {
                   // Handle comment
                 },
               ),
               IconButton(
-                icon: Icon(Icons.share, color: Colors.white),
+                icon: const Icon(Icons.share, color: Colors.white),
                 onPressed: () {
                   // Handle share
                 },

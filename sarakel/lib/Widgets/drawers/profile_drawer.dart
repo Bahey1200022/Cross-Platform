@@ -32,19 +32,19 @@ class ProfileDrawer extends StatelessWidget {
             children: [
               UserAccountsDrawerHeader(
                 accountName: Text('u/$username'),
-                accountEmail: Text('Sarakel developer'),
-                currentAccountPicture: CircleAvatar(
+                accountEmail: const Text('Sarakel developer'),
+                currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage('assets/avatar_logo.jpeg'),
                 ),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color:
                       Colors.deepOrange, // Set the background color to orange
                 ),
               ),
-              Divider(),
+              const Divider(),
               ListTile(
-                leading: Icon(Icons.account_circle_outlined),
-                title: Text('Profile'),
+                leading: const Icon(Icons.account_circle_outlined),
+                title: const Text('Profile'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
                     return UserProfile(user: user);
@@ -52,8 +52,8 @@ class ProfileDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.group_outlined),
-                title: Text('Create a community'),
+                leading: const Icon(Icons.group_outlined),
+                title: const Text('Create a community'),
                 onTap: () {
                   Navigator.push(
                       context,
@@ -73,8 +73,8 @@ class ProfileDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.history_outlined),
-                title: Text('History'),
+                leading: const Icon(Icons.history_outlined),
+                title: const Text('History'),
                 onTap: () {
                   Navigator.push(
                       context,
@@ -83,8 +83,8 @@ class ProfileDrawer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.settings_outlined),
-                title: Text('Settings'),
+                leading: const Icon(Icons.settings_outlined),
+                title: const Text('Settings'),
                 onTap: () {
                   Navigator.push(
                       context,

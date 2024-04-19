@@ -24,8 +24,8 @@ class _SavedScreenState extends State<SavedScreen> {
       length: 2, // Number of tabs (posts and comments)
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Saved'),
-          bottom: TabBar(
+          title: const Text('Saved'),
+          bottom: const TabBar(
             labelStyle: TextStyle(color: Colors.black),
             tabs: [
               Tab(text: 'Posts'), // Tab for saved posts
@@ -40,7 +40,7 @@ class _SavedScreenState extends State<SavedScreen> {
               future: _savedPostsFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (snapshot.hasData) {
@@ -53,18 +53,18 @@ class _SavedScreenState extends State<SavedScreen> {
                             post: snapshot.data![index],
                             onHide: () {},
                           ),
-                          Divider(),
+                          const Divider(),
                         ],
                       );
                     },
                   );
                 } else {
-                  return Center(child: Text('No saved posts'));
+                  return const Center(child: Text('No saved posts'));
                 }
               },
             ),
             // View for saved comments (placeholder for now)
-            Center(
+            const Center(
               child: Text('Saved Comments View'),
             ),
           ],

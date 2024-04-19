@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, empty_catches
+
 import 'dart:convert';
 
 import 'package:country_list_pick/country_list_pick.dart';
@@ -33,7 +35,7 @@ class Settings {
       builder: (context) => CountryListPick(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: Text('Select Country'),
+          title: const Text('Select Country'),
         ),
         theme: CountryTheme(
           isShowFlag: true,
@@ -51,18 +53,18 @@ class Settings {
     String selectedGender = await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Select your Gender'),
+        title: const Text('Select your Gender'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: Text('Male'),
+              title: const Text('Male'),
               onTap: () {
                 Navigator.pop(context, 'Male');
               },
             ),
             ListTile(
-              title: Text('Female'),
+              title: const Text('Female'),
               onTap: () {
                 Navigator.pop(context, 'Female');
               },
@@ -93,7 +95,6 @@ class Settings {
         // Decode the JSON response into a list
         var jsonData = json.decode(response.body);
         var settings = jsonData['settings'];
-        print(settings['showMatureContent']);
 
         // Map the community data to Community objects
         return UserPreferences(
@@ -124,7 +125,6 @@ class Settings {
         );
       }
     } catch (e) {
-      print('Error loading prefs: $e');
       // Return an empty list if an error occurs
       return UserPreferences(
         showNSFW: false,
@@ -150,7 +150,6 @@ class Settings {
         // Add other preferences here
       };
       var data = json.encode(updatedPrefs);
-      print(data);
       // Make a PATCH request to update the user's preferences
       var response = await http.patch(
         Uri.parse('$BASE_URL/api/v1/me/prefs/?'),
@@ -163,14 +162,9 @@ class Settings {
       // Check if the request was successful (status code 200)
       if (response.statusCode == 200) {
         // Preferences updated successfully
-        print(response.body);
-        print('Preferences updated successfully');
       } else {
         // Failed to update preferences
-        print('Failed to update preferences');
       }
-    } catch (e) {
-      print('Error updating prefs: $e');
-    }
+    } catch (e) {}
   }
 }

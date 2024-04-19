@@ -26,18 +26,18 @@ class _HistroyState extends State<History> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("History"),
+        title: const Text("History"),
         actions: [
           PopupMenuButton(
             itemBuilder: (BuildContext context) {
               return [
                 const PopupMenuItem(
-                  child: Text('Recent'),
                   value: 'recent',
+                  child: Text('Recent'),
                 ),
-                const PopupMenuItem(child: Text('Upvotes'), value: 'upvotes'),
+                const PopupMenuItem(value: 'upvotes', child: Text('Upvotes')),
                 const PopupMenuItem(
-                    child: Text('Downvotes'), value: 'downvotes'),
+                    value: 'downvotes', child: Text('Downvotes')),
               ];
             },
             onSelected: (value) {
@@ -74,8 +74,8 @@ class _HistroyState extends State<History> {
             itemBuilder: (BuildContext context) {
               return [
                 const PopupMenuItem(
-                  child: Text('Clear History'),
                   value: 'option1',
+                  child: Text('Clear History'),
                 ),
               ];
             },

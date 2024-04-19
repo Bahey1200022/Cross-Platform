@@ -72,7 +72,7 @@ class _MyHomePageState extends State<CreatePost> {
       builder: (BuildContext context) {
         return Dialog(
           child: Container(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: _getAttachmentWidget(attachmentFile),
           ),
         );
@@ -93,12 +93,14 @@ class _MyHomePageState extends State<CreatePost> {
         fit: BoxFit.cover,
       );
     } else if (file.path.toLowerCase().endsWith('.mp4')) {
-      attachmentWidget = Icon(Icons.play_circle, size: 100, color: Colors.blue);
+      attachmentWidget =
+          const Icon(Icons.play_circle, size: 100, color: Colors.blue);
     } else if (file.path.toLowerCase().endsWith('.pdf')) {
       attachmentWidget =
-          Icon(Icons.picture_as_pdf, size: 100, color: Colors.red);
+          const Icon(Icons.picture_as_pdf, size: 100, color: Colors.red);
     } else {
-      attachmentWidget = Icon(Icons.attach_file, size: 100, color: Colors.grey);
+      attachmentWidget =
+          const Icon(Icons.attach_file, size: 100, color: Colors.grey);
     }
 
     return attachmentWidget;
@@ -110,18 +112,18 @@ class _MyHomePageState extends State<CreatePost> {
       child: Card(
         elevation: 5.0,
         color: Colors.grey[200],
-        margin: EdgeInsets.symmetric(vertical: 8.0),
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _getAttachmentWidget(file),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.delete),
+                    icon: const Icon(Icons.delete),
                     onPressed: () =>
                         _removeAttachment(attachments.indexOf(file)),
                   ),
@@ -143,7 +145,7 @@ class _MyHomePageState extends State<CreatePost> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select Community'),
+          title: const Text('Select Community'),
           content: SizedBox(
             width: double.maxFinite,
             child: ListView(
@@ -154,7 +156,6 @@ class _MyHomePageState extends State<CreatePost> {
                       title: Text(community.name),
                       onTap: () {
                         // Handle community selection
-                        print('Selected Community: ${community.name}');
                         Navigator.of(context).pop();
                         _showPostConfirmationDialog(community);
                       },
@@ -173,7 +174,7 @@ class _MyHomePageState extends State<CreatePost> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Post Confirmation'),
+          title: const Text('Post Confirmation'),
           content: Text('Do you want to post to ${selectedCommunity.name}?'),
           actions: [
             TextButton(
@@ -181,12 +182,9 @@ class _MyHomePageState extends State<CreatePost> {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 String? token = prefs.getString('token');
                 if (token == null) {
-                  print('No token found');
                   return;
                 }
-                print('Token retrieved: $token');
                 // Handle posting
-                print('Post to ${selectedCommunity.name}');
                 Navigator.of(context).pop();
                 final String title = titleController.text;
                 final String body = bodyController.text;
@@ -194,14 +192,14 @@ class _MyHomePageState extends State<CreatePost> {
                     selectedCommunity.id, title, body, token);
                 //Navigator.pushNamed(context, '/home');
               },
-              child: Text('Post'),
+              child: const Text('Post'),
             ),
             TextButton(
               onPressed: () {
                 // Handle cancel
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
           ],
         );
@@ -216,10 +214,10 @@ class _MyHomePageState extends State<CreatePost> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Post'),
+        title: const Text('Post'),
         actions: [
           IconButton(
-            icon: Icon(Icons.attach_file, color: Colors.orange),
+            icon: const Icon(Icons.attach_file, color: Colors.orange),
             onPressed: _pickFiles,
           ),
           TextButton(
@@ -239,8 +237,8 @@ class _MyHomePageState extends State<CreatePost> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 'Next',
                 style: TextStyle(
@@ -259,16 +257,16 @@ class _MyHomePageState extends State<CreatePost> {
           children: [
             TextField(
               controller: titleController,
-              decoration: InputDecoration(labelText: 'Title'),
+              decoration: const InputDecoration(labelText: 'Title'),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextField(
               controller: bodyController,
               maxLines: null,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(labelText: 'Body'),
+              decoration: const InputDecoration(labelText: 'Body'),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
                 itemCount: attachments.length,

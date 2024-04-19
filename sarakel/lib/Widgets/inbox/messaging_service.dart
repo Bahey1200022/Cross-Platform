@@ -15,13 +15,12 @@ void message(BuildContext context, String token, String title, String body,
     },
     body: json.encode(data),
   );
-  print(response.body);
-  print(response.statusCode);
+
   if (response.statusCode == 200) {
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Message sent')));
+        .showSnackBar(const SnackBar(content: Text('Message sent')));
   } else {
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Message not sent')));
+        .showSnackBar(const SnackBar(content: Text('Message not sent')));
   }
 }

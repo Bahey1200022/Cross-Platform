@@ -44,31 +44,31 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 43, 126, 243),
+        backgroundColor: const Color.fromARGB(255, 43, 126, 243),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search, color: Colors.white),
+            icon: const Icon(Icons.search, color: Colors.white),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.share, color: Colors.white),
+            icon: const Icon(Icons.share, color: Colors.white),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.more_vert, color: Colors.white),
+            icon: const Icon(Icons.more_vert, color: Colors.white),
             onPressed: () {},
           ),
         ],
       ),
       body: Container(
         color: Colors.white,
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -77,7 +77,7 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                 Container(
                   width: 80,
                   height: 80,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       image: AssetImage('assets/avatar_logo.jpeg'),
@@ -85,22 +85,22 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.community.name,
-                      style: TextStyle(
+                      'c/${widget.community.name}',
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 if (widget.showJoinButton) ...[
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   JoinButton(
                     isJoined: _isJoined,
                     onPressed: () async {
@@ -119,7 +119,7 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                   ),
                 ],
                 if (widget.showModToolsButton) ...[
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -136,7 +136,7 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                     ),
-                    child: Text(
+                    child: const Text(
                       'Mod Tools',
                       style: TextStyle(color: Colors.white),
                     ),
@@ -144,10 +144,10 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                 ],
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextButton(
               onPressed: () {},
-              child: Text(
+              child: const Text(
                 'See Community Info',
                 style: TextStyle(color: Colors.blue),
               ),

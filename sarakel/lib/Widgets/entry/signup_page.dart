@@ -28,7 +28,7 @@ class SignupPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
             onPressed: () {
               Navigator.pushNamed(context, '/welcome');
             },
@@ -38,7 +38,7 @@ class SignupPage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/login');
               },
-              child: Text(
+              child: const Text(
                 'Log in',
                 style: TextStyle(color: Color.fromARGB(255, 58, 56, 56)),
               ),
@@ -79,7 +79,7 @@ class SignupPage extends StatelessWidget {
                         child: TextFormField(
                           cursorColor: Colors.black, //Hafez
                           controller: _emailController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               labelText: 'Email',
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.all(16.0),
@@ -87,7 +87,7 @@ class SignupPage extends StatelessWidget {
                               ),
                         ),
                       ),
-                      SizedBox(height: 16.0),
+                      const SizedBox(height: 16.0),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
@@ -97,7 +97,7 @@ class SignupPage extends StatelessWidget {
                           cursorColor: Colors.black, //Hafez
                           controller: _passwordController,
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               labelText: 'Password',
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.all(16.0),
@@ -105,7 +105,7 @@ class SignupPage extends StatelessWidget {
                               ),
                         ),
                       ),
-                      SizedBox(height: 16.0),
+                      const SizedBox(height: 16.0),
                       ElevatedButton(
                         onPressed: () async {
                           // Navigator.pushNamed(context, '/username');
@@ -130,15 +130,15 @@ class SignupPage extends StatelessWidget {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text('Error'),
-                                  content: Text(
+                                  title: const Text('Error'),
+                                  content: const Text(
                                       'Invalid email or password. Password should be more than 8 characters'),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
-                                      child: Text('OK'),
+                                      child: const Text('OK'),
                                     ),
                                   ],
                                 );
@@ -146,14 +146,14 @@ class SignupPage extends StatelessWidget {
                             );
                           }
                         },
-                        child: const Text(
-                          'Continue',
-                          style: TextStyle(color: Colors.white),
-                        ),
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
                             Colors.orange,
                           ),
+                        ),
+                        child: const Text(
+                          'Continue',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ],

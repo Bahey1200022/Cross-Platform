@@ -52,7 +52,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
     String link = "http://192.168.1.10:3000/post/${widget.post.id}";
     Clipboard.setData(ClipboardData(text: link)).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Link copied to clipboard!")),
+        const SnackBar(content: Text("Link copied to clipboard!")),
       );
     });
   }
@@ -60,12 +60,8 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
   Future<void> sendComment(String postID, String content) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token')!;
-    print('Token: $token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-    print('Decoded Token: $decodedToken');
     String username = decodedToken['username'];
-    print('Username: $username');
-    print('Post ID: ${widget.post.id}');
     Map<String, String> commentData = {
       'content': content,
       'userID': username,

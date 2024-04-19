@@ -1,7 +1,7 @@
+// ignore_for_file: empty_catches, unused_local_variable
+
 import 'package:flutter/material.dart';
-import 'package:sarakel/Widgets/explore_communities/join_button.dart';
-import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
-import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
+
 import 'package:sarakel/Widgets/home/post_details_page.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
@@ -12,7 +12,6 @@ import '../../../models/post.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:video_player/video_player.dart';
 
 class PostCard extends StatefulWidget {
   final Post post;
@@ -27,7 +26,7 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool hasBeenShared = false;
-  bool _isJoined = false;
+  //bool _isJoined = false;
 
   void _toggleUpvote() {
     bool wasUpvoted = widget.post.isUpvoted; // Store previous state
@@ -89,10 +88,7 @@ class _PostCardState extends State<PostCard> {
           'entityId': widget.post.id,
         }),
       );
-      print(response.body);
-    } catch (e) {
-      print('Error saving post: $e');
-    }
+    } catch (e) {}
   }
 
   void _unSavePost() async {
@@ -110,10 +106,7 @@ class _PostCardState extends State<PostCard> {
           'entityId': widget.post.id,
         }),
       );
-      print(response.body);
-    } catch (e) {
-      print('Error saving post: $e');
-    }
+    } catch (e) {}
   }
 
   void _makeVote(int voteType) async {
@@ -132,17 +125,13 @@ class _PostCardState extends State<PostCard> {
           'rank': voteType,
         }),
       );
-      print(response.body);
-    } catch (e) {
-      print('Error saving post: $e');
-    }
+    } catch (e) {}
   }
 
   void _report() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var token = prefs.getString('token');
-      print(widget.post.username);
       var response = await http.post(
         Uri.parse('$BASE_URL/api/report'),
         headers: <String, String>{
@@ -155,10 +144,7 @@ class _PostCardState extends State<PostCard> {
           'reportedUsername': widget.post.username,
         }),
       );
-      print(response.body);
-    } catch (e) {
-      print('Error saving post: $e');
-    }
+    } catch (e) {}
   }
 
   void _toggleSave() {
@@ -177,7 +163,7 @@ class _PostCardState extends State<PostCard> {
     String link = "http://192.168.1.10:3000/post/${widget.post.id}";
     Clipboard.setData(ClipboardData(text: link)).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Link copied to clipboard!")),
+        const SnackBar(content: Text("Link copied to clipboard!")),
       );
     });
   }
@@ -238,15 +224,17 @@ class _PostCardState extends State<PostCard> {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            '${widget.post.duration != null ? '• ${widget.post.duration}' : '6h'}',
-                            style: TextStyle(fontSize: 12),
+                            widget.post.duration != null
+                                ? '• ${widget.post.duration}'
+                                : '6h',
+                            style: const TextStyle(fontSize: 12),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
                       Text(
-                        '${widget.post.title}',
-                        style: TextStyle(
+                        widget.post.title,
+                        style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -264,7 +252,7 @@ class _PostCardState extends State<PostCard> {
                             leading: Icon(widget.post.isSaved
                                 ? Icons.bookmark
                                 : Icons.bookmark_border),
-                            title: Text('Save'),
+                            title: const Text('Save'),
                           ),
                         ),
                         const PopupMenuItem<String>(
@@ -321,7 +309,7 @@ class _PostCardState extends State<PostCard> {
             const SizedBox(height: 8),
             Text(
               widget.post.content,
-              style: TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: 14),
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
@@ -351,16 +339,16 @@ class _PostCardState extends State<PostCard> {
                       : Image.asset('assets/apple.jpg'),
                 ),
               ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_upward),
+                      icon: const Icon(Icons.arrow_upward),
                       color: widget.post.isUpvoted
-                          ? Color.fromARGB(255, 255, 152, 0)
+                          ? const Color.fromARGB(255, 255, 152, 0)
                           : Colors.grey,
                       onPressed: () {
                         _toggleUpvote();
@@ -368,9 +356,9 @@ class _PostCardState extends State<PostCard> {
                     ),
                     Text('${widget.post.upVotes}'),
                     IconButton(
-                        icon: Icon(Icons.arrow_downward),
+                        icon: const Icon(Icons.arrow_downward),
                         color: widget.post.isDownvoted
-                            ? Color.fromARGB(255, 156, 39, 176)
+                            ? const Color.fromARGB(255, 156, 39, 176)
                             : Colors.grey,
                         onPressed: () {
                           _toggleDownvote();
@@ -380,7 +368,7 @@ class _PostCardState extends State<PostCard> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.comment),
+                      icon: const Icon(Icons.comment),
                       onPressed: () {},
                     ),
                     Text('${widget.post.comments}'),
@@ -389,7 +377,7 @@ class _PostCardState extends State<PostCard> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.share),
+                      icon: const Icon(Icons.share),
                       onPressed: _sharePost,
                     ),
                     Text('${widget.post.shares}'),

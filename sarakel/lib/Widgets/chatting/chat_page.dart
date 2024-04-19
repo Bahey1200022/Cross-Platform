@@ -42,7 +42,7 @@ class _ChatSection extends State<ChatSection> {
         ),
         body: ButtonCard(
           receiver: 'habiba',
-          icon: Icon(Icons.person),
+          icon: const Icon(Icons.person),
           sender: jwtdecodedtoken['username'],
           token: widget.token,
           live: true,

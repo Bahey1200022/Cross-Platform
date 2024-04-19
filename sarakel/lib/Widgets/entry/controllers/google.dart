@@ -24,8 +24,6 @@ class GoogleService {
         accessToken: googleSignInAuthentication?.accessToken,
         idToken: googleSignInAuthentication?.idToken,
       );
-      print('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
-      print(credential.accessToken);
       await FirebaseAuth.instance.signInWithCredential(credential);
       final accessToken = credential.accessToken;
       var data = {'token': accessToken};
@@ -52,11 +50,8 @@ class GoogleService {
                     homescreenController: HomescreenController(token: token))));
       } else {
         // Request failed
-        print('Post request failed with status code: ${response.statusCode}');
       }
-    } catch (error, stackTrace) {
-      print('Error signing in with Google: $error');
-      print('Stack trace: $stackTrace');
-    }
+      // ignore: empty_catches
+    } catch (error) {}
   }
 }

@@ -52,12 +52,10 @@ class UserController {
         return true;
       } else {
         // Signup failed, handle the error
-        print('Signup failed with status code: ${response.statusCode}');
         return false;
       }
     } catch (e) {
       // Handle network errors
-      print('Error: $e');
       return false;
     }
   }
@@ -77,10 +75,8 @@ class UserController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         prefs = await SharedPreferences.getInstance();
         var token = jsonData['token'];
-        print(jsonData);
 
         prefs!.setString('token', token);
-        print(jsonData);
 
         Navigator.push(
             context,
@@ -89,11 +85,9 @@ class UserController {
                     homescreenController: HomescreenController(token: token))));
         return true;
       } else {
-        print(response.statusCode);
         return false;
       }
     } catch (e) {
-      print('Caught error: $e');
       return false;
     }
   }

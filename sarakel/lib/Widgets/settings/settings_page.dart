@@ -39,12 +39,8 @@ class _SettingsPageState extends State<SettingsPage> {
       setState(() {
         swicthval1 = data['settings'];
       });
-      print(swicthval1);
-      print(swicthval1.length);
-      print(swicthval1['showMatureContent']);
     } else {
       // Handle the error case when the API call fails
-      print('Failed to fetch switch values: ${response.statusCode}');
     }
   }
 
@@ -60,7 +56,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(' Settings '),
+        title: const Text(' Settings '),
       ),
       body: ListView(
         children: [
@@ -69,8 +65,8 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
-            leading: Icon(Icons.email_outlined),
-            title: Text('Update email address'),
+            leading: const Icon(Icons.email_outlined),
+            title: const Text('Update email address'),
             onTap: () {
               showDialog(
                   context: context,
@@ -138,45 +134,45 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.public_outlined),
-            title: Text('Country'),
+            leading: const Icon(Icons.public_outlined),
+            title: const Text('Country'),
             onTap: () {
               widget.settings.country(context);
             },
           ),
           ListTile(
-            leading: Icon(Icons.person_outline),
-            title: Text('Gender'),
+            leading: const Icon(Icons.person_outline),
+            title: const Text('Gender'),
             onTap: () {
               widget.settings.gender(context, widget.token);
             },
           ),
           ListTile(
-            title: Text('Connected accounts'),
+            title: const Text('Connected accounts'),
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
-            leading: Icon(Icons.alternate_email_outlined),
-            title: Text('Google'),
+            leading: const Icon(Icons.alternate_email_outlined),
+            title: const Text('Google'),
             trailing: widget.settings.googleConnected(widget.token)
-                ? Icon(
+                ? const Icon(
                     Icons.check,
                     color: Colors.green,
                   )
                 : null,
           ),
           ListTile(
-            title: Text('Safety'),
+            title: const Text('Safety'),
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
-            leading: Icon(Icons.block_outlined),
-            title: Text('Manage blocked accounts'),
+            leading: const Icon(Icons.block_outlined),
+            title: const Text('Manage blocked accounts'),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.volume_off_outlined),
-            title: Text('Manage muted comuninties'),
+            leading: const Icon(Icons.volume_off_outlined),
+            title: const Text('Manage muted comuninties'),
             onTap: () {
               Navigator.push(
                 context,
@@ -189,7 +185,7 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.chat_outlined),
+            leading: const Icon(Icons.chat_outlined),
             title: const Text('Chat and messaging permisions'),
             onTap: () {
               Navigator.push(
@@ -203,12 +199,12 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
-            title: Text('Manage notifications'),
+            title: const Text('Manage notifications'),
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
-            leading: Icon(Icons.chat_bubble_outline),
-            title: Text('Chat messages'),
+            leading: const Icon(Icons.chat_bubble_outline),
+            title: const Text('Chat messages'),
             trailing: Switch(
               activeColor: Colors.blue,
               value: swicthval1['chatMessages'] ?? false,
@@ -225,8 +221,8 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.lock_outline),
-            title: Text('Private emails'),
+            leading: const Icon(Icons.lock_outline),
+            title: const Text('Private emails'),
             trailing: Switch(
               activeColor: Colors.blue,
               value: swicthval1['privateMessagesEmail'] ?? false,
@@ -243,12 +239,12 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
-            title: Text('Manage 18+ content'),
+            title: const Text('Manage 18+ content'),
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
-            leading: Icon(Icons.no_adult_content_outlined),
-            title: Text('Show NSFW content'),
+            leading: const Icon(Icons.no_adult_content_outlined),
+            title: const Text('Show NSFW content'),
             trailing: Switch(
               activeColor: Colors.blue,
               value: swicthval1['showMatureContent'] ?? false,
@@ -262,13 +258,13 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
-            title: Text('General Preferences'),
+            title: const Text('General Preferences'),
             tileColor: Colors.grey[200], // Set tile color to light grey
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.search_outlined),
-            title: Text('Show in search results'),
+            leading: const Icon(Icons.search_outlined),
+            title: const Text('Show in search results'),
             trailing: Switch(
               activeColor: Colors.blue,
               value: swicthval1['showInSearch'] ?? false,
@@ -282,8 +278,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.ads_click_outlined),
-            title: Text('Personalize ads'),
+            leading: const Icon(Icons.ads_click_outlined),
+            title: const Text('Personalize ads'),
             trailing: Switch(
               activeColor: Colors.blue,
               value: swicthval1['personalizeAds'] ?? false,
@@ -297,13 +293,13 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
-            title: Text('Topics Preferences'),
+            title: const Text('Topics Preferences'),
             tileColor: Colors.grey[200], // Set tile color to light grey
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.date_range_outlined),
-            title: Text('Dating'),
+            leading: const Icon(Icons.date_range_outlined),
+            title: const Text('Dating'),
             trailing: Switch(
               activeColor: Colors.blue,
               value: swicthval1['dating'] ?? false,
@@ -316,8 +312,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.no_drinks_outlined),
-            title: Text('Alcahol'),
+            leading: const Icon(Icons.no_drinks_outlined),
+            title: const Text('Alcahol'),
             trailing: Switch(
               activeColor: Colors.blue,
               value: swicthval1['alcohol'] ?? false,
@@ -330,8 +326,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.casino_outlined),
-            title: Text('Gambling'),
+            leading: const Icon(Icons.casino_outlined),
+            title: const Text('Gambling'),
             trailing: Switch(
               activeColor: Colors.blue,
               value: swicthval1['gambling'] ?? false,
@@ -344,8 +340,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.family_restroom_outlined),
-            title: Text('Pregnancy and Parenting'),
+            leading: const Icon(Icons.family_restroom_outlined),
+            title: const Text('Pregnancy and Parenting'),
             trailing: Switch(
               activeColor: Colors.blue,
               value: swicthval1['pregnancyAndParenting'] ?? false,
@@ -359,8 +355,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.monitor_weight_outlined),
-            title: Text('Weight Loss'),
+            leading: const Icon(Icons.monitor_weight_outlined),
+            title: const Text('Weight Loss'),
             trailing: Switch(
               activeColor: Colors.blue,
               value: swicthval1['weightLoss'] ?? false,
@@ -373,27 +369,27 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           ListTile(
-            title: Text('Privacy and security'),
+            title: const Text('Privacy and security'),
             tileColor: Colors.grey[200], // Set tile color to light grey
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.key_outlined),
-            title: Text('Privacy policy'),
+            leading: const Icon(Icons.key_outlined),
+            title: const Text('Privacy policy'),
             onTap: () {
               // Navigate to privacy settings page
             },
           ),
           ListTile(
-            leading: Icon(Icons.privacy_tip_outlined),
-            title: Text('Terms and conditions'),
+            leading: const Icon(Icons.privacy_tip_outlined),
+            title: const Text('Terms and conditions'),
             onTap: () {
               // Navigate to appearance settings page
             },
           ),
           ListTile(
-            leading: Icon(Icons.help_outlined),
-            title: Text('Help center'),
+            leading: const Icon(Icons.help_outlined),
+            title: const Text('Help center'),
             onTap: () {
               // Navigate to about page
             },
@@ -402,9 +398,9 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
-            leading: Icon(Icons.logout_outlined),
+            leading: const Icon(Icons.logout_outlined),
             textColor: Colors.red,
-            title: Text('Logout'),
+            title: const Text('Logout'),
             onTap: () {
               widget.settings.logout(context);
             },
@@ -413,9 +409,9 @@ class _SettingsPageState extends State<SettingsPage> {
             tileColor: Colors.grey[200], // Set tile color to light grey
           ),
           ListTile(
-            leading: Icon(Icons.delete_forever_outlined),
+            leading: const Icon(Icons.delete_forever_outlined),
             textColor: Colors.red,
-            title: Text('Delete account'),
+            title: const Text('Delete account'),
             onTap: () {
               widget.settings.deleteAccount(context, widget.token);
             },

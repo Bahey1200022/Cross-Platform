@@ -22,15 +22,15 @@ class _MutedCommunitiesState extends State<MutedCommunities> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Muted Communities'),
+        title: const Text('Muted Communities'),
       ),
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: TextField(
               controller: _searchController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search',
                 prefixIcon: Icon(Icons.search),
               ),

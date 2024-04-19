@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/chatting/one_on_one.dart';
 import 'package:sarakel/Widgets/inbox/message_display.dart';
 
+// ignore: must_be_immutable
 class ButtonCard extends StatelessWidget {
   ButtonCard(
       {required this.sender,
@@ -12,7 +13,7 @@ class ButtonCard extends StatelessWidget {
       this.title,
       this.content});
   final String sender;
-  Icon icon = Icon(Icons.person);
+  Icon icon = const Icon(Icons.person);
   final String token;
   final String receiver;
   final bool live;
@@ -56,7 +57,7 @@ class ButtonCard extends StatelessWidget {
       ),
       title: Text(
         receiver,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.bold,
         ),

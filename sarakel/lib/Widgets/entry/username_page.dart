@@ -18,7 +18,7 @@ class _UsernamePageState extends State<UsernamePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -31,21 +31,21 @@ class _UsernamePageState extends State<UsernamePage> {
             children: [
               Image.asset('assets/logo_2d.png', height: 100.0),
               const SizedBox(height: 50.0),
-              Text(
+              const Text(
                 'Create your username',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'Most Sarakelers use an anonymous username.',
                 style: TextStyle(fontSize: 16.0),
               ),
-              SizedBox(height: 8.0),
-              Text(
+              const SizedBox(height: 8.0),
+              const Text(
                 'You won\'t be able to change it later.',
                 style: TextStyle(fontSize: 16.0),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
@@ -75,7 +75,7 @@ class _UsernamePageState extends State<UsernamePage> {
                             }
                           });
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelStyle: TextStyle(color: Colors.black), //Hafez
                           labelText: 'Username',
                           prefixText: 'u/',
@@ -87,16 +87,16 @@ class _UsernamePageState extends State<UsernamePage> {
                     // if (_errorText
                     //     .isNotEmpty) // Only show error message if there's an error
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Text(
                         _errorText,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.red,
                           fontSize: 12.0,
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () async {
                         String username = usernameController.text.trim();
@@ -107,14 +107,14 @@ class _UsernamePageState extends State<UsernamePage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Error'),
-                                content: Text('Username already taken'),
+                                title: const Text('Error'),
+                                content: const Text('Username already taken'),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK'),
+                                    child: const Text('OK'),
                                   ),
                                 ],
                               );
@@ -126,14 +126,14 @@ class _UsernamePageState extends State<UsernamePage> {
                           widget.userController.passToServer(context);
                         }
                       },
-                      child: Text(
-                        'Continue',
-                        style: TextStyle(color: Colors.white),
-                      ),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                           Colors.orange,
                         ),
+                      ),
+                      child: const Text(
+                        'Continue',
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ],

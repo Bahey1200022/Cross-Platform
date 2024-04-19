@@ -1,13 +1,14 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 
 class LeaveCommunityController {
   static Future<void> leaveCommunity(String communityName, String token) async {
     try {
-      final String apiUrl = '$BASE_URL/api/community/leave';
+      const String apiUrl = '$BASE_URL/api/community/leave';
 
       final Map<String, String> headers = {
         'Authorization': 'Bearer $token',

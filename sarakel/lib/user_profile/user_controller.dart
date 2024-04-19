@@ -19,7 +19,6 @@ Future<List<Post>> loadUserPosts() async {
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
       List<dynamic> fetchedPosts = jsonData['data'];
-      print(fetchedPosts);
 
       List<Post> posts = fetchedPosts.map((p) {
         return Post(
@@ -48,7 +47,6 @@ Future<List<Post>> loadUserPosts() async {
       return [];
     }
   } catch (e) {
-    print('Error loading posts: $e');
     // Return an empty list if an error occurs
     return <Post>[];
   }
