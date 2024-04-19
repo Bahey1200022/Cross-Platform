@@ -225,13 +225,18 @@ class _PostCardState extends State<PostCard> {
                     children: [
                       Row(
                         children: [
+                          const CircleAvatar(
+                            radius: 10,
+                            backgroundImage: NetworkImage(
+                                "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0"),
+                          ),
                           Text(
-                            'c/${widget.post.communityName}',
-                            style: TextStyle(
+                            ' c/${widget.post.communityName}',
+                            style: const TextStyle(
                                 fontSize: 12, fontWeight: FontWeight.bold),
                             overflow: TextOverflow.ellipsis,
                           ),
-                          SizedBox(width: 4),
+                          const SizedBox(width: 4),
                           Text(
                             '${widget.post.duration != null ? '• ${widget.post.duration}' : '6h'}',
                             style: TextStyle(fontSize: 12),
@@ -250,25 +255,6 @@ class _PostCardState extends State<PostCard> {
                 ),
                 Row(
                   children: [
-                    // JoinButton(
-                    //   isJoined: _isJoined,
-                    //   onPressed: () async {
-                    //     SharedPreferences prefs =
-                    //         await SharedPreferences.getInstance();
-                    //     var token = prefs.getString('token');
-                    //     setState(() {
-                    //       _isJoined = !_isJoined;
-                    //     });
-                    //     if (_isJoined) {
-                    //       await JoinCommunityController.joinCommunity(
-                    //           widget.post.communityName, token!);
-                    //     } else {
-                    //       // Add logic to leave the community
-                    //       await LeaveCommunityController.leaveCommunity(
-                    //           widget.post.communityName, token!);
-                    //     }
-                    //   },
-                    // ),
                     PopupMenuButton<String>(
                       itemBuilder: (BuildContext context) =>
                           <PopupMenuEntry<String>>[
@@ -281,21 +267,21 @@ class _PostCardState extends State<PostCard> {
                             title: Text('Save'),
                           ),
                         ),
-                        PopupMenuItem<String>(
+                        const PopupMenuItem<String>(
                           value: 'report',
                           child: ListTile(
                             leading: Icon(Icons.flag),
                             title: Text('Report'),
                           ),
                         ),
-                        PopupMenuItem<String>(
+                        const PopupMenuItem<String>(
                           value: 'block_account',
                           child: ListTile(
                             leading: Icon(Icons.block),
                             title: Text('Block Account'),
                           ),
                         ),
-                        PopupMenuItem<String>(
+                        const PopupMenuItem<String>(
                           value: 'hide',
                           child: ListTile(
                             leading: Icon(Icons.visibility_off),
@@ -332,14 +318,14 @@ class _PostCardState extends State<PostCard> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               widget.post.content,
               style: TextStyle(fontSize: 14),
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 5),
             if (widget.post.imagePath != null && widget.post.imagePath != "")
               GestureDetector(
                 onTap: () {

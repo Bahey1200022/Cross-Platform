@@ -91,29 +91,21 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
       print('Response body: ${response.body}');
     }
   }
-  //void decodeJwt() async {
-  //SharedPreferences prefs = await SharedPreferences.getInstance();
-  //String token=prefs.getString('token')! ;
-  //Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-  //print('Token: $token');
-  //print('Decoded Token: $decodedToken');
-  //print('postID: ${widget.post.id}');
-  //}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('c/${widget.post.communityName}'),
+        title: Text(widget.post.title),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               showSearch(context: context, delegate: sarakelSearch());
             },
           ),
           IconButton(
-            icon: Icon(Icons.account_circle),
+            icon: const Icon(Icons.account_circle),
             onPressed: () {
               final GlobalKey<ScaffoldState> scaffoldKey =
                   GlobalKey<ScaffoldState>();
@@ -128,22 +120,35 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'c/${widget.post.communityName}',
-              style:
-                  TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 12),
+            Row(
+              children: [
+                const CircleAvatar(
+                  radius: 10,
+                  backgroundImage: NetworkImage(
+                      "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0"),
+                ),
+                const SizedBox(width: 5),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(
+                    'c/${widget.post.communityName}',
+                    style: const TextStyle(
+                        //color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'u/${widget.post.username} • ${widget.post.duration ?? "Recently"}',
+                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                  ),
+                ])
+              ],
             ),
-            SizedBox(height: 7),
-            Text(
-              'u/${widget.post.username} • ${widget.post.duration ?? "Recently"}',
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
-            ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               widget.post.content,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             if (widget.post.imagePath != null &&
                 widget.post.imagePath != "") // Conditional image display
               GestureDetector(
@@ -170,16 +175,16 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                       : Image.asset('assets/apple.jpg'),
                 ),
               ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_upward),
+                      icon: const Icon(Icons.arrow_upward),
                       color: widget.post.isUpvoted
-                          ? Color.fromARGB(255, 255, 152, 0)
+                          ? const Color.fromARGB(255, 255, 152, 0)
                           : Colors.grey,
                       onPressed: () {
                         setState(() {
@@ -189,9 +194,9 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                     ),
                     Text('${widget.post.upVotes}'),
                     IconButton(
-                      icon: Icon(Icons.arrow_downward),
+                      icon: const Icon(Icons.arrow_downward),
                       color: widget.post.isDownvoted
-                          ? Color.fromARGB(255, 156, 39, 176)
+                          ? const Color.fromARGB(255, 156, 39, 176)
                           : Colors.grey,
                       onPressed: () {
                         setState(() {
@@ -204,7 +209,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.comment),
+                      icon: const Icon(Icons.comment),
                       onPressed: () {},
                     ),
                     Text('${widget.post.comments}'),
@@ -213,7 +218,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                 Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.share),
+                      icon: const Icon(Icons.share),
                       onPressed: () {
                         setState(() {
                           widget.onShare();
@@ -236,14 +241,14 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
               Expanded(
                 child: TextField(
                   controller: _commentController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Add comment...",
                     border: InputBorder.none,
                   ),
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.send),
+                icon: const Icon(Icons.send),
                 onPressed: () {
                   // Send the comment
                   String content = _commentController.text;
