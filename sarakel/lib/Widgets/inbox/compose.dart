@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/Widgets/inbox/service.dart';
+import 'package:sarakel/Widgets/inbox/messaging_service.dart';
 
 class Compose extends StatefulWidget {
   final String token;
@@ -18,7 +18,7 @@ class _ComposeState extends State<Compose> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Compose'),
+        title: const Text('Compose'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -27,20 +27,20 @@ class _ComposeState extends State<Compose> {
           children: [
             TextField(
               controller: recipientController,
-              decoration: InputDecoration(labelText: 'send to ...'),
+              decoration: const InputDecoration(labelText: 'send to u/'),
             ),
             TextField(
               controller: titleController,
-              decoration: InputDecoration(labelText: 'Title'),
+              decoration: const InputDecoration(labelText: 'Subject'),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextField(
               controller: bodyController,
               maxLines: null,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(labelText: 'Body'),
+              decoration: const InputDecoration(labelText: 'Message'),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton.icon(
               onPressed: () async {
                 String body = bodyController.text.trim();
@@ -49,8 +49,8 @@ class _ComposeState extends State<Compose> {
 
                 message(context, widget.token, title, body, recipients);
               },
-              icon: Icon(Icons.send),
-              label: Text('Send'),
+              icon: const Icon(Icons.send),
+              label: const Text('Send'),
             ),
           ],
         ),

@@ -163,7 +163,10 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                           widget.post.imagePath != ""
                       ? isVideo(widget.post.imagePath!)
                           ? VideoPlayerWidget(videoLink: widget.post.imagePath!)
-                          : Image.network(widget.post.imagePath!)
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(widget.post.imagePath!),
+                            )
                       : Image.asset('assets/apple.jpg'),
                 ),
               ),

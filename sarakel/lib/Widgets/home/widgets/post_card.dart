@@ -250,25 +250,25 @@ class _PostCardState extends State<PostCard> {
                 ),
                 Row(
                   children: [
-                    JoinButton(
-                      isJoined: _isJoined,
-                      onPressed: () async {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        var token = prefs.getString('token');
-                        setState(() {
-                          _isJoined = !_isJoined;
-                        });
-                        if (_isJoined) {
-                          await JoinCommunityController.joinCommunity(
-                              widget.post.communityName, token!);
-                        } else {
-                          // Add logic to leave the community
-                          await LeaveCommunityController.leaveCommunity(
-                              widget.post.communityName, token!);
-                        }
-                      },
-                    ),
+                    // JoinButton(
+                    //   isJoined: _isJoined,
+                    //   onPressed: () async {
+                    //     SharedPreferences prefs =
+                    //         await SharedPreferences.getInstance();
+                    //     var token = prefs.getString('token');
+                    //     setState(() {
+                    //       _isJoined = !_isJoined;
+                    //     });
+                    //     if (_isJoined) {
+                    //       await JoinCommunityController.joinCommunity(
+                    //           widget.post.communityName, token!);
+                    //     } else {
+                    //       // Add logic to leave the community
+                    //       await LeaveCommunityController.leaveCommunity(
+                    //           widget.post.communityName, token!);
+                    //     }
+                    //   },
+                    // ),
                     PopupMenuButton<String>(
                       itemBuilder: (BuildContext context) =>
                           <PopupMenuEntry<String>>[
@@ -358,7 +358,10 @@ class _PostCardState extends State<PostCard> {
                           widget.post.imagePath != ""
                       ? isVideo(widget.post.imagePath!)
                           ? VideoPlayerWidget(videoLink: widget.post.imagePath!)
-                          : Image.network(widget.post.imagePath!)
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(widget.post.imagePath!),
+                            )
                       : Image.asset('assets/apple.jpg'),
                 ),
               ),
@@ -408,6 +411,7 @@ class _PostCardState extends State<PostCard> {
                 ),
               ],
             ),
+            SizedBox(height: 1, child: Container(color: Colors.grey)),
           ],
         ),
       ),

@@ -43,10 +43,8 @@ class _InboxSectionState extends State<InboxSection> {
       setState(() {
         messageCard = jsonData;
       });
-      print(messageCard);
     } else {
       // Handle the error case
-      print('Failed to fetch messages: ${response.statusCode}');
     }
   }
 
@@ -92,8 +90,8 @@ class _InboxSectionState extends State<InboxSection> {
               MaterialPageRoute(
                   builder: (context) => Compose(token: widget.token)));
         },
-        icon: Icon(Icons.add),
-        label: Text('Compose Message'),
+        icon: const Icon(Icons.add),
+        label: const Text('New Message'),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -102,14 +100,3 @@ class _InboxSectionState extends State<InboxSection> {
     );
   }
 }
-// child: ElevatedButton.icon(
-//             onPressed: () {
-//               // Add your button click logic here
-//               Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                       builder: (context) => Compose(token: widget.token)));
-//             },
-//             icon: Icon(Icons.add),
-//             label: Text('Compose Message'),
-//           ),
