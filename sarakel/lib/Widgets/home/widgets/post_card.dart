@@ -14,6 +14,7 @@ import '../../../models/post.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:ui' as ui;
 
 /// all post cards functionality features
 class PostCard extends StatefulWidget {
@@ -29,6 +30,9 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool hasBeenShared = false;
+  bool _isBlurred = true;
+  bool _isImagePresent() =>
+      widget.post.imagePath != null && widget.post.imagePath!.isNotEmpty;
   //bool _isJoined = false;
 
   void _toggleUpvote() {
@@ -91,7 +95,18 @@ class _PostCardState extends State<PostCard> {
           'entityId': widget.post.id,
         }),
       );
-    } catch (e) {}
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Adjust based on your API response
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Post saved")));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Failed to save post")));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Error saving post")));
+    }
   }
 
   void _unSavePost() async {
@@ -109,7 +124,18 @@ class _PostCardState extends State<PostCard> {
           'entityId': widget.post.id,
         }),
       );
-    } catch (e) {}
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Adjust based on your API response
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Post unsaved")));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Failed to unsave post")));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Error unsaving post")));
+    }
   }
 
   void _makeVote(int voteType) async {
@@ -147,6 +173,11 @@ class _PostCardState extends State<PostCard> {
           'reportedUsername': widget.post.username,
         }),
       );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Adjust based on your API response
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Thank you for reporting! We will review it soon.')));
+      }
     } catch (e) {}
   }
 
@@ -182,6 +213,34 @@ class _PostCardState extends State<PostCard> {
         );
       },
     );
+  }
+
+  void _toggleBlur() {
+    setState(() {
+      _isBlurred = !_isBlurred;
+    });
+  }
+
+  Widget _buildImageContent() {
+    Widget imageContent = widget.post.imagePath != null &&
+            widget.post.imagePath != ""
+        ? isVideo(widget.post.imagePath!)
+            ? VideoPlayerWidget(
+                videoLink: widget.post.imagePath!) // Custom widget for video
+            : ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(widget.post.imagePath!, fit: BoxFit.cover),
+              )
+        : Image.asset('assets/apple.jpg'); // Default image if none provided
+
+    if (widget.post.isNSFW != null && _isBlurred) {
+      return ImageFiltered(
+        imageFilter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: imageContent,
+      );
+    }
+
+    return imageContent;
   }
 
   @override
@@ -264,7 +323,9 @@ class _PostCardState extends State<PostCard> {
                             leading: Icon(widget.post.isSaved
                                 ? Icons.bookmark
                                 : Icons.bookmark_border),
-                            title: const Text('Save'),
+                            title: Text(widget.post.isSaved
+                                ? 'Unsave'
+                                : 'Save'), // Dynamic text based on saved state
                           ),
                         ),
                         const PopupMenuItem<String>(
@@ -295,9 +356,9 @@ class _PostCardState extends State<PostCard> {
                             _toggleSave();
                             // Handle save action
                             if (widget.post.isSaved) {
-                              _unSavePost();
-                            } else {
                               _savePost();
+                            } else {
+                              _unSavePost();
                             }
                             break;
                           case 'report':
@@ -340,17 +401,17 @@ class _PostCardState extends State<PostCard> {
                   );
                 },
                 child: Center(
-                  child: widget.post.imagePath != null &&
-                          widget.post.imagePath != ""
-                      ? isVideo(widget.post.imagePath!)
-                          ? VideoPlayerWidget(videoLink: widget.post.imagePath!)
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.network(widget.post.imagePath!),
-                            )
-                      : Image.asset('assets/apple.jpg'),
+                  child: _buildImageContent(),
                 ),
               ),
+            if (_isImagePresent())
+              if (widget.post.isNSFW!)
+                TextButton(
+                  onPressed: _toggleBlur,
+                  child: Text(_isBlurred ? 'Show' : 'Hide',
+                      style: TextStyle(fontSize: 16)),
+                ),
+            const SizedBox(height: 8),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
