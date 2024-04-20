@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
+import 'package:sarakel/features/search_bar/search_screen.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:sarakel/features/mode_tools/moderator_tools.dart';
 
@@ -43,28 +44,40 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 43, 126, 243),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.share, color: Colors.white),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.more_vert, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100),
+        child: AppBar(
+            backgroundColor: const Color.fromARGB(255, 43, 126, 243),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.search, color: Colors.white),
+                onPressed: () {
+                  showSearch(context: context, delegate: sarakelSearch());
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.share, color: Colors.white),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.more_vert, color: Colors.white),
+                onPressed: () {},
+              ),
+            ],
+            flexibleSpace: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/logo_2d.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            )),
       ),
       body: Container(
         color: Colors.white,

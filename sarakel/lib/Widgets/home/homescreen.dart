@@ -60,7 +60,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
               value: 'Popular',
               child: Row(
                 children: [
-                  Icon(Icons.whatshot),
+                  Icon(Icons.trending_up),
                   SizedBox(width: 5), // Adjust spacing between icon and text
                   Text(
                     'Popular',
@@ -72,11 +72,46 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                 ],
               ),
             ),
+            DropdownMenuItem(
+              value: 'Hot',
+              child: Row(
+                children: [
+                  Icon(Icons.whatshot),
+                  SizedBox(width: 5), // Adjust spacing between icon and text
+                  Text(
+                    'Hot',
+                    style: TextStyle(
+                        color: Colors
+                            .black // Ensures contrast against white AppBar
+                        ),
+                  ),
+                ],
+              ),
+            ),
           ],
           onChanged: (value) {
-            setState(() {
-              _selectedPage = value!;
-            });
+            if (value == 'Popular') {
+              setState(() {
+                _selectedPage = 'Popular';
+                postsToShow = null;
+              });
+            }
+
+            if (value == 'Home') {
+              setState(() {
+                _selectedPage = 'Home';
+              });
+              widget.homescreenController.loadPosts().then((posts) {
+                setState(() => postsToShow = posts);
+              });
+            }
+
+            if (value == 'Hot') {
+              setState(() {
+                _selectedPage = 'Hot';
+                postsToShow = null;
+              });
+            }
           },
           underline: Container(), // Removes the underline
           style: const TextStyle(
@@ -89,20 +124,20 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           //.deepOrange, // Background color of the dropdown menu, ensure text color contrasts with this when active
         ),
         leading: IconButton(
-          icon: Icon(Icons.list),
+          icon: const Icon(Icons.list),
           onPressed: () {
             scaffoldKey.currentState!.openDrawer();
           },
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               showSearch(context: context, delegate: sarakelSearch());
             },
           ),
           IconButton(
-            icon: Icon(Icons.account_circle),
+            icon: const Icon(Icons.account_circle),
             onPressed: () {
               scaffoldKey.currentState!.openEndDrawer();
             },
@@ -124,9 +159,9 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                   // If post is hidden, show an Undo button
                   return Card(
                     child: ListTile(
-                      title: Text('Post hidden'),
+                      title: const Text('Post hidden'),
                       trailing: IconButton(
-                        icon: Icon(Icons.undo),
+                        icon: const Icon(Icons.undo),
                         onPressed: () {
                           setState(() {
                             hiddenPostIds.remove(post.id); // Unhide the post

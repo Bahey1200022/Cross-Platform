@@ -29,8 +29,8 @@ class Settings {
     Navigator.pushNamed(context, '/welcome');
   }
 
-  void country(BuildContext context) {
-    showDialog(
+  Future<String?> country(BuildContext context) async {
+    final result = await showDialog(
       context: context,
       builder: (context) => CountryListPick(
         appBar: AppBar(
@@ -40,13 +40,18 @@ class Settings {
         theme: CountryTheme(
           isShowFlag: true,
           isShowTitle: true,
-          isShowCode: true,
           isDownIcon: true,
           showEnglishName: true,
         ),
         initialSelection: '+20',
       ),
     );
+
+    if (result != null) {
+      return result['name'];
+    } else {
+      return null;
+    }
   }
 
   void gender(BuildContext context, String token) async {

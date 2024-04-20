@@ -134,12 +134,11 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.public_outlined),
-            title: const Text('Country'),
-            onTap: () {
-              widget.settings.country(context);
-            },
-          ),
+              leading: const Icon(Icons.public_outlined),
+              title: const Text('Country'),
+              onTap: () {
+                widget.settings.country(context);
+              }),
           ListTile(
             leading: const Icon(Icons.person_outline),
             title: const Text('Gender'),
