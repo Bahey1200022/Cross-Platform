@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:sarakel/Widgets/home/post_details_page.dart';
+import 'package:sarakel/Widgets/home/widgets/category.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
+import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
 import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
 import 'package:sarakel/constants.dart';
@@ -233,12 +235,21 @@ class _PostCardState extends State<PostCard> {
                           ),
                         ],
                       ),
-                      Text(
-                        widget.post.title,
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(children: [
+                              NSFWButton(isNSFW: widget.post.isNSFW!),
+                              const SizedBox(width: 5),
+                              PostCategory(category: widget.post.postCategory),
+                            ]),
+                            Text(
+                              widget.post.title,
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ])
                     ],
                   ),
                 ),
@@ -307,7 +318,7 @@ class _PostCardState extends State<PostCard> {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 5),
             Text(
               widget.post.content,
               style: const TextStyle(fontSize: 14),

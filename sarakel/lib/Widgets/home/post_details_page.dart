@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:sarakel/Widgets/home/widgets/category.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
+import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
 import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -138,6 +140,14 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                     style: TextStyle(color: Colors.grey[600], fontSize: 12),
                   ),
                 ])
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                NSFWButton(isNSFW: widget.post.isNSFW!),
+                const SizedBox(width: 5),
+                PostCategory(category: widget.post.postCategory),
               ],
             ),
             const SizedBox(height: 10),

@@ -66,12 +66,13 @@ class HomescreenController {
               downVotes: p['downvotes'] ?? 0,
               comments: p['numComments'] ?? 0,
               shares: p['numComments'] ?? 0,
-              isNSFW: false,
+              isNSFW: true,
               isSpoiler: p['isSpoiler'] ?? false,
               content: p['content']?.toString() ?? "",
               communityId: p['communityId']?.toString() ?? "",
               title: p['title']?.toString() ?? "",
               username: p['userId']?.toString() ?? "",
+              postCategory: "general",
               views: p['numViews'] ?? 0);
         }).toList();
 

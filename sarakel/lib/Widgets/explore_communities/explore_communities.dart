@@ -66,6 +66,7 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 elevation: 4,
+                color: Colors.white,
                 margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 child: ListTile(
                   leading: ClipRRect(
