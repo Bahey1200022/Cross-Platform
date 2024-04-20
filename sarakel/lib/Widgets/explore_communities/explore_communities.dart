@@ -6,6 +6,7 @@ import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart'; // Import the JoinButton widget
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
+import 'package:sarakel/Widgets/home/widgets/app_bar.dart';
 import 'package:sarakel/Widgets/home/widgets/bottom_bar.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/models/community.dart';
@@ -48,8 +49,9 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
 
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: const Text('Circles'),
+      appBar: CustomAppBar(
+        title: 'Circles',
+        scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
       ),
       drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(

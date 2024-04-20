@@ -53,7 +53,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.group_outlined),
-          label: 'Communities',
+          label: 'Circles',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.add_circle_outline),
