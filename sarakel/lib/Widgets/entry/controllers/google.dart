@@ -9,6 +9,7 @@ import 'package:sarakel/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+///getting a token from google to send to the backend
 class GoogleService {
   SharedPreferences? prefs;
 

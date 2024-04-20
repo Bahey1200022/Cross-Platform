@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../home/controllers/home_screen_controller.dart';
 
+///user controller class to handle user signup and login and store the token in the shared preferences
 class UserController {
   String? usernameScreen;
   String emailScreen;

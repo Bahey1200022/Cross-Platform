@@ -9,6 +9,7 @@ import 'package:sarakel/models/preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+///setttings  controller class to handle user settings
 class Settings {
   final String token;
   UserPreferences? prefs;

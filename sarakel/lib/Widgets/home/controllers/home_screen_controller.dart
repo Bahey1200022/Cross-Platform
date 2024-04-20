@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/post.dart';
 
+///one temporary list of posts
+///getting the username from the token
 class HomescreenController {
   final String token; //
   HomescreenController({required this.token});

@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+///create community with backend
+/// feat still in construction from backend
 class CreateCommunityController {
   //static Future<bool> checkCircleExists(String communityName) async {
   //final response = await http.get(

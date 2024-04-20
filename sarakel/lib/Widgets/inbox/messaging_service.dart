@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
 
+///obtain the user's messages
 void message(BuildContext context, String token, String title, String body,
     String recipients) async {
   var data = {"recipient": recipients, "title": title, "content": body};

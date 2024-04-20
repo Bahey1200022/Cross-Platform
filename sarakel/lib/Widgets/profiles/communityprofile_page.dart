@@ -6,6 +6,7 @@ import 'package:sarakel/features/search_bar/search_screen.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:sarakel/features/mode_tools/moderator_tools.dart';
 
+///community profile page class
 class CommunityProfilePage extends StatefulWidget {
   final Community community;
   final String token;

@@ -13,6 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+/// all post cards functionality features
 class PostCard extends StatefulWidget {
   final Post post;
   final VoidCallback onHide;

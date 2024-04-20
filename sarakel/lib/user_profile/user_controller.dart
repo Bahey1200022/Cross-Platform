@@ -4,6 +4,7 @@ import 'package:sarakel/constants.dart';
 import 'package:sarakel/models/post.dart';
 import 'package:http/http.dart' as http;
 
+///fetching all user data for his profile
 String extractUrl(String s) {
   RegExp exp =
       RegExp(r'\[(.*?)\]'); // Regex pattern to match text within brackets

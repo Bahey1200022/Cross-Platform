@@ -9,6 +9,7 @@ import 'controllers/home_screen_controller.dart';
 import 'widgets/post_card.dart';
 import 'widgets/bottom_bar.dart';
 
+///homescreen displaying postcards
 class SarakelHomeScreen extends StatefulWidget {
   final HomescreenController homescreenController;
 

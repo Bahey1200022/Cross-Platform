@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:sarakel/user_profile/user_controller.dart';
 
+/// fetching saved posts list
 class SavedController {
   Future<List<Post>> fetchSavedPosts() async {
     try {
