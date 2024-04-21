@@ -165,7 +165,10 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                         icon: const Icon(Icons.undo),
                         onPressed: () {
                           setState(() {
-                            hiddenPostIds.remove(post.id); // Unhide the post
+                            hiddenPostIds.remove(post.id);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content:
+                                    Text("Post Unhidden"))); // Unhide the post
                           });
                         },
                       ),
@@ -177,7 +180,11 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                     post: post,
                     onHide: () {
                       setState(() {
-                        hiddenPostIds.add(post.id); // Hide the post
+                        hiddenPostIds
+                            .add(post.id); // Adjust based on your API response
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Post Hidden")));
+                        // Hide the post
                       });
                     },
                   );
