@@ -51,7 +51,6 @@ class HomescreenController {
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         List<dynamic> fetchedPosts = jsonData['data'];
-        print(fetchedPosts);
         List<Post> posts = fetchedPosts.map((p) {
           return Post(
               communityName: p['communityName']?.toString() ?? "",

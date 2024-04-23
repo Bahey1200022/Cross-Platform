@@ -76,6 +76,7 @@ class UserController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         prefs = await SharedPreferences.getInstance();
         var token = jsonData['token'];
+        print(token);
 
         prefs!.setString('token', token);
 

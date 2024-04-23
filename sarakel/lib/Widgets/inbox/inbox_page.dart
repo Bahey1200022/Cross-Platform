@@ -24,6 +24,7 @@ class InboxSection extends StatefulWidget {
 class _InboxSectionState extends State<InboxSection> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List messageCard = [];
+  List sentmessageCard = [];
   int _selectedIndex = 4;
 
   Future<void> initiateMessageCard() async {
@@ -48,10 +49,32 @@ class _InboxSectionState extends State<InboxSection> {
     }
   }
 
+  Future<void> initiateSentMessageCard() async {
+    var response = await http.get(Uri.parse('$BASE_URL/api/message/sent'),
+        headers: {
+          'Authorization': 'Bearer ${widget.token}',
+          'Content-Type': 'application/json'
+        });
+
+    // Check if the request was successful
+    if (response.statusCode == 200) {
+      // Parse the response data
+      final jsonData = json.decode(response.body);
+
+      // Update the messageCard list with the response data
+      setState(() {
+        sentmessageCard = jsonData;
+      });
+    } else {
+      // Handle the error case
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     initiateMessageCard();
+    initiateSentMessageCard();
   }
 
   @override
@@ -68,20 +91,43 @@ class _InboxSectionState extends State<InboxSection> {
       endDrawer: ProfileDrawer(
         user: User(username: jwtdecodedtoken['username'], token: widget.token),
       ),
-      body: ListView.builder(
-        itemCount: messageCard.isNotEmpty ? messageCard.length : 0,
-        itemBuilder: (context, index) {
-          return ButtonCard(
-            sender: messageCard[index]['recipient'],
-            receiver: messageCard[index]['username'],
-            token: widget.token,
-            icon: const Icon(Icons.person),
-            live: false,
-            title: messageCard[index]['title'],
-            content: messageCard[index]['content'],
-          );
-        },
-      ),
+      body: Column(children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: messageCard.isNotEmpty ? messageCard.length : 0,
+            itemBuilder: (context, index) {
+              return ButtonCard(
+                sender: messageCard[index]['recipient'],
+                receiver: messageCard[index]['username'],
+                token: widget.token,
+                icon: const Icon(Icons.person),
+                live: false,
+                title: messageCard[index]['title'],
+                content: messageCard[index]['content'],
+              );
+            },
+          ),
+        ),
+        const ListTile(
+          title: Text('Sent Messages'),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: sentmessageCard.isNotEmpty ? sentmessageCard.length : 0,
+            itemBuilder: (context, index) {
+              return ButtonCard(
+                sender: messageCard[index]['recipient'],
+                receiver: messageCard[index]['username'],
+                token: widget.token,
+                icon: const Icon(Icons.person),
+                live: false,
+                title: messageCard[index]['title'],
+                content: messageCard[index]['content'],
+              );
+            },
+          ),
+        )
+      ]),
       floatingActionButton: ElevatedButton.icon(
         onPressed: () {
           // Add your button click logic here
