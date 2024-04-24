@@ -52,6 +52,7 @@ dependencies:
   search_autocomplete: ^0.0.6
   country_list_pick: ^1.0.1+6
   video_player: ^2.8.6
+  web_socket_channel: ^2.4.5
   
 dev_dependencies:
   flutter_test:

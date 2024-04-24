@@ -12,6 +12,7 @@ import '../home/widgets/bottom_bar.dart';
 import '../home/widgets/app_bar.dart';
 import 'package:http/http.dart' as http;
 
+///email message like class where it displays inbox of the user
 class InboxSection extends StatefulWidget {
   final String token;
 
@@ -39,6 +40,7 @@ class _InboxSectionState extends State<InboxSection> {
     if (response.statusCode == 200) {
       // Parse the response data
       final jsonData = json.decode(response.body);
+      print(jsonData[0]['_id']);
 
       // Update the messageCard list with the response data
       setState(() {
@@ -49,32 +51,10 @@ class _InboxSectionState extends State<InboxSection> {
     }
   }
 
-  Future<void> initiateSentMessageCard() async {
-    var response = await http.get(Uri.parse('$BASE_URL/api/message/sent'),
-        headers: {
-          'Authorization': 'Bearer ${widget.token}',
-          'Content-Type': 'application/json'
-        });
-
-    // Check if the request was successful
-    if (response.statusCode == 200) {
-      // Parse the response data
-      final jsonData = json.decode(response.body);
-
-      // Update the messageCard list with the response data
-      setState(() {
-        sentmessageCard = jsonData;
-      });
-    } else {
-      // Handle the error case
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     initiateMessageCard();
-    initiateSentMessageCard();
   }
 
   @override
@@ -99,7 +79,9 @@ class _InboxSectionState extends State<InboxSection> {
               return ButtonCard(
                 sender: messageCard[index]['recipient'],
                 receiver: messageCard[index]['username'],
+                id: messageCard[index]["_id"],
                 token: widget.token,
+                status: messageCard[index]['status'],
                 icon: const Icon(Icons.person),
                 live: false,
                 title: messageCard[index]['title'],
@@ -108,25 +90,25 @@ class _InboxSectionState extends State<InboxSection> {
             },
           ),
         ),
-        const ListTile(
-          title: Text('Sent Messages'),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: sentmessageCard.isNotEmpty ? sentmessageCard.length : 0,
-            itemBuilder: (context, index) {
-              return ButtonCard(
-                sender: messageCard[index]['recipient'],
-                receiver: messageCard[index]['username'],
-                token: widget.token,
-                icon: const Icon(Icons.person),
-                live: false,
-                title: messageCard[index]['title'],
-                content: messageCard[index]['content'],
-              );
-            },
-          ),
-        )
+        // const ListTile(
+        //   title: Text('Sent Messages'),
+        // ),
+        // Expanded(
+        //   child: ListView.builder(
+        //     itemCount: sentmessageCard.isNotEmpty ? sentmessageCard.length : 0,
+        //     itemBuilder: (context, index) {
+        //       return ButtonCard(
+        //         sender: sentmessageCard[index]['username'],
+        //         receiver: sentmessageCard[index]['username'],
+        //         token: widget.token,
+        //         icon: const Icon(Icons.person),
+        //         live: false,
+        //         title: sentmessageCard[index]['title'],
+        //         content: sentmessageCard[index]['content'],
+        //       );
+        //     },
+        //   ),
+        // )
       ]),
       floatingActionButton: ElevatedButton.icon(
         onPressed: () {
