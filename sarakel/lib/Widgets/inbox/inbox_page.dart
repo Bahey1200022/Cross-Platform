@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:sarakel/Widgets/chatting/chat_card.dart';
+import 'package:sarakel/Widgets/inbox/chat_card.dart';
 import 'package:sarakel/Widgets/inbox/compose.dart';
 import 'package:sarakel/constants.dart';
 import '../drawers/community_drawer/community_list.dart';
