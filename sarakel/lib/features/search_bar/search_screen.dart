@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
+import 'package:sarakel/loadposts.dart';
 import 'package:sarakel/models/community.dart';
+import 'package:sarakel/models/post.dart';
+import 'package:sarakel/models/user.dart';
+import 'package:sarakel/user_profile/user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sarakel/features/search_bar/search_control.dart';
 
+///Search delegate class for the search bar
+///searching for users posts and communities
 class sarakelSearch extends SearchDelegate {
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -37,7 +44,7 @@ class sarakelSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder<List<Community>>(
+    return FutureBuilder<List<dynamic>>(
       future: fetchSuggestions(query), // Pass the query to the API call
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -47,46 +54,122 @@ class sarakelSearch extends SearchDelegate {
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 String? token = prefs.getString('token');
-                query = suggestionList[index].name;
+                query = suggestionList[index]['name'];
+                var Type = suggestionList[index]['Type'];
+                print(query);
                 // Navigate to the desired page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CommunityProfilePage(
-                        community: suggestionList[index],
-                        token: token!,
-                        showJoinButton: false),
-                  ),
-                );
+                if (Type == 'Community') {
+                  Community community = Community(
+                    id: suggestionList[index]['_id'] ?? "",
+                    name: suggestionList[index]['communityName'] ?? "",
+                    description: suggestionList[index]['description'] ??
+                        'Sarakel Community',
+                    image: suggestionList[index]['image'] ?? '',
+                    is18Plus: suggestionList[index]['isNSFW'] ?? false,
+                    type: suggestionList[index]['type'] ?? 'public',
+                  );
+                  var moderatorsList = suggestionList[index]['moderators'];
+                  String? username = prefs.getString('username');
+                  if (username != null &&
+                      moderatorsList != null &&
+                      moderatorsList.contains(username)) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CommunityProfilePage(
+                          community: community,
+                          token: token!,
+                          showJoinButton: false,
+                          showModToolsButton: true,
+                        ),
+                      ),
+                    );
+                  } else if (username != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CommunityProfilePage(
+                          community: community,
+                          token: token!,
+                          showJoinButton: true,
+                          showModToolsButton: false,
+                        ),
+                      ),
+                    );
+                  }
+                } else if (Type == 'Post') {
+                  Post post = Post(
+                    id: suggestionList[index]['_id'],
+                    title: suggestionList[index]['title'],
+                    content: suggestionList[index]['content'],
+                    communityName: suggestionList[index]['communityName'],
+                    communityId: suggestionList[index]['communityId'],
+                    username: suggestionList[index]['userId'],
+                    upVotes: suggestionList[index]['upvotes'],
+                    downVotes: suggestionList[index]['downvotes'],
+                    comments: suggestionList[index]['numComments'],
+                    isNSFW: true,
+                    isSpoiler: suggestionList[index]['isSpoiler'],
+                    views: suggestionList[index]['numViews'],
+                    imagePath: suggestionList[index]['media'] != null
+                        ? (suggestionList[index]['media'] is List &&
+                                (suggestionList[index]['media'] as List)
+                                    .isNotEmpty
+                            ? Uri.encodeFull(extractUrl(
+                                (suggestionList[index]['media'] as List)
+                                    .first
+                                    .toString()))
+                            : Uri.encodeFull(extractUrl(
+                                suggestionList[index]['media'].toString())))
+                        : null,
+                    postCategory: "general",
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Scaffold(
+                        appBar: AppBar(
+                          title: Text('Post Details'),
+                        ),
+                        body: PostCard(
+                          post: post,
+                          onHide: () {},
+                        ),
+                      ),
+                    ),
+                  );
+                } else if (Type == 'User') {
+                  User user = User(
+                    username: suggestionList[index]['username'],
+                    token: token,
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserProfile(
+                        user: user,
+                      ),
+                    ),
+                  );
+                }
               },
               leading: const Icon(Icons.history),
               title: RichText(
                 text: TextSpan(
-                  text: suggestionList[index].name.substring(
-                      0,
-                      query.length <= suggestionList[index].name.length
-                          ? query.length
-                          : suggestionList[index].name.length),
+                  text: suggestionList[index]['name'],
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
-                  children: [
-                    TextSpan(
-                      text: suggestionList[index].name.substring(
-                          query.length <= suggestionList[index].name.length
-                              ? query.length
-                              : suggestionList[index].name.length),
-                      style: const TextStyle(color: Colors.grey),
-                    ),
-                  ],
                 ),
               ),
             ),
             itemCount: suggestionList.length,
           );
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         } else {
           return const Center(
             child: CircularProgressIndicator(),
