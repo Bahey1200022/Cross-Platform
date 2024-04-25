@@ -49,7 +49,7 @@ class ButtonCard extends StatelessWidget {
           );
         } else {
           /////go to see message
-          await readMessage(id, token);
+          await readMessage(token, id);
           Navigator.push(
             context,
             MaterialPageRoute(
