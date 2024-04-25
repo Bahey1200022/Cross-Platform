@@ -42,7 +42,7 @@ class ButtonCard extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ChatPage(
                 sender: sender,
-                receiver: 'habiba',
+                receiver: receiver,
                 token: token,
               ),
             ),
@@ -75,7 +75,9 @@ class ButtonCard extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      trailing: getstatus() ? Icon(Icons.check_box) : Icon(Icons.new_label),
+      trailing: getstatus()
+          ? const Icon(Icons.check_box)
+          : const Icon(Icons.new_label),
     );
   }
 }
