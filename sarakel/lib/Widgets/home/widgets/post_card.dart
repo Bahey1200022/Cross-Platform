@@ -7,7 +7,7 @@ import 'package:sarakel/Widgets/home/widgets/category.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
-import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
+import 'package:sarakel/Widgets/home/widgets/fullscreen_image.dart';
 import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';

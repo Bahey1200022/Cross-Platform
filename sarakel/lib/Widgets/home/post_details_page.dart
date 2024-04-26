@@ -11,7 +11,7 @@ import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
-import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
+import 'package:sarakel/Widgets/home/widgets/fullscreen_image.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 ///full screen post details page and adding a comment on the post feature
