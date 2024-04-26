@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/chatting/card.dart';
-import 'package:sarakel/constants.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+/// live chat functionality - emitting and receiving messages
 class ChatPage extends StatefulWidget {
   final String token;
   final String sender;
@@ -21,21 +21,21 @@ class _ChatPageState extends State<ChatPage> {
 
   final TextEditingController _controller = TextEditingController();
 
-  void Connect() {
-    socket = IO.io(SOCKET_URL, <String, dynamic>{
-      "transports": ['websocket'],
-      'autoConnect': false,
-    });
-    socket.connect();
-    socket.onConnect((data) {
-      print('Connected');
-    });
-    socket.emit("/signin", widget.sender);
-    socket.on("/chat", (data) {
-      print(data);
-      messages.add({"sender": data["receiver"], "message": data['message']});
-    });
-  }
+  // void Connect() {
+  //   socket = IO.io(SOCKET_URL, <String, dynamic>{
+  //     "transports": ['websocket'],
+  //     'autoConnect': false,
+  //   });
+  //   socket.connect();
+  //   socket.onConnect((data) {
+  //     print('Connected');
+  //   });
+  //   socket.emit("/signin", widget.sender);
+  //   socket.on("/chat", (data) {
+  //     print(data);
+  //     messages.add({"sender": data["receiver"], "message": data['message']});
+  //   });
+  // }
 
   void sendMessage(String messages, String senders, String receivers) {
     print(messages);
@@ -47,7 +47,6 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
-    Connect();
     super.initState();
   }
 

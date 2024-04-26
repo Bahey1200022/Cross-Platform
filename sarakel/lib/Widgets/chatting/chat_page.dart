@@ -8,6 +8,7 @@ import '../drawers/profile_drawer.dart';
 import '../home/widgets/app_bar.dart';
 import '../home/widgets/bottom_bar.dart';
 
+/// live chat user interface
 class ChatSection extends StatefulWidget {
   final String token;
 

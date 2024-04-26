@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:sarakel/constants.dart';
 import 'package:http/http.dart' as http;
 
+/// read message function
 readMessage(token, id) async {
   print(id);
   var response = await http.post(Uri.parse('$BASE_URL/api/read_message'),
