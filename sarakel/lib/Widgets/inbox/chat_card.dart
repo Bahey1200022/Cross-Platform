@@ -44,6 +44,7 @@ class ButtonCard extends StatelessWidget {
                 sender: sender,
                 receiver: receiver,
                 token: token,
+                id: id,
               ),
             ),
           );
