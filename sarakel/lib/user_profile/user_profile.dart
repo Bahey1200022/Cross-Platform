@@ -4,6 +4,8 @@ import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/models/post.dart';
 import 'package:sarakel/user_profile/user_controller.dart';
+import 'package:sarakel/user_profile/user_visibility.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user.dart';
 
@@ -19,6 +21,8 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfile extends State<UserProfile> {
+  bool loggeduserIconIsVisible = false;
+
   List<Post> postsToShow = [];
   List<Widget> getTabWidgets(String tabName) {
     switch (tabName) {
@@ -56,11 +60,18 @@ class _UserProfile extends State<UserProfile> {
   @override
   void initState() {
     super.initState();
-    loadUserPosts().then((posts) {
+
+    initializeVisibility();
+
+    loadUserPosts(widget.user!.username!).then((posts) {
       if (mounted) {
         setState(() => postsToShow = posts);
       }
     });
+  }
+
+  void initializeVisibility() async {
+    loggeduserIconIsVisible = await isLoggedInUser(widget.user!.username!);
   }
 
   @override
@@ -144,17 +155,60 @@ class _UserProfile extends State<UserProfile> {
                               ),
                             ),
                           ),
+
                           Positioned(
                             top: 170,
                             left: 20,
-                            child: OutlinedButton(
-                              onPressed: () {},
-                              child: const Text(
-                                'Edit',
-                                style: TextStyle(color: Colors.white),
+                            child: Visibility(
+                              visible: loggeduserIconIsVisible,
+                              child: OutlinedButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  'Edit',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
+                          Positioned(
+                            top: 170,
+                            left: 20,
+                            child: Visibility(
+                              visible: !loggeduserIconIsVisible,
+                              child: Row(
+                                children: [
+                                  OutlinedButton(
+                                    onPressed: () {},
+                                    child: const Text(
+                                      'follow',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  OutlinedButton(
+                                    onPressed: () {},
+                                    child: const Icon(
+                                      Icons.message_outlined,
+                                      color: Colors.white,
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                      shape: CircleBorder(),
+                                    ),
+                                  ),
+                                  OutlinedButton(
+                                    onPressed: () {},
+                                    child: const Icon(
+                                      Icons.person_add,
+                                      color: Colors.white,
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                      shape: CircleBorder(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
                           Positioned(
                             top: 210,
                             left: 20,

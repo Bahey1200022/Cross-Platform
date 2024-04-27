@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/models/post.dart';
@@ -14,12 +15,25 @@ String extractUrl(String s) {
       : s; // Return the URL without brackets, or the original string if no match is found
 }
 
-Future<List<Post>> loadUserPosts() async {
+Future<List<Post>> loadUserPosts(String username) async {
   try {
-    var response = await http.get(Uri.parse('$BASE_URL/api/subreddit/getBest'));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    print(username);
+    var response = await http.get(
+        Uri.parse('$BASE_URL/api/user/$username/submitted'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token'
+        });
+    print(response.statusCode);
     if (response.statusCode == 200) {
+      print("inside the if");
       var jsonData = json.decode(response.body);
+      print(jsonData['data']);
       List<dynamic> fetchedPosts = jsonData['data'];
+      print(fetchedPosts.length);
+      print(fetchedPosts);
 
       List<Post> posts = fetchedPosts.map((p) {
         return Post(
