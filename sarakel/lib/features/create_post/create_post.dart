@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/community.dart';
 import 'add_post_controller.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:html' as html;
+//import 'dart:html' as html;
 import 'dart:async';
 
 class CreatePost extends StatefulWidget {
@@ -62,19 +62,19 @@ class _MyHomePageState extends State<CreatePost> {
   Future<void> _getImage() async {
     final completer = Completer<File>();
 
-    final html.InputElement input = html.InputElement()
-      ..type = 'file'
-      ..accept = 'image/*';
-    input.click();
-    input.onChange.listen((event) {
-      final file = input.files!.first;
-      final reader = html.FileReader();
-      reader.readAsDataUrl(file);
-      reader.onLoadEnd.listen((event) {
-        final imageDataUrl = reader.result as String?;
-        completer.complete(File(imageDataUrl!));
-      });
-    });
+    //final html.InputElement input = html.InputElement()
+    //..type = 'file'
+    //..accept = 'image/*';
+    //input.click();
+    //input.onChange.listen((event) {
+    //final file = input.files!.first;
+    //final reader = html.FileReader();
+    //reader.readAsDataUrl(file);
+    //reader.onLoadEnd.listen((event) {
+    //final imageDataUrl = reader.result as String?;
+    //completer.complete(File(imageDataUrl!));
+    //});
+    //}//);
 
     final selectedImage = await completer.future;
     if (selectedImage != null) {
