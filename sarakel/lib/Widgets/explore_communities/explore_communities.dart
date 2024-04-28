@@ -6,6 +6,7 @@ import 'package:sarakel/Widgets/explore_communities/join_button.dart'; // Import
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
 import 'package:sarakel/Widgets/explore_communities/load_explore.dart';
+import 'package:sarakel/Widgets/home/widgets/app_bar.dart';
 import 'package:sarakel/Widgets/home/widgets/bottom_bar.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/models/community.dart';
