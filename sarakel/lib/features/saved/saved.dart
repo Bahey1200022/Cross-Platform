@@ -53,7 +53,7 @@ class _SavedScreenState extends State<SavedScreen> {
                             post: snapshot.data![index],
                             onHide: () {},
                           ),
-                          const Divider(),
+                          // const Divider(),
                         ],
                       );
                     },

@@ -5,16 +5,19 @@ import 'package:sarakel/models/community.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<List<Community>> loadCircles() async {
+///load communities that user has not joined
+Future<List<Community>> explore() async {
   try {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
+    var username = prefs.getString('username');
     // Make a GET request to fetch the JSON data from the server
-    var response =
-        await http.get(Uri.parse('$BASE_URL/api/community/list'), headers: {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    });
+    var response = await http.get(
+        Uri.parse('$BASE_URL/api/user/$username/communitiesNotJoined'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        });
 
     // Check if the request was successful (status code 200)
     if (response.statusCode == 200) {

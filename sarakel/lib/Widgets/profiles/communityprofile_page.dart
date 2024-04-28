@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/profiles/communityposts.dart';
+import 'package:sarakel/features/search_bar/search_screen.dart';
+import 'package:sarakel/models/community.dart';
+import 'package:sarakel/models/post.dart';
+import '../../Widgets/home/widgets/post_card.dart';
+import 'package:sarakel/features/mode_tools/moderator_tools.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
-import 'package:sarakel/features/search_bar/search_screen.dart';
-import 'package:sarakel/models/community.dart';
-import 'package:sarakel/features/mode_tools/moderator_tools.dart';
 
-///community profile page class
 class CommunityProfilePage extends StatefulWidget {
   final Community community;
   final String token;
@@ -25,18 +27,17 @@ class CommunityProfilePage extends StatefulWidget {
 }
 
 class _CommunityProfilePageState extends State<CommunityProfilePage> {
+  late Future<List<Post>> _communityPostsFuture;
   bool _isJoined = false;
 
   @override
   void initState() {
     super.initState();
+    _communityPostsFuture = fetchCommunityPosts(widget.community.name);
     checkIfJoined();
   }
 
   void checkIfJoined() async {
-    // Check if the user is already joined to the community
-    // Implement your logic here to determine if the user is joined
-    // For demonstration, assuming the user is joined if showJoinButton is false
     setState(() {
       _isJoined = !widget.showJoinButton;
     });
@@ -44,10 +45,12 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: AppBar(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(100),
+          child: AppBar(
             backgroundColor: const Color.fromARGB(255, 43, 126, 243),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -78,12 +81,10 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                   fit: BoxFit.fill,
                 ),
               ),
-            )),
-      ),
-      body: Container(
-        color: Colors.white,
-        padding: const EdgeInsets.all(16),
-        child: Column(
+            ),
+          ),
+        ),
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -125,7 +126,6 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                         await JoinCommunityController.joinCommunity(
                             widget.community.name, widget.token);
                       } else {
-                        // Add logic to leave the community
                         await LeaveCommunityController.leaveCommunity(
                             widget.community.name, widget.token);
                       }
@@ -144,7 +144,6 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                           ),
                         ),
                       );
-
                       // Add your logic for Mod Tools here
                     },
                     style: ElevatedButton.styleFrom(
@@ -164,6 +163,42 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
               child: const Text(
                 'See Community Info',
                 style: TextStyle(color: Colors.blue),
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  FutureBuilder<List<Post>>(
+                    future: _communityPostsFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (snapshot.hasData) {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                PostCard(
+                                  post: snapshot.data![index],
+                                  onHide: () {},
+                                ),
+                                // const Divider(),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(child: Text('No community posts'));
+                      }
+                    },
+                  ),
+                  const Center(
+                    child: Text('Saved Comments View'),
+                  ),
+                ],
               ),
             ),
           ],

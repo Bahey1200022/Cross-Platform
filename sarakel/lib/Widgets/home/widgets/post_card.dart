@@ -7,7 +7,7 @@ import 'package:sarakel/Widgets/home/widgets/category.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
-import 'package:sarakel/Widgets/profiles/fullscreen_image.dart';
+import 'package:sarakel/Widgets/home/widgets/fullscreen_image.dart';
 import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
@@ -19,9 +19,18 @@ import 'dart:ui' as ui;
 /// all post cards functionality features
 class PostCard extends StatefulWidget {
   final Post post;
+  bool? saved;
+  bool? upvoted;
+  bool? downvoted;
   final VoidCallback onHide;
 
-  const PostCard({Key? key, required this.post, required this.onHide})
+  PostCard(
+      {Key? key,
+      required this.post,
+      required this.onHide,
+      this.saved,
+      this.upvoted,
+      this.downvoted})
       : super(key: key);
 
   @override

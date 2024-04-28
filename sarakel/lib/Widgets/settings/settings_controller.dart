@@ -6,6 +6,7 @@ import 'package:country_list_pick/country_list_pick.dart';
 import 'package:flutter/material.dart';
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/models/preferences.dart';
+import 'package:sarakel/socket.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,12 +20,15 @@ class Settings {
   }
 
   void logout(BuildContext context) async {
+    SocketService.instance.socket!.disconnect();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
     Navigator.pushNamed(context, '/welcome');
   }
 
   void deleteAccount(BuildContext context, String token) async {
+    SocketService.instance.socket!.disconnect();
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
     Navigator.pushNamed(context, '/welcome');
