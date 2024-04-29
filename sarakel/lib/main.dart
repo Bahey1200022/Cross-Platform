@@ -34,8 +34,7 @@ class MyApp extends StatelessWidget {
   /// Represents a token that can be nullable.
   final String? token;
 
-  const MyApp({Key? key, required this.startWithToken, this.token})
-      : super(key: key);
+  const MyApp({super.key, required this.startWithToken, this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +56,10 @@ class MyApp extends StatelessWidget {
             ? SarakelHomeScreen(
                 homescreenController: HomescreenController(token: token!),
               )
-            : WelcomePage(),
+            : const WelcomePage(),
         routes: {
-          '/welcome': (context) => WelcomePage(),
-          '/login': (context) => LoginPage(),
+          '/welcome': (context) => const WelcomePage(),
+          '/login': (context) => const LoginPage(),
           '/signup': (context) => SignupPage(),
           '/forgotpassword': (context) => ForgotPasswordPage(),
         },

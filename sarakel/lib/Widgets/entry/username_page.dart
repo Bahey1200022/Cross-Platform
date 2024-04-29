@@ -3,7 +3,7 @@ import 'package:sarakel/Widgets/entry/controllers/user_entry_controller.dart';
 
 class UsernamePage extends StatefulWidget {
   final UserController userController;
-  UsernamePage({required this.userController});
+  const UsernamePage({super.key, required this.userController});
 
   @override
   _UsernamePageState createState() => _UsernamePageState();

@@ -6,10 +6,10 @@ import 'package:sarakel/constants.dart';
 
 class AddPostController {
   Future<void> addPost(String communityName, String communityId, String title,
-      String body, String token) async {
+      String body, String token, String url) async {
     try {
-      if (title.trim().isNotEmpty && body.trim().isNotEmpty) {
-        final String apiUrl = '$BASE_URL/createPost/create';
+      if (title.trim().isNotEmpty) {
+        const String apiUrl = '$BASE_URL/createPost/create';
 
         final Map<String, String> headers = {
           'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ class AddPostController {
         print('Username: $username');
         final Map<String, dynamic> postData = {
           'title': title,
-          'content': body,
+          'content': body + (url.isNotEmpty ? '\n$url' : ''),
           'communityId': communityName,
           //'duration': "0",
           //'upVotes': 0,

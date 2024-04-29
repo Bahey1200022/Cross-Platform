@@ -129,7 +129,7 @@ class sarakelSearch extends SearchDelegate {
                     MaterialPageRoute(
                       builder: (context) => Scaffold(
                         appBar: AppBar(
-                          title: Text('Post Details'),
+                          title: const Text('Post Details'),
                         ),
                         body: PostCard(
                           post: post,

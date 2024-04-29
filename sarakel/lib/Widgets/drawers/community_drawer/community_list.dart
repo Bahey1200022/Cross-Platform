@@ -10,7 +10,7 @@ import 'list_controller.dart';
 class CommunityDrawer extends ConsumerWidget {
   final String token;
   List<Community>? fetchedCommunities;
-  CommunityDrawer({Key? key, required this.token}) {
+  CommunityDrawer({super.key, required this.token}) {
     initializeCommunities();
   }
 

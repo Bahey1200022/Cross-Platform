@@ -1,16 +1,16 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/community.dart';
 import 'add_post_controller.dart';
+//import 'dart:html' as html;
+import 'dart:async';
 
 class CreatePost extends StatefulWidget {
   final String token;
 
-  const CreatePost({required this.token}); //
+  const CreatePost({super.key, required this.token});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -23,9 +23,12 @@ class MyAppState with ChangeNotifier {
 class _MyHomePageState extends State<CreatePost> {
   TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
-  List<File> attachments = [];
+  TextEditingController urlController = TextEditingController();
   MyAppState appState = MyAppState();
   AddPostController addPostController = AddPostController();
+  File? _image;
+  bool isTitleEmpty = true;
+  bool isUrlVisible = false;
 
   @override
   void initState() {
@@ -42,104 +45,42 @@ class _MyHomePageState extends State<CreatePost> {
     setState(() {});
   }
 
-  Future<void> _pickFiles() async {
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: ['jpg', 'jpeg', 'png', 'mp4', 'pdf'],
-      );
-
-      if (result != null && result.files.isNotEmpty) {
-        setState(() {
-          attachments.addAll(result.files.map((file) => File(file.path!)));
-        });
-      }
-    } catch (e) {
-      print('Error picking files: $e');
-    }
-  }
-
-  void _removeAttachment(int index) {
+  void toggleUrlVisibility() {
     setState(() {
-      attachments.removeAt(index);
+      isUrlVisible = !isUrlVisible;
     });
   }
 
-  void _openAttachmentDialog(File attachmentFile) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: Container(
-            padding: const EdgeInsets.all(8.0),
-            child: _getAttachmentWidget(attachmentFile),
-          ),
-        );
-      },
-    );
+  void clearUrl() {
+    setState(() {
+      urlController.clear();
+      isUrlVisible = false;
+    });
   }
 
-  Widget _getAttachmentWidget(File file) {
-    Widget attachmentWidget;
+  Future<void> _getImage() async {
+    final completer = Completer<File>();
 
-    if (file.path.toLowerCase().endsWith('.jpg') ||
-        file.path.toLowerCase().endsWith('.jpeg') ||
-        file.path.toLowerCase().endsWith('.png')) {
-      attachmentWidget = Image.file(
-        file,
-        width: double.infinity,
-        height: 300,
-        fit: BoxFit.cover,
-      );
-    } else if (file.path.toLowerCase().endsWith('.mp4')) {
-      attachmentWidget =
-          const Icon(Icons.play_circle, size: 100, color: Colors.blue);
-    } else if (file.path.toLowerCase().endsWith('.pdf')) {
-      attachmentWidget =
-          const Icon(Icons.picture_as_pdf, size: 100, color: Colors.red);
-    } else {
-      attachmentWidget =
-          const Icon(Icons.attach_file, size: 100, color: Colors.grey);
+    //final html.InputElement input = html.InputElement()
+    //..type = 'file'
+    //..accept = 'image/*';
+    //input.click();
+    //input.onChange.listen((event) {
+    //final file = input.files!.first;
+    //final reader = html.FileReader();
+    //reader.readAsDataUrl(file);
+    //reader.onLoadEnd.listen((event) {
+    //final imageDataUrl = reader.result as String?;
+    //completer.complete(File(imageDataUrl!));
+    //});
+    //}//);
+
+    final selectedImage = await completer.future;
+    setState(() {
+      _image = selectedImage;
+    });
     }
 
-    return attachmentWidget;
-  }
-
-  Widget _getFileWidget(File file) {
-    return GestureDetector(
-      onTap: () => _openAttachmentDialog(file),
-      child: Card(
-        elevation: 5.0,
-        color: Colors.grey[200],
-        margin: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _getAttachmentWidget(file),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () =>
-                        _removeAttachment(attachments.indexOf(file)),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Show community selection dialog
   void _showCommunityDialog() {
     showDialog(
       context: context,
@@ -188,8 +129,13 @@ class _MyHomePageState extends State<CreatePost> {
                 Navigator.of(context).pop();
                 final String title = titleController.text;
                 final String body = bodyController.text;
-                addPostController.addPost(selectedCommunity.name,
-                    selectedCommunity.id, title, body, token);
+                addPostController.addPost(
+                    selectedCommunity.name,
+                    selectedCommunity.id,
+                    title,
+                    body,
+                    token,
+                    urlController.text);
                 //Navigator.pushNamed(context, '/home');
               },
               child: const Text('Post'),
@@ -207,32 +153,29 @@ class _MyHomePageState extends State<CreatePost> {
     );
   }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Post'),
+        automaticallyImplyLeading: false,
+        title: const SizedBox.shrink(),
+        leading: IconButton(
+          icon: const Icon(Icons.close, color: Colors.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.attach_file, color: Colors.orange),
-            onPressed: _pickFiles,
-          ),
           TextButton(
-            onPressed: (titleController.text.trim().isNotEmpty &&
-                    bodyController.text.trim().isNotEmpty)
+            onPressed: (titleController.text.trim().isNotEmpty)
                 ? () {
-                    // Show community selection dialog
                     _showCommunityDialog();
                   }
                 : null,
             style: TextButton.styleFrom(
-              backgroundColor: (titleController.text.trim().isNotEmpty &&
-                      bodyController.text.trim().isNotEmpty)
-                  ? Colors.orange.withOpacity(0.7)
-                  : Colors.grey.withOpacity(0.5), // Shaded appearance
+              backgroundColor: (titleController.text.trim().isNotEmpty)
+                  ? Colors.blue.withOpacity(0.7)
+                  : Colors.grey.withOpacity(0.5),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
@@ -250,33 +193,123 @@ class _MyHomePageState extends State<CreatePost> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: titleController,
-              decoration: const InputDecoration(labelText: 'Title'),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextField(
+                  cursorColor: Colors.black,
+                  controller: titleController,
+                  decoration: const InputDecoration(
+                    hintText: 'Title',
+                    hintStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      isTitleEmpty = value.isEmpty;
+                    });
+                  },
+                ),
+                const SizedBox(height: 8.0),
+                if (_image != null)
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        height: 200.0,
+                        width: 200.0,
+                        child: Image.network(_image!.path, fit: BoxFit.contain),
+                      ),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _image = null;
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(4.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.8),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(Icons.close_rounded),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                const SizedBox(height: 8.0),
+                if (isUrlVisible)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          cursorColor: Colors.black,
+                          controller: urlController,
+                          decoration: const InputDecoration(
+                            hintText: 'URL',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close_rounded),
+                        onPressed: clearUrl,
+                      ),
+                    ],
+                  ),
+                const SizedBox(height: 8.0),
+                TextField(
+                  cursorColor: Colors.black,
+                  controller: bodyController,
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  decoration: const InputDecoration(
+                    hintText: 'body text (optional)',
+                    border: InputBorder.none,
+                  ),
+                ),
+                const SizedBox(height: 8.0),
+              ],
             ),
-            const SizedBox(height: 16.0),
-            TextField(
-              controller: bodyController,
-              maxLines: null,
-              keyboardType: TextInputType.multiline,
-              decoration: const InputDecoration(labelText: 'Body'),
-            ),
-            const SizedBox(height: 16.0),
-            Expanded(
-              child: ListView.builder(
-                itemCount: attachments.length,
-                itemBuilder: (context, index) {
-                  return _getFileWidget(attachments[index]);
-                },
+          ),
+          Positioned(
+            bottom: 16.0,
+            left: 16.0,
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Row(
+                crossAxisAlignment:
+                    CrossAxisAlignment.end, // Align icons at the bottom
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.link),
+                    onPressed: toggleUrlVisibility,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.image_outlined),
+                    onPressed: () {
+                      _getImage();
+                    },
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -15,7 +15,7 @@ class CommunityProfilePage extends StatefulWidget {
   final bool showModToolsButton;
   final bool showJoinButton;
 
-  CommunityProfilePage({
+  const CommunityProfilePage({super.key, 
     required this.community,
     required this.token,
     this.showModToolsButton = true,
@@ -172,7 +172,7 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                     future: _communityPostsFuture,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else if (snapshot.hasData) {
@@ -191,7 +191,7 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                           },
                         );
                       } else {
-                        return Center(child: Text('No community posts'));
+                        return const Center(child: Text('No community posts'));
                       }
                     },
                   ),

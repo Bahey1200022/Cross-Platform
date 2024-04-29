@@ -6,7 +6,7 @@ import 'package:sarakel/Widgets/inbox/message_display.dart';
 // ignore: must_be_immutable
 class ButtonCard extends StatelessWidget {
   ButtonCard(
-      {required this.sender,
+      {super.key, required this.sender,
       required this.icon,
       required this.token,
       required this.receiver,

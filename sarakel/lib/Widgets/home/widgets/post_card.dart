@@ -25,13 +25,12 @@ class PostCard extends StatefulWidget {
   final VoidCallback onHide;
 
   PostCard(
-      {Key? key,
+      {super.key,
       required this.post,
       required this.onHide,
       this.saved,
       this.upvoted,
-      this.downvoted})
-      : super(key: key);
+      this.downvoted});
 
   @override
   State<PostCard> createState() => _PostCardState();
@@ -107,14 +106,14 @@ class _PostCardState extends State<PostCard> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Adjust based on your API response
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Post saved")));
+            .showSnackBar(const SnackBar(content: Text("Post saved")));
       } else {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Failed to save post")));
+            .showSnackBar(const SnackBar(content: Text("Failed to save post")));
       }
     } catch (e) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Error saving post")));
+          .showSnackBar(const SnackBar(content: Text("Error saving post")));
     }
   }
 
@@ -136,14 +135,14 @@ class _PostCardState extends State<PostCard> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Adjust based on your API response
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Post unsaved")));
+            .showSnackBar(const SnackBar(content: Text("Post unsaved")));
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Failed to unsave post")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Failed to unsave post")));
       }
     } catch (e) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Error unsaving post")));
+          .showSnackBar(const SnackBar(content: Text("Error unsaving post")));
     }
   }
 
@@ -158,9 +157,9 @@ class _PostCardState extends State<PostCard> {
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          'type': 'post',
-          'entityId': widget.post.id,
-          'rank': voteType,
+          // 'type': 'post',
+          'id': widget.post.id,
+          'dir': voteType,
         }),
       );
     } catch (e) {}
@@ -184,7 +183,7 @@ class _PostCardState extends State<PostCard> {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Adjust based on your API response
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('Thank you for reporting! We will review it soon.')));
       }
     } catch (e) {}
@@ -418,7 +417,7 @@ class _PostCardState extends State<PostCard> {
                 TextButton(
                   onPressed: _toggleBlur,
                   child: Text(_isBlurred ? 'Show' : 'Hide',
-                      style: TextStyle(fontSize: 16)),
+                      style: const TextStyle(fontSize: 16)),
                 ),
             const SizedBox(height: 8),
             const SizedBox(height: 8),

@@ -14,7 +14,7 @@ import '../../providers/user_provider.dart';
 class ProfileDrawer extends StatelessWidget {
   final User? user;
 
-  const ProfileDrawer({
+  const ProfileDrawer({super.key, 
     this.user,
   });
 
@@ -68,7 +68,7 @@ class ProfileDrawer extends StatelessWidget {
                 onTap: () {
                   // Handle Saved tap
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                    return SavedScreen();
+                    return const SavedScreen();
                   }));
                 },
               ),

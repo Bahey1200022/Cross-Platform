@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/Widgets/drawers/community_drawer/community_list.dart';
-import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
 import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart'; // Import the JoinButton widget
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
+import 'package:sarakel/Widgets/explore_communities/load_explore.dart';
+import 'package:sarakel/Widgets/home/widgets/app_bar.dart';
 import 'package:sarakel/Widgets/home/widgets/bottom_bar.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/models/community.dart';
@@ -14,7 +15,7 @@ import 'package:sarakel/models/user.dart';
 class ExploreCommunities extends StatefulWidget {
   final String token;
 
-  const ExploreCommunities({Key? key, required this.token}) : super(key: key);
+  const ExploreCommunities({super.key, required this.token});
 
   @override
   State<ExploreCommunities> createState() => _ExploreCommunitiesState();
@@ -33,7 +34,7 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
   }
 
   void fetchCommunities() {
-    loadCircles().then((communities) {
+    explore().then((communities) {
       setState(() {
         fetchedCommunities = communities;
         _isJoinedList = List.generate(fetchedCommunities?.length ?? 0,
@@ -48,8 +49,9 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
 
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: const Text('Circles'),
+      appBar: CustomAppBar(
+        title: 'Circles',
+        scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
       ),
       drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(

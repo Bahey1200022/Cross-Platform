@@ -8,11 +8,11 @@ class FullScreenImagePage extends StatelessWidget {
   // You might want to pass additional data necessary for upvote, downvote, etc.
 
   const FullScreenImagePage({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.communityName,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

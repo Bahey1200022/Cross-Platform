@@ -6,7 +6,7 @@ class inboxMessage extends StatelessWidget {
   String? title;
   String? content;
   final String sender;
-  inboxMessage({
+  inboxMessage({super.key, 
     required this.recipient,
     this.title,
     this.content,
@@ -17,7 +17,7 @@ class inboxMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Message'),
+          title: const Text('Message'),
         ),
         body: Column(
           children: [
@@ -30,7 +30,7 @@ class inboxMessage extends StatelessWidget {
             ListTile(
               title: Text(
                 ' $title',
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ),
             ListTile(

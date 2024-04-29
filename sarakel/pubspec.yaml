@@ -53,6 +53,7 @@ dependencies:
   country_list_pick: ^1.0.1+6
   video_player: ^2.8.6
   web_socket_channel: ^2.4.5
+  image_picker: ^1.1.0
   
 dev_dependencies:
   flutter_test:

@@ -12,7 +12,7 @@ import 'package:sarakel/Widgets/settings/chat_permissions.dart';
 class SettingsPage extends StatefulWidget {
   final String token;
   final Settings settings;
-  const SettingsPage({required this.token, required this.settings});
+  const SettingsPage({super.key, required this.token, required this.settings});
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
