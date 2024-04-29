@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/constants.dart';
 
 class AddPostController {
@@ -9,31 +8,30 @@ class AddPostController {
       String body, String token, String url) async {
     try {
       if (title.trim().isNotEmpty) {
-        const String apiUrl = '$BASE_URL/createPost/create';
+        const String apiUrl = '$BASE_URL/api/createPost/create';
 
         final Map<String, String> headers = {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
         };
 
         print('Token: $token');
-        Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-        print('Decoded Token: $decodedToken');
-        String username = decodedToken['username'];
-        print('Username: $username');
         final Map<String, dynamic> postData = {
+          'content': body,
           'title': title,
-          'content': body + (url.isNotEmpty ? '\n$url' : ''),
+          //mediaUrl: url,
+          //downvotes: 0,
           'communityId': communityName,
-          //'duration': "0",
-          //'upVotes': 0,
-          //'shares': '0',
-          //'downvotes': 0,
-          //'comments': "0",
-          'communityName': communityName,
-          'userId': username,
-          'parentId': "0",
-          'isLocked': false,
-          'numViews': 0
+          //upvotes: 0,
+          //scheduledAt: null,
+          //isSpoiler: false,
+          //isLocked: false,
+          //isReported: false,
+          //isReason: null,
+          //nsfw: false,
+          //ac: false,
+          'url': url,
+          //flair: null,
         };
 
         final String postJson = jsonEncode(postData);
@@ -45,7 +43,7 @@ class AddPostController {
           body: postJson,
         );
 
-        if (response.statusCode == 201) {
+        if (response.statusCode == 201 || response.statusCode == 200) {
           //print('userId: $username');
           print('Post added successfully');
         } else {
