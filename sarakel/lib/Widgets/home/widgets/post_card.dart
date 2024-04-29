@@ -157,9 +157,9 @@ class _PostCardState extends State<PostCard> {
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          // 'type': 'post',
+          'type': 'post',
           'id': widget.post.id,
-          'dir': voteType,
+          'rank': voteType,
         }),
       );
     } catch (e) {}
