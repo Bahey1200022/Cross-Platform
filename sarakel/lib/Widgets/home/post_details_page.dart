@@ -68,7 +68,6 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
     String username = decodedToken['username'];
     Map<String, String> commentData = {
       'content': content,
-      'userID': username,
       'postID': postID,
       //'parentId': "0",
       //'isLocked': "false",
@@ -83,6 +82,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
       },
       body: postJson,
     );
+    //Comment added successfully to post 662bec333d7b7510d8d7bbe7 with content: huiii
     if (response.statusCode == 201 || response.statusCode == 200) {
       print(
           'Comment added successfully to post $postID with content: $content');
