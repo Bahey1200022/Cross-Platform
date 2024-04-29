@@ -89,6 +89,22 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                 ],
               ),
             ),
+            DropdownMenuItem(
+              value: 'Random',
+              child: Row(
+                children: [
+                  Icon(Icons.shuffle),
+                  SizedBox(width: 5), // Adjust spacing between icon and text
+                  Text(
+                    'Random',
+                    style: TextStyle(
+                        color: Colors
+                            .black // Ensures contrast against white AppBar
+                        ),
+                  ),
+                ],
+              ),
+            ),
           ],
           onChanged: (value) {
             if (value == 'Popular') {
@@ -111,6 +127,14 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
               setState(() {
                 _selectedPage = 'Hot';
                 postsToShow = null;
+              });
+            }
+            if (value == 'Random') {
+              setState(() {
+                _selectedPage = 'Random';
+              });
+              widget.homescreenController.loadRandomPosts().then((posts) {
+                setState(() => postsToShow = posts);
               });
             }
           },
@@ -166,9 +190,10 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                         onPressed: () {
                           setState(() {
                             hiddenPostIds.remove(post.id);
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                content:
-                                    Text("Post Unhidden"))); // Unhide the post
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        "Post Unhidden"))); // Unhide the post
                           });
                         },
                       ),

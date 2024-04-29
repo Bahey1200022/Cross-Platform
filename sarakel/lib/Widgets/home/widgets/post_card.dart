@@ -137,8 +137,8 @@ class _PostCardState extends State<PostCard> {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Post unsaved")));
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Failed to unsave post")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Failed to unsave post")));
       }
     } catch (e) {
       ScaffoldMessenger.of(context)
@@ -157,9 +157,9 @@ class _PostCardState extends State<PostCard> {
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          'type': 'post',
-          'entityId': widget.post.id,
-          'rank': voteType,
+          // 'type': 'post',
+          'id': widget.post.id,
+          'dir': voteType,
         }),
       );
     } catch (e) {}
