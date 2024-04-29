@@ -4,14 +4,13 @@ import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/community.dart';
 import 'add_post_controller.dart';
-import 'package:image_picker/image_picker.dart';
 //import 'dart:html' as html;
 import 'dart:async';
 
 class CreatePost extends StatefulWidget {
   final String token;
 
-  const CreatePost({required this.token});
+  const CreatePost({super.key, required this.token});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -77,12 +76,10 @@ class _MyHomePageState extends State<CreatePost> {
     //}//);
 
     final selectedImage = await completer.future;
-    if (selectedImage != null) {
-      setState(() {
-        _image = selectedImage;
-      });
+    setState(() {
+      _image = selectedImage;
+    });
     }
-  }
 
   void _showCommunityDialog() {
     showDialog(
@@ -227,7 +224,7 @@ class _MyHomePageState extends State<CreatePost> {
                   Stack(
                     alignment: Alignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         height: 200.0,
                         width: 200.0,
                         child: Image.network(_image!.path, fit: BoxFit.contain),
@@ -242,12 +239,12 @@ class _MyHomePageState extends State<CreatePost> {
                             });
                           },
                           child: Container(
-                            padding: EdgeInsets.all(4.0),
+                            padding: const EdgeInsets.all(4.0),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.8),
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.close_rounded),
+                            child: const Icon(Icons.close_rounded),
                           ),
                         ),
                       ),
@@ -299,11 +296,11 @@ class _MyHomePageState extends State<CreatePost> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.link),
+                    icon: const Icon(Icons.link),
                     onPressed: toggleUrlVisibility,
                   ),
                   IconButton(
-                    icon: Icon(Icons.image_outlined),
+                    icon: const Icon(Icons.image_outlined),
                     onPressed: () {
                       _getImage();
                     },

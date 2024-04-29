@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ModeratorTools extends StatefulWidget {
   final String token;
-  ModeratorTools({required this.token});
+  const ModeratorTools({super.key, required this.token});
   @override
   _ModeratorToolsState createState() => _ModeratorToolsState();
 }

@@ -9,7 +9,7 @@ class AddPostController {
       String body, String token, String url) async {
     try {
       if (title.trim().isNotEmpty) {
-        final String apiUrl = '$BASE_URL/createPost/create';
+        const String apiUrl = '$BASE_URL/createPost/create';
 
         final Map<String, String> headers = {
           'Content-Type': 'application/json'

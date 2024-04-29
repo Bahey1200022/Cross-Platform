@@ -24,7 +24,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
   String _selectedPage = 'Home';
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   List<Post>? postsToShow;
-  Set<String> hiddenPostIds = Set();
+  Set<String> hiddenPostIds = {};
   @override
   void initState() {
     super.initState();
@@ -166,7 +166,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                         onPressed: () {
                           setState(() {
                             hiddenPostIds.remove(post.id);
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                 content:
                                     Text("Post Unhidden"))); // Unhide the post
                           });
@@ -183,7 +183,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                         hiddenPostIds
                             .add(post.id); // Adjust based on your API response
                         ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Post Hidden")));
+                            const SnackBar(content: Text("Post Hidden")));
                         // Hide the post
                       });
                     },

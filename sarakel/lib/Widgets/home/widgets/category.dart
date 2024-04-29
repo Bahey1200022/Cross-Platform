@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PostCategory extends StatelessWidget {
   String? category;
 
-  PostCategory({this.category});
+  PostCategory({super.key, this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class PostCategory extends StatelessWidget {
     }
 
     if (category == null) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
 
     return ElevatedButton(

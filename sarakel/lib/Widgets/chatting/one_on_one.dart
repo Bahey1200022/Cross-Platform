@@ -15,7 +15,7 @@ class ChatPage extends StatefulWidget {
   final String receiver;
   String? id;
   ChatPage(
-      {required this.receiver,
+      {super.key, required this.receiver,
       required this.sender,
       required this.token,
       this.id});

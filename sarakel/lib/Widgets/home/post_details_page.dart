@@ -23,21 +23,21 @@ class PostDetailsPage extends StatefulWidget {
   final VoidCallback onImageTap;
   final Function(int) onMakeVote;
   const PostDetailsPage({
-    Key? key,
+    super.key,
     required this.post,
     required this.onUpvote,
     required this.onDownvote,
     required this.onShare,
     required this.onImageTap,
     required this.onMakeVote,
-  }) : super(key: key);
+  });
 
   @override
   _PostDetailsPageState createState() => _PostDetailsPageState();
 }
 
 class _PostDetailsPageState extends State<PostDetailsPage> {
-  TextEditingController _commentController =
+  final TextEditingController _commentController =
       TextEditingController(); // Add controller
 
   @override
@@ -46,6 +46,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
     super.dispose();
   }
 
+  @override
   void initState() {
     super.initState();
     //decodeJwt();

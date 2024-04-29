@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class BlockedAccounts extends StatefulWidget {
   final String token;
 
-  BlockedAccounts({required this.token});
+  const BlockedAccounts({super.key, required this.token});
 
   @override
   _BlockedAccountsState createState() => _BlockedAccountsState();
 }
 
 class _BlockedAccountsState extends State<BlockedAccounts> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void dispose() {

@@ -12,14 +12,14 @@ import '../home/widgets/bottom_bar.dart';
 class ChatSection extends StatefulWidget {
   final String token;
 
-  const ChatSection({required this.token});
+  const ChatSection({super.key, required this.token});
 
   @override
   State<ChatSection> createState() => _ChatSection();
 }
 
 class _ChatSection extends State<ChatSection> {
-  int _selectedIndex = 3;
+  final int _selectedIndex = 3;
   final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey(); // Create a GlobalKey
 

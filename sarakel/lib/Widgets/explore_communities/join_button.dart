@@ -4,8 +4,7 @@ class JoinButton extends StatefulWidget {
   final bool isJoined;
   final VoidCallback onPressed;
 
-  const JoinButton({Key? key, required this.isJoined, required this.onPressed})
-      : super(key: key);
+  const JoinButton({super.key, required this.isJoined, required this.onPressed});
 
   @override
   _JoinButtonState createState() => _JoinButtonState();
@@ -60,12 +59,11 @@ class _JoinButtonState extends State<JoinButton> {
 class LeaveCommunityBottomSheet extends StatelessWidget {
   final VoidCallback onLeave;
 
-  const LeaveCommunityBottomSheet({Key? key, required this.onLeave})
-      : super(key: key);
+  const LeaveCommunityBottomSheet({super.key, required this.onLeave});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity, // Ensure the bottom sheet occupies full width
       child: Column(
         mainAxisSize: MainAxisSize.min,

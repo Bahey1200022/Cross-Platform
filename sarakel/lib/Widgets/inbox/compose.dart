@@ -3,7 +3,7 @@ import 'package:sarakel/Widgets/inbox/messaging_service.dart';
 
 class Compose extends StatefulWidget {
   final String token;
-  const Compose({required this.token});
+  const Compose({super.key, required this.token});
 
   @override
   State<Compose> createState() => _ComposeState();

@@ -12,10 +12,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
   // final Function(int) onTap;
 
   const CustomBottomNavigationBar(
-      {Key? key, required this.currentIndex, required this.token
+      {super.key, required this.currentIndex, required this.token
       // required this.onTap,
-      })
-      : super(key: key);
+      });
 
   void _onItemTapped(BuildContext context, int index) {
     // onTap(index); // Pass the index to the onTap function provided externally

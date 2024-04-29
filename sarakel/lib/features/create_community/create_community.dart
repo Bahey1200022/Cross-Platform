@@ -12,7 +12,7 @@ class CommunityType {
 class CommunityForm extends StatefulWidget {
   final String token;
 
-  const CommunityForm({required this.token});
+  const CommunityForm({super.key, required this.token});
 
   @override
   _CommunityFormState createState() => _CommunityFormState();
@@ -78,7 +78,7 @@ class _CommunityFormState extends State<CommunityForm> {
       SnackBar(
         content: Text(message),
         backgroundColor: Colors.red,
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -140,8 +140,8 @@ class _CommunityFormState extends State<CommunityForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.all(8.0),
+        title: const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Text(
             'Create Community',
           ),
@@ -150,7 +150,7 @@ class _CommunityFormState extends State<CommunityForm> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -165,7 +165,7 @@ class _CommunityFormState extends State<CommunityForm> {
                     },
                     maxLength: 21,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: const TextStyle(color: Colors.black),
                       labelText: 'Community name',
                       prefixText: 'c/',
                       counterText: '',
@@ -173,7 +173,7 @@ class _CommunityFormState extends State<CommunityForm> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
+                        borderSide: const BorderSide(color: Colors.blue),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
@@ -183,7 +183,7 @@ class _CommunityFormState extends State<CommunityForm> {
                     right: 12.0,
                     child: Text(
                       '${21 - _communityNameController.text.length}/21',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12.0,
                         color: Colors.grey,
                       ),
@@ -191,25 +191,25 @@ class _CommunityFormState extends State<CommunityForm> {
                   ),
                 ],
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Text(
                   _errorText,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.red,
                     fontSize: 12.0,
                   ),
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text(
+              const SizedBox(height: 16.0),
+              const Text(
                 'Community type',
                 style: TextStyle(
                   fontSize: 18.0,
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               DropdownButtonHideUnderline(
                 child: DropdownButton<CommunityType>(
                   value: _selectedCommunityType,
@@ -220,7 +220,7 @@ class _CommunityFormState extends State<CommunityForm> {
                     });
                     //FocusManager.instance.primaryFocus?.unfocus();
                   },
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
                   ),
@@ -236,7 +236,7 @@ class _CommunityFormState extends State<CommunityForm> {
                                   children: [
                                     _getIconForCommunityType(
                                         communityType.name),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 8.0,
                                     ),
                                     Text(communityType.name)
@@ -246,16 +246,16 @@ class _CommunityFormState extends State<CommunityForm> {
                       .toList(),
                 ),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               Text(
-                '${_selectedCommunityType?.description ?? ""}',
-                style: TextStyle(fontSize: 14.0, color: Colors.grey),
+                _selectedCommunityType?.description ?? "",
+                style: const TextStyle(fontSize: 14.0, color: Colors.grey),
               ),
-              SizedBox(height: 24.0),
+              const SizedBox(height: 24.0),
               Row(
                 // Added: Toggle switch for 18+ community
                 children: [
-                  Text(
+                  const Text(
                     '18+ community',
                     style: TextStyle(fontSize: 18.0),
                   ),
@@ -270,11 +270,11 @@ class _CommunityFormState extends State<CommunityForm> {
                   ),
                 ],
               ),
-              SizedBox(height: 24.0),
+              const SizedBox(height: 24.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
                   ),
@@ -283,7 +283,7 @@ class _CommunityFormState extends State<CommunityForm> {
                   ),
                 ),
                 onPressed: _isCreateButtonEnabled() ? _createCommunity : null,
-                child: Text(
+                child: const Text(
                   'Create community',
                   style: TextStyle(
                     color: Colors.white,

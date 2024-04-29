@@ -16,7 +16,7 @@ import 'package:http/http.dart' as http;
 class InboxSection extends StatefulWidget {
   final String token;
 
-  const InboxSection({required this.token});
+  const InboxSection({super.key, required this.token});
 
   @override
   State<InboxSection> createState() => _InboxSectionState();
@@ -26,7 +26,7 @@ class _InboxSectionState extends State<InboxSection> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List messageCard = [];
   List sentmessageCard = [];
-  int _selectedIndex = 4;
+  final int _selectedIndex = 4;
 
   Future<void> initiateMessageCard() async {
     // Make an HTTP request to the API

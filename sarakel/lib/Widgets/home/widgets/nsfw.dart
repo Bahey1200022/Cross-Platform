@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class NSFWButton extends StatelessWidget {
   final bool isNSFW;
 
-  const NSFWButton({required this.isNSFW});
+  const NSFWButton({super.key, required this.isNSFW});
 
   @override
   Widget build(BuildContext context) {

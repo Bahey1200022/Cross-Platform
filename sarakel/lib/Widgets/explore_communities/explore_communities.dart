@@ -15,7 +15,7 @@ import 'package:sarakel/models/user.dart';
 class ExploreCommunities extends StatefulWidget {
   final String token;
 
-  const ExploreCommunities({Key? key, required this.token}) : super(key: key);
+  const ExploreCommunities({super.key, required this.token});
 
   @override
   State<ExploreCommunities> createState() => _ExploreCommunitiesState();

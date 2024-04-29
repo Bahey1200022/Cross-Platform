@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ChatPermissions extends StatefulWidget {
   final String token;
-  ChatPermissions({required this.token});
+  const ChatPermissions({super.key, required this.token});
   @override
   _ChatPermissionsState createState() => _ChatPermissionsState();
 }

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class MutedCommunities extends StatefulWidget {
   final String token;
 
-  MutedCommunities({required this.token});
+  const MutedCommunities({super.key, required this.token});
 
   @override
   _MutedCommunitiesState createState() => _MutedCommunitiesState();
 }
 
 class _MutedCommunitiesState extends State<MutedCommunities> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void dispose() {

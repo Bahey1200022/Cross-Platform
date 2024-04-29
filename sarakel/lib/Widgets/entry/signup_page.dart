@@ -6,6 +6,8 @@ class SignupPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  SignupPage({super.key});
+
   bool _validateEmail(String email) {
     // Regular expression for email validation
     RegExp emailRegex =

@@ -6,7 +6,7 @@ import '../../models/post.dart';
 
 class History extends StatefulWidget {
   final String token;
-  const History({required this.token});
+  const History({super.key, required this.token});
 
   @override
   State<History> createState() => _HistroyState();
@@ -15,6 +15,7 @@ class History extends StatefulWidget {
 class _HistroyState extends State<History> {
   String _selectedPage = 'recent';
   List<Post>? postsToShow;
+  @override
   void initState() {
     super.initState();
     loadRecentHistory().then((posts) {

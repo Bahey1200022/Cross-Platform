@@ -4,6 +4,8 @@ import 'saved_controller.dart';
 import '../../Widgets/home/widgets/post_card.dart';
 
 class SavedScreen extends StatefulWidget {
+  const SavedScreen({super.key});
+
   @override
   _SavedScreenState createState() => _SavedScreenState();
 }

@@ -9,6 +9,8 @@ class ForgotPasswordPage extends StatelessWidget {
   final TextEditingController emailOrUsernameController =
       TextEditingController();
 
+  ForgotPasswordPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
