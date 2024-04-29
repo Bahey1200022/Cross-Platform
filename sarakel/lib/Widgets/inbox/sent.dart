@@ -2,36 +2,29 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sarakel/Widgets/drawers/community_drawer/community_list.dart';
+import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
+import 'package:sarakel/Widgets/home/widgets/app_bar.dart';
 import 'package:sarakel/Widgets/inbox/chat_card.dart';
-import 'package:sarakel/Widgets/inbox/compose.dart';
-import 'package:sarakel/Widgets/inbox/sent.dart';
 import 'package:sarakel/constants.dart';
-import '../drawers/community_drawer/community_list.dart';
-import '../drawers/profile_drawer.dart';
-import '../../models/user.dart';
-import '../home/widgets/bottom_bar.dart';
-import '../home/widgets/app_bar.dart';
 import 'package:http/http.dart' as http;
+import 'package:sarakel/models/user.dart';
 
-///email message like class where it displays inbox of the user
-class InboxSection extends StatefulWidget {
+///email message like class where it displays sent messages of the user
+class sent extends StatefulWidget {
   final String token;
-
-  const InboxSection({super.key, required this.token});
+  const sent({super.key, required this.token});
 
   @override
-  State<InboxSection> createState() => _InboxSectionState();
+  State<sent> createState() => _sentState();
 }
 
-class _InboxSectionState extends State<InboxSection> {
+class _sentState extends State<sent> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   List messageCard = [];
-  List sentmessageCard = [];
-  final int _selectedIndex = 4;
-
-  Future<void> initiateMessageCard() async {
+  Future<void> initiatesentCard() async {
     // Make an HTTP request to the API
-    var response = await http.get(Uri.parse('$BASE_URL/api/message/inbox'),
+    var response = await http.get(Uri.parse('$BASE_URL/api/message/sent'),
         headers: {
           'Authorization': 'Bearer ${widget.token}',
           'Content-Type': 'application/json'
@@ -55,7 +48,7 @@ class _InboxSectionState extends State<InboxSection> {
   @override
   void initState() {
     super.initState();
-    initiateMessageCard();
+    initiatesentCard();
   }
 
   @override
@@ -65,7 +58,7 @@ class _InboxSectionState extends State<InboxSection> {
     return Scaffold(
       key: _scaffoldKey, // Assign key here
       appBar: CustomAppBar(
-        title: 'Inbox',
+        title: 'Sent Messages',
         scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
       ),
       drawer: CommunityDrawer(token: widget.token),
@@ -78,8 +71,8 @@ class _InboxSectionState extends State<InboxSection> {
             itemCount: messageCard.isNotEmpty ? messageCard.length : 0,
             itemBuilder: (context, index) {
               return ButtonCard(
-                sender: messageCard[index]['recipient'],
-                receiver: messageCard[index]['username'],
+                sender: messageCard[index]['username'],
+                receiver: messageCard[index]['recipient'],
                 id: messageCard[index]["_id"],
                 token: widget.token,
                 status: messageCard[index]['status'],
@@ -87,48 +80,12 @@ class _InboxSectionState extends State<InboxSection> {
                 live: false,
                 title: messageCard[index]['title'],
                 content: messageCard[index]['content'],
+                sent: true,
               );
             },
           ),
         ),
       ]),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          ElevatedButton.icon(
-            onPressed: () {
-              // Add your button click logic here
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Compose(token: widget.token),
-                ),
-              );
-            },
-            icon: const Icon(Icons.add),
-            label: const Text('New Message'),
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => sent(
-                    token: widget.token,
-                  ),
-                ),
-              );
-            },
-            icon: const Icon(Icons.mail),
-            label: const Text('sent messages'),
-          ),
-        ],
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: _selectedIndex,
-        token: widget.token,
-      ),
     );
   }
 }

@@ -6,7 +6,8 @@ import 'package:sarakel/Widgets/inbox/message_display.dart';
 // ignore: must_be_immutable
 class ButtonCard extends StatelessWidget {
   ButtonCard(
-      {super.key, required this.sender,
+      {super.key,
+      required this.sender,
       required this.icon,
       required this.token,
       required this.receiver,
@@ -14,7 +15,8 @@ class ButtonCard extends StatelessWidget {
       this.status,
       this.id,
       this.title,
-      this.content});
+      this.content,
+      this.sent});
   final String sender;
   Icon icon = const Icon(Icons.person);
   final String token;
@@ -24,6 +26,7 @@ class ButtonCard extends StatelessWidget {
   String? content;
   String? id;
   String? status;
+  bool? sent;
   bool getstatus() {
     if (status == 'read') {
       return true;
@@ -49,19 +52,33 @@ class ButtonCard extends StatelessWidget {
             ),
           );
         } else {
-          /////go to see message
-          await readMessage(token, id);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => inboxMessage(
-                recipient: receiver,
-                title: title,
-                content: content,
-                sender: sender,
+          if (sent == true) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => inboxMessage(
+                  recipient: sender,
+                  title: title,
+                  content: content,
+                  sender: receiver,
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            /////go to see message
+            await readMessage(token, id);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => inboxMessage(
+                  recipient: receiver,
+                  title: title,
+                  content: content,
+                  sender: sender,
+                ),
+              ),
+            );
+          }
         }
         // Add your onTap logic here
       },
