@@ -206,14 +206,14 @@ class _MyHomePageState extends State<CreatePost> {
                 TextField(
                   cursorColor: Colors.black,
                   controller: titleController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Title',
                     hintStyle: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                     border: InputBorder.none,
                   ),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                   onChanged: (value) {
