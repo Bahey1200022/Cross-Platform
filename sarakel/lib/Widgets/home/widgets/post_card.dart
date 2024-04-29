@@ -158,7 +158,7 @@ class _PostCardState extends State<PostCard> {
         },
         body: jsonEncode({
           'type': 'post',
-          'id': widget.post.id,
+          'entityId': widget.post.id,
           'rank': voteType,
         }),
       );

@@ -26,29 +26,43 @@ Future<List<Post>> fetchPosts(String url) async {
 
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
-      List<dynamic> fetchedPosts = jsonData['data'];
+      List<dynamic> list =
+          jsonData['data']; // replace jsonData['data'] with your actual data
 
+      List<dynamic> fetchedPosts = [];
+      for (var item in list) {
+        fetchedPosts.add(item['post']);
+      }
+      List<dynamic> numberOfComments = [];
+      for (var item in list) {
+        numberOfComments.add(item['numberOfComments']);
+      }
+
+      for (int i = 0; i < fetchedPosts.length; i++) {
+        fetchedPosts[i]['comments'] = numberOfComments[i];
+      }
+      //print(fetchedPosts);
       List<Post> posts = fetchedPosts.map((p) {
         return Post(
-            communityName: p['communityName']?.toString() ?? "",
-            id: p['_id']?.toString() ?? "",
+            communityName: p['communityId'],
+            id: p['_id'],
             imagePath: p['media'] != null
                 ? (p['media'] is List && (p['media'] as List).isNotEmpty
                     ? Uri.encodeFull(
                         extractUrl((p['media'] as List).first.toString()))
                     : Uri.encodeFull(extractUrl(p['media'].toString())))
                 : null,
-            upVotes: p['upvotes'] ?? 0,
-            downVotes: p['downvotes'] ?? 0,
-            comments: p['numComments'] ?? 0,
-            shares: p['numComments'] ?? 0,
-            isNSFW: true,
+            upVotes: p['upvotes'],
+            downVotes: p['downvotes'],
+            comments: p['comments'],
+            shares: p['comments'] ?? 0,
+            isNSFW: p['nsfw'],
             postCategory: "general",
-            isSpoiler: p['isSpoiler'] ?? false,
+            isSpoiler: p['isSpoiler'],
             content: p['content']?.toString() ?? "",
-            communityId: p['communityId']?.toString() ?? "",
-            title: p['title']?.toString() ?? "",
-            username: p['userId']?.toString() ?? "",
+            communityId: p['communityId'],
+            title: p['title'],
+            username: p['username'],
             views: p['numViews'] ?? 0);
       }).toList();
 

@@ -36,8 +36,12 @@ class HomescreenController {
     return fetchPosts('api/subreddit/getBest');
   }
 
-  Future<List<Post>> loadnewPosts() async {
+  Future<List<Post>> loadNewPosts() async {
     return fetchPosts('api/subreddit/getNew');
+  }
+
+  Future<List<Post>> loadHotPosts() async {
+    return fetchPosts('api/subreddit/getHot');
   }
 
   Future<List<Post>> loadRandomPosts() async {

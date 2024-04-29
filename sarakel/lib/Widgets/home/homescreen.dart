@@ -112,13 +112,17 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                 _selectedPage = 'Popular';
                 postsToShow = null;
               });
+              widget.homescreenController.loadPosts().then((posts) {
+                setState(() => postsToShow = posts);
+              });
             }
 
             if (value == 'Home') {
               setState(() {
                 _selectedPage = 'Home';
+                postsToShow = null;
               });
-              widget.homescreenController.loadPosts().then((posts) {
+              widget.homescreenController.loadNewPosts().then((posts) {
                 setState(() => postsToShow = posts);
               });
             }
@@ -128,10 +132,14 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                 _selectedPage = 'Hot';
                 postsToShow = null;
               });
+              widget.homescreenController.loadHotPosts().then((posts) {
+                setState(() => postsToShow = posts);
+              });
             }
             if (value == 'Random') {
               setState(() {
                 _selectedPage = 'Random';
+                postsToShow = null;
               });
               widget.homescreenController.loadRandomPosts().then((posts) {
                 setState(() => postsToShow = posts);
