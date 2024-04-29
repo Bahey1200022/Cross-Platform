@@ -6,6 +6,7 @@ import 'package:sarakel/models/post.dart';
 import 'package:sarakel/user_profile/user_controller.dart';
 import 'package:sarakel/user_profile/user_visibility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sarakel/features/search_bar/search_screen.dart';
 
 import '../models/user.dart';
 
@@ -114,7 +115,10 @@ class _UserProfile extends State<UserProfile> {
                       IconButton(
                         icon: const Icon(Icons.search),
                         color: Colors.white,
-                        onPressed: () {},
+                        onPressed: () {
+                          showSearch(
+                              context: context, delegate: sarakelSearch());
+                        },
                       ),
                       IconButton(
                         icon: const Icon(Icons.share),
