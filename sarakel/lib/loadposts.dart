@@ -26,21 +26,9 @@ Future<List<Post>> fetchPosts(String url) async {
 
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
-      List<dynamic> list =
+      List<dynamic> fetchedPosts =
           jsonData['data']; // replace jsonData['data'] with your actual data
 
-      List<dynamic> fetchedPosts = [];
-      for (var item in list) {
-        fetchedPosts.add(item['post']);
-      }
-      List<dynamic> numberOfComments = [];
-      for (var item in list) {
-        numberOfComments.add(item['numberOfComments']);
-      }
-
-      for (int i = 0; i < fetchedPosts.length; i++) {
-        fetchedPosts[i]['comments'] = numberOfComments[i];
-      }
       //print(fetchedPosts);
       List<Post> posts = fetchedPosts.map((p) {
         return Post(
@@ -54,8 +42,8 @@ Future<List<Post>> fetchPosts(String url) async {
                 : null,
             upVotes: p['upvotes'],
             downVotes: p['downvotes'],
-            comments: p['comments'],
-            shares: p['comments'] ?? 0,
+            comments: p['numberOfComments'],
+            shares: p['numberOfComments'] ?? 0,
             isNSFW: p['nsfw'],
             postCategory: "general",
             isSpoiler: p['isSpoiler'],

@@ -64,8 +64,6 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
   Future<void> sendComment(String postID, String content) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token')!;
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-    String username = decodedToken['username'];
     Map<String, String> commentData = {
       'content': content,
       'postID': postID,

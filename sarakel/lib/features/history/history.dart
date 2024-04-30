@@ -51,7 +51,10 @@ class _HistroyState extends State<History> {
                 });
               }
               if (value == 'upvotes') {
-                loadRecentHistory().then((posts) {
+                setState(() {
+                  postsToShow = null;
+                });
+                loadUpvotedHistory().then((posts) {
                   ///to be changed later
                   setState(() {
                     _selectedPage = value;
@@ -60,7 +63,7 @@ class _HistroyState extends State<History> {
                 });
               }
               if (value == 'downvotes') {
-                loadRecentHistory().then((posts) {
+                loadDownvotedHistory().then((posts) {
                   ///to be changed later
                   setState(() {
                     _selectedPage = value;
@@ -93,7 +96,7 @@ class _HistroyState extends State<History> {
         ],
       ),
       body: postsToShow == null
-          ? const Center(child: Text('History cleared'))
+          ? const Center(child: Text('No posts to show'))
           : ListView.builder(
               itemCount: postsToShow?.length ?? 0,
               itemBuilder: (context, index) {

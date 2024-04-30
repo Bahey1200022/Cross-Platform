@@ -9,7 +9,7 @@ class Post {
   final int? comments;
   int shares;
   final String content;
-  final String communityId;
+  String? communityId;
   final String title;
   final String username;
   bool? isNSFW;
@@ -33,7 +33,7 @@ class Post {
       this.shares = 0,
       this.imagePath,
       required this.content,
-      required this.communityId,
+      this.communityId,
       required this.title,
       this.downVotes = 0,
       this.image,

@@ -162,6 +162,7 @@ class _PostCardState extends State<PostCard> {
           'rank': voteType,
         }),
       );
+      print(response.body);
     } catch (e) {}
   }
 
