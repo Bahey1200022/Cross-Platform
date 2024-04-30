@@ -22,16 +22,13 @@ Future<List<Post>> loadUserPosts(String username) async {
     print(username);
     var response = await http.get(
         Uri.parse('$BASE_URL/api/user/$username/submitted'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $token'
-        });
+        headers: <String, String>{'Authorization': 'Bearer $token'});
     print(response.statusCode);
     if (response.statusCode == 200) {
       print("inside the if");
       var jsonData = json.decode(response.body);
-      print(jsonData['data']);
-      List<dynamic> fetchedPosts = jsonData['data'];
+      print(jsonData['posts']);
+      List<dynamic> fetchedPosts = jsonData['posts'];
       print(fetchedPosts.length);
       print(fetchedPosts);
 
