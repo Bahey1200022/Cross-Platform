@@ -1,37 +1,43 @@
 class Comment {
   final String id;
-  final String postID; // You may want to add postId to the comment model
+  final String postID;
   final String content;
   final String userID;
-  final String duration;
-  String?
-      replyToID; // You may want to handle duration dynamically based on the creation date
+  final String dateTime;
+  bool isUpvoted;
+  bool isDownvoted;
   int upvote;
   int downVote;
+  final bool isSpoiler;
   bool isSaved;
-  bool? isSpoiler; // For handling save functionality
+  final String? replyToID; // Assuming this can be null
 
   Comment({
     required this.id,
-    required this.content,
     required this.postID,
+    required this.content,
     required this.userID,
-    required this.duration,
+    required this.dateTime,
+    this.isUpvoted = false,
+    this.isDownvoted = false,
     this.upvote = 0,
     this.downVote = 0,
+    this.isSpoiler = false,
     this.isSaved = false,
+    this.replyToID,
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) {
     return Comment(
       id: json['_id'],
+      postID: json['postID'],
       content: json['content'],
-      userID: json['username'],
-      postID: json['PostId'],
-      duration: json['duration'],
-      upvote: json['upvotes'],
-      downVote: json['downvotes'],
-      isSaved: json['isSaved'],
+      userID: json['userID'],
+      dateTime: json['dateTime'],
+      upvote: json['upvote'] ?? 0,
+      downVote: json['downVote'] ?? 0,
+      isSpoiler: json['isSpoiler'] ?? false,
+      replyToID: json['replyToID'],
     );
   }
 }

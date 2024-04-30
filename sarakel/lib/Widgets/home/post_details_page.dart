@@ -62,10 +62,21 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
   Future<void> _loadComments() async {
     try {
       List<Comment> loadedComments = await fetchComments(widget.post.id);
-      setState(() {
-        comments = loadedComments;
-        isLoading = false;
-      });
+      if (loadedComments.isNotEmpty) {
+        setState(() {
+          comments = loadedComments;
+          isLoading = false;
+        });
+      } else {
+        // Handling no comments case
+        setState(() {
+          isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('No comments available.'),
+          backgroundColor: Colors.blue,
+        ));
+      }
     } catch (e) {
       setState(() {
         isLoading = false;

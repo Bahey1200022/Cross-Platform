@@ -451,7 +451,20 @@ class _PostCardState extends State<PostCard> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.comment),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => PostDetailsPage(
+                                post: widget.post,
+                                onUpvote: _toggleUpvote,
+                                onDownvote: _toggleDownvote,
+                                onShare: _sharePost,
+                                onMakeVote: _makeVote,
+                                onImageTap: () => _showImage(
+                                    context, widget.post.imagePath!)),
+                          ),
+                        );
+                      },
                     ),
                     Text('${widget.post.comments}'),
                   ],
