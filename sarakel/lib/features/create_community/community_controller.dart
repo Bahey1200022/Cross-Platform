@@ -1,7 +1,10 @@
-import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:file_picker/file_picker.dart';
 
 ///create community with backend
 /// feat still in construction from backend
@@ -53,32 +56,41 @@ class CreateCommunityController {
     String formattedCommunityName = communityName;
     String communityId = communityName.toLowerCase().replaceAll(' ', '_');
 
-    Map<String, dynamic> communityData = {
-      //"id": communityId,
-      "communityName": formattedCommunityName,
-      //"moderatorsUsernames": prefs.getString('username'),
-      "type": communityType,
-      "isNSFW": is18Plus, // Include 18+ flag in circle data
-      //"image":
-      //"https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
-      //"description": "new circle"
-    };
+    var uri = Uri.parse('$BASE_URL/api/site_admin');
+    var request = http.MultipartRequest('POST', uri)
+      ..fields['communityName'] = formattedCommunityName
+      ..fields['type'] = communityType
+      ..fields['isNSFW'] = is18Plus.toString();
 
-    final response = await http.post(
-      Uri.parse('$BASE_URL/api/site_admin'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode(communityData),
-    );
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      var stream = http.ByteStream(file.openRead());
+      var length = await file.length();
+
+      // Add the file to the multipart request
+      var multipartFile = http.MultipartFile('file', stream, length,
+          filename: basename(file.path));
+      request.files.add(multipartFile);
+    } else {
+      // User canceled the file picking
+      print('File picking canceled');
+      return;
+    }
+
+    request.headers.addAll({
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer $token',
+    });
+
+    var response = await request.send();
 
     print('Response status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
     if (response.statusCode == 201 || response.statusCode == 200) {
       print('Community created successfully with ID: $communityId');
     } else {
-      print('Failed to create community. Error: ${response.body}');
+      print('Failed to create community. Error: ');
     }
   }
 }

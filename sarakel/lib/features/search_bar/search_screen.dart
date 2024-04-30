@@ -102,15 +102,14 @@ class sarakelSearch extends SearchDelegate {
                     id: suggestionList[index]['_id'],
                     title: suggestionList[index]['title'],
                     content: suggestionList[index]['content'],
-                    communityName: suggestionList[index]['communityName'],
+                    communityName: suggestionList[index]['communityId'],
                     communityId: suggestionList[index]['communityId'],
-                    username: suggestionList[index]['userId'],
+                    username: suggestionList[index]['username'],
                     upVotes: suggestionList[index]['upvotes'],
                     downVotes: suggestionList[index]['downvotes'],
-                    comments: suggestionList[index]['numComments'],
+                    comments: 0,
                     isNSFW: true,
                     isSpoiler: suggestionList[index]['isSpoiler'],
-                    views: suggestionList[index]['numViews'],
                     imagePath: suggestionList[index]['media'] != null
                         ? (suggestionList[index]['media'] is List &&
                                 (suggestionList[index]['media'] as List)
