@@ -36,7 +36,6 @@ Future<List<Community>> loadCircles() async {
           type: circleData['type'] ?? "public",
         );
       }).toList();
-      print(fetchedCircles);
       return fetchedCircles; // Return the fetched communities list
     } else {
       // Return an empty list if the response status code is not 200

@@ -3,9 +3,9 @@ import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
 import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/models/post.dart';
+import 'package:sarakel/user_profile/new_chat.dart';
 import 'package:sarakel/user_profile/user_controller.dart';
 import 'package:sarakel/user_profile/user_visibility.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -190,23 +190,25 @@ class _UserProfile extends State<UserProfile> {
                                     ),
                                   ),
                                   OutlinedButton(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      newChat(widget.user!.username!, context);
+                                    },
+                                    style: OutlinedButton.styleFrom(
+                                      shape: const CircleBorder(),
+                                    ),
                                     child: const Icon(
                                       Icons.message_outlined,
                                       color: Colors.white,
                                     ),
-                                    style: OutlinedButton.styleFrom(
-                                      shape: CircleBorder(),
-                                    ),
                                   ),
                                   OutlinedButton(
                                     onPressed: () {},
+                                    style: OutlinedButton.styleFrom(
+                                      shape: const CircleBorder(),
+                                    ),
                                     child: const Icon(
                                       Icons.person_add,
                                       color: Colors.white,
-                                    ),
-                                    style: OutlinedButton.styleFrom(
-                                      shape: CircleBorder(),
                                     ),
                                   ),
                                 ],
@@ -289,7 +291,7 @@ class _UserProfile extends State<UserProfile> {
                                                   backgroundColor:
                                                       MaterialStateProperty.all<
                                                           Color>(
-                                                    Color.fromARGB(
+                                                    const Color.fromARGB(
                                                         180, 255, 255, 255),
                                                   ),
                                                 ),
@@ -313,7 +315,7 @@ class _UserProfile extends State<UserProfile> {
                                                   backgroundColor:
                                                       MaterialStateProperty.all<
                                                           Color>(
-                                                    Color.fromARGB(
+                                                    const Color.fromARGB(
                                                         180, 255, 255, 255),
                                                   ),
                                                 ),
@@ -337,14 +339,14 @@ class _UserProfile extends State<UserProfile> {
                                                   backgroundColor:
                                                       MaterialStateProperty.all<
                                                           Color>(
-                                                    Color.fromARGB(
+                                                    const Color.fromARGB(
                                                         180, 255, 255, 255),
                                                   ),
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 20),
+                                          const SizedBox(height: 20),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
@@ -353,7 +355,7 @@ class _UserProfile extends State<UserProfile> {
                                             children: [
                                               ElevatedButton.icon(
                                                 onPressed: () {},
-                                                icon: FaIcon(
+                                                icon: const FaIcon(
                                                     FontAwesomeIcons.twitter,
                                                     color: Colors.blue,
                                                     size: 15),
@@ -374,14 +376,14 @@ class _UserProfile extends State<UserProfile> {
                                                   backgroundColor:
                                                       MaterialStateProperty.all<
                                                           Color>(
-                                                    Color.fromARGB(
+                                                    const Color.fromARGB(
                                                         180, 255, 255, 255),
                                                   ),
                                                 ),
                                               ),
                                               ElevatedButton.icon(
                                                 onPressed: () {},
-                                                icon: FaIcon(
+                                                icon: const FaIcon(
                                                     FontAwesomeIcons.soundcloud,
                                                     color: Colors.orange,
                                                     size: 15),
@@ -397,14 +399,14 @@ class _UserProfile extends State<UserProfile> {
                                                   backgroundColor:
                                                       MaterialStateProperty.all<
                                                           Color>(
-                                                    Color.fromARGB(
+                                                    const Color.fromARGB(
                                                         180, 255, 255, 255),
                                                   ),
                                                 ),
                                               ),
                                               ElevatedButton.icon(
                                                 onPressed: () {},
-                                                icon: FaIcon(
+                                                icon: const FaIcon(
                                                     FontAwesomeIcons.youtube,
                                                     color: Colors.red,
                                                     size: 15),
@@ -420,21 +422,21 @@ class _UserProfile extends State<UserProfile> {
                                                   backgroundColor:
                                                       MaterialStateProperty.all<
                                                           Color>(
-                                                    Color.fromARGB(
+                                                    const Color.fromARGB(
                                                         180, 255, 255, 255),
                                                   ),
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 20),
+                                          const SizedBox(height: 20),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
                                               ElevatedButton.icon(
                                                 onPressed: () {},
-                                                icon: FaIcon(
+                                                icon: const FaIcon(
                                                     FontAwesomeIcons.link,
                                                     // color: Colors.red,
                                                     size: 15),
@@ -450,7 +452,7 @@ class _UserProfile extends State<UserProfile> {
                                                   backgroundColor:
                                                       MaterialStateProperty.all<
                                                           Color>(
-                                                    Color.fromARGB(
+                                                    const Color.fromARGB(
                                                         180, 255, 255, 255),
                                                   ),
                                                 ),
