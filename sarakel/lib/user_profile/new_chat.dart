@@ -12,8 +12,6 @@ void newChat(String name, BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString('token');
   var username = prefs.getString('username');
-  print('hi');
-  print(name);
   var response = await http.post(
     Uri.parse('$BASE_URL/api/message/converstaionId'),
     headers: {
@@ -28,7 +26,6 @@ void newChat(String name, BuildContext context) async {
     if (jsondata == 'no conversation') {
       await sendMessage('Hi, I am using Sarakel', name);
       List convos = await loadConversation();
-      print(convos);
       for (var convo in convos) {
         if (convo['users'] == name) {
           Navigator.push(context, MaterialPageRoute(builder: (context) {

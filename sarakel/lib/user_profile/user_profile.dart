@@ -5,11 +5,7 @@ import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/models/post.dart';
 import 'package:sarakel/user_profile/user_controller.dart';
 import 'package:sarakel/user_profile/user_space_bar.dart';
-import 'package:sarakel/user_profile/user_visibility.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sarakel/user_profile/user_profile.dart';
 
 import '../models/user.dart';
 

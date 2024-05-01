@@ -32,7 +32,7 @@ class UrlSheet extends StatelessWidget {
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(180, 255, 255, 255),
+                  const Color.fromARGB(180, 255, 255, 255),
                 ),
               ),
             ),
@@ -52,7 +52,7 @@ class UrlSheet extends StatelessWidget {
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(180, 255, 255, 255),
+                  const Color.fromARGB(180, 255, 255, 255),
                 ),
               ),
             ),
@@ -72,20 +72,20 @@ class UrlSheet extends StatelessWidget {
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(180, 255, 255, 255),
+                  const Color.fromARGB(180, 255, 255, 255),
                 ),
               ),
             ),
           ],
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ElevatedButton.icon(
               onPressed: () {},
-              icon: FaIcon(FontAwesomeIcons.twitter,
+              icon: const FaIcon(FontAwesomeIcons.twitter,
                   color: Colors.blue, size: 15),
               // icon: const Icon(
               //   Icons.facebook,
@@ -101,13 +101,13 @@ class UrlSheet extends StatelessWidget {
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(180, 255, 255, 255),
+                  const Color.fromARGB(180, 255, 255, 255),
                 ),
               ),
             ),
             ElevatedButton.icon(
               onPressed: () {},
-              icon: FaIcon(FontAwesomeIcons.soundcloud,
+              icon: const FaIcon(FontAwesomeIcons.soundcloud,
                   color: Colors.orange, size: 15),
               label: const Text(
                 'SoundCloud',
@@ -118,14 +118,14 @@ class UrlSheet extends StatelessWidget {
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(180, 255, 255, 255),
+                  const Color.fromARGB(180, 255, 255, 255),
                 ),
               ),
             ),
             ElevatedButton.icon(
               onPressed: () {},
-              icon:
-                  FaIcon(FontAwesomeIcons.youtube, color: Colors.red, size: 15),
+              icon: const FaIcon(FontAwesomeIcons.youtube,
+                  color: Colors.red, size: 15),
               label: const Text(
                 'Youtube',
                 style: TextStyle(
@@ -135,19 +135,19 @@ class UrlSheet extends StatelessWidget {
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(180, 255, 255, 255),
+                  const Color.fromARGB(180, 255, 255, 255),
                 ),
               ),
             ),
           ],
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton.icon(
               onPressed: () {},
-              icon: FaIcon(FontAwesomeIcons.link,
+              icon: const FaIcon(FontAwesomeIcons.link,
                   // color: Colors.red,
                   size: 15),
               label: const Text(
@@ -159,7 +159,7 @@ class UrlSheet extends StatelessWidget {
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Color.fromARGB(180, 255, 255, 255),
+                  const Color.fromARGB(180, 255, 255, 255),
                 ),
               ),
             ),

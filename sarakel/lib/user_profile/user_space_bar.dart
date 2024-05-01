@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/models/user.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sarakel/user_profile/new_chat.dart';
 import 'package:sarakel/user_profile/user_visibility.dart';
 import 'package:sarakel/user_profile/url_sheet.dart';
 
@@ -91,23 +91,25 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                       ),
                     ),
                     OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        newChat(widget.user!.username!, context);
+                      },
+                      style: OutlinedButton.styleFrom(
+                        shape: const CircleBorder(),
+                      ),
                       child: const Icon(
                         Icons.message_outlined,
                         color: Colors.white,
                       ),
-                      style: OutlinedButton.styleFrom(
-                        shape: CircleBorder(),
-                      ),
                     ),
                     OutlinedButton(
                       onPressed: () {},
+                      style: OutlinedButton.styleFrom(
+                        shape: const CircleBorder(),
+                      ),
                       child: const Icon(
                         Icons.person_add,
                         color: Colors.white,
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        shape: CircleBorder(),
                       ),
                     ),
                   ],
@@ -157,9 +159,9 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
-                    builder: (context) => Center(
+                    builder: (context) => const Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: EdgeInsets.all(12.0),
                         child: UrlSheet(),
                         // Column(
                         //   // mainAxisAlignment:
