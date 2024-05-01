@@ -23,6 +23,7 @@ class Settings {
     SocketService.instance.socket!.disconnect();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
+    prefs.remove('username');
     Navigator.pushNamed(context, '/welcome');
   }
 

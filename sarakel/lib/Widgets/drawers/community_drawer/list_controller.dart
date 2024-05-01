@@ -22,6 +22,7 @@ Future<List<Community>> loadCircles() async {
       // Decode the JSON response into a list
       var jsonData = json.decode(response.body);
       // ignore: non_constant_identifier_names
+      print(jsonData);
       List<dynamic> Data = jsonData['data'];
       // Map the community data to Community objects
       List<Community> fetchedCircles = Data.map((circleData) {
@@ -35,7 +36,7 @@ Future<List<Community>> loadCircles() async {
           type: circleData['type'] ?? "public",
         );
       }).toList();
-
+      print(fetchedCircles);
       return fetchedCircles; // Return the fetched communities list
     } else {
       // Return an empty list if the response status code is not 200
