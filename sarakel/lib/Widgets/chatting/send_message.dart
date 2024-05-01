@@ -4,7 +4,7 @@ import 'package:sarakel/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-void sendMessage(String messages, String receivers) async {
+Future<void> sendMessage(String messages, String receivers) async {
   print(messages);
   print(receivers);
 
