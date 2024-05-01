@@ -79,8 +79,6 @@ class sarakelSearch extends SearchDelegate {
                         builder: (context) => CommunityProfilePage(
                           community: community,
                           token: token!,
-                          showJoinButton: false,
-                          showModToolsButton: true,
                         ),
                       ),
                     );
@@ -91,8 +89,6 @@ class sarakelSearch extends SearchDelegate {
                         builder: (context) => CommunityProfilePage(
                           community: community,
                           token: token!,
-                          showJoinButton: true,
-                          showModToolsButton: false,
                         ),
                       ),
                     );

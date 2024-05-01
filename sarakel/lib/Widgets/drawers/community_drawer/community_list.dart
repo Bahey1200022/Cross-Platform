@@ -52,7 +52,6 @@ class CommunityDrawer extends ConsumerWidget {
                           return CommunityProfilePage(
                             community: community!,
                             token: token,
-                            showJoinButton: false,
                           );
                         }),
                       );

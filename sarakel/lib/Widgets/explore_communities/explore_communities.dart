@@ -107,8 +107,6 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
                         return CommunityProfilePage(
                           community: item,
                           token: widget.token,
-                          showModToolsButton: false,
-                          showJoinButton: true,
                         );
                       }),
                     );

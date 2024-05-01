@@ -1,26 +1,26 @@
+// community_profile_page.dart
+
 import 'package:flutter/material.dart';
-import 'package:sarakel/Widgets/profiles/communityposts.dart';
-import 'package:sarakel/features/search_bar/search_screen.dart';
-import 'package:sarakel/models/community.dart';
-import 'package:sarakel/models/post.dart';
-import '../../Widgets/home/widgets/post_card.dart';
-import 'package:sarakel/features/mode_tools/moderator_tools.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
+import 'package:sarakel/features/mode_tools/moderator_tools.dart';
+import 'package:sarakel/models/community.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 import 'package:sarakel/Widgets/explore_communities/leave_community_controller.dart';
+import 'package:sarakel/models/post.dart';
+import 'package:sarakel/Widgets/home/widgets/post_card.dart';
+import 'package:sarakel/features/search_bar/search_screen.dart';
+import 'package:sarakel/Widgets/profiles/communityposts.dart';
+import 'user_service.dart';
 
 class CommunityProfilePage extends StatefulWidget {
   final Community community;
   final String token;
-  final bool showModToolsButton;
-  final bool showJoinButton;
 
-  const CommunityProfilePage({super.key, 
+  const CommunityProfilePage({
+    Key? key,
     required this.community,
     required this.token,
-    this.showModToolsButton = true,
-    this.showJoinButton = true,
-  });
+  }) : super(key: key);
 
   @override
   _CommunityProfilePageState createState() => _CommunityProfilePageState();
@@ -28,18 +28,18 @@ class CommunityProfilePage extends StatefulWidget {
 
 class _CommunityProfilePageState extends State<CommunityProfilePage> {
   late Future<List<Post>> _communityPostsFuture;
-  bool _isJoined = false;
+  UserRole _userRole = UserRole.notLoggedIn;
 
   @override
   void initState() {
     super.initState();
     _communityPostsFuture = fetchCommunityPosts(widget.community.name);
-    checkIfJoined();
-  }
-
-  void checkIfJoined() async {
-    setState(() {
-      _isJoined = !widget.showJoinButton;
+    fetchUserRoles(widget.token, widget.community.name).then((userRole) {
+      setState(() {
+        _userRole = userRole;
+      });
+    }).catchError((error) {
+      print('Failed to fetch user roles: $error');
     });
   }
 
@@ -114,25 +114,7 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                   ],
                 ),
                 const Spacer(),
-                if (widget.showJoinButton) ...[
-                  const SizedBox(height: 16),
-                  JoinButton(
-                    isJoined: _isJoined,
-                    onPressed: () async {
-                      setState(() {
-                        _isJoined = !_isJoined;
-                      });
-                      if (_isJoined) {
-                        await JoinCommunityController.joinCommunity(
-                            widget.community.name, widget.token);
-                      } else {
-                        await LeaveCommunityController.leaveCommunity(
-                            widget.community.name, widget.token);
-                      }
-                    },
-                  ),
-                ],
-                if (widget.showModToolsButton) ...[
+                if (_userRole == UserRole.moderator) ...[
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
@@ -144,7 +126,6 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                           ),
                         ),
                       );
-                      // Add your logic for Mod Tools here
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
@@ -153,6 +134,24 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                       'Mod Tools',
                       style: TextStyle(color: Colors.white),
                     ),
+                  ),
+                ],
+                if (_userRole == UserRole.member || _userRole == UserRole.notMember) ...[
+                  const SizedBox(height: 16),
+                  JoinButton(
+                    isJoined: _userRole == UserRole.member,
+                    onPressed: () async {
+                      setState(() {
+                        _userRole = _userRole == UserRole.member ? UserRole.notMember : UserRole.member;
+                      });
+                      if (_userRole == UserRole.member) {
+                        await JoinCommunityController.joinCommunity(
+                            widget.community.name, widget.token);
+                      } else {
+                        await LeaveCommunityController.leaveCommunity(
+                            widget.community.name, widget.token);
+                      }
+                    },
                   ),
                 ],
               ],
