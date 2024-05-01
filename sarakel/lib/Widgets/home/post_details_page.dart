@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/Widgets/home/widgets/category.dart';
+import 'package:sarakel/Widgets/home/widgets/comment_card.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
 import 'package:sarakel/constants.dart';
+import 'package:sarakel/loadcomments.dart';
+import 'package:sarakel/models/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
@@ -17,6 +20,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 ///full screen post details page and adding a comment on the post feature
 class PostDetailsPage extends StatefulWidget {
   final Post post;
+
   final VoidCallback onUpvote;
   final VoidCallback onDownvote;
   final VoidCallback onShare;
@@ -39,6 +43,8 @@ class PostDetailsPage extends StatefulWidget {
 class _PostDetailsPageState extends State<PostDetailsPage> {
   final TextEditingController _commentController =
       TextEditingController(); // Add controller
+  List<Comment> comments = [];
+  bool isLoading = true;
 
   @override
   void dispose() {
@@ -49,7 +55,37 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
   @override
   void initState() {
     super.initState();
+    _loadComments();
     //decodeJwt();
+  }
+
+  Future<void> _loadComments() async {
+    try {
+      List<Comment> loadedComments = await fetchComments(widget.post.id);
+      if (loadedComments.isNotEmpty) {
+        setState(() {
+          comments = loadedComments;
+          isLoading = false;
+        });
+      } else {
+        // Handling no comments case
+        setState(() {
+          isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('No comments available.'),
+          backgroundColor: Colors.blue,
+        ));
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Failed to load comments: $e'),
+        backgroundColor: Colors.red,
+      ));
+    }
   }
 
   void _sharePost() {
@@ -235,6 +271,16 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                   ],
                 ),
               ],
+            ),
+            const SizedBox(height: 10),
+            ListView.builder(
+              shrinkWrap: true,
+              physics:
+                  NeverScrollableScrollPhysics(), // Important to nest inside SingleChildScrollView
+              itemCount: comments.length,
+              itemBuilder: (context, index) {
+                return CommentCard(comment: comments[index]);
+              },
             ),
           ],
         ),
