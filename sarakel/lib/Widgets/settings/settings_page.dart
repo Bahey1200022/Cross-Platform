@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sarakel/Widgets/settings/change_password.dart';
 import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'settings_controller.dart';
@@ -21,6 +22,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   var swicthval1 = {};
   List swicthval = [true, true, true, true, true, true, true, true, true, true];
+  bool isHavingEmailAdress = true;
   Future<void> fetchSwitchValues() async {
     // Make an API call to fetch the switch values from the backend
     // Replace 'apiEndpoint' with the actual endpoint URL
@@ -106,31 +108,15 @@ class _SettingsPageState extends State<SettingsPage> {
             leading: const Icon(Icons.lock_outlined),
             title: const Text('Change password'),
             onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Close')),
-                        ],
-                        title: const Text('Check your email'),
-                        contentPadding: const EdgeInsets.all(20.0),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Text(
-                                'We have sent a password reset link to your email address.'),
-                            const SizedBox(height: 20.0),
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: const Text('Resend email'),
-                            ),
-                          ],
-                        ),
-                      ));
+              if (isHavingEmailAdress) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChangePasswordPage(
+                        token: widget.token,
+                      ),
+                    ));
+              }
             },
           ),
           ListTile(
