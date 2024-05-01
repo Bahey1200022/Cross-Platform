@@ -10,16 +10,18 @@ Future<List<Community>> loadCircles() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
     // Make a GET request to fetch the JSON data from the server
-    var response =
-        await http.get(Uri.parse('$BASE_URL/api/community/list'), headers: {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    });
+    var response = await http.get(
+        Uri.parse('$BASE_URL/api/user/:username/communitiesJoined'),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        });
 
     // Check if the request was successful (status code 200)
     if (response.statusCode == 200) {
       // Decode the JSON response into a list
       var jsonData = json.decode(response.body);
+      // ignore: non_constant_identifier_names
       List<dynamic> Data = jsonData['data'];
       // Map the community data to Community objects
       List<Community> fetchedCircles = Data.map((circleData) {
@@ -40,6 +42,7 @@ Future<List<Community>> loadCircles() async {
       return [];
     }
   } catch (e) {
+    // ignore: avoid_print
     print('Error loading communities: $e');
     // Return an empty list if an error occurs
     return [];

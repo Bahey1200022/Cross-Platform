@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/settings/passwords_functions.dart';
 import 'package:sarakel/Widgets/settings/settings_controller.dart';
-import 'package:sarakel/user_profile/user_profile.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../models/user.dart';
 import 'package:sarakel/Widgets/settings/settings_page.dart';
 
 class ChangePasswordPage extends StatefulWidget {
@@ -41,7 +38,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Change Password'),
+        title: const Text('Change Password'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(.0),
@@ -52,6 +49,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Visibility(
+                    visible: !isLoggedThroughGoogle,
                     child: TextField(
                       controller: myOldPassword,
                       decoration: InputDecoration(
@@ -67,8 +65,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             }),
                       ),
                       obscureText: showOldPasword,
-                    ),
-                    visible: !isLoggedThroughGoogle),
+                    )),
                 TextField(
                   controller: myNewPassword,
                   decoration: InputDecoration(
@@ -123,15 +120,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Invalid old Password'),
-                                content: Text(
+                                title: const Text('Invalid old Password'),
+                                content: const Text(
                                     'please check your old password and try again.'),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK'),
+                                    child: const Text('OK'),
                                   ),
                                 ],
                               );
@@ -143,15 +140,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Invalid Password'),
-                              content: Text(
+                              title: const Text('Invalid Password'),
+                              content: const Text(
                                   'Password must be at least 8 characters long and match the confirmation password.'),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('OK'),
+                                  child: const Text('OK'),
                                 ),
                               ],
                             );
@@ -164,13 +161,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       print(myNewPassword.text);
                       print(myConfirmPassword.text);
                     },
-                    child: Text(
-                      'Change Password',
-                      style: TextStyle(color: Colors.white),
-                    ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
                           const Color.fromARGB(255, 255, 153, 0)),
+                    ),
+                    child: const Text(
+                      'Change Password',
+                      style: TextStyle(color: Colors.white),
                     )),
               ],
             ),

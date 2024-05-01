@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 /// Function to check if the new password is valid
 bool isNewPasswordValid(String password1, String password2) {
   return password1 == password2 && password1.length >= 8;
