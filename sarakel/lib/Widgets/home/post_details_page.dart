@@ -5,12 +5,15 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/Widgets/home/widgets/category.dart';
 import 'package:sarakel/Widgets/home/widgets/comment_card.dart';
+import 'package:sarakel/Widgets/home/widgets/reply_card.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/loadcomments.dart';
+import 'package:sarakel/loadreplies.dart';
 import 'package:sarakel/models/comment.dart';
+import 'package:sarakel/models/reply.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
@@ -43,12 +46,33 @@ class PostDetailsPage extends StatefulWidget {
 class _PostDetailsPageState extends State<PostDetailsPage> {
   final TextEditingController _commentController =
       TextEditingController(); // Add controller
+    final TextEditingController _replyController =
+      TextEditingController(); // Add controller
   List<Comment> comments = [];
+  List<Reply> replies = [];
   bool isLoading = true;
+  String? replyToID;
+  bool isReplying = false;
+
+
+  void toggleReplyMode() {
+    setState(() {
+      isReplying = !isReplying;
+    });
+  }
+
+void toggleReplyModeForReplies(String replyID) {
+  setState(() {
+    replyToID = replyID;
+    isReplying = !isReplying;
+  });
+}
+
 
   @override
   void dispose() {
     _commentController.dispose(); // Dispose the controller when not needed
+    _replyController.dispose(); // Dispose the controller when not needed
     super.dispose();
   }
 
@@ -56,6 +80,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
   void initState() {
     super.initState();
     _loadComments();
+    _loadReplies();
     //decodeJwt();
   }
 
@@ -83,6 +108,35 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Failed to load comments: $e'),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
+
+    Future<void> _loadReplies() async {
+    try {
+      List<Reply> loadedReplies = await fetchReplies(widget.post.id);
+      if (loadedReplies.isNotEmpty) {
+        setState(() {
+          replies = loadedReplies;
+          isLoading = false;
+        });
+      } else {
+        // Handling no replies case
+        setState(() {
+          isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('No replies available.'),
+          backgroundColor: Colors.blue,
+        ));
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Failed to load replies: $e'),
         backgroundColor: Colors.red,
       ));
     }
@@ -122,6 +176,32 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
           'Comment added successfully to post $postID with content: $content');
     } else {
       print('Failed to add comment. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+  }
+
+  Future<void> sendReply(String postID, String content, String replyToID) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token')!;
+    Map<String, String> replyData = {
+      'content': content,
+      'postID': postID,
+      'replyToID': replyToID,
+    };
+    String postJson = jsonEncode(replyData);
+    http.Response response = await http.post(
+      Uri.parse('$BASE_URL/api/sendreplies'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: postJson,
+    );
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print(
+          'Reply added successfully to post $postID with content: $content to comment $replyToID');
+    } else {
+      print('Failed to add reply. Status code: ${response.statusCode}');
       print('Response body: ${response.body}');
     }
   }
@@ -273,13 +353,24 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
               ],
             ),
             const SizedBox(height: 10),
+            if (isReplying)
             ListView.builder(
               shrinkWrap: true,
               physics:
                   NeverScrollableScrollPhysics(), // Important to nest inside SingleChildScrollView
               itemCount: comments.length,
               itemBuilder: (context, index) {
-                return CommentCard(comment: comments[index]);
+              return CommentCard(comment: comments[index], onReplyModeActivated: toggleReplyMode,);
+              },
+            ),
+            if (!isReplying)
+            ListView.builder(
+              shrinkWrap: true,
+              physics:
+                  NeverScrollableScrollPhysics(), // Important to nest inside SingleChildScrollView
+              itemCount: replies.length,
+              itemBuilder: (context, index) {
+              return ReplyCard(reply: replies[index], onReplyModeActivated: () => toggleReplyModeForReplies(replies[index].id),);
               },
             ),
           ],
@@ -290,6 +381,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
+              if (!isReplying)
               Expanded(
                 child: TextField(
                   controller: _commentController,
@@ -299,6 +391,17 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                   ),
                 ),
               ),
+              if (isReplying)
+              Expanded(
+                child: TextField(
+                  controller: _replyController,
+                  decoration: const InputDecoration(
+                    hintText: "Add reply...",
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              if (!isReplying)
               IconButton(
                 icon: const Icon(Icons.send),
                 onPressed: () {
@@ -307,6 +410,17 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                   String postID = widget.post.id;
                   sendComment(postID, content);
                   _commentController.clear();
+                },
+              ),
+              if (isReplying)
+              IconButton(
+                icon: const Icon(Icons.send),
+                onPressed: () {
+                  // Send the comment
+                  String content = _replyController.text;
+                  String postID = widget.post.id;
+                  sendReply(postID, content, replyToID!);
+                  _replyController.clear();
                 },
               )
             ],

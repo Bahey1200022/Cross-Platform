@@ -2,48 +2,50 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sarakel/constants.dart';
-import 'package:sarakel/models/comment.dart';
+import 'package:sarakel/models/reply.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class CommentCard extends StatefulWidget {
-  final Comment comment;
+class ReplyCard extends StatefulWidget {
+  final Reply reply;
   final Function() onReplyModeActivated;
 
-  const CommentCard({Key? key, required this.comment, required this.onReplyModeActivated}) : super(key: key);
+  const ReplyCard(
+      {Key? key, required this.reply, required this.onReplyModeActivated})
+      : super(key: key);
 
   @override
-  _CommentCardState createState() => _CommentCardState();
+  _ReplyCardState createState() => _ReplyCardState();
 }
 
-class _CommentCardState extends State<CommentCard> {
+class _ReplyCardState extends State<ReplyCard> {
   void _toggleSave() {
     setState(() {
-      widget.comment.isSaved = !widget.comment.isSaved;
+      widget.reply.isSaved = !widget.reply.isSaved;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text(
-                widget.comment.isSaved ? 'Comment saved' : 'Comment unsaved')),
+            content:
+                Text(widget.reply.isSaved ? 'reply saved' : 'reply unsaved')),
       );
     });
   }
 
   void _toggleUpvote() {
-    bool wasUpvoted = widget.comment.isUpvoted; // Store previous state
+    bool wasUpvoted = widget.reply.isUpvoted; // Store previous state
     setState(() {
-      widget.comment.isUpvoted = !widget.comment.isUpvoted;
-      if (widget.comment.isUpvoted) {
-        if (!widget.comment.isDownvoted) {
-          widget.comment.upvote++;
+      widget.reply.isUpvoted = !widget.reply.isUpvoted;
+      if (widget.reply.isUpvoted) {
+        if (!widget.reply.isDownvoted) {
+          widget.reply.upvote++;
         } else {
-          widget.comment.isDownvoted = false;
-          widget.comment.downVote--;
-          widget.comment.upvote++;
+          widget.reply.isDownvoted = false;
+          widget.reply.downVote--;
+          widget.reply.upvote++;
         }
-        _makeCommentVote(1); // Make an upvote API call
+        _makereplyVote(1); // Make an upvote API call
       } else {
-        widget.comment.upvote--;
-        _makeCommentVote(wasUpvoted
+        widget.reply.upvote--;
+        _makereplyVote(wasUpvoted
             ? 0
             : -1); // Revert to neutral if was upvoted, else downvote
       }
@@ -51,28 +53,28 @@ class _CommentCardState extends State<CommentCard> {
   }
 
   void _toggleDownvote() {
-    bool wasDownvoted = widget.comment.isDownvoted; // Store previous state
+    bool wasDownvoted = widget.reply.isDownvoted; // Store previous state
     setState(() {
-      widget.comment.isDownvoted = !widget.comment.isDownvoted;
-      if (widget.comment.isDownvoted) {
-        if (!widget.comment.isUpvoted) {
-          widget.comment.downVote++;
+      widget.reply.isDownvoted = !widget.reply.isDownvoted;
+      if (widget.reply.isDownvoted) {
+        if (!widget.reply.isUpvoted) {
+          widget.reply.downVote++;
         } else {
-          widget.comment.isUpvoted = false;
-          widget.comment.upvote--;
-          widget.comment.downVote++;
+          widget.reply.isUpvoted = false;
+          widget.reply.upvote--;
+          widget.reply.downVote++;
         }
-        _makeCommentVote(-1); // Make a downvote API call
+        _makereplyVote(-1); // Make a downvote API call
       } else {
-        widget.comment.downVote--;
-        _makeCommentVote(wasDownvoted
+        widget.reply.downVote--;
+        _makereplyVote(wasDownvoted
             ? 0
             : 1); // Revert to neutral if was downvoted, else upvote
       }
     });
   }
 
-  void _makeCommentVote(int voteType) async {
+  void _makereplyVote(int voteType) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var token = prefs.getString('token');
@@ -83,8 +85,8 @@ class _CommentCardState extends State<CommentCard> {
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          'type': 'comment',
-          'entityId': widget.comment.id,
+          'type': 'reply',
+          'entityId': widget.reply.id,
           'rank': voteType,
         }),
       );
@@ -92,7 +94,7 @@ class _CommentCardState extends State<CommentCard> {
     } catch (e) {}
   }
 
-  void _saveComment() async {
+  void _savereply() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var token = prefs.getString('token');
@@ -103,25 +105,25 @@ class _CommentCardState extends State<CommentCard> {
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          'type': 'comment',
-          'entityId': widget.comment.id,
+          'type': 'reply',
+          'entityId': widget.reply.id,
         }),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Adjust based on your API response
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Comment saved")));
+            .showSnackBar(const SnackBar(content: Text("reply saved")));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Failed to save comment")));
+            const SnackBar(content: Text("Failed to save reply")));
       }
     } catch (e) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Error saving comment")));
+          .showSnackBar(const SnackBar(content: Text("Error saving reply")));
     }
   }
 
-  void _unSaveComment() async {
+  void _unSavereply() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var token = prefs.getString('token');
@@ -132,22 +134,22 @@ class _CommentCardState extends State<CommentCard> {
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          'type': 'comment',
-          'entityId': widget.comment.id,
+          'type': 'reply',
+          'entityId': widget.reply.id,
         }),
       );
       print(response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Adjust based on your API response
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Comment unsaved")));
+            .showSnackBar(const SnackBar(content: Text("reply unsaved")));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Failed to unsave comment")));
+            const SnackBar(content: Text("Failed to unsave reply")));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Error unsaving comment")));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Error unsaving reply")));
     }
   }
 
@@ -164,7 +166,7 @@ class _CommentCardState extends State<CommentCard> {
         body: jsonEncode({
           'type': 'user',
           'reason': 'spam',
-          'reportedUsername': widget.comment.userID,
+          'reportedUsername': widget.reply.userID,
         }),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -186,14 +188,14 @@ class _CommentCardState extends State<CommentCard> {
           children: [
             Row(
               children: [
-                Text(widget.comment.userID,
+                Text(widget.reply.userID,
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(' • ${widget.comment.dateTime}',
+                Text(' • ${widget.reply.dateTime}',
                     style: TextStyle(color: Colors.grey[600], fontSize: 12)),
               ],
             ),
             SizedBox(height: 5),
-            Text(widget.comment.content),
+            Text(widget.reply.content),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -203,14 +205,14 @@ class _CommentCardState extends State<CommentCard> {
                       case 'save':
                         _toggleSave();
                         // Handle save action
-                        if (widget.comment.isSaved) {
+                        if (widget.reply.isSaved) {
                           setState(() {
-                            _saveComment();
+                            _savereply();
                           });
                           ();
                         } else {
                           setState(() {
-                            _unSaveComment();
+                            _unSavereply();
                           });
                         }
                         break;
@@ -231,10 +233,10 @@ class _CommentCardState extends State<CommentCard> {
                     PopupMenuItem<String>(
                       value: 'save',
                       child: ListTile(
-                        leading: Icon(widget.comment.isSaved
+                        leading: Icon(widget.reply.isSaved
                             ? Icons.bookmark
                             : Icons.bookmark_border),
-                        title: Text(widget.comment.isSaved
+                        title: Text(widget.reply.isSaved
                             ? 'Unsave'
                             : 'Save'), // Dynamic text based on saved state
                       ),
@@ -256,26 +258,25 @@ class _CommentCardState extends State<CommentCard> {
                   ],
                 ),
                 IconButton(
-  icon: Icon(Icons.reply),
-  onPressed: widget.onReplyModeActivated != null
-    ? () {
-        widget.onReplyModeActivated();
-        print('comment id ${widget.comment.id}');
-      }
-    : null,
-),
-
+                  icon: Icon(Icons.reply),
+                  onPressed: widget.onReplyModeActivated != null
+                      ? () {
+                          widget.onReplyModeActivated();
+                          print('reply id ${widget.reply.id}');
+                        }
+                      : null,
+                ),
                 IconButton(
                   icon: Icon(Icons.arrow_upward),
-                  color: widget.comment.isUpvoted
+                  color: widget.reply.isUpvoted
                       ? const Color.fromARGB(255, 255, 152, 0)
                       : Colors.grey,
                   onPressed: _toggleUpvote,
                 ),
-                Text('${widget.comment.upvote}'),
+                Text('${widget.reply.upvote}'),
                 IconButton(
                   icon: Icon(Icons.arrow_downward),
-                  color: widget.comment.isDownvoted
+                  color: widget.reply.isDownvoted
                       ? const Color.fromARGB(255, 156, 39, 176)
                       : Colors.grey,
                   onPressed: _toggleDownvote,
