@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
@@ -88,6 +89,9 @@ class CreateCommunityController {
 
     print('Response status code: ${response.statusCode}');
     if (response.statusCode == 201 || response.statusCode == 200) {
+      print('hi');
+      var responseBody = await response.stream.bytesToString();
+      print('Response body: $responseBody');
       print('Community created successfully with ID: $communityId');
     } else {
       print('Failed to create community. Error: ');
