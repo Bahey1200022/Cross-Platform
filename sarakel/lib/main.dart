@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
 import 'package:sarakel/Widgets/home/homescreen.dart';
@@ -13,11 +14,25 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 ///checking if the user has the token and already logged to direct him to either tghe home screen or the welcome screen
+///
+/// notifications
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('Handling a background message ${message.messageId}');
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FirebaseMessaging.instance.getInitialMessage();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString('token');
   runApp(MyApp(

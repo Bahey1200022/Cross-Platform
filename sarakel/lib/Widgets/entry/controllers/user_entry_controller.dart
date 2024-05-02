@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sarakel/Widgets/entry/controllers/notification.dart';
 import 'package:sarakel/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -87,7 +88,8 @@ class UserController {
         prefs!.setString('token', token);
 
         SocketService.instance.connect(BASE_URL, user);
-
+        requestPermission();
+        getTokens(user);
         Navigator.push(
             context,
             MaterialPageRoute(

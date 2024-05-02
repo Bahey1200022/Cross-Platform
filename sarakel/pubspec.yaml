@@ -57,6 +57,9 @@ dependencies:
   path: ^1.9.0
   http_parser: ^4.0.2
   font_awesome_flutter: ^10.7.0
+  flutter_local_notifications: ^17.1.1
+  firebase_messaging: ^14.9.1
+  cloud_firestore: ^4.17.2
   
 dev_dependencies:
   flutter_test:
