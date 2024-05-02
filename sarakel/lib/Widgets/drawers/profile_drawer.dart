@@ -14,7 +14,8 @@ import '../../providers/user_provider.dart';
 class ProfileDrawer extends StatelessWidget {
   final User? user;
 
-  const ProfileDrawer({super.key, 
+  const ProfileDrawer({
+    super.key,
     this.user,
   });
 
@@ -41,7 +42,6 @@ class ProfileDrawer extends StatelessWidget {
                       Colors.deepOrange, // Set the background color to orange
                 ),
               ),
-              const Divider(),
               ListTile(
                 leading: const Icon(Icons.account_circle_outlined),
                 title: const Text('Profile'),
