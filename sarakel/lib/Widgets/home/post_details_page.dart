@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/Widgets/home/widgets/category.dart';
 import 'package:sarakel/Widgets/home/widgets/comment_card.dart';
-import 'package:sarakel/Widgets/home/widgets/reply_card.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
@@ -13,11 +12,11 @@ import 'package:sarakel/constants.dart';
 import 'package:sarakel/loadcomments.dart';
 import 'package:sarakel/loadreplies.dart';
 import 'package:sarakel/models/comment.dart';
-import 'package:sarakel/models/reply.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
 import 'package:sarakel/Widgets/home/widgets/fullscreen_image.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 ///full screen post details page and adding a comment on the post feature
 class PostDetailsPage extends StatefulWidget {
@@ -45,33 +44,12 @@ class PostDetailsPage extends StatefulWidget {
 class _PostDetailsPageState extends State<PostDetailsPage> {
   final TextEditingController _commentController =
       TextEditingController(); // Add controller
-    final TextEditingController _replyController =
-      TextEditingController(); // Add controller
   List<Comment> comments = [];
-  List<Reply> replies = [];
   bool isLoading = true;
-  String? replyToID;
-  bool isReplying = false;
-
-
-  void toggleReplyMode() {
-    setState(() {
-      isReplying = !isReplying;
-    });
-  }
-
-void toggleReplyModeForReplies(String replyID) {
-  setState(() {
-    replyToID = replyID;
-    isReplying = !isReplying;
-  });
-}
-
 
   @override
   void dispose() {
     _commentController.dispose(); // Dispose the controller when not needed
-    _replyController.dispose(); // Dispose the controller when not needed
     super.dispose();
   }
 
@@ -79,7 +57,6 @@ void toggleReplyModeForReplies(String replyID) {
   void initState() {
     super.initState();
     _loadComments();
-    _loadReplies();
     //decodeJwt();
   }
 
@@ -112,35 +89,6 @@ void toggleReplyModeForReplies(String replyID) {
     }
   }
 
-    Future<void> _loadReplies() async {
-    try {
-      List<Reply> loadedReplies = await fetchReplies(widget.post.id);
-      if (loadedReplies.isNotEmpty) {
-        setState(() {
-          replies = loadedReplies;
-          isLoading = false;
-        });
-      } else {
-        // Handling no replies case
-        setState(() {
-          isLoading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('No replies available.'),
-          backgroundColor: Colors.blue,
-        ));
-      }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Failed to load replies: $e'),
-        backgroundColor: Colors.red,
-      ));
-    }
-  }
-
   void _sharePost() {
     String link = "http://192.168.1.10:3000/post/${widget.post.id}";
     Clipboard.setData(ClipboardData(text: link)).then((_) {
@@ -156,9 +104,6 @@ void toggleReplyModeForReplies(String replyID) {
     Map<String, String> commentData = {
       'content': content,
       'postID': postID,
-      //'parentId': "0",
-      //'isLocked': "false",
-      //'numViews': "0"
     };
     String postJson = jsonEncode(commentData);
     http.Response response = await http.post(
@@ -178,32 +123,43 @@ void toggleReplyModeForReplies(String replyID) {
       print('Response body: ${response.body}');
     }
   }
-
-  Future<void> sendReply(String postID, String content, String replyToID) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token')!;
-    Map<String, String> replyData = {
-      'content': content,
-      'postID': postID,
-      'replyToID': replyToID,
-    };
-    String postJson = jsonEncode(replyData);
-    http.Response response = await http.post(
-      Uri.parse('$BASE_URL/api/sendreplies'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: postJson,
-    );
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      print(
-          'Reply added successfully to post $postID with content: $content to comment $replyToID');
-    } else {
-      print('Failed to add reply. Status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
-    }
+  
+  void _handleReply(String replyContent, String replyToID) async {
+  try {
+    await sendReply(widget.post.id, replyContent, replyToID);
+    // Optionally, you can reload comments after sending a reply
+    _loadComments();
+  } catch (e) {
+    print('Failed to send reply: $e');
   }
+}
+
+Future<void> sendReply(String postID, String content, String replyToID) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token')!;
+  Map<String, String> replyData = {
+    'content': content,
+    'postID': postID,
+    'replyToID': replyToID,
+  };
+  String postJson = jsonEncode(replyData);
+  http.Response response = await http.post(
+    Uri.parse('$BASE_URL/api/sendreplies'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    },
+    body: postJson,
+  );
+  if (response.statusCode == 201 || response.statusCode == 200) {
+    print(
+        'Reply added successfully to post $postID with content: $content');
+  } else {
+    print('Failed to add reply. Status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -352,24 +308,13 @@ void toggleReplyModeForReplies(String replyID) {
               ],
             ),
             const SizedBox(height: 10),
-            if (isReplying)
             ListView.builder(
               shrinkWrap: true,
               physics:
                   NeverScrollableScrollPhysics(), // Important to nest inside SingleChildScrollView
               itemCount: comments.length,
               itemBuilder: (context, index) {
-              return CommentCard(comment: comments[index], onReplyModeActivated: toggleReplyMode,);
-              },
-            ),
-            if (!isReplying)
-            ListView.builder(
-              shrinkWrap: true,
-              physics:
-                  NeverScrollableScrollPhysics(), // Important to nest inside SingleChildScrollView
-              itemCount: replies.length,
-              itemBuilder: (context, index) {
-              return ReplyCard(reply: replies[index], onReplyModeActivated: () => toggleReplyModeForReplies(replies[index].id),);
+                return CommentCard(comment: comments[index],onReply: (replyContent, replyToID) => _handleReply(replyContent, replyToID));
               },
             ),
           ],
@@ -380,7 +325,6 @@ void toggleReplyModeForReplies(String replyID) {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              if (!isReplying)
               Expanded(
                 child: TextField(
                   controller: _commentController,
@@ -390,17 +334,6 @@ void toggleReplyModeForReplies(String replyID) {
                   ),
                 ),
               ),
-              if (isReplying)
-              Expanded(
-                child: TextField(
-                  controller: _replyController,
-                  decoration: const InputDecoration(
-                    hintText: "Add reply...",
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-              if (!isReplying)
               IconButton(
                 icon: const Icon(Icons.send),
                 onPressed: () {
@@ -409,17 +342,6 @@ void toggleReplyModeForReplies(String replyID) {
                   String postID = widget.post.id;
                   sendComment(postID, content);
                   _commentController.clear();
-                },
-              ),
-              if (isReplying)
-              IconButton(
-                icon: const Icon(Icons.send),
-                onPressed: () {
-                  // Send the comment
-                  String content = _replyController.text;
-                  String postID = widget.post.id;
-                  sendReply(postID, content, replyToID!);
-                  _replyController.clear();
                 },
               )
             ],
