@@ -1,6 +1,7 @@
 // ignore_for_file: empty_catches, unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/home/controllers/view_post.dart';
 
 import 'package:sarakel/Widgets/home/post_details_page.dart';
 import 'package:sarakel/Widgets/home/widgets/category.dart';
@@ -256,6 +257,7 @@ class _PostCardState extends State<PostCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        viewPost(widget.post.id);
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => PostDetailsPage(

@@ -6,7 +6,46 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 Future<List<Post>> loadRecentHistory() async {
-  return fetchPosts('api/subreddit/getBest');
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.getString('token');
+  var username = prefs.getString('username');
+  var response = await http
+      .get(Uri.parse('$BASE_URL/api/$username/recentlyViewedPosts'), headers: {
+    'Authorization': 'Bearer $token',
+    'Content-Type': 'application/json',
+  });
+  if (response.statusCode == 200) {
+    var jsonData = response.body;
+    var data = jsonDecode(jsonData);
+    var posts = data['message']['result'];
+    List<Post> post = [];
+    for (var p in posts) {
+      post.add(Post(
+          communityName: p['communityId'],
+          id: p['_id'],
+          imagePath: p['media'] != null
+              ? (p['media'] is List && (p['media'] as List).isNotEmpty
+                  ? Uri.encodeFull(
+                      extractUrl((p['media'] as List).first.toString()))
+                  : Uri.encodeFull(extractUrl(p['media'].toString())))
+              : null,
+          upVotes: p['upvotes'],
+          downVotes: p['downvotes'],
+          comments: p['numberOfComments'],
+          shares: p['numberOfComments'] ?? 0,
+          isNSFW: p['nsfw'],
+          postCategory: "general",
+          isSpoiler: p['isSpoiler'],
+          content: p['content']?.toString() ?? "",
+          communityId: p['communityId'],
+          title: p['title'],
+          username: p['username'],
+          views: p['numViews'] ?? 0));
+    }
+    return post;
+  } else {
+    return [];
+  }
 }
 
 Future<List<Post>> loadUpvotedHistory() async {
