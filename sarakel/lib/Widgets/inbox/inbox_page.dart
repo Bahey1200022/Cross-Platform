@@ -13,29 +13,33 @@ import '../home/widgets/bottom_bar.dart';
 import '../home/widgets/app_bar.dart';
 import 'package:http/http.dart' as http;
 
-///email message like class where it displays inbox of the user
+/// Email message like class where it displays the user's inbox
 class InboxSection extends StatefulWidget {
   final String token;
 
-  const InboxSection({super.key, required this.token});
+  const InboxSection({Key? key, required this.token}) : super(key: key);
 
   @override
   State<InboxSection> createState() => _InboxSectionState();
 }
 
-class _InboxSectionState extends State<InboxSection> {
+class _InboxSectionState extends State<InboxSection>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  late TabController _tabController;
   List messageCard = [];
   List sentmessageCard = [];
   final int _selectedIndex = 4;
 
   Future<void> initiateMessageCard() async {
     // Make an HTTP request to the API
-    var response = await http.get(Uri.parse('$BASE_URL/api/message/inbox'),
-        headers: {
-          'Authorization': 'Bearer ${widget.token}',
-          'Content-Type': 'application/json'
-        });
+    var response = await http.get(
+      Uri.parse('$BASE_URL/api/message/inbox'),
+      headers: {
+        'Authorization': 'Bearer ${widget.token}',
+        'Content-Type': 'application/json'
+      },
+    );
 
     // Check if the request was successful
     if (response.statusCode == 200) {
@@ -56,6 +60,7 @@ class _InboxSectionState extends State<InboxSection> {
   void initState() {
     super.initState();
     initiateMessageCard();
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -63,72 +68,99 @@ class _InboxSectionState extends State<InboxSection> {
     Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(widget.token);
 
     return Scaffold(
-      key: _scaffoldKey, // Assign key here
-      appBar: CustomAppBar(
-        title: 'Inbox',
-        scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text('Inbox'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(text: 'Messages'),
+            Tab(text: 'Notifications'),
+          ],
+        ),
       ),
       drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(
-        user: User(username: jwtdecodedtoken['username'], token: widget.token),
-      ),
-      body: Column(children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: messageCard.isNotEmpty ? messageCard.length : 0,
-            itemBuilder: (context, index) {
-              return ButtonCard(
-                sender: messageCard[index]['recipient'],
-                receiver: messageCard[index]['username'],
-                id: messageCard[index]["_id"],
-                token: widget.token,
-                status: messageCard[index]['status'],
-                icon: const Icon(Icons.person),
-                live: false,
-                title: messageCard[index]['title'],
-                content: messageCard[index]['content'],
-              );
-            },
-          ),
+        user: User(
+          username: jwtdecodedtoken['username'],
+          token: widget.token,
         ),
-      ]),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      ),
+      body: TabBarView(
+        controller: _tabController,
         children: [
-          ElevatedButton.icon(
-            onPressed: () {
-              // Add your button click logic here
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Compose(token: widget.token),
+          // Messages Tab
+          Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: messageCard.isNotEmpty ? messageCard.length : 0,
+                  itemBuilder: (context, index) {
+                    return ButtonCard(
+                      sender: messageCard[index]['recipient'],
+                      receiver: messageCard[index]['username'],
+                      id: messageCard[index]["_id"],
+                      token: widget.token,
+                      status: messageCard[index]['status'],
+                      icon: const Icon(Icons.person),
+                      live: false,
+                      title: messageCard[index]['title'],
+                      content: messageCard[index]['content'],
+                    );
+                  },
                 ),
-              );
-            },
-            icon: const Icon(Icons.add),
-            label: const Text('New Message'),
+              ),
+            ],
           ),
-          const SizedBox(height: 16),
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => sent(
-                    token: widget.token,
-                  ),
-                ),
-              );
-            },
-            icon: const Icon(Icons.mail),
-            label: const Text('sent messages'),
+          // Notifications Tab
+          Center(
+            child: Text('Notifications'),
           ),
         ],
       ),
+      floatingActionButton:
+          _tabController.index == 0 // Only show for "Messages" tab
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Compose(token: widget.token),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.add),
+                      label: Text('New Message'),
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => sent(token: widget.token),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.mail),
+                      label: Text('Sent Messages'),
+                    ),
+                  ],
+                )
+              : null,
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
         token: widget.token,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 }
