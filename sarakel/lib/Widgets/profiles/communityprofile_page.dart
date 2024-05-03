@@ -75,9 +75,9 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
               ),
             ],
             flexibleSpace: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/logo_2d.png'),
+                  image: NetworkImage(widget.community.backimage ?? ''),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -92,10 +92,10 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                 Container(
                   width: 80,
                   height: 80,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: AssetImage('assets/avatar_logo.jpeg'),
+                      image: NetworkImage(widget.community.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -136,13 +136,16 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                     ),
                   ),
                 ],
-                if (_userRole == UserRole.member || _userRole == UserRole.notMember) ...[
+                if (_userRole == UserRole.member ||
+                    _userRole == UserRole.notMember) ...[
                   const SizedBox(height: 16),
                   JoinButton(
                     isJoined: _userRole == UserRole.member,
                     onPressed: () async {
                       setState(() {
-                        _userRole = _userRole == UserRole.member ? UserRole.notMember : UserRole.member;
+                        _userRole = _userRole == UserRole.member
+                            ? UserRole.notMember
+                            : UserRole.member;
                       });
                       if (_userRole == UserRole.member) {
                         await JoinCommunityController.joinCommunity(

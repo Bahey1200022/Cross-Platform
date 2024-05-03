@@ -5,11 +5,13 @@ class Community {
   final String image;
   final String type;
   final bool is18Plus;
+  String? backimage;
   Community(
       {required this.id,
       required this.name,
       required this.description,
       required this.image,
       required this.is18Plus,
-      required this.type});
+      required this.type,
+      this.backimage});
 }

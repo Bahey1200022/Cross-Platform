@@ -1,39 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:file_picker/file_picker.dart';
 
 ///create community with backend
 /// feat still in construction from backend
 class CreateCommunityController {
-  //static Future<bool> checkCircleExists(String communityName) async {
-  //final response = await http.get(
-  //Uri.parse('$MOCK_URL/communities?name=$communityName'),
-  //);
-
-  //if (response.statusCode == 200) {
-  //return jsonDecode(response.body).isNotEmpty;
-  //} else {
-  //return false;
-  //}
-  //}
-
-  //static Future<bool> checkCircleIdExists(String communityId) async {
-  //final response = await http.get(
-  //Uri.parse('$MOCK_URL/communities?id=$communityId'),
-  //);
-
-  //if (response.statusCode == 200) {
-  //return jsonDecode(response.body).isNotEmpty;
-  //} else {
-  //return false;
-  //}
-  //}
-
   static Future<void> createCommunity(
       String communityName, String communityType, bool is18Plus) async {
     print('Creating community...');
@@ -71,7 +45,7 @@ class CreateCommunityController {
       var length = await file.length();
 
       // Add the file to the multipart request
-      var multipartFile = http.MultipartFile('file', stream, length,
+      var multipartFile = http.MultipartFile('displayPic', stream, length,
           filename: basename(file.path));
       request.files.add(multipartFile);
     } else {
