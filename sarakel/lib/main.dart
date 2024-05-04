@@ -64,7 +64,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Sarakel',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          scaffoldBackgroundColor: Colors.white,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true,
         ),
         home: startWithToken

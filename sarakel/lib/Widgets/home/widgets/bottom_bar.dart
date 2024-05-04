@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/chatting/chat_page.dart';
 import 'package:sarakel/Widgets/explore_communities/explore_communities.dart';
@@ -6,39 +8,84 @@ import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/Widgets/inbox/inbox_page.dart';
 import 'package:sarakel/features/create_post/create_post.dart';
 
-class CustomBottomNavigationBar extends StatelessWidget {
+class CustomBottomNavigationBar extends StatefulWidget {
   final int currentIndex;
   final String token;
-  // final Function(int) onTap;
 
-  const CustomBottomNavigationBar(
-      {super.key, required this.currentIndex, required this.token
-      // required this.onTap,
-      });
+  const CustomBottomNavigationBar({
+    Key? key,
+    required this.currentIndex,
+    required this.token,
+  }) : super(key: key);
+
+  @override
+  _CustomBottomNavigationBarState createState() =>
+      _CustomBottomNavigationBarState();
+}
+
+class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+  late List<bool> isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    isSelected =
+        List<bool>.generate(5, (index) => index == widget.currentIndex);
+  }
 
   void _onItemTapped(BuildContext context, int index) {
-    // onTap(index); // Pass the index to the onTap function provided externally
-    // Handle navigation here if needed
-    if (index == 1) {
-      Navigator.push(
+    setState(() {
+      for (int i = 0; i < isSelected.length; i++) {
+        isSelected[i] = (i == index);
+      }
+    });
+
+    // Handle navigation here
+    switch (index) {
+      case 0:
+        Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ExploreCommunities(token: token)));
-    } else if (index == 2) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => CreatePost(token: token)));
-    } else if (index == 0) {
-      Navigator.push(
+            builder: (context) => SarakelHomeScreen(
+              homescreenController: HomescreenController(token: widget.token),
+            ),
+          ),
+        );
+        break;
+      case 1:
+        Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => SarakelHomeScreen(
-                  homescreenController: HomescreenController(token: token))));
-    } else if (index == 3) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => ChatSection(token: token)));
-    } else if (index == 4) {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => InboxSection(token: token)));
+            builder: (context) => ExploreCommunities(token: widget.token),
+          ),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CreatePost(token: widget.token),
+          ),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatSection(token: widget.token),
+          ),
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InboxSection(token: widget.token),
+          ),
+        );
+        break;
+      default:
+        break;
     }
   }
 
@@ -48,31 +95,39 @@ class CustomBottomNavigationBar extends StatelessWidget {
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home_outlined),
+          activeIcon: Icon(Icons.home),
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.group_outlined),
+          icon: Icon(Icons.person_search_outlined),
+          activeIcon: Icon(Icons.person_search),
           label: 'Circles',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.add_circle_outline),
+          icon: Icon(Icons.add_outlined),
+          activeIcon: Icon(Icons.add),
           label: 'Create',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.chat_bubble_outline),
+          icon: Icon(Icons.chat_outlined),
+          activeIcon: Icon(Icons.chat),
           label: 'Chat',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.inbox_outlined),
+          icon: Icon(Icons.notifications_outlined),
+          activeIcon: Icon(Icons.notifications),
           label: 'Inbox',
         )
       ],
-      currentIndex: currentIndex,
+      currentIndex: widget.currentIndex,
       onTap: (index) => _onItemTapped(context, index),
       selectedItemColor: Colors.black,
       unselectedItemColor: Colors.grey,
-      //backgroundColor: Colors.deepOrange,
       type: BottomNavigationBarType.fixed,
+      selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+      selectedIconTheme: const IconThemeData(size: 30),
+      unselectedFontSize: 12,
+      selectedFontSize: 14,
     );
   }
 }
