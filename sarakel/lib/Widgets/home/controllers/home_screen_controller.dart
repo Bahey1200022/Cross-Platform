@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:sarakel/loadposts.dart';
+import 'package:sarakel/loading_func/loadposts.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

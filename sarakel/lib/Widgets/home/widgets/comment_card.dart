@@ -2,52 +2,50 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:sarakel/constants.dart';
-import 'package:sarakel/loadreplies.dart';
+import 'package:sarakel/loading_func/loadreplies.dart';
 import 'package:sarakel/models/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class CommentCard extends StatefulWidget {
   final Comment comment;
-  final Function(String,String) onReply;
+  final Function(String, String) onReply;
 
-  const CommentCard({Key? key, required this.comment, required this.onReply}) : super(key: key);
+  const CommentCard({Key? key, required this.comment, required this.onReply})
+      : super(key: key);
 
   @override
   _CommentCardState createState() => _CommentCardState();
 }
 
 class _CommentCardState extends State<CommentCard> {
-    bool _isReplying = false;
+  bool _isReplying = false;
   TextEditingController _replyController = TextEditingController();
-    bool _showReplies = false;
+  bool _showReplies = false;
   List<Comment> _replies = [];
-
-
 
   @override
   void dispose() {
     _replyController.dispose();
     super.dispose();
   }
-  
-   void _toggleReplies(String commentId) {
-  setState(() {
-    _showReplies = !_showReplies;
-    if (_showReplies) {
-      print('Post ID: ${widget.comment.postID}, Comment ID: $commentId');
-      _loadReplies(commentId); // Pass the comment ID to _loadReplies
-    } else {
-      // Clear replies list when hiding replies
-      setState(() {
-        _replies.clear();
-      });
-    }
-  });
-}
 
+  void _toggleReplies(String commentId) {
+    setState(() {
+      _showReplies = !_showReplies;
+      if (_showReplies) {
+        print('Post ID: ${widget.comment.postID}, Comment ID: $commentId');
+        _loadReplies(commentId); // Pass the comment ID to _loadReplies
+      } else {
+        // Clear replies list when hiding replies
+        setState(() {
+          _replies.clear();
+        });
+      }
+    });
+  }
 
-    void _toggleReply() {
+  void _toggleReply() {
     setState(() {
       _isReplying = !_isReplying;
     });
@@ -56,22 +54,23 @@ class _CommentCardState extends State<CommentCard> {
   void _submitReply() {
     String replyContent = _replyController.text;
     if (replyContent.isNotEmpty) {
-      widget.onReply(replyContent,widget.comment.id);
+      widget.onReply(replyContent, widget.comment.id);
       _replyController.clear();
       _toggleReply();
     }
   }
-  
+
   Future<void> _loadReplies(String commentId) async {
-  try {
-    List<Comment> replies = await fetchReplies(widget.comment.postID, commentId);
-    setState(() {
-      _replies = replies;
-    });
-  } catch (e) {
-    print('Failed to load replies: $e');
+    try {
+      List<Comment> replies =
+          await fetchReplies(widget.comment.postID, commentId);
+      setState(() {
+        _replies = replies;
+      });
+    } catch (e) {
+      print('Failed to load replies: $e');
+    }
   }
-}
 
   void _toggleSave() {
     setState(() {
@@ -253,9 +252,9 @@ class _CommentCardState extends State<CommentCard> {
             ElevatedButton(
               onPressed: () {
                 _toggleReplies(widget.comment.id);
-                },
+              },
               child: Text(_showReplies ? 'Hide Replies' : 'View Replies'),
-            ),   
+            ),
             if (_showReplies)
               Column(
                 children: _replies.map((reply) {
@@ -264,7 +263,7 @@ class _CommentCardState extends State<CommentCard> {
                     // Other reply information...
                   );
                 }).toList(),
-              ),                     
+              ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

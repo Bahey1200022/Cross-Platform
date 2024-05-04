@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:sarakel/constants.dart';
-import 'package:sarakel/loadposts.dart';
+import 'package:sarakel/loading_func/loadposts.dart';
 import 'package:sarakel/models/post.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -25,7 +25,7 @@ class SavedController {
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         List<dynamic> message = jsonData['message'];
-        
+
         // Iterate over the message list to find the post data
         List<Post> posts = [];
         for (var item in message) {
@@ -33,11 +33,11 @@ class SavedController {
             List<dynamic> postList = item[1];
             for (var postData in postList) {
               if (postData.isNotEmpty) {
-                var p = postData[0]; 
+                var p = postData[0];
                 print('postId: ${p['_id']}');
                 print('processing post: $p');
                 posts.add(Post(
-                  communityName: "communityId", 
+                  communityName: "communityId",
                   id: p['_id']?.toString() ?? "",
                   imagePath: p['media'] != null
                       ? (p['media'] is List && (p['media'] as List).isNotEmpty
@@ -62,7 +62,7 @@ class SavedController {
             }
           }
         }
-        
+
         print('Number of Posts Created: ${posts.length}');
         return posts.reversed.toList();
       } else {

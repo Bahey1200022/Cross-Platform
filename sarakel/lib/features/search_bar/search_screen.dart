@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
-import 'package:sarakel/loadposts.dart';
+import 'package:sarakel/loading_func/loadposts.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:sarakel/models/post.dart';
 import 'package:sarakel/models/user.dart';
@@ -157,6 +157,12 @@ class sarakelSearch extends SearchDelegate {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
+                ),
+              ),
+              subtitle: Text(
+                suggestionList[index]['Type'],
+                style: const TextStyle(
+                  color: Colors.grey,
                 ),
               ),
             ),

@@ -9,8 +9,8 @@ import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
 import 'package:sarakel/constants.dart';
-import 'package:sarakel/loadcomments.dart';
-import 'package:sarakel/loadreplies.dart';
+import 'package:sarakel/loading_func/loadcomments.dart';
+import 'package:sarakel/loading_func/loadreplies.dart';
 import 'package:sarakel/models/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
@@ -123,43 +123,42 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
       print('Response body: ${response.body}');
     }
   }
-  
+
   void _handleReply(String replyContent, String replyToID) async {
-  try {
-    await sendReply(widget.post.id, replyContent, replyToID);
-    // Optionally, you can reload comments after sending a reply
-    _loadComments();
-  } catch (e) {
-    print('Failed to send reply: $e');
+    try {
+      await sendReply(widget.post.id, replyContent, replyToID);
+      // Optionally, you can reload comments after sending a reply
+      _loadComments();
+    } catch (e) {
+      print('Failed to send reply: $e');
+    }
   }
-}
 
-Future<void> sendReply(String postID, String content, String replyToID) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
-  Map<String, String> replyData = {
-    'content': content,
-    'postID': postID,
-    'replyToID': replyToID,
-  };
-  String postJson = jsonEncode(replyData);
-  http.Response response = await http.post(
-    Uri.parse('$BASE_URL/api/sendreplies'),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    },
-    body: postJson,
-  );
-  if (response.statusCode == 201 || response.statusCode == 200) {
-    print(
-        'Reply added successfully to post $postID with content: $content');
-  } else {
-    print('Failed to add reply. Status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
+  Future<void> sendReply(
+      String postID, String content, String replyToID) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token')!;
+    Map<String, String> replyData = {
+      'content': content,
+      'postID': postID,
+      'replyToID': replyToID,
+    };
+    String postJson = jsonEncode(replyData);
+    http.Response response = await http.post(
+      Uri.parse('$BASE_URL/api/sendreplies'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: postJson,
+    );
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print('Reply added successfully to post $postID with content: $content');
+    } else {
+      print('Failed to add reply. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -314,7 +313,10 @@ Future<void> sendReply(String postID, String content, String replyToID) async {
                   NeverScrollableScrollPhysics(), // Important to nest inside SingleChildScrollView
               itemCount: comments.length,
               itemBuilder: (context, index) {
-                return CommentCard(comment: comments[index],onReply: (replyContent, replyToID) => _handleReply(replyContent, replyToID));
+                return CommentCard(
+                    comment: comments[index],
+                    onReply: (replyContent, replyToID) =>
+                        _handleReply(replyContent, replyToID));
               },
             ),
           ],
