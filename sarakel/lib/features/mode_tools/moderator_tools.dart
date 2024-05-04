@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/user_management/approved_users.dart';
 import 'package:sarakel/features/mode_tools/user_management/banned_users.dart';
-import 'package:sarakel/features/mode_tools/user_management/moderators.dart';
+import 'package:sarakel/features/mode_tools/user_management/moderators/moderators_page.dart';
 import 'package:sarakel/features/mode_tools/user_management/muted_users.dart';
 import 'package:sarakel/models/community.dart';
 
