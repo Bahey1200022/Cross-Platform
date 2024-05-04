@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/drawers/community_drawer/community_list.dart';
 import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
+import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/Widgets/home/hot.dart';
 import 'package:sarakel/Widgets/home/random.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
@@ -9,19 +10,18 @@ import '../../models/post.dart';
 import 'controllers/home_screen_controller.dart';
 import 'widgets/post_card.dart';
 import 'widgets/bottom_bar.dart';
-import 'popular.dart';
 
-///homescreen displaying postcards
-class SarakelHomeScreen extends StatefulWidget {
+///Popularscreen displaying postcards
+class SarakelPopularScreen extends StatefulWidget {
   final HomescreenController homescreenController;
 
-  const SarakelHomeScreen({required this.homescreenController, super.key});
+  const SarakelPopularScreen({required this.homescreenController, super.key});
 
   @override
-  State<SarakelHomeScreen> createState() => _SarakelHomeScreenState();
+  State<SarakelPopularScreen> createState() => _SarakelPopularScreenState();
 }
 
-class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
+class _SarakelPopularScreenState extends State<SarakelPopularScreen> {
   final int _selectedIndex = 0;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   List<Post>? postsToShow;
@@ -30,7 +30,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
   @override
   void initState() {
     super.initState();
-    widget.homescreenController.loadNewPosts().then((posts) {
+    widget.homescreenController.loadPosts().then((posts) {
       setState(() => postsToShow = posts);
     });
   }
@@ -94,16 +94,16 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
               if (value != null) {
                 switch (value) {
                   case 'home':
-                    // Navigate to Home page
-                    break;
-                  case 'popular':
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SarakelPopularScreen(
+                        builder: (context) => SarakelHomeScreen(
                             homescreenController: widget.homescreenController),
                       ),
                     );
+                    break;
+                  case 'popular':
+                    // Navigate to Popular page
                     break;
                   case 'hot':
                     Navigator.push(
@@ -132,9 +132,9 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           child: const Row(
             children: [
               Text(
-                "sarakel",
+                "popular",
                 style: TextStyle(
-                  color: Colors.orange,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
