@@ -43,6 +43,33 @@ class _PostCardState extends State<PostCard> {
   bool _isImagePresent() =>
       widget.post.imagePath != null && widget.post.imagePath!.isNotEmpty;
   //bool _isJoined = false;
+  @override
+  void initState() {
+    super.initState();
+    _checkSavedState();
+    // _checkVoteState();
+  }
+
+  // void _checkVoteState() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   List<String> upvotedIds =
+  //       json.decode(prefs.getString('upvotedPosts') ?? '[]');
+  //   List<String> downvotedIds =
+  //       json.decode(prefs.getString('downvotedPosts') ?? '[]');
+
+  //   setState(() {
+  //     widget.post.isUpvoted = upvotedIds.contains(widget.post.id);
+  //     widget.post.isDownvoted = downvotedIds.contains(widget.post.id);
+  //   });
+  // }
+
+  void _checkSavedState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? isSaved = prefs.getBool(widget.post.id);
+    setState(() {
+      widget.post.isSaved = isSaved ?? false;
+    });
+  }
 
   void _toggleUpvote() {
     bool wasUpvoted = widget.post.isUpvoted; // Store previous state
@@ -56,12 +83,12 @@ class _PostCardState extends State<PostCard> {
           widget.post.downVotes--;
           widget.post.upVotes++;
         }
-        _makeVote(1); // Make an upvote API call
+        _makeVote(1); // API call to register upvote
       } else {
         widget.post.upVotes--;
         _makeVote(wasUpvoted
             ? 0
-            : -1); // Revert to neutral if was upvoted, else downvote
+            : -1); // API call to revert vote if previously upvoted
       }
     });
   }
@@ -78,12 +105,14 @@ class _PostCardState extends State<PostCard> {
           widget.post.upVotes--;
           widget.post.downVotes++;
         }
-        _makeVote(-1); // Make a downvote API call
+
+        _makeVote(-1); // API call to register downvote
       } else {
         widget.post.downVotes--;
+
         _makeVote(wasDownvoted
             ? 0
-            : 1); // Revert to neutral if was downvoted, else upvote
+            : 1); // API call to revert vote if previously downvoted
       }
     });
   }
@@ -104,8 +133,12 @@ class _PostCardState extends State<PostCard> {
           'entityId': widget.post.id,
         }),
       );
+
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // Adjust based on your API response
+        setState(() {
+          widget.post.isSaved = true;
+          prefs.setBool(widget.post.id, true); // Persist saved state locally
+        });
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Post saved")));
       } else {
@@ -133,8 +166,13 @@ class _PostCardState extends State<PostCard> {
           'entityId': widget.post.id,
         }),
       );
+
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // Adjust based on your API response
+        setState(() {
+          widget.post.isSaved = false;
+          prefs.remove(
+              widget.post.id); // Remove saved state from SharedPreferences
+        });
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Post unsaved")));
       } else {
@@ -253,6 +291,35 @@ class _PostCardState extends State<PostCard> {
       _isBlurred = !_isBlurred;
     });
   }
+
+  // Future<void> fetchAndStoreVotedPosts(String username) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   try {
+  //     var token = prefs.getString('token');
+  //     var upvoteResponse = await http.get(
+  //       Uri.parse('$BASE_URL/api/user/$username/upvotedids'),
+  //       headers: {'Authorization': 'Bearer $token'},
+  //     );
+  //     var downvoteResponse = await http.get(
+  //       Uri.parse('$BASE_URL/api/user/$username/downvotedids'),
+  //       headers: {'Authorization': 'Bearer $token'},
+  //     );
+
+  //     if (upvoteResponse.statusCode == 200 &&
+  //         downvoteResponse.statusCode == 200) {
+  //       List<String> upvotedIds =
+  //           List<String>.from(json.decode(upvoteResponse.body));
+  //       List<String> downvotedIds =
+  //           List<String>.from(json.decode(downvoteResponse.body));
+
+  //       // Store these ids in SharedPreferences
+  //       await prefs.setString('upvotedPosts', json.encode(upvotedIds));
+  //       await prefs.setString('downvotedPosts', json.encode(downvotedIds));
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching or storing vote states: $e');
+  //   }
+  // }
 
   Widget _buildImageContent() {
     Widget imageContent = widget.post.imagePath != null &&

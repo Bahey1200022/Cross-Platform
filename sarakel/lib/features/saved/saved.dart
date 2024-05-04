@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/models/comment.dart';
 import 'package:sarakel/models/post.dart';
 import 'saved_controller.dart';
 import '../../Widgets/home/widgets/post_card.dart';
+import '../../Widgets/home/widgets/comment_card.dart';
 
 class SavedScreen extends StatefulWidget {
   const SavedScreen({super.key});
@@ -11,13 +13,17 @@ class SavedScreen extends StatefulWidget {
 }
 
 class _SavedScreenState extends State<SavedScreen> {
-  final SavedController _savedController = SavedController();
+  final SavedPostsController _savedController = SavedPostsController();
+  final SavedCommentsController _savedCommentsController =
+      SavedCommentsController();
   late Future<List<Post>> _savedPostsFuture;
+  late Future<List<Comment>> _savedCommentsFuture;
 
   @override
   void initState() {
     super.initState();
     _savedPostsFuture = _savedController.fetchSavedPosts();
+    _savedCommentsFuture = _savedCommentsController.fetchSavedComments();
   }
 
   @override
@@ -66,8 +72,33 @@ class _SavedScreenState extends State<SavedScreen> {
               },
             ),
             // View for saved comments (placeholder for now)
-            const Center(
-              child: Text('Saved Comments View'),
+            FutureBuilder<List<Comment>>(
+              future: _savedCommentsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          CommentCard(
+                            // Assuming you have a CommentCard widget
+
+                            comment: snapshot.data![index],
+                            onReply: (String param1, String param2) {},
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  return const Center(child: Text('No saved comments'));
+                }
+              },
             ),
           ],
         ),

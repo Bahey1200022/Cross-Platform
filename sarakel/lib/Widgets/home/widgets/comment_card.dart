@@ -30,6 +30,20 @@ class _CommentCardState extends State<CommentCard> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _checkSavedState();
+  }
+
+  void _checkSavedState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isSaved = prefs.getBool(widget.comment.id) ?? false;
+    setState(() {
+      widget.comment.isSaved = isSaved;
+    });
+  }
+
   void _toggleReplies(String commentId) {
     setState(() {
       _showReplies = !_showReplies;
@@ -162,8 +176,13 @@ class _CommentCardState extends State<CommentCard> {
           'entityId': widget.comment.id,
         }),
       );
+
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // Adjust based on your API response
+        setState(() {
+          widget.comment.isSaved = true; // Mark as saved locally
+          prefs.setBool(
+              widget.comment.id, true); // Save state in SharedPreferences
+        });
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Comment saved")));
       } else {
@@ -191,9 +210,13 @@ class _CommentCardState extends State<CommentCard> {
           'entityId': widget.comment.id,
         }),
       );
-      print(response.body);
+
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // Adjust based on your API response
+        setState(() {
+          widget.comment.isSaved = false; // Mark as unsaved locally
+          prefs.remove(
+              widget.comment.id); // Remove saved state from SharedPreferences
+        });
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Comment unsaved")));
       } else {
