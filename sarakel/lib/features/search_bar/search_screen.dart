@@ -64,7 +64,8 @@ class sarakelSearch extends SearchDelegate {
                     name: suggestionList[index]['communityName'] ?? "",
                     description: suggestionList[index]['description'] ??
                         'Sarakel Community',
-                    image: suggestionList[index]['image'] ?? '',
+                    image: suggestionList[index]['displayPicUrl'],
+                    backimage: suggestionList[index]['backgroundPicUrl'],
                     is18Plus: suggestionList[index]['isNSFW'] ?? false,
                     type: suggestionList[index]['type'] ?? 'public',
                   );

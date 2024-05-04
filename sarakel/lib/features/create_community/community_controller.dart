@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
@@ -31,7 +32,7 @@ class CreateCommunityController {
     String formattedCommunityName = communityName;
     String communityId = communityName.toLowerCase().replaceAll(' ', '_');
 
-    var uri = Uri.parse('$BASE_URL/api/site_admin');
+    var uri = Uri.parse('$BASE_URL/api/community/create');
     var request = http.MultipartRequest('POST', uri)
       ..fields['communityName'] = formattedCommunityName
       ..fields['type'] = communityType
@@ -42,12 +43,17 @@ class CreateCommunityController {
     if (result != null) {
       File file = File(result.files.single.path!);
       var stream = http.ByteStream(file.openRead());
+      var stream2 = http.ByteStream(file.openRead());
+
       var length = await file.length();
 
       // Add the file to the multipart request
       var multipartFile = http.MultipartFile('displayPic', stream, length,
           filename: basename(file.path));
+      var multipartFile2 = http.MultipartFile('backgroundPic', stream2, length,
+          filename: basename(file.path));
       request.files.add(multipartFile);
+      request.files.add(multipartFile2);
     } else {
       // User canceled the file picking
       print('File picking canceled');
@@ -60,7 +66,9 @@ class CreateCommunityController {
     });
 
     var response = await request.send();
-
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+    });
     print('Response status code: ${response.statusCode}');
     if (response.statusCode == 201 || response.statusCode == 200) {
       print('hi');
