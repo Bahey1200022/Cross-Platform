@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/features/mode_tools/user_management/approved_users.dart';
+import 'package:sarakel/features/mode_tools/user_management/banned_users.dart';
+import 'package:sarakel/features/mode_tools/user_management/moderators.dart';
+import 'package:sarakel/features/mode_tools/user_management/muted_users.dart';
 import 'package:sarakel/models/community.dart';
 
 class ModeratorTools extends StatefulWidget {
@@ -173,36 +177,40 @@ class _ModeratorToolsState extends State<ModeratorTools> {
           ),
           ListTile(
             leading: const Icon(Icons.shield), // Add leading widget
-            title: const Text('Moderator'),
+            title: const Text('Moderators'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Navigate to Mod Log page
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ModeratorsPage()));
             },
           ),
           ListTile(
             leading: const Icon(Icons.person), // Add leading widget
-            title: const Text('approved user'),
+            title: const Text('Approved users'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Navigate to Mod Log page
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ApprovedUsersPage()));
             },
           ),
           ListTile(
             leading:
                 const Icon(Icons.volume_mute_rounded), // Add leading widget
-            title: const Text('muted user'),
+            title: const Text('Muted users'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Navigate to Mod Log page
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MutedUsersPage()));
             },
           ),
           ListTile(
             leading:
                 const Icon(Icons.update_disabled_sharp), // Add leading widget
-            title: const Text('Banned user'),
+            title: const Text('Banned users'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Navigate to Mod Log page
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BannedUsersPage()));
             },
           ),
           ListTile(
