@@ -167,6 +167,29 @@ class _PostCardState extends State<PostCard> {
     } catch (e) {}
   }
 
+  void _blockAccount() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.getString('token');
+      var response = await http.post(
+        Uri.parse('$BASE_URL/api/block_user'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'usernameToBlock': widget.post.username,
+        }),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Adjust based on your API response
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content:
+                Text('User blocked! You will no longer see their posts.')));
+      }
+    } catch (e) {}
+  }
+
   void _report() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -377,6 +400,7 @@ class _PostCardState extends State<PostCard> {
                             _report();
                             break;
                           case 'block_account':
+                            _blockAccount();
                             break;
                           case 'hide':
                             widget.onHide();

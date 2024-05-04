@@ -35,6 +35,8 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
