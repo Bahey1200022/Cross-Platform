@@ -5,6 +5,7 @@ import 'package:sarakel/models/community.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// get community moderated by user function
 Future<List<Community>> loadModeratedCircles() async {
   try {
     SharedPreferences prefs = await SharedPreferences.getInstance();

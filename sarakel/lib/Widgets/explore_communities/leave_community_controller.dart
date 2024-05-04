@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
 
+///button functionality
 class LeaveCommunityController {
   static Future<void> leaveCommunity(String communityName, String token) async {
     try {

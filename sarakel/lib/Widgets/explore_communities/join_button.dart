@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+///join button class
 class JoinButton extends StatefulWidget {
   final bool isJoined;
   final VoidCallback onPressed;
 
-  const JoinButton({super.key, required this.isJoined, required this.onPressed});
+  const JoinButton(
+      {super.key, required this.isJoined, required this.onPressed});
 
   @override
   _JoinButtonState createState() => _JoinButtonState();

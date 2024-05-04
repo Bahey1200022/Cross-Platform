@@ -12,6 +12,8 @@ import 'package:sarakel/features/search_bar/search_screen.dart';
 import 'package:sarakel/Widgets/profiles/communityposts.dart';
 import 'user_service.dart';
 
+///CommunityProfilePage
+///ui class for community profile page
 class CommunityProfilePage extends StatefulWidget {
   final Community community;
   final String token;
@@ -123,6 +125,7 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                         MaterialPageRoute(
                           builder: (context) => ModeratorTools(
                             token: widget.token,
+                            community: widget.community,
                           ),
                         ),
                       );

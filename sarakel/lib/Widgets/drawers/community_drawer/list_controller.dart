@@ -5,6 +5,7 @@ import 'package:sarakel/models/community.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+///loading communities joined by user
 Future<List<Community>> loadCircles() async {
   try {
     SharedPreferences prefs = await SharedPreferences.getInstance();

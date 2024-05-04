@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/models/community.dart';
 
 class ModeratorTools extends StatefulWidget {
   final String token;
-  const ModeratorTools({super.key, required this.token});
+  final Community community;
+  const ModeratorTools(
+      {super.key, required this.token, required this.community});
   @override
   _ModeratorToolsState createState() => _ModeratorToolsState();
 }

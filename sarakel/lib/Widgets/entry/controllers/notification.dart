@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 ///Notifications permesion
+///saving device token to backend
 void requestPermission() async {
   //FirebaseMessaging.instance.requestPermission();
   FirebaseMessaging messaging = FirebaseMessaging.instance;

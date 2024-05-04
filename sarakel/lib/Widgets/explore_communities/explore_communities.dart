@@ -12,6 +12,7 @@ import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:sarakel/models/user.dart';
 
+///explore community page
 class ExploreCommunities extends StatefulWidget {
   final String token;
 
