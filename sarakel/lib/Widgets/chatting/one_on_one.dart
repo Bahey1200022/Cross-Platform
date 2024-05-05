@@ -12,6 +12,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:http/http.dart' as http;
 
 /// live chat functionality - emitting and receiving messages
+// ignore: duplicate_ignore
 // ignore: must_be_immutable
 class ChatPage extends StatefulWidget {
   final String token;
