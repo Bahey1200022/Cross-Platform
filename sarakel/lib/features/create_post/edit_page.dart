@@ -28,7 +28,7 @@ class _EditPageState extends State<EditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Page'),
+        title: const Text('Edit Post'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
