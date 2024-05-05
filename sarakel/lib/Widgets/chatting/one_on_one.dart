@@ -15,7 +15,8 @@ class ChatPage extends StatefulWidget {
   final String receiver;
   String? id;
   ChatPage(
-      {super.key, required this.receiver,
+      {super.key,
+      required this.receiver,
       required this.sender,
       required this.token,
       this.id});
@@ -39,6 +40,10 @@ class _ChatPageState extends State<ChatPage> {
         "id": data['_id']
       });
     });
+  }
+
+  void MarkOnline() {
+    SocketService.instance.socket!.emit('joinConversation', widget.id);
   }
 
   void loadPreviousMessages() async {
@@ -70,6 +75,7 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     super.initState();
     //Connect();
+    MarkOnline();
     loadPreviousMessages();
     SocketService.instance.socket!.on('newMessage', (data) {
       setState(() {

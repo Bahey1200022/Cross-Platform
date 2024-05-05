@@ -5,11 +5,13 @@ import 'dart:convert';
 
 ///functions to check if the post is liked or disliked
 
-Future<bool> getids(String route, String postId, int type) async {
+void getmarked() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString('token');
+  var username = prefs.getString('username');
+
   var response = await http.get(
-    Uri.parse('$BASE_URL$route'),
+    Uri.parse('$BASE_URL/api/user/$username/upvotedids'),
     headers: {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
@@ -18,35 +20,56 @@ Future<bool> getids(String route, String postId, int type) async {
 
   if (response.statusCode == 200) {
     Map<String, dynamic> jsonMap = jsonDecode(response.body);
-    List<dynamic> jsonList;
-    if (type == 1) {
-      jsonList = jsonMap['upvotedPostsIds'];
-    } else {
-      jsonList = jsonMap['downvotedPostsIds'];
-    }
-
+    List<dynamic> jsonList = jsonMap['upvotedPostsIds'];
     List<String> entityIds =
         jsonList.map((item) => item['entityId'] as String).toList();
-    if (entityIds.contains(postId)) {
-      return true;
-    } else {
-      return false;
-    }
+    prefs.setStringList('upvotedPostsIds', []);
+
+    prefs.setStringList('upvotedPostsIds', entityIds);
   } else {
-    return false;
+    prefs.setStringList('upvotedPostsIds', []);
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+  var responsedown = await http.get(
+    Uri.parse('$BASE_URL/api/user/$username/downvotedids'),
+    headers: {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    },
+  );
+
+  if (responsedown.statusCode == 200) {
+    Map<String, dynamic> jsonMap = jsonDecode(responsedown.body);
+    List<dynamic> jsonList = jsonMap['downvotedPostsIds'];
+    List<String> entityIds =
+        jsonList.map((item) => item['entityId'] as String).toList();
+    prefs.setStringList('downvotedPostsIds', []);
+
+    prefs.setStringList('downvotedPostsIds', entityIds);
+  } else {
+    prefs.setStringList('downvotedPostsIds', []);
   }
 }
 
 Future<bool> isLiked(String postId) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var username = prefs.getString('username');
-  bool result = await getids('/api/user/$username/upvotedids', postId, 1);
-  return result;
+  var uplist = prefs.getStringList('upvotedPostsIds');
+  if (uplist == null) {
+    return false;
+  } else {
+    bool result = uplist.contains(postId);
+    return result;
+  }
 }
 
 Future<bool> isDisliked(String postId) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var username = prefs.getString('username');
-  bool result = await getids('/api/user/$username/downvotedids', postId, 2);
-  return result;
+  var downlist = prefs.getStringList('downvotedPostsIds');
+  if (downlist == null) {
+    return false;
+  } else {
+    bool result = downlist.contains(postId);
+    return result;
+  }
 }
