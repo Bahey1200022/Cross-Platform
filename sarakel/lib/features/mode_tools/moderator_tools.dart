@@ -5,19 +5,15 @@ import 'package:sarakel/features/mode_tools/user_management/moderators/moderator
 import 'package:sarakel/features/mode_tools/user_management/muted_users.dart';
 import 'package:sarakel/models/community.dart';
 
-class ModeratorTools extends StatefulWidget {
+class ModeratorTools extends StatelessWidget {
   final String token;
   final Community community;
-  const ModeratorTools(
-      {super.key, required this.token, required this.community});
-  @override
-  _ModeratorToolsState createState() => _ModeratorToolsState();
-}
 
-class _ModeratorToolsState extends State<ModeratorTools> {
-  bool anyOneOnSarakel = true;
-  bool acountOlderThan30Days = true;
-  bool Nobody = false;
+  const ModeratorTools({
+    Key? key,
+    required this.token,
+    required this.community,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -180,8 +176,15 @@ class _ModeratorToolsState extends State<ModeratorTools> {
             title: const Text('Moderators'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ModeratorsPage()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ModeratorsPage(
+                    token: token,
+                    communityName: community.name,
+                  ),
+                ),
+              );
             },
           ),
           ListTile(
@@ -189,8 +192,12 @@ class _ModeratorToolsState extends State<ModeratorTools> {
             title: const Text('Approved users'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ApprovedUsersPage()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ApprovedUsersPage(),
+                ),
+              );
             },
           ),
           ListTile(
@@ -199,8 +206,12 @@ class _ModeratorToolsState extends State<ModeratorTools> {
             title: const Text('Muted users'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MutedUsersPage()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MutedUsersPage(),
+                ),
+              );
             },
           ),
           ListTile(
@@ -209,8 +220,12 @@ class _ModeratorToolsState extends State<ModeratorTools> {
             title: const Text('Banned users'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BannedUsersPage()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BannedUsersPage(),
+                ),
+              );
             },
           ),
           ListTile(
