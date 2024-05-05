@@ -1,16 +1,20 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
 import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
 import 'package:sarakel/features/create_post/circle_selection.dart';
 import 'package:sarakel/features/create_post/flairs_menu.dart';
+import 'package:sarakel/features/create_post/vid.dart';
 //import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:video_player/video_player.dart';
 import '../../models/community.dart';
 import 'add_post_controller.dart';
 //import 'dart:html' as html;
 import 'dart:async';
 import 'package:sarakel/Widgets/home/homescreen.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreatePost extends StatefulWidget {
   final String token;
@@ -36,6 +40,9 @@ class _CreatePostPageState extends State<CreatePost> {
   bool isSpoiler = false;
   bool isNSFW = false;
   bool isBA = false;
+  File? _video;
+  Image? thumbnail;
+  VideoPlayerController? _videoController;
 
   @override
   void initState() {
@@ -48,6 +55,18 @@ class _CreatePostPageState extends State<CreatePost> {
       // ignore: avoid_print
       print('Communities loaded: ${communities!.length}');
     });
+    // _videoController = VideoPlayerController.file(File(_video!.path))
+    //   ..initialize().then((_) {
+    //     // Ensure the first frame is shown after the video is initialized
+    //     setState(() {});
+    //   });
+    // _videoController!.play();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _videoController?.dispose();
   }
 
   void toggleUrlVisibility() {
@@ -103,22 +122,49 @@ class _CreatePostPageState extends State<CreatePost> {
     });
   }
 
+  Future<void> _getVideo() async {
+    final completer = Completer<File>();
+
+    if (Platform.isAndroid) {
+      // ...
+
+      final pickedVideo =
+          await ImagePicker().pickVideo(source: ImageSource.gallery);
+      if (pickedVideo != null) {
+        completer.complete(File(pickedVideo.path));
+      } else {
+        completer.completeError('No video selected');
+      }
+    }
+
+    final selectedVideo = await completer.future;
+    _video = selectedVideo;
+
+    Uint8List? thumbnaildata = await generateThumbnail(_video!.path);
+    if (thumbnaildata != null) {
+      thumbnail = Image.memory(thumbnaildata);
+      // Use the thumbnail widget
+    }
+    setState(() {
+      _video = selectedVideo;
+      print(_video!.path);
+    });
+  }
+
   Future<void> _getImage() async {
     final completer = Completer<File>();
 
-    //final html.InputElement input = html.InputElement()
-    //..type = 'file'
-    //..accept = 'image/*';
-    //input.click();
-    //input.onChange.listen((event) {
-    //final file = input.files!.first;
-    //final reader = html.FileReader();
-    //reader.readAsDataUrl(file);
-    //reader.onLoadEnd.listen((event) {
-    //final imageDataUrl = reader.result as String?;
-    //completer.complete(File(imageDataUrl!));
-    //});
-    //}//);
+    if (Platform.isAndroid) {
+      // ...
+
+      final pickedImage =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (pickedImage != null) {
+        completer.complete(File(pickedImage.path));
+      } else {
+        completer.completeError('No image selected');
+      }
+    }
 
     final selectedImage = await completer.future;
     setState(() {
@@ -160,7 +206,9 @@ class _CreatePostPageState extends State<CreatePost> {
                     urlController.text,
                     isSpoiler,
                     isNSFW,
-                    isBA);
+                    isBA,
+                    _image,
+                    _video);
                 Navigator.pushAndRemoveUntil(
                   // ignore: use_build_context_synchronously
                   context,
@@ -338,14 +386,21 @@ class _CreatePostPageState extends State<CreatePost> {
                     ],
                   ),
                 const SizedBox(height: 8.0),
-                if (_image != null)
+                if (_image != null || _video != null)
                   Stack(
                     alignment: Alignment.center,
                     children: [
                       SizedBox(
                         height: 200.0,
                         width: 200.0,
-                        child: Image.network(_image!.path, fit: BoxFit.contain),
+                        child: (_image != null)
+                            ? Image(
+                                image: FileImage(File(_image!.path)),
+                                fit: BoxFit.contain,
+                              )
+                            : (_video != null)
+                                ? thumbnail
+                                : Container(),
                       ),
                       Positioned(
                         top: 0,
@@ -354,6 +409,7 @@ class _CreatePostPageState extends State<CreatePost> {
                           onTap: () {
                             setState(() {
                               _image = null;
+                              _video = null;
                             });
                           },
                           child: Container(
@@ -430,6 +486,7 @@ class _CreatePostPageState extends State<CreatePost> {
                       icon: const Icon(Icons.videocam_outlined),
                       onPressed: () {
                         // Handle video upload
+                        _getVideo();
                       },
                     ),
                   if (!isMenuOpen)
@@ -505,6 +562,7 @@ class _CreatePostPageState extends State<CreatePost> {
                 IconButton(
                   icon: const Icon(Icons.videocam_outlined),
                   onPressed: () {
+                    _getVideo();
                     // Handle video upload
                   },
                 ),

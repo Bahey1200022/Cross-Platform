@@ -11,12 +11,12 @@ class _ApprovedUsersPageState extends State<ApprovedUsersPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Center(
+        title: const Center(
           child: Text(
             'Approved Users',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -24,13 +24,13 @@ class _ApprovedUsersPageState extends State<ApprovedUsersPage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               // Add your search functionality here
             },
           ),
           IconButton(
-            icon: Icon(Icons.person_add),
+            icon: const Icon(Icons.person_add),
             onPressed: () {
               // Add functionality to add a new user
             },
@@ -38,7 +38,7 @@ class _ApprovedUsersPageState extends State<ApprovedUsersPage> {
         ],
       ),
       body: Container(
-        child: Center(
+        child: const Center(
           child: Text('Approved Users Content'),
         ),
       ),

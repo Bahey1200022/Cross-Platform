@@ -4,7 +4,6 @@ import 'package:sarakel/Widgets/settings/settings_controller.dart';
 import 'package:sarakel/Widgets/settings/settings_page.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  @override
   final String token;
   const ChangePasswordPage({super.key, required this.token});
   _ChangePasswordPageState createState() => _ChangePasswordPageState();

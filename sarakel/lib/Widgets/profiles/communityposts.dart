@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/models/post.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 /// function to load posts from backend
@@ -17,8 +16,6 @@ String extractUrl(String s) {
 
 Future<List<Post>> fetchCommunityPosts(String communityName) async {
   try {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString('token');
     var response = await http.get(
         Uri.parse('$BASE_URL/api/community/$communityName/getPosts'),
         headers: {

@@ -20,6 +20,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 
 /// all post cards functionality features
+// ignore: must_be_immutable
 class PostCard extends StatefulWidget {
   final Post post;
   bool? saved;

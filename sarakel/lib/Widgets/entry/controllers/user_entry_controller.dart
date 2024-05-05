@@ -89,7 +89,7 @@ class UserController {
 
         SocketService.instance.connect(BASE_URL, user);
         requestPermission();
-        getTokens(user);
+        getTokens(user, token);
         Navigator.push(
             context,
             MaterialPageRoute(
