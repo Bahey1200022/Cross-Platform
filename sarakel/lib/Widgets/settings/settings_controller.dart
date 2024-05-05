@@ -31,6 +31,7 @@ class Settings {
     SocketService.instance.socket!.disconnect();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     prefs.remove('token');
     Navigator.pushNamed(context, '/welcome');
   }
@@ -119,6 +120,7 @@ class Settings {
           weightLoss: settings['weightLoss'],
           privateMessagesEmail: settings['privateMessagesEmail'],
           chatMessages: settings['chatMessages'],
+          signedInWithGoogle: settings['signedInWithGoogle'],
         );
       } else {
         // Return an empty list if the response status code is not 200
@@ -133,6 +135,7 @@ class Settings {
           weightLoss: false,
           privateMessagesEmail: false,
           chatMessages: false,
+          signedInWithGoogle: false,
         );
       }
     } catch (e) {
@@ -148,6 +151,7 @@ class Settings {
         weightLoss: false,
         privateMessagesEmail: false,
         chatMessages: false,
+        signedInWithGoogle: false,
       );
     }
   }
