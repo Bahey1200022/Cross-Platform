@@ -10,6 +10,7 @@ import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
 import 'package:sarakel/Widgets/home/widgets/fullscreen_image.dart';
 import 'package:sarakel/constants.dart';
+import 'package:sarakel/features/create_post/edit_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
 import 'package:flutter/services.dart';
@@ -42,11 +43,13 @@ class _PostCardState extends State<PostCard> {
   bool _isBlurred = true;
   bool _isImagePresent() =>
       widget.post.imagePath != null && widget.post.imagePath!.isNotEmpty;
+  bool loggedUserPost = false;
   //bool _isJoined = false;
   @override
   void initState() {
     super.initState();
     _checkSavedState();
+    _checkLoginStatus();
     // _checkVoteState();
   }
 
@@ -69,6 +72,19 @@ class _PostCardState extends State<PostCard> {
     setState(() {
       widget.post.isSaved = isSaved ?? false;
     });
+  }
+
+  Future<bool> checkLoggedInUserPost() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var username = prefs.getString('username');
+    if (username == widget.post.username) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> _checkLoginStatus() async {
+    loggedUserPost = await checkLoggedInUserPost();
   }
 
   void _toggleUpvote() {
@@ -429,27 +445,37 @@ class _PostCardState extends State<PostCard> {
                                 : 'Save'), // Dynamic text based on saved state
                           ),
                         ),
-                        const PopupMenuItem<String>(
-                          value: 'report',
-                          child: ListTile(
-                            leading: Icon(Icons.flag),
-                            title: Text('Report'),
+                        if (!loggedUserPost)
+                          const PopupMenuItem<String>(
+                            value: 'report',
+                            child: ListTile(
+                              leading: Icon(Icons.flag),
+                              title: Text('Report'),
+                            ),
                           ),
-                        ),
-                        const PopupMenuItem<String>(
-                          value: 'block_account',
-                          child: ListTile(
-                            leading: Icon(Icons.block),
-                            title: Text('Block Account'),
+                        if (!loggedUserPost)
+                          const PopupMenuItem<String>(
+                            value: 'hide',
+                            child: ListTile(
+                              leading: Icon(Icons.visibility_off),
+                              title: Text('Hide'),
+                            ),
                           ),
-                        ),
-                        const PopupMenuItem<String>(
-                          value: 'hide',
-                          child: ListTile(
-                            leading: Icon(Icons.visibility_off),
-                            title: Text('Hide'),
-                          ),
-                        ),
+                        loggedUserPost
+                            ? const PopupMenuItem<String>(
+                                value: 'edit',
+                                child: ListTile(
+                                  leading: Icon(Icons.edit),
+                                  title: Text('Edit'),
+                                ),
+                              )
+                            : const PopupMenuItem<String>(
+                                value: 'block_account',
+                                child: ListTile(
+                                  leading: Icon(Icons.block),
+                                  title: Text('Block Account'),
+                                ),
+                              ),
                       ],
                       onSelected: (String value) {
                         switch (value) {
@@ -472,6 +498,12 @@ class _PostCardState extends State<PostCard> {
                           case 'hide':
                             widget.onHide();
                             break;
+                          case 'edit':
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => EditPage(widget.post.id),
+                              ),
+                            );
                           default:
                             break;
                         }

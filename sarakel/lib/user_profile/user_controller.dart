@@ -51,7 +51,7 @@ Future<List<Post>> loadUserPosts(String username) async {
             content: p['content']?.toString() ?? "",
             communityId: p['communityId']?.toString() ?? "",
             title: p['title']?.toString() ?? "",
-            username: p['userId']?.toString() ?? "",
+            username: p['username']?.toString() ?? "",
             views: p['numViews'] ?? 0);
       }).toList();
       return posts;
