@@ -97,16 +97,8 @@ class _ChatPageState extends State<ChatPage> {
           "id": data['_id']
         });
       });
-      _scrollToBottom();
+      //_scrollToBottom();
     });
-  }
-
-  void _scrollToBottom() {
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
   }
 
   @override
@@ -136,8 +128,7 @@ class _ChatPageState extends State<ChatPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CircleAvatar(
-                              child: Image.asset(
-                                  'assets/avatar_logo.jpeg'), 
+                              child: Image.asset('assets/avatar_logo.jpeg'),
                               radius: 30.0,
                             ),
                             const SizedBox(height: 10.0),
@@ -151,15 +142,13 @@ class _ChatPageState extends State<ChatPage> {
                       );
                     } else {
                       /// Display normal chat message
-                      final messageIndex =
-                          index - 1; 
+                      final messageIndex = index - 1;
                       final bool isSender =
                           messages[messageIndex]['sender'] == widget.sender;
                       return ChatTile(
                         person: messages[messageIndex]['sender'],
                         content: messages[messageIndex]['message'],
-                        profilePicture:
-                            'assets/avatar_logo.jpeg', 
+                        profilePicture: 'assets/avatar_logo.jpeg',
                         isSender: isSender,
                       );
                     }
