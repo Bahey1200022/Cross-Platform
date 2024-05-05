@@ -11,6 +11,7 @@ import 'add_post_controller.dart';
 //import 'dart:html' as html;
 import 'dart:async';
 import 'package:sarakel/Widgets/home/homescreen.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreatePost extends StatefulWidget {
   final String token;
@@ -106,19 +107,17 @@ class _CreatePostPageState extends State<CreatePost> {
   Future<void> _getImage() async {
     final completer = Completer<File>();
 
-    //final html.InputElement input = html.InputElement()
-    //..type = 'file'
-    //..accept = 'image/*';
-    //input.click();
-    //input.onChange.listen((event) {
-    //final file = input.files!.first;
-    //final reader = html.FileReader();
-    //reader.readAsDataUrl(file);
-    //reader.onLoadEnd.listen((event) {
-    //final imageDataUrl = reader.result as String?;
-    //completer.complete(File(imageDataUrl!));
-    //});
-    //}//);
+    if (Platform.isAndroid) {
+      // ...
+
+      final pickedImage =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (pickedImage != null) {
+        completer.complete(File(pickedImage.path));
+      } else {
+        completer.completeError('No image selected');
+      }
+    }
 
     final selectedImage = await completer.future;
     setState(() {
@@ -160,7 +159,8 @@ class _CreatePostPageState extends State<CreatePost> {
                     urlController.text,
                     isSpoiler,
                     isNSFW,
-                    isBA);
+                    isBA,
+                    _image);
                 Navigator.pushAndRemoveUntil(
                   // ignore: use_build_context_synchronously
                   context,
@@ -345,7 +345,9 @@ class _CreatePostPageState extends State<CreatePost> {
                       SizedBox(
                         height: 200.0,
                         width: 200.0,
-                        child: Image.network(_image!.path, fit: BoxFit.contain),
+                        child: Image(
+                            image: FileImage(File(_image!.path)),
+                            fit: BoxFit.contain),
                       ),
                       Positioned(
                         top: 0,
