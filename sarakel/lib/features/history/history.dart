@@ -1,3 +1,4 @@
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/features/history/history_controller.dart';
@@ -96,18 +97,35 @@ class _HistroyState extends State<History> {
         ],
       ),
       body: postsToShow == null
-          ? const Center(child: Text('No posts to show'))
-          : ListView.builder(
-              itemCount: postsToShow?.length ?? 0,
-              itemBuilder: (context, index) {
-                final post = postsToShow?[index];
+          ? Center(child: Image.asset('assets/logo_2d.png', width: 30))
+          : CustomMaterialIndicator(
+              onRefresh: () async {
+                if (_selectedPage == 'recent') {
+                  final posts = await loadRecentHistory();
+                  setState(() => postsToShow = posts);
+                } else if (_selectedPage == 'upvotes') {
+                  final posts = await loadUpvotedHistory();
+                  setState(() => postsToShow = posts);
+                } else if (_selectedPage == 'downvotes') {
+                  final posts = await loadDownvotedHistory();
+                  setState(() => postsToShow = posts);
+                }
+              },
+              indicatorBuilder: (context, controller) {
+                return Image.asset('assets/logo_2d.png', width: 30);
+              },
+              child: ListView.builder(
+                  itemCount: postsToShow?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final post = postsToShow?[index];
 
-                // Show the post
-                return PostCard(
-                  post: post!,
-                  onHide: () {},
-                );
-              }),
+                    // Show the post
+                    return PostCard(
+                      post: post!,
+                      onHide: () {},
+                    );
+                  }),
+            ),
     );
   }
 }

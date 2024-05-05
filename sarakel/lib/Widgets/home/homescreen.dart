@@ -186,7 +186,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
         user: widget.homescreenController.getUser(),
       ),
       body: postsToShow == null
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: Image.asset('assets/logo_2d.png', width: 30))
           : CustomMaterialIndicator(
               indicatorBuilder: (context, controller) {
                 return Image.asset('assets/logo_2d.png', width: 30);

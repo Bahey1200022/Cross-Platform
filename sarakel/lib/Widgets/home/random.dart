@@ -186,7 +186,7 @@ class _SarakelRandomScreenState extends State<SarakelRandomScreen> {
         user: widget.homescreenController.getUser(),
       ),
       body: postsToShow == null
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: Image.asset('assets/logo_2d.png', width: 30))
           : CustomMaterialIndicator(
               onRefresh: () async {
                 final posts =
