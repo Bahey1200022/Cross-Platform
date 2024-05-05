@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/user_management/moderators/add_moderators_page.dart';
 import 'package:sarakel/features/mode_tools/user_management/moderators/moderators_search_page.dart';
 import 'package:sarakel/features/mode_tools/user_management/moderators/moderators_service.dart';
+import 'package:sarakel/user_profile/user_profile.dart'; // Import the UserProfile page
+import 'package:sarakel/models/user.dart'; // Import the User model
 
 class ModeratorsPage extends StatefulWidget {
   final String token; // Token to be passed to fetch moderators
@@ -54,7 +56,18 @@ class _ModeratorsPageState extends State<ModeratorsPage>
                 leading: Icon(Icons.person),
                 title: Text('View Profile'),
                 onTap: () {
-                  // Implement viewing profile action
+                  // Navigate to the user profile page of the moderator
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserProfile(
+                        user: User(
+                            username: moderatorName,
+                            token: widget
+                                .token), // Pass the moderator's username and token here
+                      ),
+                    ),
+                  );
                 },
               ),
               ListTile(
@@ -147,6 +160,17 @@ class _ModeratorsPageState extends State<ModeratorsPage>
                 title: Text(moderatorName), // Moderator name
                 onTap: () {
                   //navigate to the moderator's profile
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserProfile(
+                        user: User(
+                            username: moderatorName,
+                            token: widget
+                                .token), // Pass the moderator's username and token here
+                      ),
+                    ),
+                  );
                 },
               );
             },
@@ -161,6 +185,16 @@ class _ModeratorsPageState extends State<ModeratorsPage>
                 title: Text(moderatorName), // Moderator name
                 onTap: () {
                   //navigate to the moderator's profile
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserProfile(
+                        user: User(
+                            username:
+                                moderatorName), // Pass the moderator's username and token here
+                      ),
+                    ),
+                  );
                 },
                 trailing: IconButton(
                   icon: Icon(Icons.more_vert),

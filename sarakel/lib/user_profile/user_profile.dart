@@ -93,13 +93,7 @@ class _UserProfile extends State<UserProfile> {
                         icon: const Icon(Icons.arrow_back),
                         color: Colors.white,
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SarakelHomeScreen(
-                                      homescreenController:
-                                          HomescreenController(
-                                              token: widget.user!.token!))));
+                          Navigator.pop(context);
                         },
                       ),
                       SizedBox(
