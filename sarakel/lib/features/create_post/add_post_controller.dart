@@ -14,6 +14,7 @@ class AddPostController {
     bool isNSFW,
     bool isBA,
     File? image,
+    File? video,
   ) async {
     try {
       // if (title.trim().isNotEmpty) {
