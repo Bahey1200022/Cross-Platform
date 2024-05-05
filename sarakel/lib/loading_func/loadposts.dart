@@ -15,6 +15,22 @@ String extractUrl(String s) {
       : s; // Return the URL without brackets, or the original string if no match is found
 }
 
+///function to extracte the duration into a string
+String formatDateTime(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+  final Duration difference = DateTime.now().difference(dateTime);
+
+  if (difference.inDays > 0) {
+    return '${difference.inDays}d';
+  } else if (difference.inHours > 0) {
+    return '${difference.inHours}h';
+  } else if (difference.inMinutes > 0) {
+    return '${difference.inMinutes}m';
+  } else {
+    return '${difference.inSeconds}s';
+  }
+}
+
 Future<List<Post>> fetchPosts(String url) async {
   try {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -51,14 +67,15 @@ Future<List<Post>> fetchPosts(String url) async {
             communityId: p['communityId'],
             title: p['title'],
             username: p['username'],
+            duration: formatDateTime(p['createdAt']),
             views: p['numViews'] ?? 0);
       }).toList();
 
       return posts.reversed.toList();
     } else {
-      throw Exception('Failed to load saved posts');
+      throw Exception('Failed to load  posts');
     }
   } catch (e) {
-    throw Exception('Error loading saved posts: $e');
+    throw Exception('Error loading  posts: $e');
   }
 }

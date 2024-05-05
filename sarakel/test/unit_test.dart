@@ -22,6 +22,21 @@ bool _validatePassword(String password) {
   return password.length >= 3;
 }
 
+String formatDateTime(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+  final Duration difference = DateTime.now().difference(dateTime);
+
+  if (difference.inDays > 0) {
+    return '${difference.inDays}d';
+  } else if (difference.inHours > 0) {
+    return '${difference.inHours}h';
+  } else if (difference.inMinutes > 0) {
+    return '${difference.inMinutes}m';
+  } else {
+    return '${difference.inSeconds}s';
+  }
+}
+
 void main() {
   group('Email Validation', () {
     test('Empty email returns false', () {
@@ -72,5 +87,30 @@ void main() {
     test('Returns false for URL without extension', () {
       expect(isVideo('https://example.com/video'), false);
     });
+  });
+  test('formatDateTime should return a formatted string', () {
+    // Call the function with a date-time string 2 days ago
+    String result = formatDateTime(
+        DateTime.now().subtract(Duration(days: 2)).toIso8601String());
+    // Check that the function returned '2d'
+    expect(result, equals('2d'));
+
+    // Call the function with a date-time string 3 hours ago
+    result = formatDateTime(
+        DateTime.now().subtract(Duration(hours: 3)).toIso8601String());
+    // Check that the function returned '3h'
+    expect(result, equals('3h'));
+
+    // Call the function with a date-time string 4 minutes ago
+    result = formatDateTime(
+        DateTime.now().subtract(Duration(minutes: 4)).toIso8601String());
+    // Check that the function returned '4m'
+    expect(result, equals('4m'));
+
+    // Call the function with a date-time string 5 seconds ago
+    result = formatDateTime(
+        DateTime.now().subtract(Duration(seconds: 5)).toIso8601String());
+    // Check that the function returned '5s'
+    expect(result, equals('5s'));
   });
 }

@@ -3,15 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:sarakel/Widgets/home/controllers/get_community.dart';
 import 'package:sarakel/Widgets/home/widgets/category.dart';
 import 'package:sarakel/Widgets/home/widgets/comment_card.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
+import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/loading_func/loadcomments.dart';
 import 'package:sarakel/loading_func/loadreplies.dart';
 import 'package:sarakel/models/comment.dart';
+import 'package:sarakel/models/community.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/post.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
@@ -46,7 +49,14 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
       TextEditingController(); // Add controller
   List<Comment> comments = [];
   bool isLoading = true;
-
+  Community community = Community(
+      id: 'id',
+      name: 'name',
+      description: 'description',
+      image: 'image',
+      is18Plus: true,
+      type: 'type');
+  String token = '';
   @override
   void dispose() {
     _commentController.dispose(); // Dispose the controller when not needed
@@ -57,7 +67,18 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
   void initState() {
     super.initState();
     _loadComments();
+    getCommunityfromPost(widget.post.communityName);
+    getToken();
     //decodeJwt();
+  }
+
+  Future<void> getCommunityfromPost(String CommunityName) async {
+    community = await getCommunity(CommunityName);
+  }
+
+  Future<void> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token')!;
   }
 
   Future<void> _loadComments() async {
@@ -73,7 +94,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
         setState(() {
           isLoading = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('No comments available.'),
           backgroundColor: Colors.blue,
         ));
@@ -190,10 +211,23 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
           children: [
             Row(
               children: [
-                const CircleAvatar(
-                  radius: 10,
-                  backgroundImage: NetworkImage(
-                      "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0"),
+                GestureDetector(
+                  onTap: () {
+                    // Define your onPress logic here
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CommunityProfilePage(
+                                  community: community,
+                                  token: token,
+                                )));
+
+                    ///////
+                  },
+                  child: CircleAvatar(
+                    radius: 10,
+                    backgroundImage: NetworkImage(community.image),
+                  ),
                 ),
                 const SizedBox(width: 5),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
