@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/create_post/edit_post.dart';
 
+///edit post ui
 class EditPage extends StatefulWidget {
   String postid;
 

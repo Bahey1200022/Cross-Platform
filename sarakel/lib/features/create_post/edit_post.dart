@@ -4,6 +4,7 @@ import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+///edit post function
 void editpost(String postid, String post) async {
   // Edit post
   print(postid);
