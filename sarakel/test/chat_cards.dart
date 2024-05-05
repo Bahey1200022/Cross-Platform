@@ -7,7 +7,12 @@ void main() {
     // Create the ChatTile widget
     const widget = MaterialApp(
       home: Scaffold(
-        body: ChatTile(person: 'Test Person', content: 'Test Content'),
+        body: ChatTile(
+          person: 'Test Person',
+          content: 'Test Content',
+          profilePicture: 'assets/avatar_logo.jpeg',
+          isSender: false,
+        ),
       ),
     );
 

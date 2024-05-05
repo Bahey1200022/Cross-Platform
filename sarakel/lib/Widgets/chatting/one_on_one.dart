@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, library_prefixes, non_constant_identifier_names, avoid_print, sort_child_properties_last
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:http/http.dart' as http;
 
 /// live chat functionality - emitting and receiving messages
+// ignore: duplicate_ignore
 // ignore: must_be_immutable
 class ChatPage extends StatefulWidget {
   final String token;
@@ -32,6 +35,7 @@ class _ChatPageState extends State<ChatPage> {
   final List messages = [];
 
   final TextEditingController _controller = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   void Connect() {
     SocketService.instance.socket!.on("newMessage", (data) {
@@ -93,7 +97,16 @@ class _ChatPageState extends State<ChatPage> {
           "id": data['_id']
         });
       });
+      _scrollToBottom();
     });
+  }
+
+  void _scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
@@ -101,18 +114,58 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.receiver),
+        centerTitle: true,
       ),
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                return ChatTile(
-                  person: messages[index]['sender'],
-                  content: messages[index]['message'],
-                );
-              },
+            child: Stack(
+              children: [
+                // Chat messages
+                ListView.builder(
+                  controller: _scrollController,
+                  itemCount:
+                      messages.length + 1, // Add 1 for the avatar message
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      /// Display avatar message for the receiver
+                      return Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              child: Image.asset(
+                                  'assets/avatar_logo.jpeg'), 
+                              radius: 30.0,
+                            ),
+                            const SizedBox(height: 10.0),
+                            Text(
+                              'u/${widget.receiver}',
+                              style: const TextStyle(
+                                  fontSize: 16.0, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      /// Display normal chat message
+                      final messageIndex =
+                          index - 1; 
+                      final bool isSender =
+                          messages[messageIndex]['sender'] == widget.sender;
+                      return ChatTile(
+                        person: messages[messageIndex]['sender'],
+                        content: messages[messageIndex]['message'],
+                        profilePicture:
+                            'assets/avatar_logo.jpeg', 
+                        isSender: isSender,
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
           ),
           Padding(
@@ -125,32 +178,22 @@ class _ChatPageState extends State<ChatPage> {
                     decoration: InputDecoration(
                       hintText: 'Type a message...',
                       suffixIcon: IconButton(
-                          onPressed: () {
-                            String value = _controller.text;
-                            if (value.isNotEmpty) {
-                              sendMessage(value, widget.receiver);
-                              // setState(() {
-                              //   messages.add({
-                              //     'message': value,
-                              //     'sender': widget.sender,
-                              //   });
-                              // });
-                              _controller.clear(); // Clear the text field
-                            }
-                          },
-                          icon: const Icon(Icons.send)),
+                        onPressed: () {
+                          String value = _controller.text;
+                          if (value.isNotEmpty) {
+                            sendMessage(value, widget.receiver);
+                            _controller.clear();
+                          }
+                        },
+                        icon: const Icon(Icons.send),
+                      ),
                     ),
                     onSubmitted: (value) {
                       sendMessage(value, widget.receiver);
                       setState(() {
                         if (value.isNotEmpty) {
-                          // messages.add({
-                          //   'message': value,
-                          //   'sender': widget.sender,
-                          // });
-
                           _controller.clear();
-                        } // Clear the text field
+                        }
                       });
                     },
                   ),
