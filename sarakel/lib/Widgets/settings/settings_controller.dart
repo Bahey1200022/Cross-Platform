@@ -31,6 +31,12 @@ class Settings {
     SocketService.instance.socket!.disconnect();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    var response = await http.delete(
+      Uri.parse('$BASE_URL/api/v1/me/delete_profile'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
 
     prefs.remove('token');
     Navigator.pushNamed(context, '/welcome');
