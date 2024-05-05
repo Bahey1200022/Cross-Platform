@@ -51,7 +51,8 @@ class _ChatSection extends State<ChatSection> {
           future: loadConversation(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return Center(
+                  child: Image.asset('assets/logo_2d.png', width: 30));
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
