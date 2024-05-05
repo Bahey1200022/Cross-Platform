@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/Widgets/chatting/card.dart';
 import 'package:sarakel/Widgets/chatting/send_message.dart';
 import 'package:sarakel/constants.dart';
@@ -9,6 +10,7 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:http/http.dart' as http;
 
 /// live chat functionality - emitting and receiving messages
+// ignore: must_be_immutable
 class ChatPage extends StatefulWidget {
   final String token;
   final String sender;
@@ -43,7 +45,13 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void MarkOnline() {
-    SocketService.instance.socket!.emit('joinConversation', widget.id);
+    if (SocketService.instance.socket == null) {
+      Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(widget.token);
+      var user = jwtdecodedtoken['username'];
+
+      SocketService.instance.connect(BASE_URL, user);
+    }
+    SocketService.instance.socket!.emit('markOnline', widget.id);
   }
 
   void loadPreviousMessages() async {

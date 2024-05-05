@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/features/create_post/edit_post.dart';
 
 ///edit post ui
+// ignore: must_be_immutable
 class EditPage extends StatefulWidget {
   String postid;
 

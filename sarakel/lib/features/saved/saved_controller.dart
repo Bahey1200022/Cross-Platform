@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/loading_func/loadposts.dart';
-import 'package:sarakel/loading_func/loadcomments.dart';
 import 'package:sarakel/models/post.dart';
 import 'package:sarakel/models/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
