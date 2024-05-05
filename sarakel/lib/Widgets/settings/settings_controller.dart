@@ -20,7 +20,9 @@ class Settings {
   }
 
   void logout(BuildContext context) async {
-    SocketService.instance.socket!.disconnect();
+    if (SocketService.instance.socket != null) {
+      SocketService.instance.socket!.disconnect();
+    }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
     prefs.remove('username');
