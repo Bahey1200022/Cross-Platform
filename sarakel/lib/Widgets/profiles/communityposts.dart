@@ -22,7 +22,6 @@ Future<List<Post>> fetchCommunityPosts(String communityName) async {
     var response = await http.get(
         Uri.parse('$BASE_URL/api/community/$communityName/getPosts'),
         headers: {
-          'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
         });
 

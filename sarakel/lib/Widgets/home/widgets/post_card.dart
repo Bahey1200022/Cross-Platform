@@ -7,6 +7,7 @@ import 'package:sarakel/Widgets/home/post_details_page.dart';
 import 'package:sarakel/Widgets/home/widgets/category.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
+import 'package:sarakel/Widgets/home/widgets/postisLiked.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
 import 'package:sarakel/Widgets/home/widgets/fullscreen_image.dart';
 import 'package:sarakel/constants.dart';
@@ -44,27 +45,16 @@ class _PostCardState extends State<PostCard> {
   bool _isImagePresent() =>
       widget.post.imagePath != null && widget.post.imagePath!.isNotEmpty;
   bool loggedUserPost = false;
-  //bool _isJoined = false;
+
   @override
   void initState() {
     super.initState();
     _checkSavedState();
     _checkLoginStatus();
+    _checkLiked();
+    _checkdownvoted();
     // _checkVoteState();
   }
-
-  // void _checkVoteState() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   List<String> upvotedIds =
-  //       json.decode(prefs.getString('upvotedPosts') ?? '[]');
-  //   List<String> downvotedIds =
-  //       json.decode(prefs.getString('downvotedPosts') ?? '[]');
-
-  //   setState(() {
-  //     widget.post.isUpvoted = upvotedIds.contains(widget.post.id);
-  //     widget.post.isDownvoted = downvotedIds.contains(widget.post.id);
-  //   });
-  // }
 
   void _checkSavedState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -81,6 +71,14 @@ class _PostCardState extends State<PostCard> {
       return true;
     }
     return false;
+  }
+
+  void _checkLiked() async {
+    widget.post.isUpvoted = await isLiked(widget.post.id);
+  }
+
+  void _checkdownvoted() async {
+    widget.post.isDownvoted = await isDisliked(widget.post.id);
   }
 
   Future<void> _checkLoginStatus() async {
@@ -307,35 +305,6 @@ class _PostCardState extends State<PostCard> {
       _isBlurred = !_isBlurred;
     });
   }
-
-  // Future<void> fetchAndStoreVotedPosts(String username) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   try {
-  //     var token = prefs.getString('token');
-  //     var upvoteResponse = await http.get(
-  //       Uri.parse('$BASE_URL/api/user/$username/upvotedids'),
-  //       headers: {'Authorization': 'Bearer $token'},
-  //     );
-  //     var downvoteResponse = await http.get(
-  //       Uri.parse('$BASE_URL/api/user/$username/downvotedids'),
-  //       headers: {'Authorization': 'Bearer $token'},
-  //     );
-
-  //     if (upvoteResponse.statusCode == 200 &&
-  //         downvoteResponse.statusCode == 200) {
-  //       List<String> upvotedIds =
-  //           List<String>.from(json.decode(upvoteResponse.body));
-  //       List<String> downvotedIds =
-  //           List<String>.from(json.decode(downvoteResponse.body));
-
-  //       // Store these ids in SharedPreferences
-  //       await prefs.setString('upvotedPosts', json.encode(upvotedIds));
-  //       await prefs.setString('downvotedPosts', json.encode(downvotedIds));
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching or storing vote states: $e');
-  //   }
-  // }
 
   Widget _buildImageContent() {
     Widget imageContent = widget.post.imagePath != null &&
