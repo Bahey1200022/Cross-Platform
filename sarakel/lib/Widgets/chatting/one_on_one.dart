@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/Widgets/chatting/card.dart';
@@ -11,7 +12,8 @@ import 'package:sarakel/socket.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:http/http.dart' as http;
 
-/// live chat functionality - emitting and receiving messages
+/// live chat functionality - emitting and receiving messages via websockets
+/// api call to trigger socket and listen for new messages
 // ignore: duplicate_ignore
 // ignore: must_be_immutable
 class ChatPage extends StatefulWidget {
@@ -35,17 +37,6 @@ class _ChatPageState extends State<ChatPage> {
   final List messages = [];
 
   final TextEditingController _controller = TextEditingController();
-
-  // void Connect() {
-  //   SocketService.instance.socket!.on("newMessage", (data) {
-  //     print(data);
-  //     messages.add({
-  //       "sender": data["username"],
-  //       "message": data['content'],
-  //       "id": data['_id']
-  //     });
-  //   });
-  // }
 
   void MarkOnline() {
     if (SocketService.instance.socket == null) {
@@ -113,45 +104,53 @@ class _ChatPageState extends State<ChatPage> {
             child: Stack(
               children: [
                 // Chat messages
-                ListView.builder(
-                  // controller: _scrollController,
-                  itemCount:
-                      messages.length + 1, // Add 1 for the avatar message
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      /// Display avatar message for the receiver
-                      return Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              child: Image.asset('assets/avatar_logo.jpeg'),
-                              radius: 30.0,
-                            ),
-                            const SizedBox(height: 10.0),
-                            Text(
-                              'u/${widget.receiver}',
-                              style: const TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      );
-                    } else {
-                      /// Display normal chat message
-                      final messageIndex = index - 1;
-                      final bool isSender =
-                          messages[messageIndex]['sender'] == widget.sender;
-                      return ChatTile(
-                        person: messages[messageIndex]['sender'],
-                        content: messages[messageIndex]['message'],
-                        profilePicture: 'assets/avatar_logo.jpeg',
-                        isSender: isSender,
-                      );
-                    }
+                CustomMaterialIndicator(
+                  onRefresh: () async {
+                    loadPreviousMessages();
                   },
+                  indicatorBuilder: (context, controller) {
+                    return Image.asset('assets/logo_2d.png', width: 30);
+                  },
+                  child: ListView.builder(
+                    itemCount:
+                        messages.length + 1, // Add 1 for the avatar message
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        /// Display avatar message for the receiver
+                        return Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10.0),
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                child: Image.asset('assets/avatar_logo.jpeg'),
+                                radius: 30.0,
+                              ),
+                              const SizedBox(height: 10.0),
+                              Text(
+                                'u/${widget.receiver}',
+                                style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        /// Display normal chat message
+                        final messageIndex = index - 1;
+                        final bool isSender =
+                            messages[messageIndex]['sender'] == widget.sender;
+                        return ChatTile(
+                          person: messages[messageIndex]['sender'],
+                          content: messages[messageIndex]['message'],
+                          profilePicture: 'assets/avatar_logo.jpeg',
+                          isSender: isSender,
+                        );
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
