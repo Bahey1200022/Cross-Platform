@@ -1,5 +1,6 @@
 // community_profile_page.dart
 
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
 import 'package:sarakel/features/mode_tools/moderator_tools.dart';
@@ -173,32 +174,47 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
             Expanded(
               child: TabBarView(
                 children: [
-                  FutureBuilder<List<Post>>(
-                    future: _communityPostsFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (snapshot.hasData) {
-                        return ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                PostCard(
-                                  post: snapshot.data![index],
-                                  onHide: () {},
-                                ),
-                                // const Divider(),
-                              ],
-                            );
-                          },
-                        );
-                      } else {
-                        return const Center(child: Text('No community posts'));
-                      }
+                  CustomMaterialIndicator(
+                    onRefresh: () async {
+                      setState(() {
+                        _communityPostsFuture =
+                            fetchCommunityPosts(widget.community.name);
+                      });
                     },
+                    indicatorBuilder: (context, controller) {
+                      return Image.asset('assets/logo_2d.png', width: 30);
+                    },
+                    child: FutureBuilder<List<Post>>(
+                      future: _communityPostsFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (snapshot.hasData) {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  PostCard(
+                                    post: snapshot.data![index],
+                                    onHide: () {},
+                                  ),
+                                  // const Divider(),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          return const Center(
+                              child: Text('No community posts'));
+                        }
+                      },
+                    ),
                   ),
                   const Center(
                     child: Text('Saved Comments View'),

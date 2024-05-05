@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/drawers/community_drawer/community_list.dart';
 import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
@@ -186,45 +187,55 @@ class _SarakelRandomScreenState extends State<SarakelRandomScreen> {
       ),
       body: postsToShow == null
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: postsToShow!.length,
-              itemBuilder: (context, index) {
-                final post = postsToShow![index];
-                if (hiddenPostIds.contains(post.id)) {
-                  // If post is hidden, show an Undo button
-                  return Card(
-                    child: ListTile(
-                      title: const Text('Post hidden'),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.undo),
-                        onPressed: () {
-                          setState(() {
-                            hiddenPostIds.remove(post.id);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        "Post Unhidden"))); // Unhide the post
-                          });
-                        },
-                      ),
-                    ),
-                  );
-                } else {
-                  // Show the post
-                  return PostCard(
-                    post: post,
-                    onHide: () {
-                      setState(() {
-                        hiddenPostIds
-                            .add(post.id); // Adjust based on your API response
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Post Hidden")));
-                        // Hide the post
-                      });
-                    },
-                  );
-                }
+          : CustomMaterialIndicator(
+              onRefresh: () async {
+                final posts =
+                    await widget.homescreenController.loadRandomPosts();
+                setState(() => postsToShow = posts);
               },
+              indicatorBuilder: (context, controller) {
+                return Image.asset('assets/logo_2d.png', width: 30);
+              },
+              child: ListView.builder(
+                itemCount: postsToShow!.length,
+                itemBuilder: (context, index) {
+                  final post = postsToShow![index];
+                  if (hiddenPostIds.contains(post.id)) {
+                    // If post is hidden, show an Undo button
+                    return Card(
+                      child: ListTile(
+                        title: const Text('Post hidden'),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.undo),
+                          onPressed: () {
+                            setState(() {
+                              hiddenPostIds.remove(post.id);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          "Post Unhidden"))); // Unhide the post
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  } else {
+                    // Show the post
+                    return PostCard(
+                      post: post,
+                      onHide: () {
+                        setState(() {
+                          hiddenPostIds.add(
+                              post.id); // Adjust based on your API response
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Post Hidden")));
+                          // Hide the post
+                        });
+                      },
+                    );
+                  }
+                },
+              ),
             ),
       bottomNavigationBar: CustomBottomNavigationBar(
         currentIndex: _selectedIndex,
