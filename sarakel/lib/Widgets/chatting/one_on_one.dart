@@ -35,18 +35,17 @@ class _ChatPageState extends State<ChatPage> {
   final List messages = [];
 
   final TextEditingController _controller = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
 
-  void Connect() {
-    SocketService.instance.socket!.on("newMessage", (data) {
-      print(data);
-      messages.add({
-        "sender": data["username"],
-        "message": data['content'],
-        "id": data['_id']
-      });
-    });
-  }
+  // void Connect() {
+  //   SocketService.instance.socket!.on("newMessage", (data) {
+  //     print(data);
+  //     messages.add({
+  //       "sender": data["username"],
+  //       "message": data['content'],
+  //       "id": data['_id']
+  //     });
+  //   });
+  // }
 
   void MarkOnline() {
     if (SocketService.instance.socket == null) {
@@ -86,18 +85,18 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    //Connect();
     MarkOnline();
     loadPreviousMessages();
     SocketService.instance.socket!.on('newMessage', (data) {
-      setState(() {
-        messages.add({
-          "sender": data['username'],
-          "message": data['content'],
-          "id": data['_id']
+      if (mounted) {
+        setState(() {
+          messages.add({
+            "sender": data['username'],
+            "message": data['content'],
+            "id": data['_id']
+          });
         });
-      });
-      //_scrollToBottom();
+      }
     });
   }
 
@@ -115,7 +114,7 @@ class _ChatPageState extends State<ChatPage> {
               children: [
                 // Chat messages
                 ListView.builder(
-                  controller: _scrollController,
+                  // controller: _scrollController,
                   itemCount:
                       messages.length + 1, // Add 1 for the avatar message
                   itemBuilder: (context, index) {
