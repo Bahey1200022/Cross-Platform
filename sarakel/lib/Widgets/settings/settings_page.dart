@@ -139,11 +139,13 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             leading: const Icon(Icons.alternate_email_outlined),
             title: const Text('Google'),
-            trailing: swicthval1['signedInWithGoogle']
-                ? const Icon(
-                    Icons.check,
-                    color: Colors.green,
-                  )
+            trailing: swicthval1['signedInWithGoogle'] != null
+                ? swicthval1['signedInWithGoogle']
+                    ? const Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      )
+                    : null
                 : null,
           ),
           ListTile(
