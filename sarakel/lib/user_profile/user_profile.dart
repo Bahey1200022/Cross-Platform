@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
-import 'package:sarakel/Widgets/home/homescreen.dart';
+import 'package:sarakel/Widgets/home/widgets/comment_card.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
+import 'package:sarakel/models/comment.dart';
 import 'package:sarakel/models/post.dart';
 import 'package:sarakel/user_profile/user_controller.dart';
 import 'package:sarakel/user_profile/user_space_bar.dart';
@@ -24,6 +24,8 @@ class _UserProfile extends State<UserProfile> {
   bool loggeduserIconIsVisible = false;
 
   List<Post> postsToShow = [];
+  List<Comment> commentsToShow = [];
+
   List<Widget> getTabWidgets(String tabName) {
     switch (tabName) {
       case "Posts":
@@ -44,8 +46,17 @@ class _UserProfile extends State<UserProfile> {
         ];
       case "Comments":
         return [
-          const Text("Comments"),
+          ListView.builder(
+              itemCount: commentsToShow.length,
+              itemBuilder: (context, index) {
+                final comment = commentsToShow[index];
 
+                // Show the post
+                return CommentCard(
+                  comment: comment,
+                  onReply: (String param1, String param2) {},
+                );
+              }),
           // Add more widgets as needed
         ];
 
@@ -64,6 +75,11 @@ class _UserProfile extends State<UserProfile> {
     loadUserPosts(widget.user!.username!).then((posts) {
       if (mounted) {
         setState(() => postsToShow = posts);
+      }
+    });
+    loadUserComments(widget.user!.username!).then((comments) {
+      if (mounted) {
+        setState(() => commentsToShow = comments);
       }
     });
   }

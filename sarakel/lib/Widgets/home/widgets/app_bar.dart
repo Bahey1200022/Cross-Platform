@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
@@ -5,10 +7,11 @@ import 'package:sarakel/providers/user_provider.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  String? photo;
   final GlobalKey<ScaffoldState>?
       scaffoldKey; // Accept scaffoldKey as parameter
 
-  const CustomAppBar({
+  CustomAppBar({
     super.key,
     required this.title,
     this.scaffoldKey, // Mark scaffoldKey as nullable

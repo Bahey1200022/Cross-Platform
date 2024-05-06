@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:sarakel/models/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sarakel/constants.dart';
@@ -61,5 +62,25 @@ Future<List<Post>> loadUserPosts(String username) async {
   } catch (e) {
     // Return an empty list if an error occurs
     return <Post>[];
+  }
+}
+
+Future<List<Comment>> loadUserComments(String username) async {
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    var response = await http.get(
+        Uri.parse('$BASE_URL/api/user/$username/comments'),
+        headers: <String, String>{'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      List<dynamic> fetchedComments = jsonData['userComments'];
+      return fetchedComments.map((json) => Comment.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load comments: ${response.body}');
+    }
+  } catch (e) {
+    // Return an empty list if an error occurs
+    return <Comment>[];
   }
 }

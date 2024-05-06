@@ -64,12 +64,13 @@ class sarakelSearch extends SearchDelegate {
                     name: suggestionList[index]['communityName'] ?? "",
                     description: suggestionList[index]['description'] ??
                         'Sarakel Community',
-                    image: suggestionList[index]['displayPicUrl'],
-                    backimage: suggestionList[index]['backgroundPicUrl'],
+                    image: suggestionList[index]['displayPicUrl'] ?? "",
+                    backimage: suggestionList[index]['backgroundPicUrl'] ?? "",
                     is18Plus: suggestionList[index]['isNSFW'] ?? false,
                     type: suggestionList[index]['type'] ?? 'public',
                   );
-                  var moderatorsList = suggestionList[index]['moderators'];
+                  var moderatorsList =
+                      suggestionList[index]['moderators'] ?? [];
                   String? username = prefs.getString('username');
                   if (username != null &&
                       moderatorsList != null &&
@@ -96,17 +97,17 @@ class sarakelSearch extends SearchDelegate {
                   }
                 } else if (Type == 'Post') {
                   Post post = Post(
-                    id: suggestionList[index]['_id'],
-                    title: suggestionList[index]['title'],
-                    content: suggestionList[index]['content'],
-                    communityName: suggestionList[index]['communityId'],
-                    communityId: suggestionList[index]['communityId'],
-                    username: suggestionList[index]['username'],
-                    upVotes: suggestionList[index]['upvotes'],
-                    downVotes: suggestionList[index]['downvotes'],
-                    comments: 0,
-                    isNSFW: true,
-                    isSpoiler: suggestionList[index]['isSpoiler'],
+                    id: suggestionList[index]['_id'] ?? "",
+                    title: suggestionList[index]['title'] ?? "",
+                    content: suggestionList[index]['content'] ?? "",
+                    communityName: suggestionList[index]['communityId'] ?? "",
+                    communityId: suggestionList[index]['communityId'] ?? "",
+                    username: suggestionList[index]['username'] ?? "",
+                    upVotes: suggestionList[index]['upvotes'] ?? 0,
+                    downVotes: suggestionList[index]['downvotes'] ?? 0,
+                    comments: suggestionList[index]['numberOfComments'] ?? 0,
+                    isNSFW: suggestionList[index]['nsfw'] ?? false,
+                    isSpoiler: suggestionList[index]['isSpoiler'] ?? false,
                     imagePath: suggestionList[index]['media'] != null
                         ? (suggestionList[index]['media'] is List &&
                                 (suggestionList[index]['media'] as List)
@@ -160,7 +161,7 @@ class sarakelSearch extends SearchDelegate {
                 ),
               ),
               subtitle: Text(
-                suggestionList[index]['Type'],
+                suggestionList[index]['Type'] ?? 'Default value',
                 style: const TextStyle(
                   color: Colors.grey,
                 ),

@@ -6,7 +6,8 @@ class inboxMessage extends StatelessWidget {
   String? title;
   String? content;
   final String sender;
-  inboxMessage({super.key, 
+  inboxMessage({
+    super.key,
     required this.recipient,
     this.title,
     this.content,
@@ -18,6 +19,7 @@ class inboxMessage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Message'),
+          centerTitle: true,
         ),
         body: Column(
           children: [

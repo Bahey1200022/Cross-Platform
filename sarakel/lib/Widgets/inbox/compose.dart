@@ -19,6 +19,7 @@ class _ComposeState extends State<Compose> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Compose'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

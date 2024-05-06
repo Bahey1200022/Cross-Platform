@@ -34,7 +34,9 @@ Future<List<dynamic>> fetchSuggestions(String query) async {
         suggestion['Type'] = 'Community';
       }
     }
-
-    return suggestions;
+    List<dynamic> filteredSuggestions = suggestions
+        .where((suggestion) => suggestion.containsKey('Type'))
+        .toList();
+    return filteredSuggestions;
   }
 }

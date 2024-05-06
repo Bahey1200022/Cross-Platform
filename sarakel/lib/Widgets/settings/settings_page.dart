@@ -57,9 +57,9 @@ class _SettingsPageState extends State<SettingsPage> {
     Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(widget.token);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(' Settings '),
-      ),
+      // appBar: AppBar(
+      //     // title: const Text(' Settings '),
+      //     ),
       body: ListView(
         children: [
           ListTile(
@@ -139,11 +139,13 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             leading: const Icon(Icons.alternate_email_outlined),
             title: const Text('Google'),
-            trailing: widget.settings.googleConnected(widget.token)
-                ? const Icon(
-                    Icons.check,
-                    color: Colors.green,
-                  )
+            trailing: swicthval1['signedInWithGoogle'] != null
+                ? swicthval1['signedInWithGoogle']
+                    ? const Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      )
+                    : null
                 : null,
           ),
           ListTile(

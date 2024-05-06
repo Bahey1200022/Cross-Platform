@@ -6,6 +6,7 @@ class Community {
   final String type;
   final bool is18Plus;
   String? backimage;
+  String? rules;
   Community(
       {required this.id,
       required this.name,
@@ -13,5 +14,6 @@ class Community {
       required this.image,
       required this.is18Plus,
       required this.type,
-      this.backimage});
+      this.backimage,
+      this.rules});
 }

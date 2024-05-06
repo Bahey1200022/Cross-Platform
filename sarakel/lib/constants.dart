@@ -1,4 +1,9 @@
+///For ip address definition
+library;
+
 const ip = '57.151.116.81'; //don't change this ever
+//ged3an ma7adesh yeghayar da 3ayez teghayar fel beta3 e3mel comment lel base url el oula
+//w 7ot el ip address beta3ak fel base url el tanya
 
 const BASE_URL = 'http://$ip:5000';
 

@@ -65,7 +65,7 @@ class ButtonCard extends StatelessWidget {
               ),
             );
           } else {
-            /////go to see message            
+            /////go to see message
             await readMessage(token, id);
             Navigator.push(
               context,
