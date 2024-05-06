@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/models/user.dart';
+import 'package:sarakel/user_profile/edit%20_pi.dart';
+import 'package:sarakel/user_profile/get_userpic.dart';
 import 'package:sarakel/user_profile/new_chat.dart';
 import 'package:sarakel/user_profile/user_visibility.dart';
 import 'package:sarakel/user_profile/url_sheet.dart';
@@ -22,10 +24,20 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
     super.initState();
 
     initializeVisibility();
+    checkpic();
   }
 
   void initializeVisibility() async {
     loggeduserIconIsVisible = await isLoggedInUser(widget.user!.username!);
+  }
+
+  void checkpic() async {
+    String photo = await getPicUrl(widget.user!.username!);
+    setState(() {
+      widget.user?.photoUrl = photo;
+    });
+    print('hii');
+    print(widget.user?.photoUrl);
   }
 
   Widget build(BuildContext context) {
@@ -54,10 +66,15 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
               child: ClipOval(
                 child: SizedBox.fromSize(
                   size: const Size.fromRadius(50), // Image radius
-                  child: Image.asset(
-                    'assets/avatar_logo.jpeg',
-                    fit: BoxFit.contain,
-                  ),
+                  child: widget.user?.photoUrl != null
+                      ? Image.network(
+                          widget.user!.photoUrl!,
+                          fit: BoxFit.contain,
+                        )
+                      : Image.asset(
+                          'assets/avatar_logo.jpeg',
+                          fit: BoxFit.contain,
+                        ),
                 ),
               ),
             ),
@@ -68,7 +85,9 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
               child: Visibility(
                 visible: loggeduserIconIsVisible,
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    editPic();
+                  },
                   child: const Text(
                     'Edit',
                     style: TextStyle(color: Colors.white),

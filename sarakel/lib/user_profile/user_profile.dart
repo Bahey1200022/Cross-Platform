@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
-import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/models/post.dart';
 import 'package:sarakel/user_profile/user_controller.dart';
