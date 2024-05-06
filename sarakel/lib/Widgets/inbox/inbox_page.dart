@@ -11,6 +11,7 @@ import '../drawers/profile_drawer.dart';
 import '../../models/user.dart';
 import '../home/widgets/bottom_bar.dart';
 import 'package:http/http.dart' as http;
+import '../home/widgets/app_bar.dart';
 
 /// Email message like class where it displays the user's inbox
 class InboxSection extends StatefulWidget {
@@ -68,15 +69,8 @@ class _InboxSectionState extends State<InboxSection>
 
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: const Text('Inbox'),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const [
-            Tab(text: 'Messages'),
-            Tab(text: 'Notifications'),
-          ],
-        ),
+      appBar: CustomAppBar(
+        title: 'Inbox',
       ),
       drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(
@@ -85,35 +79,49 @@ class _InboxSectionState extends State<InboxSection>
           token: widget.token,
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
+      body: Column(
         children: [
-          // Messages Tab
-          Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: messageCard.isNotEmpty ? messageCard.length : 0,
-                  itemBuilder: (context, index) {
-                    return ButtonCard(
-                      sender: messageCard[index]['recipient'],
-                      receiver: messageCard[index]['username'],
-                      id: messageCard[index]["_id"],
-                      token: widget.token,
-                      status: messageCard[index]['status'],
-                      icon: const Icon(Icons.person),
-                      live: false,
-                      title: messageCard[index]['title'],
-                      content: messageCard[index]['content'],
-                    );
-                  },
-                ),
-              ),
+          TabBar(
+            controller: _tabController,
+            tabs: const [
+              Tab(text: 'Messages'),
+              Tab(text: 'Notifications'),
             ],
           ),
-          // Notifications Tab
-          const Center(
-            child: Text('Notifications'),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                // Messages Tab
+                Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount:
+                            messageCard.isNotEmpty ? messageCard.length : 0,
+                        itemBuilder: (context, index) {
+                          return ButtonCard(
+                            sender: messageCard[index]['recipient'],
+                            receiver: messageCard[index]['username'],
+                            id: messageCard[index]["_id"],
+                            token: widget.token,
+                            status: messageCard[index]['status'],
+                            icon: const Icon(Icons.person),
+                            live: false,
+                            title: messageCard[index]['title'],
+                            content: messageCard[index]['content'],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                // Notifications Tab
+                const Center(
+                  child: Text('Notifications'),
+                ),
+              ],
+            ),
           ),
         ],
       ),
