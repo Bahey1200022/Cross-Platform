@@ -11,10 +11,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import '../../models/community.dart';
 import 'add_post_controller.dart';
-//import 'dart:html' as html;
 import 'dart:async';
 import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class CreatePost extends StatefulWidget {
   final String token;
