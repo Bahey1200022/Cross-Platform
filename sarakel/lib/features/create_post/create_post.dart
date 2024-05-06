@@ -13,12 +13,16 @@ import '../../models/community.dart';
 import 'add_post_controller.dart';
 import 'dart:async';
 import 'package:sarakel/Widgets/home/homescreen.dart';
+import 'schedule_post.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreatePost extends StatefulWidget {
   final String token;
+  final DateTime selectedDate;
+  final TimeOfDay selectedTime;
+  final Function(bool) onScheduled;
 
-  const CreatePost({super.key, required this.token});
+  const CreatePost({super.key, required this.token, required this.selectedDate, required this.selectedTime, required this.onScheduled});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -42,6 +46,10 @@ class _CreatePostPageState extends State<CreatePost> {
   File? _video;
   Image? thumbnail;
   VideoPlayerController? _videoController;
+  DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
+  bool _isScheduled = false;
+  
 
   @override
   void initState() {
@@ -50,6 +58,8 @@ class _CreatePostPageState extends State<CreatePost> {
       setState(() {
         communities = fetchedCommunities;
       });
+      _selectedDate = widget.selectedDate;
+      _selectedTime = widget.selectedTime;
       //appState.communities = fetchedCommunities;
       // ignore: avoid_print
       print('Communities loaded: ${communities!.length}');
@@ -67,7 +77,7 @@ class _CreatePostPageState extends State<CreatePost> {
     super.dispose();
     _videoController?.dispose();
   }
-
+  
   void toggleUrlVisibility() {
     setState(() {
       isUrlVisible = !isUrlVisible;
@@ -170,6 +180,23 @@ class _CreatePostPageState extends State<CreatePost> {
     });
   }
 
+    void _schedulePost(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SchedulePostScreen(
+          selectedDate: _selectedDate,
+          selectedTime: _selectedTime,
+          onScheduled: (isScheduled) {
+            setState(() {
+              _isScheduled = isScheduled;
+            });
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,6 +210,12 @@ class _CreatePostPageState extends State<CreatePost> {
           },
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              _schedulePost(context);
+            },
+          ),
           TextButton(
             onPressed: () async {
               if (selectedCommunity != null) {
@@ -231,7 +264,7 @@ class _CreatePostPageState extends State<CreatePost> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                (selectedCommunity != null) ? 'Post' : 'Next',
+                (selectedCommunity != null && _isScheduled==false) ? 'Post' : (_isScheduled == true) ? 'Schedule' : 'Next',
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
