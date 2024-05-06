@@ -3,6 +3,7 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
+import 'package:sarakel/Widgets/profiles/community_info.dart';
 import 'package:sarakel/features/mode_tools/moderator_tools.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button_controller.dart';
@@ -165,7 +166,15 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
             ),
             const SizedBox(height: 16),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InfoCommunity(
+                        community: widget.community, token: widget.token),
+                  ),
+                );
+              },
               child: const Text(
                 'See Community Info',
                 style: TextStyle(color: Colors.blue),

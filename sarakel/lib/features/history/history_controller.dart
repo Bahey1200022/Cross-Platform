@@ -10,8 +10,8 @@ Future<List<Post>> loadRecentHistory() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString('token');
   var username = prefs.getString('username');
-  var response = await http
-      .get(Uri.parse('$BASE_URL/api/$username/recentlyViewedPosts'), headers: {
+  var response =
+      await http.get(Uri.parse('$BASE_URL/api/recentlyViewedPosts'), headers: {
     'Authorization': 'Bearer $token',
     'Content-Type': 'application/json',
   });
