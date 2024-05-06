@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
 
@@ -17,6 +19,8 @@ class AddPostController {
     bool isBA,
     File? image,
     File? video,
+    DateTime? date,
+    TimeOfDay? time,
   ) async {
     try {
       // if (title.trim().isNotEmpty) {
@@ -83,6 +87,10 @@ class AddPostController {
           'isSpoiler': isSpoiler.toString(),
           'nsfw': isNSFW.toString(),
           'ac': isBA.toString(),
+          'scheduled': jsonEncode({
+            'date': date?.toIso8601String(),
+            'time': time != null ? '${time.hour}:${time.minute}' : null,
+            }),          
         };
 
         final http.MultipartRequest request =
@@ -111,7 +119,7 @@ class AddPostController {
         final http.StreamedResponse response = await request.send();
 
         if (response.statusCode == 201 || response.statusCode == 200) {
-          print('Post added successfully');
+          print('Post added successfully with $date and $time');
           print('Response body: ${await response.stream.bytesToString()}');
         } else {
           print('Failed to add post. Status code: ${response.statusCode}');

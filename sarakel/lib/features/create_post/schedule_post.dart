@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SchedulePostScreen extends StatefulWidget {
   final DateTime selectedDate;
   final TimeOfDay selectedTime;
-  final Function(bool) onScheduled;
+  final Function(bool, DateTime, TimeOfDay) onScheduled;
 
   SchedulePostScreen({
     required this.selectedDate,
@@ -15,7 +15,6 @@ class SchedulePostScreen extends StatefulWidget {
   @override
   _SchedulePostScreenState createState() => _SchedulePostScreenState();
 }
-
 
 class _SchedulePostScreenState extends State<SchedulePostScreen> {
   bool _isScheduled = false;
@@ -34,7 +33,7 @@ class _SchedulePostScreenState extends State<SchedulePostScreen> {
     setState(() {
       _isScheduled = prefs.getBool('isScheduled') ?? false;
     });
-    widget.onScheduled(_isScheduled);
+    widget.onScheduled(_isScheduled, _selectedDate, _selectedTime);
   }
 
   void _loadDateTime() async {
@@ -49,7 +48,7 @@ class _SchedulePostScreenState extends State<SchedulePostScreen> {
   void _saveSwitchState(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isScheduled', value);
-    widget.onScheduled(value);
+    widget.onScheduled(value, _selectedDate, _selectedTime);
     if (!value) {
       // Clear date and time if switch is turned off
       prefs.remove('selectedDate');
@@ -61,6 +60,8 @@ class _SchedulePostScreenState extends State<SchedulePostScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('selectedDate', date.toString());
     prefs.setString('selectedTime', "${time.hour}:${time.minute}");
+    print('Date: $date, Time: $time');
+    widget.onScheduled(_isScheduled, date, time);
   }
 
   @override
@@ -75,7 +76,6 @@ class _SchedulePostScreenState extends State<SchedulePostScreen> {
             title: Text('Schedule post'),
             trailing: Switch(
               value: _isScheduled,
-              
               activeColor: Colors.blue,
               onChanged: (value) {
                 setState(() {

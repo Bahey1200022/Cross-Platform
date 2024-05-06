@@ -187,9 +187,13 @@ class _CreatePostPageState extends State<CreatePost> {
         return SchedulePostScreen(
           selectedDate: _selectedDate,
           selectedTime: _selectedTime,
-          onScheduled: (isScheduled) {
+          onScheduled: (isScheduled, selectedDate, selectedTime) {
             setState(() {
               _isScheduled = isScheduled;
+              _selectedDate = selectedDate;
+              _selectedTime = selectedTime;
+             print('dateww: $_selectedDate, timeww: $_selectedTime');
+
             });
           },
         );
@@ -239,7 +243,9 @@ class _CreatePostPageState extends State<CreatePost> {
                     isNSFW,
                     isBA,
                     _image,
-                    _video);
+                    _video,
+                    _selectedDate,
+                    _selectedTime);
                 Navigator.pushAndRemoveUntil(
                   // ignore: use_build_context_synchronously
                   context,
