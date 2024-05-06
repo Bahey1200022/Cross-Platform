@@ -20,18 +20,16 @@ Future<List<Post>> loadUserPosts(String username) async {
   try {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
-    print(username);
+    //print(username);
     var response = await http.get(
         Uri.parse('$BASE_URL/api/user/$username/submitted'),
         headers: <String, String>{'Authorization': 'Bearer $token'});
-    print(response.statusCode);
+    //print(response.statusCode);
     if (response.statusCode == 200) {
-      print("inside the if");
+      // print("inside the if");
       var jsonData = json.decode(response.body);
-      print(jsonData['posts']);
+      //print(jsonData['posts']);
       List<dynamic> fetchedPosts = jsonData['posts'];
-      print(fetchedPosts.length);
-      print(fetchedPosts);
 
       List<Post> posts = fetchedPosts.map((p) {
         return Post(
