@@ -1,6 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/features/mode_tools/user_management/moderators/moderators_service.dart';
+import 'package:sarakel/user_profile/user_profile.dart';
+import 'package:sarakel/models/user.dart';
 
-class ModeratorSearchPage extends StatelessWidget {
+/// This class represents the search page where users can search for moderators by typing their usernames.
+/// It allows users to input a username in a TextField and displays the matching moderator if found.
+class ModeratorSearchPage extends StatefulWidget {
+  final String token;
+  final String communityName;
+
+  ModeratorSearchPage({
+    required this.token,
+    required this.communityName,
+  });
+
+  @override
+  _ModeratorSearchPageState createState() => _ModeratorSearchPageState();
+}
+
+/// This stateful widget represents the state for the ModeratorSearchPage.
+/// It manages the UI state and handles fetching and displaying moderators based on user input.
+class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
+  final TextEditingController _controller = TextEditingController();
+  String? moderatorName;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,25 +32,29 @@ class ModeratorSearchPage extends StatelessWidget {
         child: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          automaticallyImplyLeading: false, // Removes the back arrow
+          automaticallyImplyLeading: false,
           title: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
-                    autofocus: true, // Focus the text field on page load
+                    autofocus: true,
+                    controller: _controller,
+                    onChanged: fetchModerator,
                     decoration: InputDecoration(
                       hintText: 'Search by username',
                       prefixIcon: Icon(
                         Icons.search,
-                        color: Colors.black, // Color of the search icon
+                        color: Colors.black,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 12.0),
+                        horizontal: 16.0,
+                        vertical: 12.0,
+                      ),
                     ),
                   ),
                 ),
@@ -43,7 +70,7 @@ class ModeratorSearchPage extends StatelessWidget {
                       style: TextStyle(
                         color: Color.fromARGB(255, 124, 119, 119),
                         fontWeight: FontWeight.bold,
-                        fontSize: 14, // Smaller font size
+                        fontSize: 14,
                       ),
                     ),
                   ),
@@ -53,25 +80,87 @@ class ModeratorSearchPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Search by username',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20, // Increased font size
+      body: Column(
+        children: [
+          if (moderatorName != null)
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text(
+                moderatorName!,
+                style: TextStyle(fontSize: 18),
               ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserProfile(
+                      user: User(
+                        username: moderatorName!,
+                        token: widget.token,
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
-            SizedBox(height: 8),
-            Text(
-              'Only exact matches will be found',
-              style: TextStyle(fontSize: 18), // Increased font size
+          Expanded(
+            child: Center(
+              child: moderatorName == null
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Search by username',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Only exact matches will be found',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    )
+                  : SizedBox.shrink(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
+  }
+
+  /// Fetches the moderator based on the provided username.
+  /// If the username matches a moderator, it updates the UI to display the moderator.
+  /// If no match is found, it resets the UI.
+  void fetchModerator(String value) {
+    if (value.isEmpty) {
+      setState(() {
+        moderatorName = null;
+      });
+      return;
+    }
+
+    ModerationService.getModerators(widget.token, widget.communityName)
+        .then((moderators) {
+      if (moderators.contains(value)) {
+        setState(() {
+          moderatorName = value;
+        });
+      } else {
+        setState(() {
+          moderatorName = null;
+        });
+      }
+    }).catchError((error) {
+      print('Error fetching moderators: $error');
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
