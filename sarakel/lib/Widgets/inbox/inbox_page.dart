@@ -10,7 +10,6 @@ import '../drawers/community_drawer/community_list.dart';
 import '../drawers/profile_drawer.dart';
 import '../../models/user.dart';
 import '../home/widgets/bottom_bar.dart';
-import '../home/widgets/app_bar.dart';
 import 'package:http/http.dart' as http;
 
 /// Email message like class where it displays the user's inbox
@@ -70,10 +69,10 @@ class _InboxSectionState extends State<InboxSection>
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Inbox'),
+        title: const Text('Inbox'),
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
             Tab(text: 'Messages'),
             Tab(text: 'Notifications'),
           ],
@@ -113,7 +112,7 @@ class _InboxSectionState extends State<InboxSection>
             ],
           ),
           // Notifications Tab
-          Center(
+          const Center(
             child: Text('Notifications'),
           ),
         ],
@@ -132,10 +131,10 @@ class _InboxSectionState extends State<InboxSection>
                           ),
                         );
                       },
-                      icon: Icon(Icons.add),
-                      label: Text('New Message'),
+                      icon: const Icon(Icons.add),
+                      label: const Text('New Message'),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     ElevatedButton.icon(
                       onPressed: () {
                         Navigator.push(
@@ -145,8 +144,8 @@ class _InboxSectionState extends State<InboxSection>
                           ),
                         );
                       },
-                      icon: Icon(Icons.mail),
-                      label: Text('Sent Messages'),
+                      icon: const Icon(Icons.mail),
+                      label: const Text('Sent Messages'),
                     ),
                   ],
                 )

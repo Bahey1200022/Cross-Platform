@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 ///edit post function
 void editpost(String postid, String post) async {
   // Edit post
-  print(postid);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString('token');
   var response = await http.post(
@@ -23,8 +22,5 @@ void editpost(String postid, String post) async {
     }),
   );
   if (response.statusCode == 200) {
-    print(response.body);
-  } else {
-    print('Failed to edit post');
-  }
+  } else {}
 }

@@ -5,6 +5,7 @@ import 'package:sarakel/Widgets/drawers/community_drawer/community_list.dart';
 import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
 import 'package:sarakel/Widgets/home/hot.dart';
 import 'package:sarakel/Widgets/home/random.dart';
+import 'package:sarakel/Widgets/home/widgets/postisLiked.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
 import '../../models/post.dart';
 import 'controllers/home_screen_controller.dart';
@@ -31,6 +32,8 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
   @override
   void initState() {
     super.initState();
+    getmarked();
+
     widget.homescreenController.loadPosts().then((posts) {
       setState(() => postsToShow = posts);
     });

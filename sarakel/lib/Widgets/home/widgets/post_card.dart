@@ -21,6 +21,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 
 /// all post cards functionality features
+// ignore: must_be_immutable
 class PostCard extends StatefulWidget {
   final Post post;
   bool? saved;
@@ -42,7 +43,7 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool hasBeenShared = false;
-  bool _isBlurred = true;
+  bool _isBlurred = false;
   bool _isImagePresent() =>
       widget.post.imagePath != null && widget.post.imagePath!.isNotEmpty;
   bool loggedUserPost = false;
@@ -54,6 +55,7 @@ class _PostCardState extends State<PostCard> {
     _checkLoginStatus();
     _checkLiked();
     _checkdownvoted();
+    _isBlurred = widget.post.isNSFW!;
     // _checkVoteState();
   }
 
@@ -315,7 +317,8 @@ class _PostCardState extends State<PostCard> {
                 videoLink: widget.post.imagePath!) // Custom widget for video
             : ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(widget.post.imagePath!, fit: BoxFit.cover),
+                child: Image.network(widget.post.imagePath!,
+                    fit: BoxFit.cover, width: 300, height: 300),
               )
         : Image.asset('assets/apple.jpg'); // Default image if none provided
 

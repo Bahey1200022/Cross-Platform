@@ -36,7 +36,7 @@ class _ChatSection extends State<ChatSection> {
         key: _scaffoldKey, // Provide the GlobalKey to the Scaffold
 
         appBar: CustomAppBar(
-          title: 'chat',
+          title: 'Chat',
           scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
         ),
         drawer: CommunityDrawer(
@@ -51,7 +51,8 @@ class _ChatSection extends State<ChatSection> {
           future: loadConversation(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return Center(
+                  child: Image.asset('assets/logo_2d.png', width: 30));
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
@@ -62,7 +63,7 @@ class _ChatSection extends State<ChatSection> {
                   final conversation = conversations[index];
                   return ButtonCard(
                     receiver: conversation['users'],
-                    icon: const Icon(Icons.person),
+                    icon: Image.asset('assets/avatar_logo.jpeg'),
                     sender: jwtdecodedtoken['username'],
                     token: widget.token,
                     live: true,

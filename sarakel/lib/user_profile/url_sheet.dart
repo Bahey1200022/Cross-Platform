@@ -12,6 +12,18 @@ class UrlSheet extends StatelessWidget {
       // mainAxisAlignment:
       //     MainAxisAlignment.center,
       children: [
+        const Text('Add Social Link',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+        const Divider(
+          color: Colors.grey,
+          thickness: 1,
+          indent: 150,
+          endIndent: 150,
+        ),
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,

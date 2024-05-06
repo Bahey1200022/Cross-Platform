@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/socket.dart';
+import 'package:sarakel/user_profile/get_userpic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../home/controllers/home_screen_controller.dart';
@@ -86,10 +87,13 @@ class UserController {
         Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(token);
         String user = jwtdecodedtoken['username'];
         prefs!.setString('token', token);
+        String photo = await getPicUrl(user);
+
+        prefs!.setString('photo', photo);
 
         SocketService.instance.connect(BASE_URL, user);
         requestPermission();
-        getTokens(user);
+        getTokens(user, token);
         Navigator.push(
             context,
             MaterialPageRoute(

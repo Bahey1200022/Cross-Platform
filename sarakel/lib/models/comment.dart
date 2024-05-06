@@ -1,3 +1,5 @@
+import 'package:sarakel/loading_func/loadposts.dart';
+
 class Comment {
   final String id;
   final String postID;
@@ -33,7 +35,7 @@ class Comment {
       postID: json['postID'],
       content: json['content'],
       userID: json['userID'],
-      dateTime: json['dateTime'],
+      dateTime: formatDateTime(json['dateTime']),
       upvote: json['upvote'] ?? 0,
       downVote: json['downVote'] ?? 0,
       isSpoiler: json['isSpoiler'] ?? false,
