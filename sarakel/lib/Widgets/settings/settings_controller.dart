@@ -30,18 +30,41 @@ class Settings {
   }
 
   void deleteAccount(BuildContext context, String token) async {
-    SocketService.instance.socket!.disconnect();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Account'),
+          content: const Text('Are you sure you want to Leave The Sarakel ?'),
+          actions: [
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Delete'),
+              onPressed: () async {
+                if (SocketService.instance.socket != null) {
+                  SocketService.instance.socket!.disconnect();
+                }
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                var response = await http.delete(
+                  Uri.parse('$BASE_URL/api/v1/me/delete_profile'),
+                  headers: {
+                    'Authorization': 'Bearer $token',
+                  },
+                );
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var response = await http.delete(
-      Uri.parse('$BASE_URL/api/v1/me/delete_profile'),
-      headers: {
-        'Authorization': 'Bearer $token',
+                prefs.remove('token');
+                Navigator.pushNamed(context, '/welcome');
+              },
+            ),
+          ],
+        );
       },
     );
-
-    prefs.remove('token');
-    Navigator.pushNamed(context, '/welcome');
   }
 
   Future<String?> country(BuildContext context) async {
