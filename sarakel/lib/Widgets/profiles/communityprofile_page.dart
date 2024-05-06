@@ -110,7 +110,7 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                     Text(
                       'c/${widget.community.name}',
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
