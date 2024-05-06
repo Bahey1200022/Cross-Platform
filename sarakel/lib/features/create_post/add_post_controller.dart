@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
@@ -117,7 +119,6 @@ class AddPostController {
         }
       }
     } catch (e) {
-      // ignore: avoid_print
       print('Error adding post: $e');
     }
   }

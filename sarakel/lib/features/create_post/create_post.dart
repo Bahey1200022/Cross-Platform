@@ -14,7 +14,6 @@ import 'add_post_controller.dart';
 import 'dart:async';
 import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class CreatePost extends StatefulWidget {
   final String token;
@@ -147,7 +146,6 @@ class _CreatePostPageState extends State<CreatePost> {
     }
     setState(() {
       _video = selectedVideo;
-      print(_video!.path);
     });
   }
 

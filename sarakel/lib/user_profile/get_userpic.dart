@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +16,6 @@ Future<String> getPicUrl(String username) async {
 
   if (response.statusCode == 200) {
     var jsondata = jsonDecode(response.body);
-    print('ehhhhh');
     return jsondata['profilePicture'];
   } else {
     return '';
