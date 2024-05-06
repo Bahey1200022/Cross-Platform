@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/features/mode_tools/user_management/approved_users.dart';
-import 'package:sarakel/features/mode_tools/user_management/banned_users.dart';
+import 'package:sarakel/features/mode_tools/user_management/approved/approved_users.dart';
+import 'package:sarakel/features/mode_tools/user_management/banned/banned_users.dart';
 import 'package:sarakel/features/mode_tools/user_management/moderators/moderators_page.dart';
 import 'package:sarakel/features/mode_tools/user_management/muted_users.dart';
 import 'package:sarakel/models/community.dart';
@@ -223,7 +223,10 @@ class ModeratorTools extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => BannedUsersPage(),
+                  builder: (context) => BannedUsersPage(
+                    token: token,
+                    communityName: community.name,
+                  ),
                 ),
               );
             },
