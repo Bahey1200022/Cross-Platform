@@ -3,8 +3,8 @@ import 'package:sarakel/features/mode_tools/user_management/banned/banned_users_
 import 'package:sarakel/user_profile/user_profile.dart';
 import 'package:sarakel/models/user.dart';
 
-/// This class represents the search page where users can search for moderators by typing their usernames.
-/// It allows users to input a username in a TextField and displays the matching moderator if found.
+/// This class represents the search page where users can search for banned  by typing their usernames.
+/// It allows users to input a username in a TextField and displays the matching banned  if found.
 class BannedSearchPage extends StatefulWidget {
   final String token;
   final String communityName;
@@ -18,8 +18,8 @@ class BannedSearchPage extends StatefulWidget {
   _BannedSearchPageState createState() => _BannedSearchPageState();
 }
 
-/// This stateful widget represents the state for the ModeratorSearchPage.
-/// It manages the UI state and handles fetching and displaying moderators based on user input.
+/// This stateful widget represents the state for the banned earchPage.
+/// It manages the UI state and handles fetching and displaying banned  based on user input.
 class _BannedSearchPageState extends State<BannedSearchPage> {
   final TextEditingController _controller = TextEditingController();
   String? bannedName;
@@ -131,8 +131,8 @@ class _BannedSearchPageState extends State<BannedSearchPage> {
     );
   }
 
-  /// Fetches the moderator based on the provided username.
-  /// If the username matches a moderator, it updates the UI to display the moderator.
+  /// Fetches the banned  based on the provided username.
+  /// If the username matches a banned , it updates the UI to display the banned .
   /// If no match is found, it resets the UI.
   void fetchBanned(String value) {
     if (value.isEmpty) {
@@ -154,7 +154,7 @@ class _BannedSearchPageState extends State<BannedSearchPage> {
         });
       }
     }).catchError((error) {
-      print('Error fetching moderators: $error');
+      print('Error fetching banned : $error');
     });
   }
 
