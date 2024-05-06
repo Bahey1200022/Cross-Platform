@@ -22,6 +22,8 @@ class _CommentCardState extends State<CommentCard> {
   bool _isReplying = false;
   TextEditingController _replyController = TextEditingController();
   bool _showReplies = false;
+  bool loggedUserComment = false;
+
   List<Comment> _replies = [];
 
   @override
@@ -34,6 +36,7 @@ class _CommentCardState extends State<CommentCard> {
   void initState() {
     super.initState();
     _checkSavedState();
+    _checkLoginStatus();
   }
 
   void _checkSavedState() async {
@@ -42,6 +45,19 @@ class _CommentCardState extends State<CommentCard> {
     setState(() {
       widget.comment.isSaved = isSaved;
     });
+  }
+
+  Future<bool> checkLoggedInUserComment() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var username = prefs.getString('username');
+    if (username == widget.comment.userID) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> _checkLoginStatus() async {
+    loggedUserComment = await checkLoggedInUserComment();
   }
 
   void _toggleReplies(String commentId) {
@@ -332,20 +348,22 @@ class _CommentCardState extends State<CommentCard> {
                             : 'Save'), // Dynamic text based on saved state
                       ),
                     ),
-                    PopupMenuItem<String>(
-                      value: 'report',
-                      child: ListTile(
-                        leading: Icon(Icons.flag),
-                        title: Text('Report'),
+                    if (!loggedUserComment)
+                      const PopupMenuItem<String>(
+                        value: 'report',
+                        child: ListTile(
+                          leading: Icon(Icons.flag),
+                          title: Text('Report'),
+                        ),
                       ),
-                    ),
-                    PopupMenuItem<String>(
-                      value: 'block',
-                      child: ListTile(
-                        leading: Icon(Icons.block),
-                        title: Text('Block'),
+                    if (!loggedUserComment)
+                      const PopupMenuItem<String>(
+                        value: 'block',
+                        child: ListTile(
+                          leading: Icon(Icons.block),
+                          title: Text('Block'),
+                        ),
                       ),
-                    ),
                   ],
                 ),
                 IconButton(

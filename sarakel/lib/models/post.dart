@@ -18,8 +18,10 @@ class Post {
   bool isUpvoted;
   bool isDownvoted;
   bool isSaved;
+  bool isLocked;
   int views;
   bool? isSpoiler;
+  bool? isBA;
   String? postCategory;
   Post(
       {required this.communityName,
@@ -27,6 +29,7 @@ class Post {
       this.duration, // Initialize duration
       this.upVotes = 0,
       this.isSaved = false,
+      this.isLocked = false,
       this.isUpvoted = false,
       this.isDownvoted = false,
       this.comments,
@@ -41,5 +44,6 @@ class Post {
       this.views = 0,
       this.isNSFW,
       this.isSpoiler,
+      this.isBA,
       this.postCategory});
 }
