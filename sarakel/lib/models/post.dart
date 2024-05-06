@@ -20,6 +20,7 @@ class Post {
   bool isSaved;
   int views;
   bool? isSpoiler;
+  bool? isBA;
   String? postCategory;
   Post(
       {required this.communityName,
@@ -41,5 +42,6 @@ class Post {
       this.views = 0,
       this.isNSFW,
       this.isSpoiler,
+      this.isBA,
       this.postCategory});
 }

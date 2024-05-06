@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/Widgets/home/controllers/get_community.dart';
+import 'package:sarakel/Widgets/home/widgets/brand_affiliate.dart';
 import 'package:sarakel/Widgets/home/widgets/category.dart';
 import 'package:sarakel/Widgets/home/widgets/comment_card.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
 import 'package:sarakel/Widgets/home/widgets/nsfw.dart';
+import 'package:sarakel/Widgets/home/widgets/spoiler.dart';
 import 'package:sarakel/Widgets/home/widgets/video_player.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/constants.dart';
@@ -245,14 +247,19 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                 ])
               ],
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Row(children: [
+                SpoilerAlert(isSpoiler: widget.post.isSpoiler!),
+                const SizedBox(width: 5),
                 NSFWButton(isNSFW: widget.post.isNSFW!),
                 const SizedBox(width: 5),
+                BrandAffiliate(isBA: widget.post.isBA!),
+                const SizedBox(width: 5),
                 PostCategory(category: widget.post.postCategory),
-              ],
-            ),
+
+                // Spoiler alert
+              ]),
+            ]),
             const SizedBox(height: 10),
             Text(
               widget.post.content,
