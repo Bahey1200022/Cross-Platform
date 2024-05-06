@@ -10,6 +10,7 @@ class UserPreferences {
   bool? weightLoss;
   bool? privateMessagesEmail;
   bool? chatMessages;
+  bool? signedInWithGoogle;
 
   UserPreferences({
     required this.showNSFW,
@@ -23,5 +24,6 @@ class UserPreferences {
     this.weightLoss,
     this.privateMessagesEmail,
     this.chatMessages,
+    this.signedInWithGoogle = false,
   });
 }

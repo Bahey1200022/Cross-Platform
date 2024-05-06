@@ -1,4 +1,4 @@
-const ip = '57.151.116.81'; //don't change this ever
+const ip = '192.168.1.12'; //don't change this ever
 
 const BASE_URL = 'http://$ip:5000';
 
