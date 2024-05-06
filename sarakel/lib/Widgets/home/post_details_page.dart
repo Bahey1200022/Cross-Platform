@@ -145,6 +145,15 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
     }
   }
 
+  void commentRestriction() {
+    if (widget.post.isLocked == true) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Post is locked. Cannot comment.'),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
+
   void _handleReply(String replyContent, String replyToID) async {
     try {
       await sendReply(widget.post.id, replyContent, replyToID);
@@ -251,7 +260,8 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                 const SizedBox(width: 5),
                 NSFWButton(isNSFW: widget.post.isNSFW!),
                 const SizedBox(width: 5),
-                BrandAffiliate(isBA: widget.post.isBA!),
+                if (widget.post.isBA != null) // Checks if isBA is not null
+                  BrandAffiliate(isBA: widget.post.isBA!),
                 const SizedBox(width: 5),
                 PostCategory(category: widget.post.postCategory),
 
@@ -379,6 +389,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                 icon: const Icon(Icons.send),
                 onPressed: () {
                   // Send the comment
+                  commentRestriction();
                   String content = _commentController.text;
                   String postID = widget.post.id;
                   sendComment(postID, content);

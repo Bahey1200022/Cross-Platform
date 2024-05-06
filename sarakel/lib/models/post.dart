@@ -18,6 +18,7 @@ class Post {
   bool isUpvoted;
   bool isDownvoted;
   bool isSaved;
+  bool isLocked;
   int views;
   bool? isSpoiler;
   bool? isBA;
@@ -28,6 +29,7 @@ class Post {
       this.duration, // Initialize duration
       this.upVotes = 0,
       this.isSaved = false,
+      this.isLocked = false,
       this.isUpvoted = false,
       this.isDownvoted = false,
       this.comments,

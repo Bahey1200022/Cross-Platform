@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/controllers/view_post.dart';
 import 'package:sarakel/Widgets/home/widgets/brand_affiliate.dart';
+import 'package:sarakel/Widgets/home/widgets/lock_post.dart';
 import 'package:sarakel/Widgets/home/widgets/spoiler.dart';
 import 'package:sarakel/Widgets/home/post_details_page.dart';
 import 'package:sarakel/Widgets/home/widgets/category.dart';
@@ -47,6 +48,7 @@ class _PostCardState extends State<PostCard> {
   bool _isImagePresent() =>
       widget.post.imagePath != null && widget.post.imagePath!.isNotEmpty;
   bool loggedUserPost = false;
+  late PostService _postService;
 
   @override
   void initState() {
@@ -56,6 +58,7 @@ class _PostCardState extends State<PostCard> {
     _checkLiked();
     _checkdownvoted();
     _isBlurred = widget.post.isNSFW!;
+    _postService = PostService(context);
     // _checkVoteState();
   }
 
@@ -269,9 +272,23 @@ class _PostCardState extends State<PostCard> {
     } catch (e) {}
   }
 
+  void _handleLockPost() {
+    _postService.lockPost(widget.post);
+  }
+
+  void _handleUnlockPost() {
+    _postService.unlockPost(widget.post);
+  }
+
   void _toggleSave() {
     setState(() {
       widget.post.isSaved = !widget.post.isSaved;
+    });
+  }
+
+  void _toggleLock() {
+    setState(() {
+      widget.post.isLocked = !widget.post.isLocked;
     });
   }
 
@@ -392,7 +409,9 @@ class _PostCardState extends State<PostCard> {
                               const SizedBox(width: 5),
                               NSFWButton(isNSFW: widget.post.isNSFW!),
                               const SizedBox(width: 5),
-                              BrandAffiliate(isBA: widget.post.isBA!),
+                              if (widget.post.isBA !=
+                                  null) // Checks if isBA is not null
+                                BrandAffiliate(isBA: widget.post.isBA!),
                               const SizedBox(width: 5),
                               PostCategory(category: widget.post.postCategory),
 
@@ -440,21 +459,33 @@ class _PostCardState extends State<PostCard> {
                               title: Text('Hide'),
                             ),
                           ),
-                        loggedUserPost
-                            ? const PopupMenuItem<String>(
-                                value: 'edit',
-                                child: ListTile(
-                                  leading: Icon(Icons.edit),
-                                  title: Text('Edit'),
-                                ),
-                              )
-                            : const PopupMenuItem<String>(
-                                value: 'block_account',
-                                child: ListTile(
-                                  leading: Icon(Icons.block),
-                                  title: Text('Block Account'),
-                                ),
-                              ),
+                        if (loggedUserPost) // Option to edit post if it is the user's post
+                          const PopupMenuItem<String>(
+                            value: 'edit',
+                            child: ListTile(
+                              leading: Icon(Icons.edit),
+                              title: Text('Edit'),
+                            ),
+                          ),
+                        if (loggedUserPost) // Option to lock the post if it is the user's post
+                          PopupMenuItem<String>(
+                            value: 'lock',
+                            child: ListTile(
+                              leading: Icon(widget.post.isLocked
+                                  ? Icons.lock_open
+                                  : Icons.lock),
+                              title: Text(
+                                  widget.post.isLocked ? 'Unlock' : 'lock'),
+                            ),
+                          ),
+                        if (!loggedUserPost) // Option to block the user if it is not the user's post
+                          const PopupMenuItem<String>(
+                            value: 'block_account',
+                            child: ListTile(
+                              leading: Icon(Icons.block),
+                              title: Text('Block Account'),
+                            ),
+                          ),
                       ],
                       onSelected: (String value) {
                         switch (value) {
@@ -476,6 +507,14 @@ class _PostCardState extends State<PostCard> {
                             break;
                           case 'hide':
                             widget.onHide();
+                            break;
+                          case 'lock':
+                            _toggleLock();
+                            if (widget.post.isLocked) {
+                              _handleLockPost();
+                            } else {
+                              _handleUnlockPost();
+                            }
                             break;
                           case 'edit':
                             Navigator.of(context).push(

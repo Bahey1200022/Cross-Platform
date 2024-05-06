@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class BrandAffiliate extends StatelessWidget {
-  final bool isBA;
+  final bool? isBA;
 
-  const BrandAffiliate({super.key, required this.isBA});
+  const BrandAffiliate({super.key, this.isBA});
 
   @override
   Widget build(BuildContext context) {
-    return isBA
+    return isBA == true // Is isBA true?
         ? ElevatedButton(
             onPressed: null,
             style: ElevatedButton.styleFrom(
@@ -26,6 +26,6 @@ class BrandAffiliate extends StatelessWidget {
               ),
             ),
           )
-        : const SizedBox(); // Returns an empty SizedBox if isNSFW is false
+        : const SizedBox(); // Returns an empty SizedBox if isBA is false
   }
 }

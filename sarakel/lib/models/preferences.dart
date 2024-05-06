@@ -3,7 +3,7 @@ class UserPreferences {
   bool? showNotifications;
   bool? showInSearch;
   bool? personalizeAds;
-  bool? alcahol;
+  bool? alcohol;
   bool? gambling;
   bool? dating;
   bool? pregnancyAndParenting;
@@ -17,7 +17,7 @@ class UserPreferences {
     this.showNotifications,
     this.showInSearch,
     this.personalizeAds,
-    this.alcahol,
+    this.alcohol,
     this.gambling,
     this.dating,
     this.pregnancyAndParenting,
