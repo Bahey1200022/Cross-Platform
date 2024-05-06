@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/features/mode_tools/user_management/banned/banned_users_service.dart';
-import 'package:sarakel/features/mode_tools/user_management/banned/search_banned_users_page.dart';
+import 'package:sarakel/features/mode_tools/user_management/muted/muted_users_service.dart';
+import 'package:sarakel/features/mode_tools/user_management/muted/search_muted_users_page.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:sarakel/user_profile/user_profile.dart';
 
-class BannedUsersPage extends StatefulWidget {
-  final String token; // Token to be passed to fetch banned
+class MutedUsersPage extends StatefulWidget {
+  final String token; // Token to be passed to fetch muted
   final String communityName; // Community name
 
-  const BannedUsersPage({
+  const MutedUsersPage({
     Key? key,
     required this.token,
     required this.communityName,
   }) : super(key: key);
   @override
-  _BannedUsersPageState createState() => _BannedUsersPageState();
+  _MutedUsersPageState createState() => _MutedUsersPageState();
 }
 
-class _BannedUsersPageState extends State<BannedUsersPage>
+class _MutedUsersPageState extends State<MutedUsersPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  List<String> allBanned = []; // List to store all banned
+  List<String> allMuted = []; // List to store all muted
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    fetchBanned(widget.token, widget.communityName);
+    fetchMuted(widget.token, widget.communityName);
   }
 
-  Future<void> fetchBanned(String token, String communityName) async {
+  Future<void> fetchMuted(String token, String communityName) async {
     try {
-      final banned =
-          await BannedUsersService.getBannedUsers(token, communityName);
+      final muted = await MutedUsersService.getMutedUsers(token, communityName);
       setState(() {
-        allBanned = banned;
+        allMuted = muted;
       });
     } catch (error) {
       print(error);
@@ -42,7 +41,7 @@ class _BannedUsersPageState extends State<BannedUsersPage>
     }
   }
 
-  void _showActionsModal(BuildContext context, String bannedName) {
+  void _showActionsModal(BuildContext context, String mutedName) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -54,15 +53,15 @@ class _BannedUsersPageState extends State<BannedUsersPage>
                 leading: Icon(Icons.person),
                 title: Text('View Profile'),
                 onTap: () {
-                  // Navigate to the user profile page of the banned
+                  // Navigate to the user profile page of the muted
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => UserProfile(
                         user: User(
-                            username: bannedName,
+                            username: mutedName,
                             token: widget
-                                .token), // Pass the banned's username and token here
+                                .token), // Pass the muted's username and token here
                       ),
                     ),
                   );
@@ -72,7 +71,7 @@ class _BannedUsersPageState extends State<BannedUsersPage>
                 leading: Icon(Icons.remove_circle),
                 title: Text('Remove'),
                 onTap: () {
-                  // Implement remove banned logic
+                  // Implement remove muted logic
                 },
               ),
               ListTile(
@@ -110,7 +109,7 @@ class _BannedUsersPageState extends State<BannedUsersPage>
           },
         ),
         title: Text(
-          'Banned users',
+          'Muted users',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
@@ -120,7 +119,7 @@ class _BannedUsersPageState extends State<BannedUsersPage>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => BannedSearchPage(
+                  builder: (context) => MutedSearchPage(
                     token: widget.token,
                     communityName: widget.communityName,
                   ),
@@ -145,24 +144,24 @@ class _BannedUsersPageState extends State<BannedUsersPage>
         controller: _tabController,
         children: [
           // Content for "All" tab
-          allBanned.isNotEmpty
+          allMuted.isNotEmpty
               ? ListView.builder(
-                  itemCount: allBanned.length,
+                  itemCount: allMuted.length,
                   itemBuilder: (context, index) {
-                    final bannedName = allBanned[index];
+                    final mutedName = allMuted[index];
                     return ListTile(
-                      leading: Icon(Icons.person), // Icon for banned
-                      title: Text(bannedName), // banned name
+                      leading: Icon(Icons.person), // Icon for muted
+                      title: Text(mutedName), // muted name
                       onTap: () {
-                        //navigate to the banned's profile
+                        //navigate to the muted's profile
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => UserProfile(
                               user: User(
-                                  username: bannedName,
+                                  username: mutedName,
                                   token: widget
-                                      .token), // Pass the banned's username and token here
+                                      .token), // Pass the muted's username and token here
                             ),
                           ),
                         );
@@ -175,7 +174,7 @@ class _BannedUsersPageState extends State<BannedUsersPage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'No banned users',
+                        'No muted users',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20, // Increased font size
@@ -183,30 +182,30 @@ class _BannedUsersPageState extends State<BannedUsersPage>
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Users banned from the subsarakel will appear here',
+                        'Users muted from the subsarakel will appear here',
                         style: TextStyle(fontSize: 18), // Increased font size
                       ),
                     ],
                   ),
                 ),
           // Content for "Editable" tab
-          allBanned.isNotEmpty
+          allMuted.isNotEmpty
               ? ListView.builder(
-                  itemCount: allBanned.length,
+                  itemCount: allMuted.length,
                   itemBuilder: (context, index) {
-                    final bannedName = allBanned[index];
+                    final mutedName = allMuted[index];
                     return ListTile(
-                      leading: Icon(Icons.person), // Icon for banned
-                      title: Text(bannedName), // banned name
+                      leading: Icon(Icons.person), // Icon for muted
+                      title: Text(mutedName), // muted name
                       onTap: () {
-                        //navigate to the banned's profile
+                        //navigate to the muted's profile
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => UserProfile(
                               user: User(
                                   username:
-                                      bannedName), // Pass the banned's username and token here
+                                      mutedName), // Pass the muted's username and token here
                             ),
                           ),
                         );
@@ -214,7 +213,7 @@ class _BannedUsersPageState extends State<BannedUsersPage>
                       trailing: IconButton(
                         icon: Icon(Icons.more_vert),
                         onPressed: () {
-                          _showActionsModal(context, bannedName);
+                          _showActionsModal(context, mutedName);
                         },
                       ),
                     );
@@ -225,7 +224,7 @@ class _BannedUsersPageState extends State<BannedUsersPage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'No banned users',
+                        'No muted users',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20, // Increased font size
@@ -233,12 +232,12 @@ class _BannedUsersPageState extends State<BannedUsersPage>
                       ),
                       SizedBox(height: 8),
                       Text(
-                        'Users banned from the subsarakel will appear here',
+                        'Users muted from the subsarakel will appear here',
                         style: TextStyle(fontSize: 18), // Increased font size
                       ),
                     ],
                   ),
-                ), // If no banned users, return an empty center widget
+                ), // If no muted users, return an empty center widget
         ],
       ),
     );
