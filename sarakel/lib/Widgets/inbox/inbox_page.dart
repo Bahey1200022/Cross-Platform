@@ -16,6 +16,7 @@ import '../home/widgets/app_bar.dart';
 /// Email message like class where it displays the user's inbox
 class InboxSection extends StatefulWidget {
   final String token;
+  
 
   const InboxSection({Key? key, required this.token}) : super(key: key);
 
@@ -69,16 +70,18 @@ class _InboxSectionState extends State<InboxSection>
 
     return Scaffold(
       key: _scaffoldKey,
-      appBar: CustomAppBar(
-        title: 'Inbox',
-      ),
-      drawer: CommunityDrawer(token: widget.token),
-      endDrawer: ProfileDrawer(
-        user: User(
-          username: jwtdecodedtoken['username'],
+        appBar: CustomAppBar(
+          title: 'Chat',
+          scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
+        ),
+        drawer: CommunityDrawer(
           token: widget.token,
         ),
-      ),
+        endDrawer: ProfileDrawer(
+          // Add end drawer
+          user:
+              User(username: jwtdecodedtoken['username'], token: widget.token),
+        ),
       body: Column(
         children: [
           TabBar(

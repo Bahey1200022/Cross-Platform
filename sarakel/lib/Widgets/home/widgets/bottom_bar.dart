@@ -64,7 +64,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CreatePost(token: widget.token),
+            builder: (context) => CreatePost(token: widget.token, selectedDate: DateTime.now(), selectedTime: TimeOfDay.now(), onScheduled: (bool value) {}),
           ),
         );
         break;
