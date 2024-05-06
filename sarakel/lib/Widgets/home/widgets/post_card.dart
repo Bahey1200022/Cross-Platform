@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/controllers/view_post.dart';
-
+import 'package:sarakel/Widgets/home/widgets/brand_affiliate.dart';
+import 'package:sarakel/Widgets/home/widgets/spoiler.dart';
 import 'package:sarakel/Widgets/home/post_details_page.dart';
 import 'package:sarakel/Widgets/home/widgets/category.dart';
 import 'package:sarakel/Widgets/home/widgets/functions.dart';
@@ -387,9 +388,15 @@ class _PostCardState extends State<PostCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(children: [
+                              SpoilerAlert(isSpoiler: widget.post.isSpoiler!),
+                              const SizedBox(width: 5),
                               NSFWButton(isNSFW: widget.post.isNSFW!),
                               const SizedBox(width: 5),
+                              BrandAffiliate(isBA: widget.post.isBA!),
+                              const SizedBox(width: 5),
                               PostCategory(category: widget.post.postCategory),
+
+                              // Spoiler alert
                             ]),
                             Text(
                               widget.post.title,
