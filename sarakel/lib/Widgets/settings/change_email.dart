@@ -11,7 +11,6 @@ void changeEmail(String newEmail, String token, BuildContext context) async {
         'Content-Type': 'application/json',
       },
       body: jsonEncode({'email': newEmail}));
-  print(response.body);
   if (response.statusCode == 200) {
     ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Email changed successfully')));

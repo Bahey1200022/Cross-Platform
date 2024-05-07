@@ -7,6 +7,7 @@ import 'package:sarakel/models/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+/// Controller for fetching saved posts and comments
 class SavedPostsController {
   Future<List<Post>> fetchSavedPosts() async {
     try {
@@ -21,8 +22,8 @@ class SavedPostsController {
         },
       );
 
-      print('response Body: ${response.body}');
-      print('response status code: ${response.statusCode}');
+      // print('response Body: ${response.body}');
+      // print('response status code: ${response.statusCode}');
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         List<dynamic> message = jsonData['message'];
@@ -35,10 +36,9 @@ class SavedPostsController {
             for (var postData in postList) {
               if (postData.isNotEmpty) {
                 var p = postData[0];
-                print('postId: ${p['_id']}');
-                print('processing post: $p');
+
                 posts.add(Post(
-                  communityName: "communityId",
+                  communityName: p['communityId']?.toString() ?? "",
                   id: p['_id']?.toString() ?? "",
                   imagePath: p['media'] != null
                       ? (p['media'] is List && (p['media'] as List).isNotEmpty

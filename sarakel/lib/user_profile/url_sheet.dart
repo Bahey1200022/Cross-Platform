@@ -39,7 +39,7 @@ class UrlSheet extends StatelessWidget {
                 'Facebook',
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 15,
+                    fontSize: 10,
                     fontWeight: FontWeight.bold),
               ),
               style: ButtonStyle(
@@ -53,13 +53,13 @@ class UrlSheet extends StatelessWidget {
               icon: const Icon(
                 Icons.reddit_rounded,
                 color: Colors.orange,
-                size: 15,
+                size: 10,
               ),
               label: const Text(
                 'Reddit',
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 15,
+                    fontSize: 10,
                     fontWeight: FontWeight.bold),
               ),
               style: ButtonStyle(
@@ -73,13 +73,13 @@ class UrlSheet extends StatelessWidget {
               icon: const Icon(
                 Icons.tiktok,
                 color: Colors.black,
-                size: 15,
+                size: 10,
               ),
               label: const Text(
                 'Tiktok',
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 15,
+                    fontSize: 10,
                     fontWeight: FontWeight.bold),
               ),
               style: ButtonStyle(
@@ -98,7 +98,7 @@ class UrlSheet extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: () {},
               icon: const FaIcon(FontAwesomeIcons.twitter,
-                  color: Colors.blue, size: 15),
+                  color: Colors.blue, size: 10),
               // icon: const Icon(
               //   Icons.facebook,
               //   color: Colors.blue,
@@ -108,7 +108,7 @@ class UrlSheet extends StatelessWidget {
                 'Twitter',
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 15,
+                    fontSize: 10,
                     fontWeight: FontWeight.bold),
               ),
               style: ButtonStyle(
@@ -120,12 +120,12 @@ class UrlSheet extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: () {},
               icon: const FaIcon(FontAwesomeIcons.soundcloud,
-                  color: Colors.orange, size: 15),
+                  color: Colors.orange, size: 10),
               label: const Text(
                 'SoundCloud',
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 15,
+                    fontSize: 10,
                     fontWeight: FontWeight.bold),
               ),
               style: ButtonStyle(
@@ -137,12 +137,12 @@ class UrlSheet extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: () {},
               icon: const FaIcon(FontAwesomeIcons.youtube,
-                  color: Colors.red, size: 15),
+                  color: Colors.red, size: 10),
               label: const Text(
                 'Youtube',
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 15,
+                    fontSize: 10,
                     fontWeight: FontWeight.bold),
               ),
               style: ButtonStyle(
@@ -166,7 +166,7 @@ class UrlSheet extends StatelessWidget {
                 'custom link',
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 15,
+                    fontSize: 10,
                     fontWeight: FontWeight.bold),
               ),
               style: ButtonStyle(
