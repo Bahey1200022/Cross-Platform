@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:core';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +6,11 @@ import 'package:sarakel/Widgets/drawers/community_drawer/community_list.dart';
 import 'package:sarakel/Widgets/drawers/profile_drawer.dart';
 import 'package:sarakel/Widgets/home/hot.dart';
 import 'package:sarakel/Widgets/home/random.dart';
+import 'package:http/http.dart' as http;
 import 'package:sarakel/Widgets/home/widgets/postisLiked.dart';
+import 'package:sarakel/constants.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/post.dart';
 import 'controllers/home_screen_controller.dart';
 import 'widgets/post_card.dart';
@@ -37,6 +41,74 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
     widget.homescreenController.loadPosts().then((posts) {
       setState(() => postsToShow = posts);
     });
+  }
+
+  Future<void> unhidePost(String id) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.getString('token');
+      var response = await http.post(
+        Uri.parse('$BASE_URL/api/unhide'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+
+          // Remove the token if it's not required by your backend
+        },
+        body: jsonEncode({
+          'type': 'post',
+          'entityId': id,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Post Successfully Unhidden!')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to unhide post: ${response.body}')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error unhiding post: $e')),
+      );
+    }
+  }
+
+  Future<void> hidePost(String id) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.getString('token');
+      var response = await http.post(
+        Uri.parse('$BASE_URL/api/hide'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+          // Remove the token if it's not required by your backend
+        },
+        body: jsonEncode({
+          'type': 'post',
+          'entityId': id,
+        }),
+      );
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Post Successfully Hidden!')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to hide post: ${response.body}')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error hiding post: $e')),
+      );
+    }
   }
 
   @override
@@ -211,12 +283,10 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                         trailing: IconButton(
                           icon: const Icon(Icons.undo),
                           onPressed: () {
+                            unhidePost(post.id);
                             setState(() {
                               hiddenPostIds.remove(post.id);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          "Post Unhidden"))); // Unhide the post
+                              // Unhide the post
                             });
                           },
                         ),
@@ -227,11 +297,11 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                     return PostCard(
                       post: post,
                       onHide: () {
+                        hidePost(post.id);
                         setState(() {
                           hiddenPostIds.add(
                               post.id); // Adjust based on your API response
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Post Hidden")));
+
                           // Hide the post
                         });
                       },
