@@ -65,7 +65,9 @@ class QueueBottomSheet extends StatelessWidget {
 class QueueButton extends StatelessWidget {
   final String title;
   final Function()? onTap;
+  final Function()? onTap;
 
+  const QueueButton({required this.title, this.onTap});
   const QueueButton({required this.title, this.onTap});
 
   @override
