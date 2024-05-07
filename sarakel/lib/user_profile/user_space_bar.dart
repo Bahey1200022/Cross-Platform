@@ -1,6 +1,8 @@
+// ignore_for_file: avoid_print, avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/models/user.dart';
-import 'package:sarakel/user_profile/edit%20_pi.dart';
+import 'package:sarakel/user_profile/edit%20_pic.dart';
 import 'package:sarakel/user_profile/get_userpic.dart';
 import 'package:sarakel/user_profile/new_chat.dart';
 import 'package:sarakel/user_profile/user_visibility.dart';
@@ -8,7 +10,7 @@ import 'package:sarakel/user_profile/url_sheet.dart';
 
 class UserSpaceBar extends StatefulWidget {
   final User? user;
-  const UserSpaceBar({Key? key, this.user});
+  const UserSpaceBar({super.key, this.user});
 
   @override
   State<UserSpaceBar> createState() {
@@ -40,6 +42,7 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
     print(widget.user?.photoUrl);
   }
 
+  @override
   Widget build(BuildContext context) {
     return FlexibleSpaceBar(
       background: Container(
@@ -71,10 +74,7 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                           widget.user!.photoUrl!,
                           fit: BoxFit.contain,
                         )
-                      : Image.asset(
-                          'assets/avatar_logo.jpeg',
-                          fit: BoxFit.contain,
-                        ),
+                      : null,
                 ),
               ),
             ),
@@ -158,7 +158,7 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                 child: const Row(
                   children: [
                     Text(
-                      '# followers  ',
+                      '# followers  ', //Not handeled (Backend)
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     Icon(
@@ -355,7 +355,7 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                   // Your action when the button is clicked
                 },
                 label: const Text(
-                  'Add social link',
+                  'Add social link', //Not handled (Backend)
                   style: TextStyle(color: Colors.white),
                 ),
                 icon: const Icon(

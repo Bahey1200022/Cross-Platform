@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class UrlSheet extends StatelessWidget {
   final String? title;
 
-  const UrlSheet({Key? key, this.title}) : super(key: key);
+  const UrlSheet({super.key, this.title});
 
   @override
   Widget build(BuildContext context) {
