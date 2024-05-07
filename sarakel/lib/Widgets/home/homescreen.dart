@@ -40,7 +40,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
     super.initState();
     getmarked();
 
-    widget.homescreenController.loadPosts().then((posts) {
+    widget.homescreenController.loadNewPosts().then((posts) {
       setState(() => postsToShow = posts);
     });
   }

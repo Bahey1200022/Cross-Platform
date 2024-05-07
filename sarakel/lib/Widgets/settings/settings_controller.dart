@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, empty_catches
+// ignore_for_file: unused_local_variable, empty_catches, use_build_context_synchronously
 
 import 'dart:convert';
 
