@@ -18,30 +18,47 @@ class _RemovedPostsPageState extends State<RemovedPostsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    load();
+    // load();
   }
 
-  void load() async {
-    posts = await getRemovedPosts(widget.community);
-  }
+  // void load() async {
+  //   posts = await getRemovedPosts(widget.community);
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Removed Posts'),
-      ),
-      body: ListView.builder(
-          itemCount: posts.length,
-          itemBuilder: (context, index) {
-            final post = posts[index];
+        appBar: AppBar(
+          title: const Text('Removed Posts'),
+        ),
+        body: FutureBuilder<List<Post>>(
+          future: getReportedPosts(widget.community),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            } else {
+              final posts = snapshot.data ?? [];
 
-            // Show the post
-            return PostCard(
-              post: post,
-              onHide: () {},
-            );
-          }),
-    );
+              return ListView.builder(
+                itemCount: posts.length,
+                itemBuilder: (context, index) {
+                  final post = posts[index];
+
+                  // Show the post
+                  return PostCard(
+                    post: post,
+                    onHide: () {},
+                  );
+                },
+              );
+            }
+          },
+        ));
   }
 }

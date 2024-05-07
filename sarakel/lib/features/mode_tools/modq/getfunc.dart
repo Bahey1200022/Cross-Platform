@@ -19,32 +19,31 @@ Future<List<Post>> fromjson(String route) async {
 
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
+    print('data: $data');
     List<dynamic> postList = data['posts'];
-    print(postList);
     List<Post> posts = postList.map((p) {
       return Post(
-          communityName: p['communityName']?.toString() ?? "",
-          id: p['_id']?.toString() ?? "",
-          imagePath: p['media'] != null
-              ? (p['media'] is List && (p['media'] as List).isNotEmpty
-                  ? Uri.encodeFull(
-                      extractUrl((p['media'] as List).first.toString()))
-                  : Uri.encodeFull(extractUrl(p['media'].toString())))
-              : null,
-          upVotes: p['upvotes'] ?? 0,
-          downVotes: p['downvotes'] ?? 0,
-          comments: p['numComments'] ?? 0,
-          shares: p['numComments'] ?? 0,
-          isNSFW: false,
-          isSpoiler: p['isSpoiler'] ?? false,
-          content: p['content']?.toString() ?? "",
-          communityId: p['communityId']?.toString() ?? "",
-          title: p['title']?.toString() ?? "",
-          username: p['username']?.toString() ?? "",
-          views: p['numViews'] ?? 0);
+        communityName: p['communityId']?.toString() ?? "",
+        id: p['_id']?.toString() ?? "",
+        imagePath: p['media'] != null
+            ? (p['media'] is List && (p['media'] as List).isNotEmpty
+                ? Uri.encodeFull(
+                    extractUrl((p['media'] as List).first.toString()))
+                : Uri.encodeFull(extractUrl(p['media'].toString())))
+            : null,
+        upVotes: p['upvotes'] ?? 0,
+        downVotes: p['downvotes'] ?? 0,
+        comments: p['numComments'] ?? 0,
+        shares: p['numComments'] ?? 0,
+        isNSFW: p['nsfw:'] ?? false,
+        duration: formatDateTime(p['createdAt']),
+        isSpoiler: p['isSpoiler'] ?? false,
+        content: p['content']?.toString() ?? "",
+        title: p['title']?.toString() ?? "",
+        username: p['username']?.toString() ?? "",
+      );
     }).toList();
     print('completed');
-    print(posts);
     return posts;
   } else {
     throw Exception('Failed to load post');
@@ -64,5 +63,5 @@ Future<List<Post>> getRemovedPosts(String community) async {
 }
 
 Future<List<Post>> getReportedPosts(String community) async {
-  return fromjson('/api/r/$community/about/Reported');
+  return fromjson('/api/r/$community/about/reports');
 }
