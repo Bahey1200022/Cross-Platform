@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:sarakel/Widgets/entry/controllers/notification.dart';
 import 'package:sarakel/Widgets/settings/change_password.dart';
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/features/mode_tools/general/notifications.dart';

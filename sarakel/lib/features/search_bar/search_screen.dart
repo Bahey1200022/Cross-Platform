@@ -64,8 +64,12 @@ class sarakelSearch extends SearchDelegate {
                     name: suggestionList[index]['communityName'] ?? "",
                     description: suggestionList[index]['description'] ??
                         'Sarakel Community',
-                    image: suggestionList[index]['displayPicUrl'] ?? "",
-                    backimage: suggestionList[index]['backgroundPicUrl'] ?? "",
+                    backimage: suggestionList[index]['backgroundPicUrl'] ??
+                        suggestionList[index]['backgroundPic'] ??
+                        "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
+                    image: suggestionList[index]['displayPicUrl'] ??
+                        suggestionList[index]['displayPic'] ??
+                        "https://th.bing.com/th/id/R.cfa6aef7e239c59240261cfcc2ab9063?rik=MCdYhA5MWh4W4g&riu=http%3a%2f%2fclipart-library.com%2fnew_gallery%2f118-1182264_orange-circle-with-black-outline.png&ehk=y2cy3yUQQXMU1oZejNa1TdkIke9qTXPkWWc0mQSLtGA%3d&risl=&pid=ImgRaw&r=0",
                     is18Plus: suggestionList[index]['isNSFW'] ?? false,
                     type: suggestionList[index]['type'] ?? 'public',
                   );
