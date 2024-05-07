@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:sarakel/user_profile/edit%20_pi.dart';
-import 'package:sarakel/user_profile/invite.dart';
 import 'package:sarakel/user_profile/get_userpic.dart';
 import 'package:sarakel/user_profile/new_chat.dart';
 import 'package:sarakel/user_profile/user_visibility.dart';
@@ -123,13 +122,7 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                       ),
                     ),
                     OutlinedButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Text("Invite ${widget.user!.username}");
-                            });
-                      },
+                      onPressed: () {},
                       style: OutlinedButton.styleFrom(
                         shape: const CircleBorder(),
                       ),

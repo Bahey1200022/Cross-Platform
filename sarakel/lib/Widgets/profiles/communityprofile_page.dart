@@ -3,6 +3,7 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
+import 'package:sarakel/Widgets/profiles/accept-invite.dart';
 import 'package:sarakel/Widgets/profiles/community_info.dart';
 import 'package:sarakel/features/mode_tools/moderator_tools.dart';
 import 'package:sarakel/models/community.dart';
@@ -75,7 +76,50 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
               ),
               IconButton(
                 icon: const Icon(Icons.more_vert, color: Colors.white),
-                onPressed: () {},
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            title:
+                                const Text('Accept invite to be a moderator?'),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    // Handle "Yes" button press
+                                    acceptInvite(widget.community.name,
+                                        widget.token, context);
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'You are now a moderator in ${widget.community.name}!'),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text('Yes'),
+                                ),
+                                const SizedBox(width: 8),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Handle "No" button press
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
               ),
             ],
             flexibleSpace: Container(
