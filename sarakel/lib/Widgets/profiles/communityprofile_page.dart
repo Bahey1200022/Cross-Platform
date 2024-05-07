@@ -1,5 +1,7 @@
 // community_profile_page.dart
 
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/explore_communities/join_button.dart';
@@ -22,10 +24,10 @@ class CommunityProfilePage extends StatefulWidget {
   final String token;
 
   const CommunityProfilePage({
-    Key? key,
+    super.key,
     required this.community,
     required this.token,
-  }) : super(key: key);
+  });
 
   @override
   _CommunityProfilePageState createState() => _CommunityProfilePageState();
@@ -126,7 +128,7 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                                       // Handle "No" button press
                                       Navigator.pop(context);
                                     },
-                                    child: Text('Cancel'),
+                                    child: const Text('Cancel'),
                                   ),
                                 ],
                               ),
