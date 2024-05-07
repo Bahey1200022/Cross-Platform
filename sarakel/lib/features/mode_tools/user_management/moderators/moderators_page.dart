@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/user_management/moderators/add_moderators_page.dart';
 import 'package:sarakel/features/mode_tools/user_management/moderators/moderators_search_page.dart';
@@ -10,10 +12,10 @@ class ModeratorsPage extends StatefulWidget {
   final String communityName; // Community name
 
   const ModeratorsPage({
-    Key? key,
+    super.key,
     required this.token,
     required this.communityName,
-  }) : super(key: key);
+  });
 
   @override
   _ModeratorsPageState createState() => _ModeratorsPageState();
@@ -53,8 +55,8 @@ class _ModeratorsPageState extends State<ModeratorsPage>
           child: Wrap(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.person),
-                title: Text('View Profile'),
+                leading: const Icon(Icons.person),
+                title: const Text('View Profile'),
                 onTap: () {
                   // Navigate to the user profile page of the moderator
                   Navigator.push(
@@ -71,8 +73,8 @@ class _ModeratorsPageState extends State<ModeratorsPage>
                 },
               ),
               ListTile(
-                leading: Icon(Icons.remove_circle),
-                title: Text('Remove'),
+                leading: const Icon(Icons.remove_circle),
+                title: const Text('Remove'),
                 onTap: () {
                   // Implement remove moderator logic
                 },
@@ -80,10 +82,10 @@ class _ModeratorsPageState extends State<ModeratorsPage>
               ListTile(
                 title: Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFF00BFA5),
+                    color: const Color(0xFF00BFA5),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Cancel',
                       style: TextStyle(color: Colors.white),
@@ -106,18 +108,18 @@ class _ModeratorsPageState extends State<ModeratorsPage>
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Moderators',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               Navigator.push(
                 context,
@@ -131,7 +133,7 @@ class _ModeratorsPageState extends State<ModeratorsPage>
             },
           ),
           IconButton(
-            icon: Icon(Icons.person_add),
+            icon: const Icon(Icons.person_add),
             onPressed: () {
               Navigator.push(
                 context,
@@ -147,7 +149,7 @@ class _ModeratorsPageState extends State<ModeratorsPage>
         ],
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
             Tab(text: 'All'), // Tab for "All"
             Tab(text: 'Editable'), // Tab for "Editable"
           ],
@@ -162,7 +164,7 @@ class _ModeratorsPageState extends State<ModeratorsPage>
             itemBuilder: (context, index) {
               final moderatorName = allModerators[index];
               return ListTile(
-                leading: Icon(Icons.person), // Icon for moderator
+                leading: const Icon(Icons.person), // Icon for moderator
                 title: Text(moderatorName), // Moderator name
                 onTap: () {
                   //navigate to the moderator's profile
@@ -187,7 +189,7 @@ class _ModeratorsPageState extends State<ModeratorsPage>
             itemBuilder: (context, index) {
               final moderatorName = allModerators[index];
               return ListTile(
-                leading: Icon(Icons.person), // Icon for moderator
+                leading: const Icon(Icons.person), // Icon for moderator
                 title: Text(moderatorName), // Moderator name
                 onTap: () {
                   //navigate to the moderator's profile
@@ -203,7 +205,7 @@ class _ModeratorsPageState extends State<ModeratorsPage>
                   );
                 },
                 trailing: IconButton(
-                  icon: Icon(Icons.more_vert),
+                  icon: const Icon(Icons.more_vert),
                   onPressed: () {
                     _showActionsModal(context, moderatorName);
                   },

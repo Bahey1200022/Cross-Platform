@@ -22,6 +22,12 @@ class _HistroyState extends State<History> {
     loadRecentHistory().then((posts) {
       setState(() => postsToShow = posts);
     });
+    loadDownvotedHistory().then((posts) {
+      setState(() => postsToShow = posts);
+    });
+    loadUpvotedHistory().then((posts) {
+      setState(() => postsToShow = posts);
+    });
   }
 
   @override
@@ -29,17 +35,41 @@ class _HistroyState extends State<History> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("History"),
+        centerTitle: true,
         actions: [
           PopupMenuButton(
             itemBuilder: (BuildContext context) {
               return [
-                const PopupMenuItem(
+                PopupMenuItem(
                   value: 'recent',
-                  child: Text('Recent'),
+                  child: Text(
+                    'Recent',
+                    style: TextStyle(
+                        fontWeight: _selectedPage == 'recent'
+                            ? FontWeight.bold
+                            : FontWeight.normal),
+                  ),
                 ),
-                const PopupMenuItem(value: 'upvotes', child: Text('Upvotes')),
-                const PopupMenuItem(
-                    value: 'downvotes', child: Text('Downvotes')),
+                PopupMenuItem(
+                  value: 'upvotes',
+                  child: Text(
+                    'Upvotes',
+                    style: TextStyle(
+                        fontWeight: _selectedPage == 'upvotes'
+                            ? FontWeight.bold
+                            : FontWeight.normal),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 'downvotes',
+                  child: Text(
+                    'Downvotes',
+                    style: TextStyle(
+                        fontWeight: _selectedPage == 'downvotes'
+                            ? FontWeight.bold
+                            : FontWeight.normal),
+                  ),
+                ),
               ];
             },
             onSelected: (value) {

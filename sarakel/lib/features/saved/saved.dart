@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:sarakel/models/comment.dart';
@@ -6,6 +8,7 @@ import 'saved_controller.dart';
 import '../../Widgets/home/widgets/post_card.dart';
 import '../../Widgets/home/widgets/comment_card.dart';
 
+/// Screen for displaying saved posts and comments
 class SavedScreen extends StatefulWidget {
   const SavedScreen({super.key});
 
@@ -34,6 +37,7 @@ class _SavedScreenState extends State<SavedScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Saved'),
+          centerTitle: true,
           bottom: const TabBar(
             labelStyle: TextStyle(color: Colors.black),
             tabs: [
@@ -82,7 +86,7 @@ class _SavedScreenState extends State<SavedScreen> {
                 },
               ),
             ),
-            // View for saved comments (placeholder for now)
+            // View for saved comments
             CustomMaterialIndicator(
               onRefresh: () async {
                 setState(() {
@@ -107,8 +111,6 @@ class _SavedScreenState extends State<SavedScreen> {
                         return Column(
                           children: [
                             CommentCard(
-                              // Assuming you have a CommentCard widget
-
                               comment: snapshot.data![index],
                               onReply: (String param1, String param2) {},
                             ),
