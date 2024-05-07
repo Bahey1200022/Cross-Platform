@@ -181,14 +181,13 @@ class _SettingsPageState extends State<SettingsPage> {
             leading: const Icon(Icons.volume_off_outlined),
             title: const Text('Manage muted comuninties'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MutedCommunities(
-                    token: widget.token,
-                  ),
-                ),
-              );
+              showSearch(context: context, delegate: BlockedSearch());
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => BlockedSearch(),
+              //   ),
+              // );
             },
           ),
           ListTile(
