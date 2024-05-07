@@ -281,6 +281,11 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => FullScreenImagePage(
+                        post: widget.post,
+                        onDownvote: widget.onDownvote,
+                        onUpvote: widget.onUpvote,
+                        onMakeVote: widget.onMakeVote,
+                        onShare: widget.onShare,
                         imagePath: widget.post.imagePath!,
                         communityName: widget.post.communityName,
                         title: widget.post.title,
