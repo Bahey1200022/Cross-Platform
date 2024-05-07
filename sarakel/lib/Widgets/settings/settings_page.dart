@@ -115,6 +115,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     MaterialPageRoute(
                       builder: (context) => ChangePasswordPage(
                         token: widget.token,
+                        isSignedInGoogle: swicthval1['signedInWithGoogle'],
+                        settings: Settings(token: widget.token),
                       ),
                     ));
               }

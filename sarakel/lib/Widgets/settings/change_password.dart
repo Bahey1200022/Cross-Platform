@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/settings/change_Pass.dart';
 import 'package:sarakel/Widgets/settings/passwords_functions.dart';
 import 'package:sarakel/Widgets/settings/settings_controller.dart';
 import 'package:sarakel/Widgets/settings/settings_page.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   final String token;
-  const ChangePasswordPage({super.key, required this.token});
+  final Settings settings;
+  bool isSignedInGoogle = false;
+  ChangePasswordPage(
+      {super.key,
+      required this.token,
+      required this.settings,
+      required this.isSignedInGoogle});
   _ChangePasswordPageState createState() => _ChangePasswordPageState();
 }
 
@@ -23,6 +30,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   void initState() {
     super.initState();
     token = widget.token;
+    isLoggedThroughGoogle = widget.isSignedInGoogle;
   }
 
   // Future<void> getToken() async {
@@ -102,38 +110,39 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       bool isvalid = isNewPasswordValid(
                           myNewPassword.text, myConfirmPassword.text);
                       print(isvalid);
-
                       if (isvalid) {
-                        if (isOldPasswordValid(
-                            myOldPassword.text, 'dataBasePassword')) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SettingsPage(
-                                  token: token,
-                                  settings: Settings(token: token)),
-                            ),
-                          );
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Invalid old Password'),
-                                content: const Text(
-                                    'please check your old password and try again.'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('OK'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
+                        // if (isOldPasswordValid(
+                        //     myOldPassword.text, 'dataBasePassword')) {
+                        //   Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => SettingsPage(
+                        //           token: token,
+                        //           settings: Settings(token: token)),
+                        //     ),
+                        //   );
+                        // } else {
+                        //   showDialog(
+                        //     context: context,
+                        //     builder: (BuildContext context) {
+                        //       return AlertDialog(
+                        //         title: const Text('Invalid old Password'),
+                        //         content: const Text(
+                        //             'please check your old password and try again.'),
+                        //         actions: <Widget>[
+                        //           TextButton(
+                        //             onPressed: () {
+                        //               Navigator.of(context).pop();
+                        //             },
+                        //             child: const Text('OK'),
+                        //           ),
+                        //         ],
+                        //       );
+                        //     },
+                        //   );
+                        // }
+                        changePassword(context, myNewPassword.text, token,
+                            myOldPassword.text);
                       } else {
                         showDialog(
                           context: context,
