@@ -1,19 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:pinch_zoom/pinch_zoom.dart'; // Make sure to add pinch_zoom package in your pubspec.yaml
+import 'package:pinch_zoom/pinch_zoom.dart';
+import 'package:sarakel/Widgets/home/post_details_page.dart';
+import 'package:sarakel/models/post.dart';
+// Make sure to add pinch_zoom package in your pubspec.yaml
 
-class FullScreenImagePage extends StatelessWidget {
+class FullScreenImagePage extends StatefulWidget {
   final String imagePath;
   final String communityName;
   final String title;
-  // You might want to pass additional data necessary for upvote, downvote, etc.
+  final Post post;
+  final VoidCallback onUpvote;
+  final VoidCallback onDownvote;
+  final VoidCallback onShare;
+  final Function(int) onMakeVote;
 
   const FullScreenImagePage({
     super.key,
     required this.imagePath,
     required this.communityName,
     required this.title,
+    required this.post,
+    required this.onUpvote,
+    required this.onDownvote,
+    required this.onShare,
+    required this.onMakeVote,
   });
 
+  @override
+  _FullScreenImagePageState createState() => _FullScreenImagePageState();
+}
+
+class _FullScreenImagePageState extends State<FullScreenImagePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +41,7 @@ class FullScreenImagePage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('$communityName: $title',
+        title: Text('${widget.communityName}: ${widget.title}',
             style: const TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
@@ -40,7 +57,7 @@ class FullScreenImagePage extends StatelessWidget {
                 onZoomEnd: () {
                   print('Stop zooming');
                 },
-                child: Image(image: NetworkImage(imagePath)),
+                child: Image(image: NetworkImage(widget.imagePath)),
               ),
             ),
           ),
@@ -49,29 +66,56 @@ class FullScreenImagePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconButton(
-                icon: const Icon(Icons.arrow_upward, color: Colors.white),
-                onPressed: () {
-                  // Handle upvote
-                },
+                icon: const Icon(Icons.arrow_upward),
+                color: widget.post.isUpvoted
+                    ? const Color.fromARGB(255, 255, 152, 0)
+                    : Colors.grey,
+                onPressed: widget.onUpvote,
               ),
+              Text(widget.post.upVotes.toString()),
               IconButton(
-                icon: const Icon(Icons.arrow_downward, color: Colors.white),
-                onPressed: () {
-                  // Handle downvote
-                },
+                icon: const Icon(Icons.arrow_downward),
+                color: widget.post.isDownvoted
+                    ? const Color.fromARGB(255, 156, 39, 176)
+                    : Colors.grey,
+                onPressed: widget.onDownvote,
               ),
               IconButton(
                 icon: const Icon(Icons.comment, color: Colors.white),
                 onPressed: () {
-                  // Handle comment
+                  // Navigate to the PostDetailsPage
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => PostDetailsPage(
+                        post: widget.post,
+                        onUpvote: widget.onUpvote,
+                        onDownvote: widget.onDownvote,
+                        onShare: widget.onShare,
+                        onMakeVote: widget.onMakeVote,
+                        onImageTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => FullScreenImagePage(
+                              imagePath: widget.imagePath,
+                              communityName: widget.communityName,
+                              title: widget.title,
+                              post: widget.post,
+                              onUpvote: widget.onUpvote,
+                              onDownvote: widget.onDownvote,
+                              onShare: widget.onShare,
+                              onMakeVote: widget.onMakeVote,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
                 },
               ),
               IconButton(
-                icon: const Icon(Icons.share, color: Colors.white),
-                onPressed: () {
-                  // Handle share
-                },
+                icon: const Icon(Icons.share),
+                onPressed: widget.onShare,
               ),
+              Text(widget.post.shares.toString()),
             ],
           ),
         ],

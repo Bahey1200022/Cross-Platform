@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/controllers/view_post.dart';
 import 'package:sarakel/Widgets/home/widgets/brand_affiliate.dart';
-import 'package:sarakel/Widgets/home/widgets/lock_post.dart';
 import 'package:sarakel/Widgets/home/widgets/mark_spoiler.dart';
 import 'package:sarakel/Widgets/home/widgets/spoiler.dart';
 import 'package:sarakel/Widgets/home/post_details_page.dart';
@@ -518,6 +517,7 @@ class _PostCardState extends State<PostCard> {
                             break;
                           case 'hide':
                             widget.onHide();
+
                             break;
                           case 'lock':
                             _toggleLock();
@@ -558,6 +558,11 @@ class _PostCardState extends State<PostCard> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => FullScreenImagePage(
+                        post: widget.post,
+                        onUpvote: _toggleUpvote,
+                        onDownvote: _toggleDownvote,
+                        onShare: _sharePost,
+                        onMakeVote: _makeVote,
                         imagePath: widget.post.imagePath!,
                         communityName: widget.post.communityName,
                         title: widget.post.title,
