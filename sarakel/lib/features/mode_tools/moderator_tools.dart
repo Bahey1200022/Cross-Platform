@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/general/edit-pic.dart';
 import 'package:sarakel/features/mode_tools/general/notifications.dart';
+import 'package:sarakel/features/mode_tools/quit_moderation_bottom_sheet.dart';
 import 'package:sarakel/features/mode_tools/user_management/approved/approved_users.dart';
 import 'package:sarakel/features/mode_tools/user_management/banned/banned_users.dart';
 import 'package:sarakel/features/mode_tools/user_management/moderators/moderators_page.dart';
@@ -307,7 +308,15 @@ class ModeratorTools extends StatelessWidget {
             title: Text('Quit moderation of c/${community.name}'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Navigate to Mod Log page
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return QuitModerationBottomSheet(
+                    token: token,
+                    communityName: community.name,
+                  );
+                },
+              );
             },
           )
         ],
