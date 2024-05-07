@@ -121,6 +121,7 @@ class IconLinkState extends State<IconLink> {
       return const Icon(
         Icons.reddit_rounded,
         color: Colors.white,
+        size: 30,
       );
     } else if (iconName.contains('tiktok')) {
       return const Icon(
@@ -132,7 +133,7 @@ class IconLinkState extends State<IconLink> {
         FontAwesomeIcons.twitter,
         color: Colors.white,
       );
-    } else if (iconName.contains('SoundCloud')) {
+    } else if (iconName.contains('soundcloud')) {
       return const FaIcon(
         FontAwesomeIcons.soundcloud,
         color: Colors.white,
@@ -141,7 +142,6 @@ class IconLinkState extends State<IconLink> {
       return const FaIcon(
         FontAwesomeIcons.youtube,
         color: Colors.white,
-        size: 10,
       );
     } else {
       return Container(); // Return an empty container if the iconName doesn't match

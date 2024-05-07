@@ -10,7 +10,8 @@ import 'package:sarakel/user_profile/user_controller.dart';
 
 class UserSpaceBar extends StatefulWidget {
   final User? user;
-  const UserSpaceBar({Key? key, this.user});
+  Widget? iconUrl;
+  UserSpaceBar({Key? key, this.user, iconUrl});
 
   @override
   State<UserSpaceBar> createState() {
@@ -64,6 +65,7 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
               ),
             ),
             // Additional widgets on the background
+
             Positioned(
               top: 50,
               left: 20,
@@ -74,6 +76,19 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                       ? Image.network(
                           widget.user!.photoUrl!,
                           fit: BoxFit.contain,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },
                         )
                       : Image.asset(
                           'assets/avatar_logo.jpeg',
@@ -82,6 +97,24 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                 ),
               ),
             ),
+            // Positioned(
+            //   top: 50,
+            //   left: 20,
+            //   child: ClipOval(
+            //     child: SizedBox.fromSize(
+            //       size: const Size.fromRadius(50), // Image radius
+            //       child: widget.user?.photoUrl != null
+            //           ? Image.network(
+            //               widget.user!.photoUrl!,
+            //               fit: BoxFit.contain,
+            //             )
+            //           : Image.asset(
+            //               'assets/avatar_logo.jpeg',
+            //               fit: BoxFit.contain,
+            //             ),
+            //     ),
+            //   ),
+            // ),
 
             Positioned(
               top: 170,
