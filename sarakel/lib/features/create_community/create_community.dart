@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
+import 'package:sarakel/models/community.dart';
 
 import 'community_controller.dart';
 
@@ -82,34 +84,12 @@ class _CommunityFormState extends State<CommunityForm> {
       ),
     );
   }
-
-  //void _checkCommunityExists(String communityName) async {
-  //bool circleExists =
-  //await CreateCircleController.checkCircleExists(communityName);
-  //bool idExists = await CreateCircleController.checkCircleIdExists(
-  //communityName.toLowerCase().replaceAll(' ', '_'));
-
-  //setState(() {
-  //_circleExists = circleExists || idExists;
-  //if (_circleExists) {
-  //_errorText =
-  //'Circle with the name "$communityName" already exists. Please choose a different name.';
-  //}
-  //});
-  //}
-
   void _createCommunity() async {
     String communityName = _communityNameController.text.trim();
     String communityType = _selectedCommunityType!.name;
 
-    //if (_communityExists) {
-    //_showErrorSnackbar(
-    //'Circle with the name "$communityName" already exists. Please choose a different name.');
-    //return;
-    //}
-
     await CreateCommunityController.createCommunity(
-        communityName, communityType, _is18Plus);
+        communityName, communityType, _is18Plus, context);
   }
 
   Widget _getIconForCommunityType(String communityTypeName) {
