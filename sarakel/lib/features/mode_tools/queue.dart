@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/features/mode_tools/modq/edited.dart';
 import 'package:sarakel/features/mode_tools/modq/umodereted.dart';
+import 'package:sarakel/features/mode_tools/removed_posts.dart';
+import 'package:sarakel/features/mode_tools/reported_posts.dart';
 
 class QueueBottomSheet extends StatelessWidget {
   final String community;
@@ -34,18 +37,29 @@ class QueueBottomSheet extends StatelessWidget {
             title: 'Removed',
             onTap: () {
               // Handle button tap
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RemovedPostsPage(community: community),
+                ),
+              );
             },
           ),
           QueueButton(
             title: 'Reported',
             onTap: () {
               // Handle button tap
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>
+                      ReportedPostsPage(community: community)));
             },
           ),
           QueueButton(
             title: 'Edited',
             onTap: () {
               // Handle button tap
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => Edited(community: community)));
             },
           ),
           QueueButton(
@@ -65,9 +79,7 @@ class QueueBottomSheet extends StatelessWidget {
 class QueueButton extends StatelessWidget {
   final String title;
   final Function()? onTap;
-  final Function()? onTap;
 
-  const QueueButton({required this.title, this.onTap});
   const QueueButton({required this.title, this.onTap});
 
   @override

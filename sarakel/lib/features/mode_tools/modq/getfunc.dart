@@ -58,3 +58,11 @@ Future<List<Post>> getUnmoderated(String community) async {
 Future<List<Post>> getEdited(String community) async {
   return fromjson('/api/r/$community/about/edited');
 }
+
+Future<List<Post>> getRemovedPosts(String community) async {
+  return fromjson('/api/r/$community/about/removed');
+}
+
+Future<List<Post>> getReportedPosts(String community) async {
+  return fromjson('/api/r/$community/about/Reported');
+}
