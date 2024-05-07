@@ -312,7 +312,8 @@ class _CommentCardState extends State<CommentCard> {
               Column(
                 children: _replies.map((reply) {
                   return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 8.0),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -322,7 +323,8 @@ class _CommentCardState extends State<CommentCard> {
                             children: [
                               const CircleAvatar(
                                 radius: 16,
-                                backgroundImage: AssetImage('assets/avatar_logo.jpeg'),
+                                backgroundImage:
+                                    AssetImage('assets/avatar_logo.jpeg'),
                               ),
                               const SizedBox(width: 8),
                               Column(
@@ -330,11 +332,13 @@ class _CommentCardState extends State<CommentCard> {
                                 children: [
                                   Text(
                                     'u/${reply.userID}',
-                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     reply.dateTime,
-                                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                                    style: TextStyle(
+                                        color: Colors.grey[600], fontSize: 12),
                                   ),
                                 ],
                               ),
@@ -345,6 +349,17 @@ class _CommentCardState extends State<CommentCard> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
+                              IconButton(
+                                icon: Icon(
+                                  widget.comment.isSaved
+                                      ? Icons.bookmark
+                                      : Icons.bookmark_border,
+                                  color: widget.comment.isSaved
+                                      ? Colors.blue
+                                      : null,
+                                ),
+                                onPressed: _toggleSave,
+                              ),
                               IconButton(
                                 icon: const Icon(Icons.flag),
                                 onPressed: _reportReply,
@@ -366,7 +381,9 @@ class _CommentCardState extends State<CommentCard> {
               children: [
                 IconButton(
                   icon: Icon(
-                    widget.comment.isSaved ? Icons.bookmark : Icons.bookmark_border,
+                    widget.comment.isSaved
+                        ? Icons.bookmark
+                        : Icons.bookmark_border,
                     color: widget.comment.isSaved ? Colors.blue : null,
                   ),
                   onPressed: _toggleSave,
@@ -374,6 +391,14 @@ class _CommentCardState extends State<CommentCard> {
                 IconButton(
                   icon: const Icon(Icons.reply),
                   onPressed: _toggleReply,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.block),
+                  onPressed: _blockUserReply,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.flag),
+                  onPressed: _reportReply,
                 ),
                 if (_isReplying)
                   Expanded(
