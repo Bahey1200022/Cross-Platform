@@ -7,6 +7,7 @@ import 'package:sarakel/Widgets/inbox/chat_card.dart';
 import 'package:sarakel/Widgets/inbox/compose.dart';
 import 'package:sarakel/Widgets/inbox/sent.dart';
 import 'package:sarakel/constants.dart';
+import 'package:sarakel/loading_func/loadposts.dart';
 import '../drawers/community_drawer/community_list.dart';
 import '../drawers/profile_drawer.dart';
 import '../../models/user.dart';
@@ -29,7 +30,7 @@ class _InboxSectionState extends State<InboxSection>
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   late TabController _tabController;
   List messageCard = [];
-  List sentmessageCard = [];
+  List notificationCard = [];
   final int _selectedIndex = 4;
 
   Future<void> initiateMessageCard() async {
@@ -56,10 +57,39 @@ class _InboxSectionState extends State<InboxSection>
     }
   }
 
+  Future<void> initiateNotificationCard() async {
+    var response = await http.get(
+      Uri.parse('$BASE_URL/api/notifications/listNotifications'),
+      headers: {
+        'Authorization': 'Bearer ${widget.token}',
+        'Content-Type': 'application/json'
+      },
+    );
+
+    // Check if the request was successful
+    if (response.statusCode == 200) {
+      // Parse the response data
+      final jsonData = json.decode(response.body);
+      var notificationList = jsonData['data'];
+      setState(() {
+        notificationCard = notificationList
+            .map((item) => {
+                  "duration": formatDateTime(item['createdAt']),
+                  "content": item['body'],
+                })
+            .toList();
+        // Update the messageCard list with the response data
+      });
+    } else {
+      // Handle the error case
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     initiateMessageCard();
+    initiateNotificationCard();
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -125,10 +155,36 @@ class _InboxSectionState extends State<InboxSection>
                     ),
                   ],
                 ),
+
                 // Notifications Tab
-                const Center(
-                  child: Text('Notifications'),
-                ),
+                Column(
+                  children: [
+                    Expanded(
+                      child: CustomMaterialIndicator(
+                        onRefresh: () async {
+                          await initiateNotificationCard();
+                        },
+                        indicatorBuilder: (context, controller) {
+                          return Image.asset('assets/logo_2d.png', width: 30);
+                        },
+                        child: ListView.builder(
+                          itemCount: notificationCard.isNotEmpty
+                              ? notificationCard.length
+                              : 0,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              leading:
+                                  Image.asset('assets/logo_2d.png', width: 30),
+                              title: Text(notificationCard[index]['content']),
+                              subtitle:
+                                  Text(notificationCard[index]['duration']),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
