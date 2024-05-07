@@ -47,19 +47,29 @@ class ModeratorTools extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.comments_disabled), // Add leading widget
-            title: const Text('community icon'),
+            title: const Text('Edit community Picture'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
               // Navigate to Mod Log page
-              editCommunityPic(community.name, token);
+              editDisplayPic(community.name, token);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.edit), // Add leading widget
-            title: const Text('description'),
+            leading: const Icon(Icons.image), // Add leading widget
+            title: const Text('Edit community Picture'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
               // Navigate to Mod Log page
+              editDisplayPic(community.name, token);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.image_outlined), // Add leading widget
+            title: const Text('Edit background Picture'),
+            trailing: const Icon(Icons.arrow_forward),
+            onTap: () {
+              // Navigate to Mod Log page
+              editBackgroundPic(community.name, token);
             },
           ),
           ListTile(
