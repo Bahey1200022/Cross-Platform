@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, use_build_context_synchronously, unused_element, avoid_print, prefer_const_constructors
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';

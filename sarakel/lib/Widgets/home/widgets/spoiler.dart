@@ -7,10 +7,10 @@ class SpoilerAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isSpoiler
-        ? Row(
+        ? const Row(
             mainAxisSize:
                 MainAxisSize.min, // Ensures the Row only takes up needed space
-            children: const [
+            children: [
               Icon(Icons.warning,
                   size: 18, color: Colors.black), // Spoiler icon
               SizedBox(width: 4), // Spacing between icon and text

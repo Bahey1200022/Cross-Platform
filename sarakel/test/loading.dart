@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:sarakel/loading_func/loadposts.dart';
 import 'package:sarakel/models/comment.dart';
 import 'package:sarakel/models/community.dart';

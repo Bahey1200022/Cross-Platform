@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, must_be_immutable, library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/settings/change_Pass.dart';
 import 'package:sarakel/Widgets/settings/passwords_functions.dart';
@@ -13,6 +15,7 @@ class ChangePasswordPage extends StatefulWidget {
       required this.token,
       required this.settings,
       required this.isSignedInGoogle});
+  @override
   _ChangePasswordPageState createState() => _ChangePasswordPageState();
 }
 
@@ -51,134 +54,131 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         padding: const EdgeInsets.all(.0),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Visibility(
-                    visible: !isLoggedThroughGoogle,
-                    child: TextField(
-                      controller: myOldPassword,
-                      decoration: InputDecoration(
-                        hintText: 'Old Password',
-                        suffixIcon: IconButton(
-                            icon: Icon(showOldPasword
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                showOldPasword = !showOldPasword;
-                              });
-                            }),
-                      ),
-                      obscureText: showOldPasword,
-                    )),
-                TextField(
-                  controller: myNewPassword,
-                  decoration: InputDecoration(
-                    hintText: 'New Password',
-                    suffixIcon: IconButton(
-                        icon: Icon(showNewPassword
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                        onPressed: () {
-                          setState(() {
-                            showNewPassword = !showNewPassword;
-                          });
-                        }),
-                  ),
-                  obscureText: showNewPassword,
-                ),
-                TextField(
-                  controller: myConfirmPassword,
-                  decoration: InputDecoration(
-                    hintText: 'Confirm New Password',
-                    suffixIcon: IconButton(
-                        icon: Icon(showConfirmedPassword
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                        onPressed: () {
-                          setState(() {
-                            showConfirmedPassword = !showConfirmedPassword;
-                          });
-                        }),
-                  ),
-                  obscureText: showConfirmedPassword,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      bool isvalid = isNewPasswordValid(
-                          myNewPassword.text, myConfirmPassword.text);
-                      print(isvalid);
-                      if (isvalid) {
-                        // if (isOldPasswordValid(
-                        //     myOldPassword.text, 'dataBasePassword')) {
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => SettingsPage(
-                        //           token: token,
-                        //           settings: Settings(token: token)),
-                        //     ),
-                        //   );
-                        // } else {
-                        //   showDialog(
-                        //     context: context,
-                        //     builder: (BuildContext context) {
-                        //       return AlertDialog(
-                        //         title: const Text('Invalid old Password'),
-                        //         content: const Text(
-                        //             'please check your old password and try again.'),
-                        //         actions: <Widget>[
-                        //           TextButton(
-                        //             onPressed: () {
-                        //               Navigator.of(context).pop();
-                        //             },
-                        //             child: const Text('OK'),
-                        //           ),
-                        //         ],
-                        //       );
-                        //     },
-                        //   );
-                        // }
-                        changePassword(context, myNewPassword.text, token,
-                            myOldPassword.text);
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Invalid Password'),
-                              content: const Text(
-                                  'Password must be at least 8 characters long and match the confirmation password.'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('OK'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }
-                      ;
-
-                      print(myOldPassword.text);
-                      print(myNewPassword.text);
-                      print(myConfirmPassword.text);
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          const Color.fromARGB(255, 255, 153, 0)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Visibility(
+                  visible: !isLoggedThroughGoogle,
+                  child: TextField(
+                    controller: myOldPassword,
+                    decoration: InputDecoration(
+                      hintText: 'Old Password',
+                      suffixIcon: IconButton(
+                          icon: Icon(showOldPasword
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              showOldPasword = !showOldPasword;
+                            });
+                          }),
                     ),
-                    child: const Text(
-                      'Change Password',
-                      style: TextStyle(color: Colors.white),
-                    )),
-              ],
-            ),
+                    obscureText: showOldPasword,
+                  )),
+              TextField(
+                controller: myNewPassword,
+                decoration: InputDecoration(
+                  hintText: 'New Password',
+                  suffixIcon: IconButton(
+                      icon: Icon(showNewPassword
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          showNewPassword = !showNewPassword;
+                        });
+                      }),
+                ),
+                obscureText: showNewPassword,
+              ),
+              TextField(
+                controller: myConfirmPassword,
+                decoration: InputDecoration(
+                  hintText: 'Confirm New Password',
+                  suffixIcon: IconButton(
+                      icon: Icon(showConfirmedPassword
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          showConfirmedPassword = !showConfirmedPassword;
+                        });
+                      }),
+                ),
+                obscureText: showConfirmedPassword,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    bool isvalid = isNewPasswordValid(
+                        myNewPassword.text, myConfirmPassword.text);
+                    print(isvalid);
+                    if (isvalid) {
+                      // if (isOldPasswordValid(
+                      //     myOldPassword.text, 'dataBasePassword')) {
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => SettingsPage(
+                      //           token: token,
+                      //           settings: Settings(token: token)),
+                      //     ),
+                      //   );
+                      // } else {
+                      //   showDialog(
+                      //     context: context,
+                      //     builder: (BuildContext context) {
+                      //       return AlertDialog(
+                      //         title: const Text('Invalid old Password'),
+                      //         content: const Text(
+                      //             'please check your old password and try again.'),
+                      //         actions: <Widget>[
+                      //           TextButton(
+                      //             onPressed: () {
+                      //               Navigator.of(context).pop();
+                      //             },
+                      //             child: const Text('OK'),
+                      //           ),
+                      //         ],
+                      //       );
+                      //     },
+                      //   );
+                      // }
+                      changePassword(context, myNewPassword.text, token,
+                          myOldPassword.text);
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Invalid Password'),
+                            content: const Text(
+                                'Password must be at least 8 characters long and match the confirmation password.'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+
+                    print(myOldPassword.text);
+                    print(myNewPassword.text);
+                    print(myConfirmPassword.text);
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromARGB(255, 255, 153, 0)),
+                  ),
+                  child: const Text(
+                    'Change Password',
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ],
           ),
         ),
       ),

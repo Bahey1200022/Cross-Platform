@@ -31,7 +31,7 @@ class _SarakelPopularScreenState extends State<SarakelPopularScreen> {
   @override
   void initState() {
     super.initState();
-    widget.homescreenController.loadNewPosts().then((posts) {
+    widget.homescreenController.loadPosts().then((posts) {
       setState(() => postsToShow = posts);
     });
   }

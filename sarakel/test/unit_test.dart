@@ -91,25 +91,25 @@ void main() {
   test('formatDateTime should return a formatted string', () {
     // Call the function with a date-time string 2 days ago
     String result = formatDateTime(
-        DateTime.now().subtract(Duration(days: 2)).toIso8601String());
+        DateTime.now().subtract(const Duration(days: 2)).toIso8601String());
     // Check that the function returned '2d'
     expect(result, equals('2d'));
 
     // Call the function with a date-time string 3 hours ago
     result = formatDateTime(
-        DateTime.now().subtract(Duration(hours: 3)).toIso8601String());
+        DateTime.now().subtract(const Duration(hours: 3)).toIso8601String());
     // Check that the function returned '3h'
     expect(result, equals('3h'));
 
     // Call the function with a date-time string 4 minutes ago
     result = formatDateTime(
-        DateTime.now().subtract(Duration(minutes: 4)).toIso8601String());
+        DateTime.now().subtract(const Duration(minutes: 4)).toIso8601String());
     // Check that the function returned '4m'
     expect(result, equals('4m'));
 
     // Call the function with a date-time string 5 seconds ago
     result = formatDateTime(
-        DateTime.now().subtract(Duration(seconds: 5)).toIso8601String());
+        DateTime.now().subtract(const Duration(seconds: 5)).toIso8601String());
     // Check that the function returned '5s'
     expect(result, equals('5s'));
   });
