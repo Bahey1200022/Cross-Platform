@@ -57,69 +57,86 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
           preferredSize: const Size.fromHeight(100),
           child: AppBar(
             backgroundColor: const Color.fromARGB(255, 43, 126, 243),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+            leading: Material(
+              color: Colors.grey.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(20.0),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
             actions: [
-              IconButton(
-                icon: const Icon(Icons.search, color: Colors.white),
-                onPressed: () {
-                  showSearch(context: context, delegate: sarakelSearch());
-                },
+              Material(
+                color: Colors.grey.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(20.0),
+                child: IconButton(
+                  icon: const Icon(Icons.search, color: Colors.white),
+                  onPressed: () {
+                    showSearch(context: context, delegate: sarakelSearch());
+                  },
+                ),
               ),
-              IconButton(
-                icon: const Icon(Icons.share, color: Colors.white),
-                onPressed: () {},
+              Material(
+                color: Colors.grey.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(20.0),
+                child: IconButton(
+                  icon: const Icon(Icons.share, color: Colors.white),
+                  onPressed: () {},
+                ),
               ),
-              IconButton(
-                icon: const Icon(Icons.more_vert, color: Colors.white),
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ListTile(
-                            title:
-                                const Text('Accept invite to be a moderator?'),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    // Handle "Yes" button press
-                                    acceptInvite(widget.community.name,
-                                        widget.token, context);
-                                    Navigator.pop(context);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            'You are now a moderator in ${widget.community.name}!'),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text('Yes'),
-                                ),
-                                const SizedBox(width: 8),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // Handle "No" button press
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text('Cancel'),
-                                ),
-                              ],
+              Material(
+                color: Colors.grey.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(20.0),
+                child: IconButton(
+                  icon: const Icon(Icons.more_vert, color: Colors.white),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              title: const Text(
+                                  'Accept invite to be a moderator?'),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      // Handle "Yes" button press
+                                      acceptInvite(widget.community.name,
+                                          widget.token, context);
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              'You are now a moderator in ${widget.community.name}!'),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text('Yes'),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Handle "No" button press
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Cancel'),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ],
             flexibleSpace: Container(
@@ -220,7 +237,7 @@ class _CommunityProfilePageState extends State<CommunityProfilePage> {
                 );
               },
               child: const Text(
-                'See Community Info',
+                'See more',
                 style: TextStyle(color: Colors.blue),
               ),
             ),

@@ -5,11 +5,13 @@ import 'package:sarakel/models/community.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:sarakel/user_profile/user_profile.dart';
 
+
+///Community Info Page
 class InfoCommunity extends StatefulWidget {
   final Community community;
   final String token;
-  const InfoCommunity({Key? key, required this.community, required this.token})
-      : super(key: key);
+
+  const InfoCommunity({super.key, required this.community, required this.token});
 
   @override
   State<InfoCommunity> createState() => _InfoCommunityState();
@@ -17,106 +19,140 @@ class InfoCommunity extends StatefulWidget {
 
 class _InfoCommunityState extends State<InfoCommunity> {
   List<String> moderators = [];
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
-    getmoderators();
+    getModerators();
   }
 
-  void getmoderators() {
+  ///Get Moderators of the community
+  void getModerators() {
     ModerationService.getModerators(widget.token, widget.community.name)
         .then((value) {
       setState(() {
         moderators = value;
+        isLoading = false;
       });
     });
   }
 
+  //Page UI
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: AppBar(
-          backgroundColor: const Color.fromARGB(255, 43, 126, 243),
-          leading: IconButton(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent, 
+        leading: Material(
+          color: Colors.grey.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(20.0), 
+          child: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
-          actions: [
-            IconButton(
+        ),
+        actions: [
+          Material(
+            color: Colors.grey.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(20.0), 
+            child: IconButton(
               icon: const Icon(Icons.search, color: Colors.white),
               onPressed: () {
                 showSearch(context: context, delegate: sarakelSearch());
               },
             ),
-            IconButton(
+          ),
+          Material(
+            color: Colors.grey.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(20.0), 
+            child: IconButton(
               icon: const Icon(Icons.share, color: Colors.white),
               onPressed: () {},
             ),
-            IconButton(
+          ),
+          Material(
+            color: Colors.grey.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(20.0), 
+            child: IconButton(
               icon: const Icon(Icons.more_vert, color: Colors.white),
               onPressed: () {},
             ),
-          ],
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(widget.community.backimage ?? ''),
-                fit: BoxFit.fill,
+          ),
+        ],
+        flexibleSpace: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(widget.community.backimage ?? ''),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'c/${widget.community.name}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      body: Column(
-        children: [
-          Card(
-            child: ListTile(
-              title: const Text('Description'),
-              subtitle: Text(widget.community.description),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: const Text('Circles Rules'),
-              subtitle:
-                  Text(widget.community.rules ?? 'Sarakel under constructiom'),
-            ),
-          ),
-          const Card(
-            child: ListTile(
-              title: Text('Moderators'),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: moderators.length,
-              itemBuilder: (context, index) {
-                final member = moderators[index];
-                return ListTile(
-                  title: Text(member),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.message),
-                    onPressed: () {
-                      // Perform delete operation for the moderator
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserProfile(
-                            user: User(username: member),
-                          ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  title: const Text('Description'),
+                  subtitle: Text(widget.community.description),
+                ),
+                ListTile(
+                  title: const Text('Rules'),
+                  subtitle: Text(
+                      widget.community.rules ?? 'Sarakel under construction'),
+                ),
+                const ListTile(
+                  title: Text('Moderators'),
+                ),
+                Expanded(
+                  child: moderators.isEmpty
+                      ? const Center(child: Text('No Moderators Found'))
+                      : ListView.builder(
+                          itemCount: moderators.length,
+                          itemBuilder: (context, index) {
+                            final member = moderators[index];
+                            return Card(
+                              child: ListTile(
+                                title: Text('u/$member'),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => UserProfile(
+                                        user: User(username: member),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                );
-              },
+                ),
+              ],
             ),
-          )
-        ],
-      ),
     );
   }
 }
