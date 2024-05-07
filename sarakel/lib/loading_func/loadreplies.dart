@@ -1,9 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/models/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+///Fetches replies for a given comment
 Future<List<Comment>> fetchReplies(String postId, String commentId) async {
   try {
     SharedPreferences prefs = await SharedPreferences.getInstance();
