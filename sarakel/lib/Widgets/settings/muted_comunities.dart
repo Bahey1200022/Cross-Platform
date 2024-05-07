@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/Widgets/home/widgets/post_card.dart';
-import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
-import 'package:sarakel/loading_func/loadposts.dart';
-import 'package:sarakel/models/community.dart';
-import 'package:sarakel/models/post.dart';
+
 import 'package:sarakel/models/user.dart';
 import 'package:sarakel/user_profile/user_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sarakel/features/search_bar/search_control.dart';
 import 'package:sarakel/Widgets/settings/search_muted_community.dart';
 
 ///Search delegate class for the search bar
@@ -55,12 +50,12 @@ class BlockedSearch extends SearchDelegate {
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 String? token = prefs.getString('token');
-                query = suggestionList[index]['name'];
+                query = suggestionList[index];
                 print(query);
                 // Navigate to the desired page
 
                 User user = User(
-                  username: suggestionList[index]['username'],
+                  username: suggestionList[index],
                   token: token,
                 );
                 Navigator.push(
@@ -75,17 +70,11 @@ class BlockedSearch extends SearchDelegate {
               leading: const Icon(Icons.history),
               title: RichText(
                 text: TextSpan(
-                  text: suggestionList[index]['name'],
+                  text: suggestionList[index],
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
-                ),
-              ),
-              subtitle: Text(
-                suggestionList[index]['Type'] ?? 'Default value',
-                style: const TextStyle(
-                  color: Colors.grey,
                 ),
               ),
             ),

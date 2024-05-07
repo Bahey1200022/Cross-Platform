@@ -4,6 +4,8 @@ import 'package:sarakel/constants.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<dynamic>> fetchBlockedSuggestions(String query) async {
+  print('fetching suggestions');
+  print(query);
   var response = await http.post(Uri.parse('$BASE_URL/searchBy/users'),
       headers: {
         'Content-Type': 'application/json',
@@ -11,20 +13,20 @@ Future<List<dynamic>> fetchBlockedSuggestions(String query) async {
       body: jsonEncode({
         'keyword': query,
       }));
-  if (response.statusCode != 200) {
-    throw Exception('Failed to load suggestions');
-  } else {
-    print('user prints');
-    print(response.body);
+  print(response.statusCode);
+  if (response.statusCode == 200) {
     var suggestionsList = json.decode(response.body);
-    List<dynamic> allUsersResults = suggestionsList['usersResults'];
-    if (suggestionsList.containsKey('username')) {
-      suggestionsList['name'] = suggestionsList['username'];
-      suggestionsList['Type'] = 'User';
+    var suggestions = suggestionsList['usersResults'];
+
+    List<dynamic> filteredSuggestions = [];
+    for (var suggestion in suggestions) {
+      filteredSuggestions.add(suggestion['username']);
     }
-    List<dynamic> filteredSuggestions = suggestionsList
-        .where((suggestion) => suggestion.containsKey('Type'))
-        .toList();
+
+    print('ahhhh');
+    print(filteredSuggestions);
     return filteredSuggestions;
+  } else {
+    throw Exception('Failed to load suggestions');
   }
 }

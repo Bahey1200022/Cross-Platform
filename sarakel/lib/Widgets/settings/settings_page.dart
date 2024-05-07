@@ -175,13 +175,14 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             leading: const Icon(Icons.block_outlined),
             title: const Text('Manage blocked accounts'),
-            onTap: () {},
+            onTap: () {
+              showSearch(context: context, delegate: BlockedSearch());
+            },
           ),
           ListTile(
             leading: const Icon(Icons.volume_off_outlined),
-            title: const Text('Manage muted comuninties'),
+            title: const Text('Manage muted communities'),
             onTap: () {
-              showSearch(context: context, delegate: BlockedSearch());
               // Navigator.push(
               //   context,
               //   MaterialPageRoute(
