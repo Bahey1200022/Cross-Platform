@@ -36,7 +36,6 @@ Future<bool> leaveModeration(String token, String communityName) async {
     );
     print(response.body);
     if (response.statusCode == 200) {
-      // Invitation sent successfully
       return true;
     } else {
       // Invitation failed
@@ -82,7 +81,16 @@ class QuitModerationBottomSheet extends StatelessWidget {
             onTap: () async {
               // Implement leave moderation logic
               try {
-                await leaveModeration(token, communityName);
+                bool success = await leaveModeration(token, communityName);
+                if (success) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Left the community successfully')),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to leave the community')),
+                  );
+                }
                 Navigator.pop(context); // Close the bottom sheet
                 Navigator.push(
                   context,
