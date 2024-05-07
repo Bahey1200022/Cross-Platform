@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/general/edit-pic.dart';
 import 'package:sarakel/features/mode_tools/general/notifications.dart';
-import 'package:sarakel/features/mode_tools/queue.dart';
+import 'package:sarakel/features/mode_tools/modq/queue.dart';
 import 'package:sarakel/features/mode_tools/quit_moderation_bottom_sheet.dart';
 import 'package:sarakel/features/mode_tools/user_management/approved/approved_users.dart';
 import 'package:sarakel/features/mode_tools/user_management/banned/banned_users.dart';

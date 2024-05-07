@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/modq/edited.dart';
 import 'package:sarakel/features/mode_tools/modq/umodereted.dart';
-import 'package:sarakel/features/mode_tools/removed_posts.dart';
-import 'package:sarakel/features/mode_tools/reported_posts.dart';
+import 'package:sarakel/features/mode_tools/modq/removed_posts.dart';
+import 'package:sarakel/features/mode_tools/modq/reported_posts.dart';
 
 class QueueBottomSheet extends StatelessWidget {
   final String community;

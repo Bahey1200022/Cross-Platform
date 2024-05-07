@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
-import 'package:sarakel/features/mode_tools/removed_posts_controller.dart';
+import 'package:sarakel/features/mode_tools/modq/getfunc.dart';
 import 'package:sarakel/models/post.dart';
 
 class RemovedPostsPage extends StatefulWidget {
