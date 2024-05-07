@@ -298,6 +298,18 @@ class ModeratorTools extends StatelessWidget {
               // Navigate to Mod Log page
             },
           ),
+          ListTile(
+            tileColor: Colors.grey[200], // Set tile color to light grey
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout_outlined),
+            textColor: Colors.red, // Add leading widget
+            title: Text('Quit moderation of c/${community.name}'),
+            trailing: const Icon(Icons.arrow_forward),
+            onTap: () {
+              // Navigate to Mod Log page
+            },
+          )
         ],
       ),
     );
