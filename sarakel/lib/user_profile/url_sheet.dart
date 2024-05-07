@@ -33,7 +33,7 @@ class UrlSheet extends StatelessWidget {
               icon: const Icon(
                 Icons.facebook,
                 color: Colors.blue,
-                size: 15,
+                size: 10,
               ),
               label: const Text(
                 'Facebook',
@@ -85,6 +85,10 @@ class UrlSheet extends StatelessWidget {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
                   const Color.fromARGB(180, 255, 255, 255),
+                ),
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.all(
+                      5), // Adjust this value to change the size of the button
                 ),
               ),
             ),
