@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print
+
 import 'dart:convert';
 import 'dart:core';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
@@ -63,7 +65,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
 
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Post Successfully Unhidden!')),
+          const SnackBar(content: Text('Post Successfully Unhidden!')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -97,7 +99,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
 
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Post Successfully Hidden!')),
+          const SnackBar(content: Text('Post Successfully Hidden!')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -111,6 +113,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
     }
   }
 
+  ///builds the homescreen
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,6 +125,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
               context: context,
               position: const RelativeRect.fromLTRB(0, kToolbarHeight, 0, 0),
               items: <PopupMenuEntry<String>>[
+                ///menu items for home screen
                 const PopupMenuItem<String>(
                   value: 'home',
                   child: Row(
