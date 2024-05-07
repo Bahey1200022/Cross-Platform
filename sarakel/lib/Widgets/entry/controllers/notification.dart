@@ -38,6 +38,8 @@ void saveToken(String token, String username, String usertoken) async {
 
   request.headers['Authorization'] = 'Bearer $usertoken';
   var response = await request.send();
+  print('allah yostor');
   if (response.statusCode == 200) {
+    print(token);
   } else {}
 }
