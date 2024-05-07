@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sarakel/Widgets/settings/change_email.dart';
 import 'package:sarakel/Widgets/settings/change_password.dart';
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/features/mode_tools/general/notifications.dart';
@@ -21,6 +22,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final myController = TextEditingController();
+
   var swicthval1 = {};
   List swicthval = [true, true, true, true, true, true, true, true, true, true];
   bool isHavingEmailAdress = true;
@@ -86,7 +89,17 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  // Add your logic for the continue button here
+                                  String newEmail = myController.text.trim();
+                                  if (validateEmail(newEmail) == false) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                'Please enter a valid email address')));
+                                  } else {
+                                    // Add your logic for the continue button here
+                                    changeEmail(
+                                        newEmail, widget.token, context);
+                                  }
                                 },
                                 child: const Text('Continue'),
                               ),
@@ -95,11 +108,15 @@ class _SettingsPageState extends State<SettingsPage> {
                         ],
                         title: const Text('Update email address'),
                         contentPadding: const EdgeInsets.all(20.0),
-                        content: const Column(
+                        content: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                                'To change change yout email address, you need to create a reddit password first'),
+                            TextField(
+                              controller: myController,
+                              decoration: const InputDecoration(
+                                hintText: 'Enter your new email address',
+                              ),
+                            ),
                           ],
                         ),
                       ));
