@@ -103,7 +103,7 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                 child: Row(
                   children: [
                     OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () async {},
                       child: const Text(
                         'follow',
                         style: TextStyle(color: Colors.white),

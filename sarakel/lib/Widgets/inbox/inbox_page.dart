@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/Widgets/inbox/chat_card.dart';
@@ -16,7 +17,6 @@ import '../home/widgets/app_bar.dart';
 /// Email message like class where it displays the user's inbox
 class InboxSection extends StatefulWidget {
   final String token;
-  
 
   const InboxSection({Key? key, required this.token}) : super(key: key);
 
@@ -46,7 +46,6 @@ class _InboxSectionState extends State<InboxSection>
     if (response.statusCode == 200) {
       // Parse the response data
       final jsonData = json.decode(response.body);
-      print(jsonData[0]['_id']);
 
       // Update the messageCard list with the response data
       setState(() {
@@ -70,18 +69,17 @@ class _InboxSectionState extends State<InboxSection>
 
     return Scaffold(
       key: _scaffoldKey,
-        appBar: CustomAppBar(
-          title: 'Chat',
-          scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
-        ),
-        drawer: CommunityDrawer(
-          token: widget.token,
-        ),
-        endDrawer: ProfileDrawer(
-          // Add end drawer
-          user:
-              User(username: jwtdecodedtoken['username'], token: widget.token),
-        ),
+      appBar: CustomAppBar(
+        title: 'Chat',
+        scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
+      ),
+      drawer: CommunityDrawer(
+        token: widget.token,
+      ),
+      endDrawer: ProfileDrawer(
+        // Add end drawer
+        user: User(username: jwtdecodedtoken['username'], token: widget.token),
+      ),
       body: Column(
         children: [
           TabBar(
@@ -99,22 +97,30 @@ class _InboxSectionState extends State<InboxSection>
                 Column(
                   children: [
                     Expanded(
-                      child: ListView.builder(
-                        itemCount:
-                            messageCard.isNotEmpty ? messageCard.length : 0,
-                        itemBuilder: (context, index) {
-                          return ButtonCard(
-                            sender: messageCard[index]['recipient'],
-                            receiver: messageCard[index]['username'],
-                            id: messageCard[index]["_id"],
-                            token: widget.token,
-                            status: messageCard[index]['status'],
-                            icon: const Icon(Icons.person),
-                            live: false,
-                            title: messageCard[index]['title'],
-                            content: messageCard[index]['content'],
-                          );
+                      child: CustomMaterialIndicator(
+                        onRefresh: () async {
+                          await initiateMessageCard();
                         },
+                        indicatorBuilder: (context, controller) {
+                          return Image.asset('assets/logo_2d.png', width: 30);
+                        },
+                        child: ListView.builder(
+                          itemCount:
+                              messageCard.isNotEmpty ? messageCard.length : 0,
+                          itemBuilder: (context, index) {
+                            return ButtonCard(
+                              sender: messageCard[index]['recipient'],
+                              receiver: messageCard[index]['username'],
+                              id: messageCard[index]["_id"],
+                              token: widget.token,
+                              status: messageCard[index]['status'],
+                              icon: const Icon(Icons.person),
+                              live: false,
+                              title: messageCard[index]['title'],
+                              content: messageCard[index]['content'],
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
