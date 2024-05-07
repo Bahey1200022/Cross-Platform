@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print, duplicate_ignore
+
 import 'dart:convert';
 
 import 'package:sarakel/constants.dart';
