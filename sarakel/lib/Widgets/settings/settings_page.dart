@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sarakel/Widgets/entry/controllers/notification.dart';
 import 'package:sarakel/Widgets/settings/change_password.dart';
 import 'package:sarakel/constants.dart';
+import 'package:sarakel/features/mode_tools/general/notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'settings_controller.dart';
 import 'package:http/http.dart' as http;
@@ -201,6 +203,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 });
                 widget.settings
                     .change("chatMessages", swicthval1['chatMessages']);
+                if (swicthval1['chatMessages']) {
+                  enableNotification(context);
+                } else {
+                  disableNotification(context);
+                }
               },
             ),
             onTap: () {
@@ -219,6 +226,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 });
                 widget.settings.change(
                     "privateMessagesEmail", swicthval1['privateMessagesEmail']);
+                if (swicthval1['privateMessagesEmail']) {
+                  enableNotification(context);
+                } else {
+                  disableNotification(context);
+                }
               },
             ),
             onTap: () {

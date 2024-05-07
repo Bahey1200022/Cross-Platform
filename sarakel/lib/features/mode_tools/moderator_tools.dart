@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/features/mode_tools/general/notifications.dart';
 import 'package:sarakel/features/mode_tools/user_management/approved/approved_users.dart';
 import 'package:sarakel/features/mode_tools/user_management/banned/banned_users.dart';
 import 'package:sarakel/features/mode_tools/user_management/moderators/moderators_page.dart';
@@ -104,7 +105,7 @@ class ModeratorTools extends StatelessWidget {
             title: const Text('Mod notifications'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Navigate to Mod Log page
+              disableNotification(context);
             },
           ),
           ListTile(
