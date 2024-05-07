@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/user_management/moderators/add_moderator_controller.dart';
 
@@ -6,10 +8,10 @@ class AddModeratorPage extends StatefulWidget {
   final String token;
 
   const AddModeratorPage({
-    Key? key,
+    super.key,
     required this.communityName,
     required this.token,
-  }) : super(key: key);
+  });
 
   @override
   _AddModeratorPageState createState() => _AddModeratorPageState();
@@ -26,19 +28,19 @@ class _AddModeratorPageState extends State<AddModeratorPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Add a moderator',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -51,24 +53,24 @@ class _AddModeratorPageState extends State<AddModeratorPage> {
               },
               decoration: InputDecoration(
                 hintText: 'Enter moderator username',
-                enabledBorder: UnderlineInputBorder(
+                enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.black),
                 ),
-                focusedBorder: UnderlineInputBorder(
+                focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.black),
                 ),
-                errorBorder: UnderlineInputBorder(
+                errorBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.red),
                 ),
                 errorText: _isFocused && _controller.text.isEmpty
                     ? 'Username is required'
                     : null,
-                suffixIcon: Icon(Icons.person),
+                suffixIcon: const Icon(Icons.person),
                 labelText: _isFocused ? 'Username' : null,
-                labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                labelStyle: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -87,7 +89,7 @@ class _AddModeratorPageState extends State<AddModeratorPage> {
                         });
                       },
                     ),
-                    Text('Full Permissions'),
+                    const Text('Full Permissions'),
                   ],
                 ),
                 ...List.generate(
@@ -108,7 +110,7 @@ class _AddModeratorPageState extends State<AddModeratorPage> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -120,23 +122,23 @@ class _AddModeratorPageState extends State<AddModeratorPage> {
                     if (invitationSent) {
                       // Invitation sent successfully
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Invitation sent successfully')),
+                        const SnackBar(content: Text('Invitation sent successfully')),
                       );
                     } else {
                       // Invitation failed
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Failed to send invitation')),
+                        const SnackBar(content: Text('Failed to send invitation')),
                       );
                     }
                   });
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF00BFA5),
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  shape: StadiumBorder(), // Oval shape
+                  backgroundColor: const Color(0xFF00BFA5),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  shape: const StadiumBorder(), // Oval shape
                 ),
-                child: Text('Add'),
+                child: const Text('Add'),
               ),
             ),
           ],

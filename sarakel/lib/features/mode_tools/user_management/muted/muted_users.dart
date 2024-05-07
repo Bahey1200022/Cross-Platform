@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/user_management/muted/muted_users_service.dart';
 import 'package:sarakel/features/mode_tools/user_management/muted/search_muted_users_page.dart';
@@ -9,10 +11,10 @@ class MutedUsersPage extends StatefulWidget {
   final String communityName; // Community name
 
   const MutedUsersPage({
-    Key? key,
+    super.key,
     required this.token,
     required this.communityName,
-  }) : super(key: key);
+  });
   @override
   _MutedUsersPageState createState() => _MutedUsersPageState();
 }
@@ -50,8 +52,8 @@ class _MutedUsersPageState extends State<MutedUsersPage>
           child: Wrap(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.person),
-                title: Text('View Profile'),
+                leading: const Icon(Icons.person),
+                title: const Text('View Profile'),
                 onTap: () {
                   // Navigate to the user profile page of the muted
                   Navigator.push(
@@ -68,8 +70,8 @@ class _MutedUsersPageState extends State<MutedUsersPage>
                 },
               ),
               ListTile(
-                leading: Icon(Icons.remove_circle),
-                title: Text('Remove'),
+                leading: const Icon(Icons.remove_circle),
+                title: const Text('Remove'),
                 onTap: () {
                   // Implement remove muted logic
                 },
@@ -77,10 +79,10 @@ class _MutedUsersPageState extends State<MutedUsersPage>
               ListTile(
                 title: Container(
                   decoration: BoxDecoration(
-                    color: Color(0xFF00BFA5),
+                    color: const Color(0xFF00BFA5),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Cancel',
                       style: TextStyle(color: Colors.white),
@@ -103,18 +105,18 @@ class _MutedUsersPageState extends State<MutedUsersPage>
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Muted users',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               Navigator.push(
                 context,
@@ -128,13 +130,13 @@ class _MutedUsersPageState extends State<MutedUsersPage>
             },
           ),
           IconButton(
-            icon: Icon(Icons.person_add),
+            icon: const Icon(Icons.person_add),
             onPressed: () {},
           ),
         ],
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
             Tab(text: 'All'), // Tab for "All"
             Tab(text: 'Editable'), // Tab for "Editable"
           ],
@@ -150,7 +152,7 @@ class _MutedUsersPageState extends State<MutedUsersPage>
                   itemBuilder: (context, index) {
                     final mutedName = allMuted[index];
                     return ListTile(
-                      leading: Icon(Icons.person), // Icon for muted
+                      leading: const Icon(Icons.person), // Icon for muted
                       title: Text(mutedName), // muted name
                       onTap: () {
                         //navigate to the muted's profile
@@ -169,7 +171,7 @@ class _MutedUsersPageState extends State<MutedUsersPage>
                     );
                   },
                 )
-              : Center(
+              : const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -195,7 +197,7 @@ class _MutedUsersPageState extends State<MutedUsersPage>
                   itemBuilder: (context, index) {
                     final mutedName = allMuted[index];
                     return ListTile(
-                      leading: Icon(Icons.person), // Icon for muted
+                      leading: const Icon(Icons.person), // Icon for muted
                       title: Text(mutedName), // muted name
                       onTap: () {
                         //navigate to the muted's profile
@@ -211,7 +213,7 @@ class _MutedUsersPageState extends State<MutedUsersPage>
                         );
                       },
                       trailing: IconButton(
-                        icon: Icon(Icons.more_vert),
+                        icon: const Icon(Icons.more_vert),
                         onPressed: () {
                           _showActionsModal(context, mutedName);
                         },
@@ -219,7 +221,7 @@ class _MutedUsersPageState extends State<MutedUsersPage>
                     );
                   },
                 )
-              : Center(
+              : const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

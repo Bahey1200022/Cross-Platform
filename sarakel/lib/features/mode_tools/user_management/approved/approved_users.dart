@@ -1,6 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class ApprovedUsersPage extends StatefulWidget {
+  const ApprovedUsersPage({super.key});
+
   @override
   _ApprovedUsersPageState createState() => _ApprovedUsersPageState();
 }
@@ -37,10 +41,8 @@ class _ApprovedUsersPageState extends State<ApprovedUsersPage> {
           ),
         ],
       ),
-      body: Container(
-        child: const Center(
-          child: Text('Approved Users Content'),
-        ),
+      body: const Center(
+        child: Text('Approved Users Content'),
       ),
     );
   }
