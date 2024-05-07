@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:sarakel/constants.dart';
@@ -38,25 +40,26 @@ class SavedPostsController {
                 var p = postData[0];
 
                 posts.add(Post(
-                  communityName: p['communityId']?.toString() ?? "",
-                  id: p['_id']?.toString() ?? "",
+                  communityName: p['communityId'],
+                  id: p['_id'],
                   imagePath: p['media'] != null
                       ? (p['media'] is List && (p['media'] as List).isNotEmpty
                           ? Uri.encodeFull(
                               extractUrl((p['media'] as List).first.toString()))
                           : Uri.encodeFull(extractUrl(p['media'].toString())))
                       : null,
-                  upVotes: p['upvotes'] ?? 0,
-                  downVotes: p['downvotes'] ?? 0,
-                  comments: p['numComments'] ?? 0,
-                  shares: p['numComments'] ?? 0,
-                  isNSFW: true,
+                  upVotes: p['upvotes'],
+                  downVotes: p['downvotes'],
+                  comments: p['numberOfComments'] ?? 0,
+                  shares: p['numberOfComments'] ?? 0,
+                  isNSFW: p['nsfw'],
                   postCategory: "general",
-                  isSpoiler: p['isSpoiler'] ?? false,
+                  isSpoiler: p['isSpoiler'],
                   content: p['content']?.toString() ?? "",
-                  communityId: p['communityId']?.toString() ?? "",
-                  title: p['title']?.toString() ?? "",
-                  username: p['userId']?.toString() ?? "",
+                  communityId: p['communityId'],
+                  title: p['title'],
+                  duration: formatDateTime(p['createdAt']),
+                  username: p['username'],
                   views: p['numViews'] ?? 0,
                 ));
               }
@@ -76,6 +79,7 @@ class SavedPostsController {
   }
 }
 
+/// Controller for fetching saved comments
 class SavedCommentsController {
   Future<List<Comment>> fetchSavedComments() async {
     try {
@@ -104,7 +108,7 @@ class SavedCommentsController {
         for (var item in message) {
           if (item.isNotEmpty && item[0] == "comment") {
             List<dynamic> commentList =
-                item[1]; // Assuming comment data is always the second element
+                item[1]; 
             for (var commentData in commentList) {
               if (commentData is Map<String, dynamic>) {
                 comments.add(Comment.fromJson(commentData));

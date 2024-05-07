@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/loading_func/loadposts.dart';
 import 'package:sarakel/models/post.dart';
