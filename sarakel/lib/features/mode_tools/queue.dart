@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/features/mode_tools/removed_posts.dart';
+import 'package:sarakel/features/mode_tools/reported_posts.dart';
+import 'package:sarakel/models/community.dart';
 
 class QueueBottomSheet extends StatelessWidget {
+  final Community community;
+
+  QueueBottomSheet({required this.community});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,11 +27,50 @@ class QueueBottomSheet extends StatelessWidget {
           ),
           Divider(),
           SizedBox(height: 16.0),
-          QueueButton(title: 'Needs Review'),
-          QueueButton(title: 'Removed'),
-          QueueButton(title: 'Reported'),
-          QueueButton(title: 'Edited'),
-          QueueButton(title: 'Unmoderated'),
+          QueueButton(
+            title: 'Needs Review',
+            onTap: () {
+              // Handle button tap
+            },
+          ),
+          QueueButton(
+            title: 'Removed',
+            onTap: () {
+              // Handle button tap
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      RemovedPostsPage(community: community.name),
+                ),
+              );
+            },
+          ),
+          QueueButton(
+            title: 'Reported',
+            onTap: () {
+              // Handle button tap
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ReportedPostsPage(community: community.name),
+                ),
+              );
+            },
+          ),
+          QueueButton(
+            title: 'Edited',
+            onTap: () {
+              // Handle button tap
+            },
+          ),
+          QueueButton(
+            title: 'Unmoderated',
+            onTap: () {
+              // Handle button tap
+            },
+          ),
         ],
       ),
     );
@@ -33,8 +79,9 @@ class QueueBottomSheet extends StatelessWidget {
 
 class QueueButton extends StatelessWidget {
   final String title;
+  final Function()? onTap;
 
-  const QueueButton({required this.title});
+  const QueueButton({required this.title, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +90,8 @@ class QueueButton extends StatelessWidget {
         title,
         style: TextStyle(fontWeight: FontWeight.normal),
       ),
-      //trailing: Icon(Icons.arrow_forward),
-      onTap: () {
-        // Handle button tap
-      },
+      trailing: Icon(Icons.arrow_forward),
+      onTap: onTap,
     );
   }
 }
