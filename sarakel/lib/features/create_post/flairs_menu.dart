@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///Menu for selecting flairs
 class FlairsMenu extends StatefulWidget {
   final Function(bool) onSpoilerChanged;
   final Function(bool) onNSFWChanged;
@@ -21,6 +22,7 @@ class _FlairsMenuState extends State<FlairsMenu> {
   bool spoiler = false;
   bool brandAffiliate = false;
 
+  ///UI for selecting flairs
   @override
   Widget build(BuildContext context) {
     return Container(
