@@ -7,7 +7,7 @@ class ChatTile extends StatelessWidget {
   final String profilePicture; // Add profile picture parameter
   final bool isSender;
 
-  const ChatTile({
+  const ChatTile({super.key, 
     required this.person,
     required this.content,
     required this.profilePicture, // Initialize profile picture parameter
@@ -30,7 +30,7 @@ class ChatTile extends StatelessWidget {
                   AssetImage(profilePicture), // Display profile picture
               radius: 20.0,
             ),
-            SizedBox(width: 8.0),
+            const SizedBox(width: 8.0),
           ],
           Expanded(
             child: Column(
@@ -41,13 +41,13 @@ class ChatTile extends StatelessWidget {
               children: [
                 Text(
                   person,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 4.0),
+                const SizedBox(height: 4.0),
                 Container(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     color: isSender
                         ? Colors.blue
@@ -63,7 +63,7 @@ class ChatTile extends StatelessWidget {
             ),
           ),
           if (isSender) ...[
-            SizedBox(width: 8.0),
+            const SizedBox(width: 8.0),
             CircleAvatar(
               backgroundImage:
                   AssetImage(profilePicture), // Display profile picture

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
@@ -62,7 +64,7 @@ class QuitModerationBottomSheet extends StatelessWidget {
   final String token;
   final String communityName;
 
-  const QuitModerationBottomSheet({
+  const QuitModerationBottomSheet({super.key, 
     required this.token,
     required this.communityName,
   });
@@ -74,8 +76,8 @@ class QuitModerationBottomSheet extends StatelessWidget {
       child: Wrap(
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.remove_circle),
-            title: Text('Leave'),
+            leading: const Icon(Icons.remove_circle),
+            title: const Text('Leave'),
             onTap: () async {
               // Implement leave moderation logic
               try {

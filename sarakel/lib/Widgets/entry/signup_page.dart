@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/entry/controllers/user_entry_controller.dart';
 import 'username_page.dart';

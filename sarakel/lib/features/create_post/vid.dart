@@ -2,14 +2,12 @@ import 'dart:typed_data';
 
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-// ...
-
+/// Generate a thumbnail from a video file
 Future<Uint8List?> generateThumbnail(String videoPath) async {
   final uint8list = await VideoThumbnail.thumbnailData(
     video: videoPath,
     imageFormat: ImageFormat.JPEG,
-    maxWidth:
-        128, // specify the width of the thumbnail, let the height auto-scaled to keep the source aspect ratio
+    maxWidth: 128,
     quality: 25,
   );
 

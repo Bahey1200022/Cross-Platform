@@ -21,6 +21,8 @@ void editpost(String postid, String post) async {
       "newText": post,
     }),
   );
-  if (response.statusCode == 200) {
-  } else {}
+  if (response.statusCode == 200 || response.statusCode == 201) {
+  } else {
+    throw Exception('Failed to edit post');
+  }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/user_management/muted/muted_users_service.dart';
 import 'package:sarakel/user_profile/user_profile.dart';
@@ -9,7 +11,7 @@ class MutedSearchPage extends StatefulWidget {
   final String token;
   final String communityName;
 
-  MutedSearchPage({
+  const MutedSearchPage({super.key, 
     required this.token,
     required this.communityName,
   });
@@ -28,13 +30,13 @@ class _MutedSearchPageState extends State<MutedSearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(kToolbarHeight),
         child: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
           automaticallyImplyLeading: false,
           title: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               children: [
                 Expanded(
@@ -44,27 +46,27 @@ class _MutedSearchPageState extends State<MutedSearchPage> {
                     onChanged: fetchMuted,
                     decoration: InputDecoration(
                       hintText: 'Search by username',
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.search,
                         color: Colors.black,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      contentPadding: EdgeInsets.symmetric(
+                      contentPadding: const EdgeInsets.symmetric(
                         horizontal: 16.0,
                         vertical: 12.0,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 8.0),
+                const SizedBox(width: 8.0),
                 InkWell(
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(5.0),
                     child: Text(
                       'Cancel',
                       style: TextStyle(
@@ -84,10 +86,10 @@ class _MutedSearchPageState extends State<MutedSearchPage> {
         children: [
           if (mutedName != null)
             ListTile(
-              leading: Icon(Icons.person),
+              leading: const Icon(Icons.person),
               title: Text(
                 mutedName!,
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
               onTap: () {
                 Navigator.push(
@@ -106,7 +108,7 @@ class _MutedSearchPageState extends State<MutedSearchPage> {
           Expanded(
             child: Center(
               child: mutedName == null
-                  ? Column(
+                  ? const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -123,7 +125,7 @@ class _MutedSearchPageState extends State<MutedSearchPage> {
                         ),
                       ],
                     )
-                  : SizedBox.shrink(),
+                  : const SizedBox.shrink(),
             ),
           ),
         ],

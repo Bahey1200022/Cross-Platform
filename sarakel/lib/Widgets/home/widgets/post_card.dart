@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/controllers/view_post.dart';
 import 'package:sarakel/Widgets/home/widgets/brand_affiliate.dart';
 import 'package:sarakel/Widgets/home/widgets/lock_post.dart';
+import 'package:sarakel/Widgets/home/widgets/mark_spoiler.dart';
 import 'package:sarakel/Widgets/home/widgets/spoiler.dart';
 import 'package:sarakel/Widgets/home/post_details_page.dart';
 import 'package:sarakel/Widgets/home/widgets/category.dart';
@@ -443,6 +444,16 @@ class _PostCardState extends State<PostCard> {
                                 : 'Save'), // Dynamic text based on saved state
                           ),
                         ),
+                        if (widget.post.isSpoiler == false)
+                          const PopupMenuItem<String>(
+                            value: 'mark_spoiler',
+                            child: ListTile(
+                              leading: Icon(Icons.warning),
+                              title: Text('Mark as Spoiler'),
+
+                              // Dynamic text based on saved state
+                            ),
+                          ),
                         if (!loggedUserPost)
                           const PopupMenuItem<String>(
                             value: 'report',
@@ -522,6 +533,8 @@ class _PostCardState extends State<PostCard> {
                                 builder: (context) => EditPage(widget.post.id),
                               ),
                             );
+                          case 'mark_spoiler':
+                            markSpoiler(widget.post.id, context);
                           default:
                             break;
                         }

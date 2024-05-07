@@ -1,16 +1,16 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:http/http.dart' as http;
-import 'package:sarakel/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:path/path.dart';
-import 'package:file_picker/file_picker.dart';
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
-///create community with backend
-/// feat still in construction from backend
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
+import 'package:sarakel/constants.dart';
+import 'package:sarakel/models/community.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+///Create Community Controller to get the name, type, NSFW then push to the community profile page
 class CreateCommunityController {
-  static Future<void> createCommunity(
-      String communityName, String communityType, bool is18Plus) async {
+  static Future<void> createCommunity(String communityName,
+      String communityType, bool is18Plus, BuildContext context) async {
     print('Creating community...');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -19,64 +19,52 @@ class CreateCommunityController {
       return;
     }
     print('Token retrieved: $token');
-    //bool circleExists = await checkCircleExists(communityName);
-    //bool idExists = await checkCircleIdExists(
-    //communityName.toLowerCase().replaceAll(' ', '_'));
-
-    //if (circleExists || idExists) {
-    //print(
-    //'Circle with the name "$communityName" already exists. Please choose a different name.');
-    //return;
-    //}
 
     String formattedCommunityName = communityName;
     String communityId = communityName.toLowerCase().replaceAll(' ', '_');
 
+    ///API from the backend to create a community
     var uri = Uri.parse('$BASE_URL/api/community/create');
     var request = http.MultipartRequest('POST', uri)
       ..fields['communityName'] = formattedCommunityName
       ..fields['type'] = communityType
       ..fields['isNSFW'] = is18Plus.toString();
 
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      File file = File(result.files.single.path!);
-      var stream = http.ByteStream(file.openRead());
-      var stream2 = http.ByteStream(file.openRead());
-
-      var length = await file.length();
-
-      // Add the file to the multipart request
-      var multipartFile = http.MultipartFile('displayPic', stream, length,
-          filename: basename(file.path));
-      var multipartFile2 = http.MultipartFile('backgroundPic', stream2, length,
-          filename: basename(file.path));
-      request.files.add(multipartFile);
-      request.files.add(multipartFile2);
-    } else {
-      // User canceled the file picking
-      print('File picking canceled');
-      return;
-    }
-
     request.headers.addAll({
-      'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer $token',
     });
 
     var response = await request.send();
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-    });
     print('Response status code: ${response.statusCode}');
+
+    ///If the response is successful, push to the community profile page
     if (response.statusCode == 201 || response.statusCode == 200) {
-      print('hi');
-      var responseBody = await response.stream.bytesToString();
-      print('Response body: $responseBody');
       print('Community created successfully with ID: $communityId');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CommunityProfilePage(
+            community: Community(
+              id: communityId,
+              name: communityName,
+              type: communityType,
+              is18Plus: is18Plus,
+              description: '',
+              image: '',
+            ),
+            token: token,
+          ),
+        ),
+      );
     } else {
       print('Failed to create community. Error: ');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Community name already exists'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 }

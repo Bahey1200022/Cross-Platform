@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/loading_func/loadposts.dart';
 import 'package:sarakel/models/post.dart';
@@ -31,13 +33,14 @@ Future<List<Post>> loadRecentHistory() async {
               : null,
           upVotes: p['upvotes'],
           downVotes: p['downvotes'],
-          comments: p['numberOfComments'],
+          comments: p['numberOfComments'] ?? 0,
           shares: p['numberOfComments'] ?? 0,
           isNSFW: p['nsfw'],
           postCategory: "general",
           isSpoiler: p['isSpoiler'],
           content: p['content']?.toString() ?? "",
           communityId: p['communityId'],
+          duration: formatDateTime(p['createdAt']),
           title: p['title'],
           username: p['username'],
           views: p['numViews'] ?? 0));
@@ -83,7 +86,7 @@ Future<List<Post>> loadUpvotedHistory() async {
               : null,
           upVotes: p['upvotes'],
           downVotes: p['downvotes'],
-          comments: p['numberOfComments'],
+          comments: p['numberOfComments'] ?? 0,
           shares: p['numberOfComments'] ?? 0,
           isNSFW: p['nsfw'],
           postCategory: "general",
@@ -91,6 +94,7 @@ Future<List<Post>> loadUpvotedHistory() async {
           content: p['content']?.toString() ?? "",
           communityId: p['communityId'],
           title: p['title'],
+          duration: formatDateTime(p['createdAt']),
           username: p['username'],
           views: p['numViews'] ?? 0));
     }
@@ -135,9 +139,10 @@ Future<List<Post>> loadDownvotedHistory() async {
               : null,
           upVotes: p['upvotes'],
           downVotes: p['downvotes'],
-          comments: p['numberOfComments'],
+          comments: p['numberOfComments'] ?? 0,
           shares: p['numberOfComments'] ?? 0,
           isNSFW: p['nsfw'],
+          duration: formatDateTime(p['createdAt']),
           postCategory: "general",
           isSpoiler: p['isSpoiler'],
           content: p['content']?.toString() ?? "",

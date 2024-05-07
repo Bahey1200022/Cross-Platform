@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../models/community.dart';
 
+///Page for selecting a circle to post to
 class CircleSelectionPage extends StatelessWidget {
   final List<Community>? communities;
-  final Community? selectedCommunity; // Add selectedCommunity parameter
+  final Community? selectedCommunity;
 
   const CircleSelectionPage(
       {super.key, this.communities, this.selectedCommunity});
 
+  ///Page UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(

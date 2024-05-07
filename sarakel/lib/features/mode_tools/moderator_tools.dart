@@ -13,10 +13,10 @@ class ModeratorTools extends StatelessWidget {
   final Community community;
 
   const ModeratorTools({
-    Key? key,
+    super.key,
     required this.token,
     required this.community,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +200,7 @@ class ModeratorTools extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ApprovedUsersPage(),
+                  builder: (context) => const ApprovedUsersPage(),
                 ),
               );
             },
