@@ -18,7 +18,7 @@ import '../home/widgets/app_bar.dart';
 class InboxSection extends StatefulWidget {
   final String token;
 
-  const InboxSection({Key? key, required this.token}) : super(key: key);
+  const InboxSection({super.key, required this.token});
 
   @override
   State<InboxSection> createState() => _InboxSectionState();

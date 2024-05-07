@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
