@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:sarakel/models/comment.dart';
 import 'package:test/test.dart';
 

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, duplicate_ignore
+// ignore_for_file: avoid_print, duplicate_ignore, non_constant_identifier_names
 
 import 'dart:convert';
 

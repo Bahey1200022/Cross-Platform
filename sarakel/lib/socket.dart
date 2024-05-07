@@ -1,3 +1,5 @@
+// ignore_for_file: library_prefixes
+
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 /// Socket service class to establish socket connection

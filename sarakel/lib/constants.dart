@@ -1,4 +1,6 @@
 ///For ip address definition
+// ignore_for_file: constant_identifier_names
+
 library;
 
 const ip = '57.151.116.81'; //don't change this ever
