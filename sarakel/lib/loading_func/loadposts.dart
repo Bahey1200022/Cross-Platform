@@ -42,8 +42,8 @@ Future<List<Post>> fetchPosts(String url) async {
 
     if (response.statusCode == 200) {
       var jsonData = json.decode(response.body);
-      List<dynamic> fetchedPosts =
-          jsonData['data']; // replace jsonData['data'] with your actual data
+      List<dynamic> fetchedPosts = jsonData['data']
+          ['posts']; // replace jsonData['data'] with your actual data
 
       //print(fetchedPosts);
       List<Post> posts = fetchedPosts.map((p) {
