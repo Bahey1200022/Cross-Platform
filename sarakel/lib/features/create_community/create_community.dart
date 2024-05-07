@@ -1,9 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
-import 'package:sarakel/models/community.dart';
 
 import 'community_controller.dart';
 
+///Community Type class to get the name and description of the community
 class CommunityType {
   final String name;
   final String description;
@@ -20,13 +21,13 @@ class CommunityForm extends StatefulWidget {
   _CommunityFormState createState() => _CommunityFormState();
 }
 
+///Community Form State to get the community name, type, NSFW and push to the community profile page
 class _CommunityFormState extends State<CommunityForm> {
   final TextEditingController _communityNameController =
       TextEditingController();
   CommunityType? _selectedCommunityType;
   bool _is18Plus = false;
   String _errorText = '';
-  //bool _circleExists = false;
   bool _isValidCommunityName = false;
 
   List<CommunityType> communityTypes = [
@@ -54,6 +55,7 @@ class _CommunityFormState extends State<CommunityForm> {
     super.dispose();
   }
 
+  ///Validate the community name rules
   void _validateCommunityName(String name) {
     setState(() {
       _isValidCommunityName = RegExp(r'^[a-zA-Z0-9_]{3,21}$').hasMatch(name);
@@ -63,6 +65,7 @@ class _CommunityFormState extends State<CommunityForm> {
     });
   }
 
+  ///Enable the create button if the community name is valid and the community type is selected
   bool _isCreateButtonEnabled() {
     String communityName = _communityNameController.text.trim();
 
@@ -72,9 +75,9 @@ class _CommunityFormState extends State<CommunityForm> {
     }
 
     return _isValidCommunityName && _selectedCommunityType != null;
-    //!_circleExists;
   }
 
+  // ignore: unused_element
   void _showErrorSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -84,6 +87,7 @@ class _CommunityFormState extends State<CommunityForm> {
       ),
     );
   }
+
   void _createCommunity() async {
     String communityName = _communityNameController.text.trim();
     String communityType = _selectedCommunityType!.name;
@@ -116,6 +120,7 @@ class _CommunityFormState extends State<CommunityForm> {
     );
   }
 
+  //UI for creating a community
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,7 +146,6 @@ class _CommunityFormState extends State<CommunityForm> {
                     controller: _communityNameController,
                     onChanged: (value) {
                       _validateCommunityName(value);
-                      //_checkCommunityExists(value);
                     },
                     maxLength: 21,
                     decoration: InputDecoration(
@@ -198,7 +202,6 @@ class _CommunityFormState extends State<CommunityForm> {
                     setState(() {
                       _selectedCommunityType = newValue;
                     });
-                    //FocusManager.instance.primaryFocus?.unfocus();
                   },
                   style: const TextStyle(
                     color: Colors.black,
