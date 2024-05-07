@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, avoid_print, non_constant_identifier_names, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
