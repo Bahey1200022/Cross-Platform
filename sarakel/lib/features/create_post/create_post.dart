@@ -1,12 +1,14 @@
+// ignore_for_file: avoid_print, duplicate_ignore
+
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
 import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
+import 'package:sarakel/Widgets/profiles/community_info.dart';
 import 'package:sarakel/features/create_post/circle_selection.dart';
 import 'package:sarakel/features/create_post/flairs_menu.dart';
 import 'package:sarakel/features/create_post/vid.dart';
-//import 'package:sarakel/Widgets/drawers/community_drawer/list_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import '../../models/community.dart';
@@ -16,19 +18,26 @@ import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'schedule_post.dart';
 import 'package:image_picker/image_picker.dart';
 
+///Page for creating a post
 class CreatePost extends StatefulWidget {
   final String token;
   final DateTime selectedDate;
   final TimeOfDay selectedTime;
   final Function(bool) onScheduled;
 
-  const CreatePost({super.key, required this.token, required this.selectedDate, required this.selectedTime, required this.onScheduled});
+  const CreatePost(
+      {super.key,
+      required this.token,
+      required this.selectedDate,
+      required this.selectedTime,
+      required this.onScheduled});
 
   @override
   // ignore: library_private_types_in_public_api
   _CreatePostPageState createState() => _CreatePostPageState();
 }
 
+///State for the create post page
 class _CreatePostPageState extends State<CreatePost> {
   TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
@@ -49,7 +58,7 @@ class _CreatePostPageState extends State<CreatePost> {
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
   bool _isScheduled = false;
-  
+
 
   @override
   void initState() {
@@ -60,7 +69,6 @@ class _CreatePostPageState extends State<CreatePost> {
       });
       _selectedDate = widget.selectedDate;
       _selectedTime = widget.selectedTime;
-      //appState.communities = fetchedCommunities;
       // ignore: avoid_print
       print('Communities loaded: ${communities!.length}');
     });
@@ -77,7 +85,7 @@ class _CreatePostPageState extends State<CreatePost> {
     super.dispose();
     _videoController?.dispose();
   }
-  
+
   void toggleUrlVisibility() {
     setState(() {
       isUrlVisible = !isUrlVisible;
@@ -180,7 +188,7 @@ class _CreatePostPageState extends State<CreatePost> {
     });
   }
 
-    void _schedulePost(BuildContext context) {
+  void _schedulePost(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -192,8 +200,7 @@ class _CreatePostPageState extends State<CreatePost> {
               _isScheduled = isScheduled;
               _selectedDate = selectedDate;
               _selectedTime = selectedTime;
-             print('dateww: $_selectedDate, timeww: $_selectedTime');
-
+              print('dateww: $_selectedDate, timeww: $_selectedTime');
             });
           },
         );
@@ -201,6 +208,7 @@ class _CreatePostPageState extends State<CreatePost> {
     );
   }
 
+  //Page UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -229,7 +237,6 @@ class _CreatePostPageState extends State<CreatePost> {
                   return;
                 }
                 // Handle posting
-                //Navigator.of(context).pop();
                 final String title = titleController.text;
                 final String body = bodyController.text;
                 addPostController.addPost(
@@ -246,6 +253,8 @@ class _CreatePostPageState extends State<CreatePost> {
                     _video,
                     _selectedDate,
                     _selectedTime);
+
+                    ///Push to home screen when post is added
                 Navigator.pushAndRemoveUntil(
                   // ignore: use_build_context_synchronously
                   context,
@@ -270,7 +279,11 @@ class _CreatePostPageState extends State<CreatePost> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                (selectedCommunity != null && _isScheduled==false) ? 'Post' : (_isScheduled == true) ? 'Schedule' : 'Next',
+                (selectedCommunity != null && _isScheduled == false)
+                    ? 'Post'
+                    : (_isScheduled == true)
+                        ? 'Schedule'
+                        : 'Next',
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -296,12 +309,30 @@ class _CreatePostPageState extends State<CreatePost> {
                     onTap: () {
                       _selectCircle(context);
                     },
-                    trailing: const Text('RULES',
+
+                    ///Navigate to community info page
+                    trailing: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => InfoCommunity(
+                                    community: selectedCommunity!,
+                                    token: widget.token,
+                                  )),
+                        );
+                      },
+                      child: const Text(
+                        'RULES',
                         style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
-                        )),
+                        ),
+                      ),
+                    ),
                   ),
+
+                ///Show tags and flairs if post has any
                 if (isSpoiler || isNSFW || isBA)
                   Positioned(
                     top: 0,
@@ -522,7 +553,7 @@ class _CreatePostPageState extends State<CreatePost> {
                     IconButton(
                       icon: const Icon(Icons.videocam_outlined),
                       onPressed: () {
-                        // Handle video upload
+                        /// Videos Not Handled from the backend
                         _getVideo();
                       },
                     ),
@@ -530,7 +561,7 @@ class _CreatePostPageState extends State<CreatePost> {
                     IconButton(
                       icon: const Icon(Icons.poll_outlined),
                       onPressed: () {
-                        // Handle poll
+                        /// Polls Not Handled from the backend
                       },
                     ),
                 ],
@@ -600,7 +631,7 @@ class _CreatePostPageState extends State<CreatePost> {
                   icon: const Icon(Icons.videocam_outlined),
                   onPressed: () {
                     _getVideo();
-                    // Handle video upload
+                    // Video Not Handled from the backend
                   },
                 ),
                 const Text('Video'),
@@ -611,7 +642,7 @@ class _CreatePostPageState extends State<CreatePost> {
                 IconButton(
                   icon: const Icon(Icons.poll_outlined),
                   onPressed: () {
-                    // Handle poll
+                    // Polls Not Handled from the backend
                   },
                 ),
                 const Text('Poll'),

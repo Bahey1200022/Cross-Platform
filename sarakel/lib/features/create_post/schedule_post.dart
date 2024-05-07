@@ -1,21 +1,25 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Screen to schedule a post
 class SchedulePostScreen extends StatefulWidget {
   final DateTime selectedDate;
   final TimeOfDay selectedTime;
   final Function(bool, DateTime, TimeOfDay) onScheduled;
 
-  SchedulePostScreen({
-    required this.selectedDate,
-    required this.selectedTime,
-    required this.onScheduled
-  });
+  const SchedulePostScreen(
+      {super.key,
+      required this.selectedDate,
+      required this.selectedTime,
+      required this.onScheduled});
 
   @override
   _SchedulePostScreenState createState() => _SchedulePostScreenState();
 }
 
+/// State for SchedulePostScreen
 class _SchedulePostScreenState extends State<SchedulePostScreen> {
   bool _isScheduled = false;
   DateTime _selectedDate = DateTime.now();
@@ -39,9 +43,14 @@ class _SchedulePostScreenState extends State<SchedulePostScreen> {
   void _loadDateTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _selectedDate = DateTime.parse(prefs.getString('selectedDate') ?? DateTime.now().toString());
-      List<String> timeComponents = (prefs.getString('selectedTime') ?? TimeOfDay.now().toString()).split(":");
-      _selectedTime = TimeOfDay(hour: int.parse(timeComponents[0]), minute: int.parse(timeComponents[1]));
+      _selectedDate = DateTime.parse(
+          prefs.getString('selectedDate') ?? DateTime.now().toString());
+      List<String> timeComponents =
+          (prefs.getString('selectedTime') ?? TimeOfDay.now().toString())
+              .split(":");
+      _selectedTime = TimeOfDay(
+          hour: int.parse(timeComponents[0]),
+          minute: int.parse(timeComponents[1]));
     });
   }
 
@@ -64,16 +73,17 @@ class _SchedulePostScreenState extends State<SchedulePostScreen> {
     widget.onScheduled(_isScheduled, date, time);
   }
 
+  /// UI for scheduling a post
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Schedule Post'),
+        title: const Text('Schedule Post'),
       ),
       body: Column(
         children: [
           ListTile(
-            title: Text('Schedule post'),
+            title: const Text('Schedule post'),
             trailing: Switch(
               value: _isScheduled,
               activeColor: Colors.blue,
@@ -94,15 +104,17 @@ class _SchedulePostScreenState extends State<SchedulePostScreen> {
             Column(
               children: [
                 ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text('Select Date'),
-                  subtitle: Text('${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}'),
+                  leading: const Icon(Icons.calendar_today),
+                  title: const Text('Select Date'),
+                  subtitle: Text(
+                      '${_selectedDate.year}-${_selectedDate.month}-${_selectedDate.day}'),
                   onTap: () => _selectDate(context),
                 ),
                 ListTile(
-                  leading: Icon(Icons.access_time),
-                  title: Text('Select Time'),
-                  subtitle: Text('${_selectedTime.hour}:${_selectedTime.minute}'),
+                  leading: const Icon(Icons.access_time),
+                  title: const Text('Select Time'),
+                  subtitle:
+                      Text('${_selectedTime.hour}:${_selectedTime.minute}'),
                   onTap: () => _selectTime(context),
                 ),
               ],
