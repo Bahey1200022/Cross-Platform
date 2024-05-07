@@ -122,7 +122,10 @@ class _ModeratorsPageState extends State<ModeratorsPage>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ModeratorSearchPage(),
+                  builder: (context) => ModeratorSearchPage(
+                    token: widget.token,
+                    communityName: widget.communityName,
+                  ),
                 ),
               );
             },
@@ -133,7 +136,10 @@ class _ModeratorsPageState extends State<ModeratorsPage>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddModeratorPage(),
+                  builder: (context) => AddModeratorPage(
+                    communityName: widget.communityName,
+                    token: widget.token,
+                  ),
                 ),
               );
             },

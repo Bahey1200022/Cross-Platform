@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/features/mode_tools/user_management/moderators/moderators_service.dart';
+import 'package:sarakel/features/mode_tools/user_management/banned/banned_users_service.dart';
 import 'package:sarakel/user_profile/user_profile.dart';
 import 'package:sarakel/models/user.dart';
 
-/// This class represents the search page where users can search for moderators by typing their usernames.
-/// It allows users to input a username in a TextField and displays the matching moderator if found.
-class ModeratorSearchPage extends StatefulWidget {
+/// This class represents the search page where users can search for banned  by typing their usernames.
+/// It allows users to input a username in a TextField and displays the matching banned  if found.
+class BannedSearchPage extends StatefulWidget {
   final String token;
   final String communityName;
 
-  ModeratorSearchPage({
+  BannedSearchPage({
     required this.token,
     required this.communityName,
   });
 
   @override
-  _ModeratorSearchPageState createState() => _ModeratorSearchPageState();
+  _BannedSearchPageState createState() => _BannedSearchPageState();
 }
 
-/// This stateful widget represents the state for the ModeratorSearchPage.
-/// It manages the UI state and handles fetching and displaying moderators based on user input.
-class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
+/// This stateful widget represents the state for the banned earchPage.
+/// It manages the UI state and handles fetching and displaying banned  based on user input.
+class _BannedSearchPageState extends State<BannedSearchPage> {
   final TextEditingController _controller = TextEditingController();
-  String? moderatorName;
+  String? bannedName;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
                   child: TextField(
                     autofocus: true,
                     controller: _controller,
-                    onChanged: fetchModerator,
+                    onChanged: fetchBanned,
                     decoration: InputDecoration(
                       hintText: 'Search by username',
                       prefixIcon: Icon(
@@ -82,11 +82,11 @@ class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
       ),
       body: Column(
         children: [
-          if (moderatorName != null)
+          if (bannedName != null)
             ListTile(
               leading: Icon(Icons.person),
               title: Text(
-                moderatorName!,
+                bannedName!,
                 style: TextStyle(fontSize: 18),
               ),
               onTap: () {
@@ -95,7 +95,7 @@ class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
                   MaterialPageRoute(
                     builder: (context) => UserProfile(
                       user: User(
-                        username: moderatorName!,
+                        username: bannedName!,
                         token: widget.token,
                       ),
                     ),
@@ -105,7 +105,7 @@ class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
             ),
           Expanded(
             child: Center(
-              child: moderatorName == null
+              child: bannedName == null
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -131,30 +131,30 @@ class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
     );
   }
 
-  /// Fetches the moderator based on the provided username.
-  /// If the username matches a moderator, it updates the UI to display the moderator.
+  /// Fetches the banned  based on the provided username.
+  /// If the username matches a banned , it updates the UI to display the banned .
   /// If no match is found, it resets the UI.
-  void fetchModerator(String value) {
+  void fetchBanned(String value) {
     if (value.isEmpty) {
       setState(() {
-        moderatorName = null;
+        bannedName = null;
       });
       return;
     }
 
-    ModerationService.getModerators(widget.token, widget.communityName)
-        .then((moderators) {
-      if (moderators.contains(value)) {
+    BannedUsersService.getBannedUsers(widget.token, widget.communityName)
+        .then((banned) {
+      if (banned.contains(value)) {
         setState(() {
-          moderatorName = value;
+          bannedName = value;
         });
       } else {
         setState(() {
-          moderatorName = null;
+          bannedName = null;
         });
       }
     }).catchError((error) {
-      print('Error fetching moderators: $error');
+      print('Error fetching banned : $error');
     });
   }
 

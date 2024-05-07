@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/features/mode_tools/user_management/moderators/moderators_service.dart';
+import 'package:sarakel/features/mode_tools/user_management/muted/muted_users_service.dart';
 import 'package:sarakel/user_profile/user_profile.dart';
 import 'package:sarakel/models/user.dart';
 
-/// This class represents the search page where users can search for moderators by typing their usernames.
-/// It allows users to input a username in a TextField and displays the matching moderator if found.
-class ModeratorSearchPage extends StatefulWidget {
+/// This class represents the search page where users can search for muted  by typing their usernames.
+/// It allows users to input a username in a TextField and displays the matching muted  if found.
+class MutedSearchPage extends StatefulWidget {
   final String token;
   final String communityName;
 
-  ModeratorSearchPage({
+  MutedSearchPage({
     required this.token,
     required this.communityName,
   });
 
   @override
-  _ModeratorSearchPageState createState() => _ModeratorSearchPageState();
+  _MutedSearchPageState createState() => _MutedSearchPageState();
 }
 
-/// This stateful widget represents the state for the ModeratorSearchPage.
-/// It manages the UI state and handles fetching and displaying moderators based on user input.
-class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
+/// This stateful widget represents the state for the muted earchPage.
+/// It manages the UI state and handles fetching and displaying muted  based on user input.
+class _MutedSearchPageState extends State<MutedSearchPage> {
   final TextEditingController _controller = TextEditingController();
-  String? moderatorName;
+  String? mutedName;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
                   child: TextField(
                     autofocus: true,
                     controller: _controller,
-                    onChanged: fetchModerator,
+                    onChanged: fetchMuted,
                     decoration: InputDecoration(
                       hintText: 'Search by username',
                       prefixIcon: Icon(
@@ -82,11 +82,11 @@ class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
       ),
       body: Column(
         children: [
-          if (moderatorName != null)
+          if (mutedName != null)
             ListTile(
               leading: Icon(Icons.person),
               title: Text(
-                moderatorName!,
+                mutedName!,
                 style: TextStyle(fontSize: 18),
               ),
               onTap: () {
@@ -95,7 +95,7 @@ class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
                   MaterialPageRoute(
                     builder: (context) => UserProfile(
                       user: User(
-                        username: moderatorName!,
+                        username: mutedName!,
                         token: widget.token,
                       ),
                     ),
@@ -105,7 +105,7 @@ class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
             ),
           Expanded(
             child: Center(
-              child: moderatorName == null
+              child: mutedName == null
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -131,30 +131,30 @@ class _ModeratorSearchPageState extends State<ModeratorSearchPage> {
     );
   }
 
-  /// Fetches the moderator based on the provided username.
-  /// If the username matches a moderator, it updates the UI to display the moderator.
+  /// Fetches the muted  based on the provided username.
+  /// If the username matches a muted , it updates the UI to display the muted .
   /// If no match is found, it resets the UI.
-  void fetchModerator(String value) {
+  void fetchMuted(String value) {
     if (value.isEmpty) {
       setState(() {
-        moderatorName = null;
+        mutedName = null;
       });
       return;
     }
 
-    ModerationService.getModerators(widget.token, widget.communityName)
-        .then((moderators) {
-      if (moderators.contains(value)) {
+    MutedUsersService.getMutedUsers(widget.token, widget.communityName)
+        .then((muted) {
+      if (muted.contains(value)) {
         setState(() {
-          moderatorName = value;
+          mutedName = value;
         });
       } else {
         setState(() {
-          moderatorName = null;
+          mutedName = null;
         });
       }
     }).catchError((error) {
-      print('Error fetching moderators: $error');
+      print('Error fetching muted : $error');
     });
   }
 
