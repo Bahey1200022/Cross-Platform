@@ -5,6 +5,8 @@ import 'package:sarakel/user_profile/get_userpic.dart';
 import 'package:sarakel/user_profile/new_chat.dart';
 import 'package:sarakel/user_profile/user_visibility.dart';
 import 'package:sarakel/user_profile/url_sheet.dart';
+import 'package:sarakel/user_profile/icon_link.dart';
+import 'package:sarakel/user_profile/user_controller.dart';
 
 class UserSpaceBar extends StatefulWidget {
   final User? user;
@@ -18,11 +20,13 @@ class UserSpaceBar extends StatefulWidget {
 
 class _UserSpaceBarState extends State<UserSpaceBar> {
   bool loggeduserIconIsVisible = false;
+  Future<String?> _urlsFuture = getUserUrl();
 
   @override
   void initState() {
     super.initState();
 
+    _urlsFuture = getUserUrl();
     initializeVisibility();
     checkpic();
   }
@@ -182,172 +186,6 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                       child: Padding(
                         padding: EdgeInsets.all(12.0),
                         child: UrlSheet(),
-                        // Column(
-                        //   // mainAxisAlignment:
-                        //   //     MainAxisAlignment.center,
-                        //   children: [
-                        //     Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //       crossAxisAlignment: CrossAxisAlignment.center,
-                        //       children: [
-                        //         ElevatedButton.icon(
-                        //           onPressed: () {},
-                        //           icon: const Icon(
-                        //             Icons.facebook,
-                        //             color: Colors.blue,
-                        //             size: 15,
-                        //           ),
-                        //           label: const Text(
-                        //             'Facebook',
-                        //             style: TextStyle(
-                        //                 color: Colors.black,
-                        //                 fontSize: 15,
-                        //                 fontWeight: FontWeight.bold),
-                        //           ),
-                        //           style: ButtonStyle(
-                        //             backgroundColor:
-                        //                 MaterialStateProperty.all<Color>(
-                        //               Color.fromARGB(180, 255, 255, 255),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         ElevatedButton.icon(
-                        //           onPressed: () {},
-                        //           icon: const Icon(
-                        //             Icons.reddit_rounded,
-                        //             color: Colors.orange,
-                        //             size: 15,
-                        //           ),
-                        //           label: const Text(
-                        //             'Reddit',
-                        //             style: TextStyle(
-                        //                 color: Colors.black,
-                        //                 fontSize: 15,
-                        //                 fontWeight: FontWeight.bold),
-                        //           ),
-                        //           style: ButtonStyle(
-                        //             backgroundColor:
-                        //                 MaterialStateProperty.all<Color>(
-                        //               Color.fromARGB(180, 255, 255, 255),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         ElevatedButton.icon(
-                        //           onPressed: () {},
-                        //           icon: const Icon(
-                        //             Icons.tiktok,
-                        //             color: Colors.black,
-                        //             size: 15,
-                        //           ),
-                        //           label: const Text(
-                        //             'Tiktok',
-                        //             style: TextStyle(
-                        //                 color: Colors.black,
-                        //                 fontSize: 15,
-                        //                 fontWeight: FontWeight.bold),
-                        //           ),
-                        //           style: ButtonStyle(
-                        //             backgroundColor:
-                        //                 MaterialStateProperty.all<Color>(
-                        //               Color.fromARGB(180, 255, 255, 255),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     SizedBox(height: 20),
-                        //     Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //       crossAxisAlignment: CrossAxisAlignment.center,
-                        //       children: [
-                        //         ElevatedButton.icon(
-                        //           onPressed: () {},
-                        //           icon: FaIcon(FontAwesomeIcons.twitter,
-                        //               color: Colors.blue, size: 15),
-                        //           // icon: const Icon(
-                        //           //   Icons.facebook,
-                        //           //   color: Colors.blue,
-                        //           //   size: 15,
-                        //           // ),
-                        //           label: const Text(
-                        //             'Twitter',
-                        //             style: TextStyle(
-                        //                 color: Colors.black,
-                        //                 fontSize: 15,
-                        //                 fontWeight: FontWeight.bold),
-                        //           ),
-                        //           style: ButtonStyle(
-                        //             backgroundColor:
-                        //                 MaterialStateProperty.all<Color>(
-                        //               Color.fromARGB(180, 255, 255, 255),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         ElevatedButton.icon(
-                        //           onPressed: () {},
-                        //           icon: FaIcon(FontAwesomeIcons.soundcloud,
-                        //               color: Colors.orange, size: 15),
-                        //           label: const Text(
-                        //             'SoundCloud',
-                        //             style: TextStyle(
-                        //                 color: Colors.black,
-                        //                 fontSize: 15,
-                        //                 fontWeight: FontWeight.bold),
-                        //           ),
-                        //           style: ButtonStyle(
-                        //             backgroundColor:
-                        //                 MaterialStateProperty.all<Color>(
-                        //               Color.fromARGB(180, 255, 255, 255),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         ElevatedButton.icon(
-                        //           onPressed: () {},
-                        //           icon: FaIcon(FontAwesomeIcons.youtube,
-                        //               color: Colors.red, size: 15),
-                        //           label: const Text(
-                        //             'Youtube',
-                        //             style: TextStyle(
-                        //                 color: Colors.black,
-                        //                 fontSize: 15,
-                        //                 fontWeight: FontWeight.bold),
-                        //           ),
-                        //           style: ButtonStyle(
-                        //             backgroundColor:
-                        //                 MaterialStateProperty.all<Color>(
-                        //               Color.fromARGB(180, 255, 255, 255),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     SizedBox(height: 20),
-                        //     Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //       children: [
-                        //         ElevatedButton.icon(
-                        //           onPressed: () {},
-                        //           icon: FaIcon(FontAwesomeIcons.link,
-                        //               // color: Colors.red,
-                        //               size: 15),
-                        //           label: const Text(
-                        //             'custom link',
-                        //             style: TextStyle(
-                        //                 color: Colors.black,
-                        //                 fontSize: 15,
-                        //                 fontWeight: FontWeight.bold),
-                        //           ),
-                        //           style: ButtonStyle(
-                        //             backgroundColor:
-                        //                 MaterialStateProperty.all<Color>(
-                        //               Color.fromARGB(180, 255, 255, 255),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ],
-                        // ),
                       ),
                     ),
                   );
@@ -370,6 +208,11 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                 ),
               ),
             ),
+            Positioned(
+              top: 300,
+              left: 230,
+              child: IconLink(urlsFuture: _urlsFuture), // replace with your URL
+            )
           ],
         ),
       ),

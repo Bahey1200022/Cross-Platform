@@ -9,7 +9,7 @@ import 'package:sarakel/features/mode_tools/general/notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'settings_controller.dart';
 import 'package:http/http.dart' as http;
-import 'package:sarakel/Widgets/settings/muted_comunities.dart';
+import 'package:sarakel/Widgets/settings/blocked_account_page.dart';
 import 'package:sarakel/Widgets/settings/chat_permissions.dart';
 
 class SettingsPage extends StatefulWidget {
