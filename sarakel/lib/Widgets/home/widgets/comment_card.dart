@@ -90,11 +90,6 @@ class _CommentCardState extends State<CommentCard> {
   void _toggleSave() {
     setState(() {
       widget.comment.isSaved = !widget.comment.isSaved;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(
-                widget.comment.isSaved ? 'Comment saved' : 'Comment unsaved')),
-      );
       if (widget.comment.isSaved) {
         _saveComment();
       } else {
@@ -253,22 +248,6 @@ class _CommentCardState extends State<CommentCard> {
     }
   }
 
-  void _reportReply() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Reply reported'),
-      ),
-    );
-  }
-
-  void _blockUserReply() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('User of the reply blocked'),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -346,29 +325,8 @@ class _CommentCardState extends State<CommentCard> {
                           ),
                           const SizedBox(height: 8),
                           Text(reply.content),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  widget.comment.isSaved
-                                      ? Icons.bookmark
-                                      : Icons.bookmark_border,
-                                  color: widget.comment.isSaved
-                                      ? Colors.blue
-                                      : null,
-                                ),
-                                onPressed: _toggleSave,
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.flag),
-                                onPressed: _reportReply,
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.block),
-                                onPressed: _blockUserReply,
-                              ),
-                            ],
                           ),
                         ],
                       ),
@@ -377,49 +335,47 @@ class _CommentCardState extends State<CommentCard> {
                 }).toList(),
               ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                IconButton(
-                  icon: Icon(
-                    widget.comment.isSaved
-                        ? Icons.bookmark
-                        : Icons.bookmark_border,
-                    color: widget.comment.isSaved ? Colors.blue : null,
+                Align(
+                  alignment: Alignment.topRight,
+                  child: PopupMenuButton(
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: ListTile(
+                          leading: Icon(
+                            widget.comment.isSaved
+                                ? Icons.bookmark
+                                : Icons.bookmark_border,
+                            color: widget.comment.isSaved ? Colors.blue : null,
+                          ),
+                          title: Text(widget.comment.isSaved
+                              ? 'Unsave Comment'
+                              : 'Save Comment'),
+                          onTap: _toggleSave,
+                        ),
+                      ),
+                      PopupMenuItem(
+                        child: ListTile(
+                          leading: const Icon(Icons.block),
+                          title: const Text('Block User'),
+                          onTap: _blockUser,
+                        ),
+                      ),
+                      PopupMenuItem(
+                        child: ListTile(
+                          leading: const Icon(Icons.flag),
+                          title: const Text('Report Comment'),
+                          onTap: _report,
+                        ),
+                      ),
+                    ],
                   ),
-                  onPressed: _toggleSave,
                 ),
                 IconButton(
                   icon: const Icon(Icons.reply),
                   onPressed: _toggleReply,
                 ),
-                IconButton(
-                  icon: const Icon(Icons.block),
-                  onPressed: _blockUserReply,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.flag),
-                  onPressed: _reportReply,
-                ),
-                if (_isReplying)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: TextField(
-                        controller: _replyController,
-                        decoration: InputDecoration(
-                          hintText: 'Write a reply...',
-                          border: const OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.send),
-                            onPressed: _submitReply,
-                          ),
-                        ),
-                        onSubmitted: (_) {
-                          _submitReply();
-                        },
-                      ),
-                    ),
-                  ),
                 IconButton(
                   icon: const Icon(Icons.arrow_upward),
                   color: widget.comment.isUpvoted ? Colors.orange : null,
@@ -433,6 +389,24 @@ class _CommentCardState extends State<CommentCard> {
                 ),
               ],
             ),
+            if (_isReplying)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: TextField(
+                  controller: _replyController,
+                  decoration: InputDecoration(
+                    hintText: 'Write a reply...',
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.send),
+                      onPressed: _submitReply,
+                    ),
+                  ),
+                  onSubmitted: (_) {
+                    _submitReply();
+                  },
+                ),
+              ),
           ],
         ),
       ),
