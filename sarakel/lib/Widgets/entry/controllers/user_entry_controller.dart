@@ -1,3 +1,5 @@
+// ignore_for_file: library_prefixes, use_build_context_synchronously, avoid_print
+
 import 'dart:convert';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/Widgets/entry/controllers/notification.dart';
