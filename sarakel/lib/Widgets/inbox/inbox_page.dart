@@ -70,7 +70,7 @@ class _InboxSectionState extends State<InboxSection>
     if (response.statusCode == 200) {
       // Parse the response data
       final jsonData = json.decode(response.body);
-      var notificationList = jsonData['data'];
+      var notificationList = jsonData['data'].reversed.toList();
       setState(() {
         notificationCard = notificationList
             .map((item) => {
