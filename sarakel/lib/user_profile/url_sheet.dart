@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sarakel/user_profile/save_url.dart';
 
+import 'package:sarakel/models/user.dart';
+
 class UrlSheet extends StatelessWidget {
+  final User? user;
   final String? title;
 
-  const UrlSheet({super.key, this.title});
+  UrlSheet({super.key, this.title, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +42,7 @@ class UrlSheet extends StatelessWidget {
                       child: SaveUrl(
                         icon: Icon(Icons.facebook),
                         title: 'Facebook',
+                        user: user,
                       ),
                     ),
                   ),
@@ -75,6 +79,7 @@ class UrlSheet extends StatelessWidget {
                           color: Colors.orange,
                         ),
                         title: 'Reddit',
+                        user: user,
                       ),
                     ),
                   ),
@@ -111,6 +116,7 @@ class UrlSheet extends StatelessWidget {
                           color: Colors.black,
                         ),
                         title: 'Tiktok',
+                        user: user,
                       ),
                     ),
                   ),
@@ -156,6 +162,7 @@ class UrlSheet extends StatelessWidget {
                         icon: FaIcon(FontAwesomeIcons.twitter,
                             color: Colors.blue),
                         title: 'Twitter',
+                        user: user,
                       ),
                     ),
                   ),
@@ -163,6 +170,7 @@ class UrlSheet extends StatelessWidget {
                 SaveUrl(
                   icon: FaIcon(FontAwesomeIcons.twitter, color: Colors.blue),
                   title: 'Twitter',
+                  user: user,
                 );
               },
               icon: const FaIcon(FontAwesomeIcons.twitter,
@@ -194,6 +202,7 @@ class UrlSheet extends StatelessWidget {
                           size: 10,
                         ),
                         title: 'SoundCloud',
+                        user: user,
                       ),
                     ),
                   ),
@@ -228,6 +237,7 @@ class UrlSheet extends StatelessWidget {
                         icon: const FaIcon(FontAwesomeIcons.youtube,
                             color: Colors.red, size: 10),
                         title: 'Youtube',
+                        user: user,
                       ),
                     ),
                   ),
@@ -266,6 +276,7 @@ class UrlSheet extends StatelessWidget {
                             // color: Colors.red,
                             size: 15),
                         title: 'Custom Link',
+                        user: user,
                       ),
                     ),
                   ),
