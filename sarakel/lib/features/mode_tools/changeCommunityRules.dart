@@ -60,66 +60,74 @@ class _ChangeCommunityRulesPageState extends State<ChangeCommunityRulesPage> {
     }
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text('Change Community Rules'),
-    ),
-    body: Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Current Rules:',
-              style: TextStyle(fontSize: 18),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              widget.currentRules ?? "No rules specified",
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _newRulesController,
-              decoration: const InputDecoration(
-                hintText: 'Enter New Rules',
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Community Rules'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              final newRules = _newRulesController.text;
+              if (newRules.isNotEmpty) {
+                _changeCommunityRules(newRules);
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Error'),
+                      content: const Text('Please enter new rules.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: const Text(
+              'save',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
               ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                final newRules = _newRulesController.text;
-                if (newRules.isNotEmpty) {
-                  _changeCommunityRules(newRules);
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('Error'),
-                        content: const Text('Please enter new rules.'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
-              child: const Text('Change Rules'),
-            ),
-          ],
+          ),
+        ],
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Current Rules:',
+                style: TextStyle(fontSize: 30),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                widget.currentRules ?? "No rules specified",
+                style: const TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _newRulesController,
+                decoration: const InputDecoration(
+                  hintText: 'Enter New Rules',
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 }

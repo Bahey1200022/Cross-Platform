@@ -36,8 +36,7 @@ class _ChangeCommunityNamePageState extends State<ChangeCommunityNamePage> {
     super.dispose();
   }
 
-  Future<void> _changeCommunityName(
-      String newName) async {
+  Future<void> _changeCommunityName(String newName) async {
     final url = '$BASE_URL/api/r/${widget.communityName}/edit_community';
     final response = await http.patch(
       Uri.parse(url),
@@ -62,6 +61,39 @@ class _ChangeCommunityNamePageState extends State<ChangeCommunityNamePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Change Community Name'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              final newName = _newNameController.text;
+              if (newName.isNotEmpty) {
+                _changeCommunityName(newName);
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Error'),
+                      content: const Text('Please enter a new name.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: const Text('Save',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                )),
+          ),
+        ],
       ),
       body: Center(
         child: Padding(
@@ -70,8 +102,12 @@ class _ChangeCommunityNamePageState extends State<ChangeCommunityNamePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Current Community Name: ${widget.communityName}',
-                style: const TextStyle(fontSize: 18),
+                'Current Community Name: ',
+                style: const TextStyle(fontSize: 30),
+              ),
+              Text(
+                widget.communityName,
+                style: const TextStyle(fontSize: 20),
               ),
               const SizedBox(height: 20),
               TextField(
@@ -81,33 +117,6 @@ class _ChangeCommunityNamePageState extends State<ChangeCommunityNamePage> {
                 ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  final newName = _newNameController.text;
-                  if (newName.isNotEmpty) {
-                    _changeCommunityName(newName);
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Error'),
-                          content: const Text('Please enter a new name.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                child: const Text('Change Name'),
-              ),
             ],
           ),
         ),

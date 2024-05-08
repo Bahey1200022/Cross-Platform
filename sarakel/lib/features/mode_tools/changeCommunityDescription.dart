@@ -23,7 +23,8 @@ class ChangeCommunityDescriptionPage extends StatefulWidget {
       _ChangeCommunityDescriptionPageState();
 }
 
-class _ChangeCommunityDescriptionPageState extends State<ChangeCommunityDescriptionPage> {
+class _ChangeCommunityDescriptionPageState
+    extends State<ChangeCommunityDescriptionPage> {
   late TextEditingController _newDescriptionController;
 
   @override
@@ -38,32 +39,62 @@ class _ChangeCommunityDescriptionPageState extends State<ChangeCommunityDescript
     super.dispose();
   }
 
-Future<void> _changeCommunityDescription(
-    String newDescription) async {
-  final url = '$BASE_URL/api/r/${widget.communityName}/edit_community';
-  final response = await http.patch(
-    Uri.parse(url),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${widget.token}',
-    },
-    body: jsonEncode({
-      'description': newDescription,
-    }),
-  );
+  Future<void> _changeCommunityDescription(String newDescription) async {
+    final url = '$BASE_URL/api/r/${widget.communityName}/edit_community';
+    final response = await http.patch(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${widget.token}',
+      },
+      body: jsonEncode({
+        'description': newDescription,
+      }),
+    );
 
-  if (response.statusCode == 200) {
-    print('Successfully changed community Description to $newDescription ${response.body}');
-  } else {
-    print('Failed to change community Description. Error: ${response.body}');
+    if (response.statusCode == 200) {
+      print(
+          'Successfully changed community Description to $newDescription ${response.body}');
+    } else {
+      print('Failed to change community Description. Error: ${response.body}');
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Change Community description'),
+        title: const Text(' Community description'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              final newDescription = _newDescriptionController.text;
+              if (newDescription.isNotEmpty) {
+                _changeCommunityDescription(newDescription);
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Error'),
+                      content: const Text('Please enter a new description.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: const Text('Save',
+                style: TextStyle(color: Colors.black, fontSize: 20)),
+          ),
+        ],
       ),
       body: Center(
         child: Padding(
@@ -83,33 +114,6 @@ Future<void> _changeCommunityDescription(
                 ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  final newDescription = _newDescriptionController.text;
-                  if (newDescription.isNotEmpty) {
-                    _changeCommunityDescription(newDescription);
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Error'),
-                          content: const Text('Please enter a new description.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                child: const Text('Change Description'),
-              ),
             ],
           ),
         ),
