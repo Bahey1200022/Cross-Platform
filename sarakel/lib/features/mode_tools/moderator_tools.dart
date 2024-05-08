@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/features/mode_tools/changeCommunityDescription.dart';
-import 'package:sarakel/features/mode_tools/changeCommunityName.dart';
-import 'package:sarakel/features/mode_tools/changeCommunityRules.dart';
-import 'package:sarakel/features/mode_tools/changeCommunityType.dart';
+import 'package:sarakel/features/mode_tools/type-description/changeCommunityDescription.dart';
+import 'package:sarakel/features/mode_tools/type-description/changeCommunityName.dart';
+import 'package:sarakel/features/mode_tools/type-description/changeCommunityRules.dart';
+import 'package:sarakel/features/mode_tools/type-description/changeCommunityType.dart';
 import 'package:sarakel/features/mode_tools/general/edit-pic.dart';
 import 'package:sarakel/features/mode_tools/general/notifications.dart';
 import 'package:sarakel/features/mode_tools/modq/queue.dart';

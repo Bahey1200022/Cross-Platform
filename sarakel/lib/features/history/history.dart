@@ -117,6 +117,7 @@ class _HistroyState extends State<History> {
             onSelected: (value) {
               if (value == 'option1') {
                 if (_selectedPage == 'recent') {
+                  clearHistory(context);
                   setState(() {
                     postsToShow = null;
                   });

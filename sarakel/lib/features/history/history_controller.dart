@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:flutter/material.dart';
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/loading_func/loadposts.dart';
 import 'package:sarakel/models/post.dart';
@@ -72,7 +73,7 @@ Future<List<Post>> loadUpvotedHistory() async {
         posts.add(upvote[1][0]);
       }
     }
-    print(posts);
+    //print(posts);
     List<Post> post = [];
     for (var p in posts) {
       post.add(Post(
@@ -125,7 +126,7 @@ Future<List<Post>> loadDownvotedHistory() async {
         posts.add(upvote[1][0]);
       }
     }
-    print(posts);
+    //print(posts);
     List<Post> post = [];
     for (var p in posts) {
       post.add(Post(
@@ -154,5 +155,28 @@ Future<List<Post>> loadDownvotedHistory() async {
     return post;
   } else {
     return [];
+  }
+}
+
+void clearHistory(BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.getString('token');
+  var response = await http
+      .patch(Uri.parse('$BASE_URL/api/deleteRecentlyViewedPosts'), headers: {
+    'Authorization': 'Bearer $token',
+    'Content-Type': 'application/json',
+  });
+  if (response.statusCode == 200) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('History cleared successfully'),
+      ),
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('History could not be cleared'),
+      ),
+    );
   }
 }
