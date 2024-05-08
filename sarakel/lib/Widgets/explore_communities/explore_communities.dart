@@ -71,6 +71,7 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
       drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(
         user: User(username: jwtdecodedtoken['username'], token: widget.token),
+        photo: widget.user.photoUrl,
       ),
       body: ListView.builder(
         itemCount: fetchedCommunities?.length ?? 0,

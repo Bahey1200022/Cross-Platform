@@ -121,6 +121,7 @@ class _InboxSectionState extends State<InboxSection>
       endDrawer: ProfileDrawer(
         // Add end drawer
         user: User(username: jwtdecodedtoken['username'], token: widget.token),
+        photo: widget.user.photoUrl,
       ),
       body: Column(
         children: [

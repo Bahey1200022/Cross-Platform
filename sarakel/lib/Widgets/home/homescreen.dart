@@ -24,7 +24,7 @@ import 'popular.dart';
 class SarakelHomeScreen extends StatefulWidget {
   final HomescreenController homescreenController;
 
-  SarakelHomeScreen({required this.homescreenController, super.key});
+  const SarakelHomeScreen({required this.homescreenController, super.key});
 
   @override
   State<SarakelHomeScreen> createState() => _SarakelHomeScreenState();
@@ -274,6 +274,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
       endDrawer: ProfileDrawer(
         // Add end drawer ////to be fixed
         user: widget.homescreenController.getUser(),
+        photo: widget.homescreenController.profilePic,
       ),
       body: postsToShow == null
           ? Center(child: Image.asset('assets/logo_2d.png', width: 30))

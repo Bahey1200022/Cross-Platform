@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/settings/settings_controller.dart';
 import 'package:sarakel/Widgets/settings/settings_page.dart';
 import 'package:sarakel/features/history/history.dart';
-import 'package:sarakel/user_profile/get_userpic.dart';
 import 'package:sarakel/user_profile/user_profile.dart';
 import 'package:sarakel/features/create_community/create_community.dart';
 import 'package:sarakel/features/saved/saved.dart';
@@ -18,6 +17,7 @@ class ProfileDrawer extends StatefulWidget {
   ProfileDrawer({
     super.key,
     this.user,
+    required this.photo,
   });
 
   @override
@@ -39,23 +39,9 @@ class _ProfileDrawerState extends State<ProfileDrawer> {
     Navigator.pushNamed(context, '/welcome');
   }
 
-  void getImage() async {
-    print(widget.user!.username!);
-    if (widget.user != null && widget.user!.username != null) {
-      try {
-        String photoUrl = await getPicUrl(widget.user!.username!);
-        widget.user?.photoUrl = photoUrl;
-        widget.photo = photoUrl;
-      } catch (e) {
-        print('Failed to get image: $e');
-      }
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    getImage();
   }
 
   @override
@@ -112,10 +98,9 @@ class _ProfileDrawerState extends State<ProfileDrawer> {
                               ),
                               const Divider(),
                               ListTile(
-                                leading: const CircleAvatar(
+                                leading: CircleAvatar(
                                   radius: 20,
-                                  backgroundImage:
-                                      AssetImage('assets/avatar_logo.jpeg'),
+                                  backgroundImage: NetworkImage(widget.photo??'assets/logo_2d.png'),
                                 ),
                                 title: Text(
                                   'u/${widget.user!.username}',
