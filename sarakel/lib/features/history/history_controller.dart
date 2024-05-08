@@ -144,7 +144,6 @@ Future<List<Post>> loadDownvotedHistory() async {
           shares: p['numberOfComments'] ?? 0,
           isNSFW: p['nsfw'],
           duration: formatDateTime(p['createdAt']),
-          postCategory: "general",
           isSpoiler: p['isSpoiler'],
           content: p['content']?.toString() ?? "",
           communityId: p['communityId'],

@@ -53,7 +53,6 @@ class SavedPostsController {
                   comments: p['numberOfComments'] ?? 0,
                   shares: p['numberOfComments'] ?? 0,
                   isNSFW: p['nsfw'],
-                  postCategory: "general",
                   isSpoiler: p['isSpoiler'],
                   content: p['content']?.toString() ?? "",
                   communityId: p['communityId'],
@@ -107,8 +106,7 @@ class SavedCommentsController {
         List<Comment> comments = [];
         for (var item in message) {
           if (item.isNotEmpty && item[0] == "comment") {
-            List<dynamic> commentList =
-                item[1]; 
+            List<dynamic> commentList = item[1];
             for (var commentData in commentList) {
               if (commentData is Map<String, dynamic>) {
                 comments.add(Comment.fromJson(commentData));

@@ -61,7 +61,6 @@ Future<List<Post>> fetchPosts(String url) async {
             comments: p['numberOfComments'],
             shares: p['numberOfComments'] ?? 0,
             isNSFW: p['nsfw'],
-            postCategory: "general",
             isSpoiler: p['isSpoiler'],
             content: p['content']?.toString() ?? "",
             communityId: p['communityId'],
