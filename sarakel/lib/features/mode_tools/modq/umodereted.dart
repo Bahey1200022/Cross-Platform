@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/features/mode_tools/modq/getfunc.dart';
@@ -5,7 +7,7 @@ import 'package:sarakel/models/post.dart';
 
 class Unmoderated extends StatefulWidget {
   String community;
-  Unmoderated({Key? key, required this.community}) : super(key: key);
+  Unmoderated({super.key, required this.community});
 
   @override
   State<Unmoderated> createState() => _UnmoderatedState();
@@ -16,7 +18,6 @@ class _UnmoderatedState extends State<Unmoderated> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     load();
   }

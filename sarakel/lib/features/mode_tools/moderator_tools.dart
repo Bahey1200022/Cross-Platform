@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sarakel/features/mode_tools/changeCommunityDescription.dart';
+import 'package:sarakel/features/mode_tools/changeCommunityName.dart';
+import 'package:sarakel/features/mode_tools/changeCommunityRules.dart';
+import 'package:sarakel/features/mode_tools/changeCommunityType.dart';
 import 'package:sarakel/features/mode_tools/general/edit-pic.dart';
 import 'package:sarakel/features/mode_tools/general/notifications.dart';
 import 'package:sarakel/features/mode_tools/modq/queue.dart';
@@ -74,11 +78,53 @@ class ModeratorTools extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.group), // Add leading widget
+            title: const Text('Community name'),
+            trailing: const Icon(Icons.arrow_forward),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChangeCommunityNamePage(
+                    token: token,
+                    communityName: community.name,
+                  ),
+                ),
+              );
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.lock_reset), // Add leading widget
             title: const Text('Community type'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Navigate to Mod Log page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChangeCommunityTypePage(
+                    token: token,
+                    communityName: community.name,
+                    type: community.type,
+                  ),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.lock_reset), // Add leading widget
+            title: const Text('Description'),
+            trailing: const Icon(Icons.arrow_forward),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChangeCommunityDescriptionPage(
+                    token: token,
+                    communityName: community.name,
+                    description: community.description,
+                  ),
+                ),
+              );
             },
           ),
           ListTile(
@@ -159,7 +205,16 @@ class ModeratorTools extends StatelessWidget {
             title: const Text('Rules'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {
-              // Navigate to Mod Log page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChangeCommunityRulesPage(
+                    token: token,
+                    communityName: community.name,
+                    currentRules: community.rules,
+                  ),
+                ),
+              );
             },
           ),
           ListTile(
