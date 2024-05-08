@@ -1,6 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:sarakel/features/mode_tools/user_management/muted/add_muted_users_controller.dart';
+import 'package:sarakel/features/mode_tools/user_management/muted/add_muted_users_page.dart';
 import 'package:sarakel/features/mode_tools/user_management/muted/muted_users_service.dart';
 import 'package:sarakel/features/mode_tools/user_management/muted/search_muted_users_page.dart';
 import 'package:sarakel/models/user.dart';
@@ -71,9 +73,27 @@ class _MutedUsersPageState extends State<MutedUsersPage>
               ),
               ListTile(
                 leading: const Icon(Icons.remove_circle),
-                title: const Text('Remove'),
+                title: const Text('Unmute'),
                 onTap: () {
                   // Implement remove muted logic
+                  unMuteUser(widget.token, mutedName, widget.communityName)
+                      .then((unMuttedUser) {
+                    if (unMuttedUser) {
+                      // Unmutted user successfully
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Unmutted user successfully')),
+                      );
+                    } else {
+                      // Unmutted usser failed
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Failed to unmute the user')),
+                      );
+                    }
+                  });
                 },
               ),
               ListTile(
@@ -131,7 +151,17 @@ class _MutedUsersPageState extends State<MutedUsersPage>
           ),
           IconButton(
             icon: const Icon(Icons.person_add),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MuteUserPage(
+                    token: widget.token,
+                    communityName: widget.communityName,
+                  ),
+                ),
+              );
+            },
           ),
         ],
         bottom: TabBar(
