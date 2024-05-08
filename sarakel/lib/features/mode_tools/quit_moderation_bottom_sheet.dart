@@ -84,11 +84,11 @@ class QuitModerationBottomSheet extends StatelessWidget {
                 bool success = await leaveModeration(token, communityName);
                 if (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Left the community successfully')),
+                    const SnackBar(content: Text('Left the community successfully')),
                   );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Failed to leave the community')),
+                    const SnackBar(content: Text('Failed to leave the community')),
                   );
                 }
                 Navigator.pop(context); // Close the bottom sheet
