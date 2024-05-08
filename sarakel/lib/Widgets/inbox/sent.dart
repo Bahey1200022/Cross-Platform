@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, avoid_print
+// ignore_for_file: camel_case_types, avoid_print, must_be_immutable
 
 import 'dart:convert';
 
@@ -11,11 +11,13 @@ import 'package:sarakel/Widgets/inbox/chat_card.dart';
 import 'package:sarakel/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/models/user.dart';
+import 'package:sarakel/user_profile/get_userpic.dart';
 
 ///email message like class where it displays sent messages of the user
 class sent extends StatefulWidget {
   final String token;
-  const sent({super.key, required this.token});
+  User user;
+  sent({super.key, required this.token, required this.user});
 
   @override
   State<sent> createState() => _sentState();
@@ -51,6 +53,15 @@ class _sentState extends State<sent> {
   void initState() {
     super.initState();
     initiatesentCard();
+    getUserPic();
+  }
+
+  Future<void> getUserPic() async {
+    String username = JwtDecoder.decode(widget.token)['username'];
+    String picUrl = await getPicUrl(username);
+    setState(() {
+      widget.user.photoUrl = picUrl;
+    });
   }
 
   @override
@@ -62,6 +73,7 @@ class _sentState extends State<sent> {
       appBar: CustomAppBar(
         title: 'Sent Messages',
         scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
+        photo: widget.user.photoUrl,
       ),
       drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(

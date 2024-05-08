@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/Widgets/drawers/community_drawer/community_list.dart';
@@ -11,12 +13,14 @@ import 'package:sarakel/Widgets/home/widgets/bottom_bar.dart';
 import 'package:sarakel/Widgets/profiles/communityprofile_page.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:sarakel/models/user.dart';
+import 'package:sarakel/user_profile/get_userpic.dart';
 
 ///explore community page
 class ExploreCommunities extends StatefulWidget {
   final String token;
+  User user;
 
-  const ExploreCommunities({super.key, required this.token});
+  ExploreCommunities({super.key, required this.token, required this.user});
 
   @override
   State<ExploreCommunities> createState() => _ExploreCommunitiesState();
@@ -32,6 +36,15 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
   void initState() {
     super.initState();
     fetchCommunities();
+    getUserPic();
+  }
+
+  Future<void> getUserPic() async {
+    String username = JwtDecoder.decode(widget.token)['username'];
+    String picUrl = await getPicUrl(username);
+    setState(() {
+      widget.user.photoUrl = picUrl;
+    });
   }
 
   void fetchCommunities() {
@@ -53,6 +66,7 @@ class _ExploreCommunitiesState extends State<ExploreCommunities> {
       appBar: CustomAppBar(
         title: 'Circles',
         scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
+        photo: widget.user.photoUrl,
       ),
       drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(

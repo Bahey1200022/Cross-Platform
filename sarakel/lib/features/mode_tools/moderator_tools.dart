@@ -111,7 +111,8 @@ class ModeratorTools extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.lock_reset), // Add leading widget
+            leading:
+                const Icon(Icons.description_outlined), // Add leading widget
             title: const Text('Description'),
             trailing: const Icon(Icons.arrow_forward),
             onTap: () {

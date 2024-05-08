@@ -14,6 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar({
     super.key,
     required this.title,
+    required this.photo,
     this.scaffoldKey, // Mark scaffoldKey as nullable
   });
 
@@ -43,7 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
             icon: Stack(
               children: [
-                Image.asset('assets/avatar_logo.jpeg'),
+                Image.network(photo ?? 'assets/logo_2d.png'),
                 Positioned(
                   bottom: 0,
                   left: 0,

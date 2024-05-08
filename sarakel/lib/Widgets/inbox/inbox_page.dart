@@ -8,6 +8,7 @@ import 'package:sarakel/Widgets/inbox/compose.dart';
 import 'package:sarakel/Widgets/inbox/sent.dart';
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/loading_func/loadposts.dart';
+import 'package:sarakel/user_profile/get_userpic.dart';
 import '../drawers/community_drawer/community_list.dart';
 import '../drawers/profile_drawer.dart';
 import '../../models/user.dart';
@@ -18,8 +19,9 @@ import '../home/widgets/app_bar.dart';
 /// Email message like class where it displays the user's inbox
 class InboxSection extends StatefulWidget {
   final String token;
+  User user;
 
-  const InboxSection({super.key, required this.token});
+  InboxSection({super.key, required this.token, required this.user});
 
   @override
   State<InboxSection> createState() => _InboxSectionState();
@@ -90,7 +92,16 @@ class _InboxSectionState extends State<InboxSection>
     super.initState();
     initiateMessageCard();
     initiateNotificationCard();
+    getUserPic();
     _tabController = TabController(length: 2, vsync: this);
+  }
+
+  Future<void> getUserPic() async {
+    String username = JwtDecoder.decode(widget.token)['username'];
+    String picUrl = await getPicUrl(username);
+    setState(() {
+      widget.user.photoUrl = picUrl;
+    });
   }
 
   @override
@@ -102,6 +113,7 @@ class _InboxSectionState extends State<InboxSection>
       appBar: CustomAppBar(
         title: 'Chat',
         scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
+        photo: widget.user.photoUrl,
       ),
       drawer: CommunityDrawer(
         token: widget.token,
@@ -213,7 +225,8 @@ class _InboxSectionState extends State<InboxSection>
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => sent(token: widget.token),
+                            builder: (context) =>
+                                sent(token: widget.token, user: widget.user),
                           ),
                         );
                       },

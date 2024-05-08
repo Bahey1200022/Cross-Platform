@@ -1,10 +1,11 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/Widgets/chatting/conversations.dart';
 import 'package:sarakel/Widgets/inbox/chat_card.dart';
 import 'package:sarakel/models/user.dart';
+import 'package:sarakel/user_profile/get_userpic.dart';
 import '../drawers/community_drawer/community_list.dart';
 import '../drawers/profile_drawer.dart';
 import '../home/widgets/app_bar.dart';
@@ -12,9 +13,10 @@ import '../home/widgets/bottom_bar.dart';
 
 /// live chat user interface
 class ChatSection extends StatefulWidget {
+  User user;
   final String token;
 
-  const ChatSection({super.key, required this.token});
+  ChatSection({super.key, required this.token, required this.user});
 
   @override
   State<ChatSection> createState() => _ChatSection();
@@ -28,6 +30,15 @@ class _ChatSection extends State<ChatSection> {
   @override
   void initState() {
     super.initState();
+    getUserPic();
+  }
+
+  Future<void> getUserPic() async {
+    String username = JwtDecoder.decode(widget.token)['username'];
+    String picUrl = await getPicUrl(username);
+    setState(() {
+      widget.user.photoUrl = picUrl;
+    });
   }
 
   @override
@@ -40,6 +51,7 @@ class _ChatSection extends State<ChatSection> {
         appBar: CustomAppBar(
           title: 'Chat',
           scaffoldKey: _scaffoldKey, // Pass the GlobalKey to the CustomAppBar
+          photo: widget.user.photoUrl,
         ),
         drawer: CommunityDrawer(
           token: widget.token,

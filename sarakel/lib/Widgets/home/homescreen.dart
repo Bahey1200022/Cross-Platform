@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:sarakel/Widgets/home/widgets/postisLiked.dart';
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
+import 'package:sarakel/user_profile/get_userpic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/post.dart';
 import 'controllers/home_screen_controller.dart';
@@ -23,7 +24,7 @@ import 'popular.dart';
 class SarakelHomeScreen extends StatefulWidget {
   final HomescreenController homescreenController;
 
-  const SarakelHomeScreen({required this.homescreenController, super.key});
+  SarakelHomeScreen({required this.homescreenController, super.key});
 
   @override
   State<SarakelHomeScreen> createState() => _SarakelHomeScreenState();
@@ -39,9 +40,18 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
   void initState() {
     super.initState();
     getmarked();
+    getUserPic();
 
     widget.homescreenController.loadNewPosts().then((posts) {
       setState(() => postsToShow = posts);
+    });
+  }
+
+  Future<void> getUserPic() async {
+    String username = widget.homescreenController.getusername();
+    String picUrl = await getPicUrl(username);
+    setState(() {
+      widget.homescreenController.profilePic = picUrl;
     });
   }
 
@@ -238,7 +248,8 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           IconButton(
             icon: Stack(
               children: [
-                Image.asset('assets/avatar_logo.jpeg'),
+                Image.network(widget.homescreenController.profilePic ??
+                    'assets/logo_2d.png'),
                 Positioned(
                   bottom: 0,
                   left: 0,

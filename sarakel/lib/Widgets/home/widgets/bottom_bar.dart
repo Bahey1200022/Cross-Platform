@@ -7,6 +7,7 @@ import 'package:sarakel/Widgets/home/controllers/home_screen_controller.dart';
 import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/Widgets/inbox/inbox_page.dart';
 import 'package:sarakel/features/create_post/create_post.dart';
+import 'package:sarakel/models/user.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   final int currentIndex;
@@ -56,7 +57,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ExploreCommunities(token: widget.token),
+            builder: (context) =>
+                ExploreCommunities(token: widget.token, user: User()),
           ),
         );
         break;
@@ -64,7 +66,11 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CreatePost(token: widget.token, selectedDate: DateTime.now(), selectedTime: TimeOfDay.now(), onScheduled: (bool value) {}),
+            builder: (context) => CreatePost(
+                token: widget.token,
+                selectedDate: DateTime.now(),
+                selectedTime: TimeOfDay.now(),
+                onScheduled: (bool value) {}),
           ),
         );
         break;
@@ -72,7 +78,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ChatSection(token: widget.token),
+            builder: (context) =>
+                ChatSection(token: widget.token, user: User()),
           ),
         );
         break;
@@ -80,7 +87,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => InboxSection(token: widget.token),
+            builder: (context) =>
+                InboxSection(token: widget.token, user: User()),
           ),
         );
         break;

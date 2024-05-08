@@ -7,6 +7,7 @@ import 'package:sarakel/Widgets/home/homescreen.dart';
 import 'package:sarakel/Widgets/home/hot.dart';
 import 'package:sarakel/Widgets/home/popular.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
+import 'package:sarakel/user_profile/get_userpic.dart';
 import '../../models/post.dart';
 import 'controllers/home_screen_controller.dart';
 import 'widgets/post_card.dart';
@@ -31,8 +32,17 @@ class _SarakelRandomScreenState extends State<SarakelRandomScreen> {
   @override
   void initState() {
     super.initState();
+    getUserPic();
     widget.homescreenController.loadRandomPosts().then((posts) {
       setState(() => postsToShow = posts);
+    });
+  }
+
+  Future<void> getUserPic() async {
+    String username = widget.homescreenController.getusername();
+    String picUrl = await getPicUrl(username);
+    setState(() {
+      widget.homescreenController.profilePic = picUrl;
     });
   }
 
@@ -159,7 +169,7 @@ class _SarakelRandomScreenState extends State<SarakelRandomScreen> {
           IconButton(
             icon: Stack(
               children: [
-                Image.asset('assets/avatar_logo.jpeg'),
+                Image.network(widget.homescreenController.profilePic!),
                 Positioned(
                   bottom: 0,
                   left: 0,

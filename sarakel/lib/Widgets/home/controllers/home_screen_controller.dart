@@ -11,7 +11,8 @@ import '../../../models/post.dart';
 ///getting the username from the token
 class HomescreenController {
   final String token; //
-  HomescreenController({required this.token});
+  String? profilePic;
+  HomescreenController({required this.token, this.profilePic});
 
   String getusername() {
     Map<String, dynamic> jwtdecodedtoken = JwtDecoder.decode(token);
