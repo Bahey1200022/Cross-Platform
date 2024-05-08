@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/widgets/comment_card.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
-import 'package:sarakel/Widgets/settings/search_blocked_accounts.dart';
 import 'package:sarakel/models/comment.dart';
 import 'package:sarakel/models/post.dart';
 import 'package:sarakel/user_profile/invitations.dart';

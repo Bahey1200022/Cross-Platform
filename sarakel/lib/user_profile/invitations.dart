@@ -4,6 +4,7 @@ import 'package:sarakel/models/community.dart';
 import 'package:sarakel/user_profile/getInvitations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+///showcase moderator and member invitations
 class Invitations extends StatefulWidget {
   final String username;
 
@@ -18,7 +19,6 @@ class _InvitationsState extends State<Invitations> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getInvitations().then((value) {
       setState(() {
@@ -39,6 +39,40 @@ class _InvitationsState extends State<Invitations> {
           return ListTile(
             title: Text(invitations[index]['name']),
             subtitle: Text('${invitations[index]['type']}'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize
+                  .min, // set to min to take as little space as possible
+              children: <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.thumb_up),
+                  onPressed: () {
+                    if (invitations[index]['type'] ==
+                        'You are invited to be a moderator') {
+                      respond(invitations[index]['name'], "moderation",
+                          "accept", context);
+                    } else {
+                      respond(invitations[index]['name'], "member", "accept",
+                          context);
+                    }
+                    // Handle edit button press
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.thumb_down),
+                  onPressed: () {
+                    // Handle delete button press
+                    if (invitations[index]['type'] ==
+                        'You are invited to be a moderator') {
+                      respond(invitations[index]['name'], "moderation",
+                          "reject", context);
+                    } else {
+                      respond(invitations[index]['name'], "member", "reject",
+                          context);
+                    }
+                  },
+                ),
+              ],
+            ),
             onTap: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               var token = prefs.getString('token');
