@@ -5,13 +5,13 @@ import 'package:sarakel/models/community.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:sarakel/user_profile/user_profile.dart';
 
-
 ///Community Info Page
 class InfoCommunity extends StatefulWidget {
   final Community community;
   final String token;
 
-  const InfoCommunity({super.key, required this.community, required this.token});
+  const InfoCommunity(
+      {super.key, required this.community, required this.token});
 
   @override
   State<InfoCommunity> createState() => _InfoCommunityState();
@@ -43,10 +43,10 @@ class _InfoCommunityState extends State<InfoCommunity> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent, 
+        backgroundColor: Colors.transparent,
         leading: Material(
           color: Colors.grey.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(20.0), 
+          borderRadius: BorderRadius.circular(20.0),
           child: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
@@ -57,7 +57,7 @@ class _InfoCommunityState extends State<InfoCommunity> {
         actions: [
           Material(
             color: Colors.grey.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(20.0), 
+            borderRadius: BorderRadius.circular(20.0),
             child: IconButton(
               icon: const Icon(Icons.search, color: Colors.white),
               onPressed: () {
@@ -67,7 +67,7 @@ class _InfoCommunityState extends State<InfoCommunity> {
           ),
           Material(
             color: Colors.grey.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(20.0), 
+            borderRadius: BorderRadius.circular(20.0),
             child: IconButton(
               icon: const Icon(Icons.share, color: Colors.white),
               onPressed: () {},
@@ -75,7 +75,7 @@ class _InfoCommunityState extends State<InfoCommunity> {
           ),
           Material(
             color: Colors.grey.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(20.0), 
+            borderRadius: BorderRadius.circular(20.0),
             child: IconButton(
               icon: const Icon(Icons.more_vert, color: Colors.white),
               onPressed: () {},
@@ -120,8 +120,8 @@ class _InfoCommunityState extends State<InfoCommunity> {
                 ),
                 ListTile(
                   title: const Text('Rules'),
-                  subtitle: Text(
-                      widget.community.rules ?? 'Sarakel under construction'),
+                  subtitle: Text(widget.community.rules.toString() ??
+                      'Sarakel under construction'),
                 ),
                 const ListTile(
                   title: Text('Moderators'),

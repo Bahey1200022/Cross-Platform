@@ -26,6 +26,8 @@ class Settings {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
     prefs.remove('username');
+    prefs.remove('upvotedPostsIds');
+    prefs.remove('downvotedPostsIds');
     Navigator.pushNamed(context, '/welcome');
   }
 

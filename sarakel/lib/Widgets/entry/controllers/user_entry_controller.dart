@@ -93,9 +93,10 @@ class UserController {
 
         prefs!.setString('photo', photo);
 
-        SocketService.instance.connect(BASE_URL, user);
         requestPermission();
         getTokens(user, token);
+        SocketService.instance.connect(BASE_URL, user);
+
         Navigator.push(
             context,
             MaterialPageRoute(
