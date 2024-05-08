@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:sarakel/constants.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,5 +60,40 @@ Future<Community> getInfo(String communityName) async {
     return community;
   } else {
     throw Exception('Failed to load community');
+  }
+}
+
+void respond(String communityName, String type, String responsetoinvite,
+    BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('token');
+
+  var uri = Uri.parse('$BASE_URL/r/$communityName/api/respond_to_invitation');
+  var request = http.MultipartRequest('POST', uri)
+    ..fields['responseType'] = responsetoinvite
+    ..fields['typeOfInvitation'] = type;
+
+  request.headers.addAll({
+    'Authorization': 'Bearer $token',
+  });
+
+  var response = await request.send();
+  //print('Response status code: ${response.statusCode}');
+  if (response.statusCode == 200) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Invitation accepted'),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 2),
+      ),
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Failed to accept invitation'),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 2),
+      ),
+    );
   }
 }
