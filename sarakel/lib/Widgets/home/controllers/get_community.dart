@@ -14,7 +14,7 @@ Future<Community> getCommunity(String CommunityName) async {
   if (response.statusCode == 200) {
     var jsondata = jsonDecode(response.body);
     var data = jsondata['data']['data'];
-    print(data);
+    //print(data);
     return Community(
       id: data['_id'],
       name: data['communityName'] ?? "",
