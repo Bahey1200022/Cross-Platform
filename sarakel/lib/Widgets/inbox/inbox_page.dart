@@ -17,6 +17,7 @@ import 'package:http/http.dart' as http;
 import '../home/widgets/app_bar.dart';
 
 /// Email message like class where it displays the user's inbox
+// ignore: must_be_immutable
 class InboxSection extends StatefulWidget {
   final String token;
   User user;

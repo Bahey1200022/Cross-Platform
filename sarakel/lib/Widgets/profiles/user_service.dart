@@ -11,6 +11,7 @@ enum UserRole {
   notLoggedIn,
 }
 
+///to know user role when he enters community page
 Future<UserRole> fetchUserRoles(String token, String communityName) async {
   final url = '$BASE_URL/api/r/$communityName';
 

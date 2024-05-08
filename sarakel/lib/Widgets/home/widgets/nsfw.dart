@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// NSFW reddit tag
 class NSFWButton extends StatelessWidget {
   final bool isNSFW;
 

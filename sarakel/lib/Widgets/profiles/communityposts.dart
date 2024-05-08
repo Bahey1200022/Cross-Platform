@@ -4,7 +4,7 @@ import 'package:sarakel/constants.dart';
 import 'package:sarakel/models/post.dart';
 import 'package:http/http.dart' as http;
 
-/// function to load posts from backend
+/// function to load community posts from backend
 String extractUrl(String s) {
   RegExp exp =
       RegExp(r'\[(.*?)\]'); // Regex pattern to match text within brackets

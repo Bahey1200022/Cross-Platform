@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
 import 'package:sarakel/providers/user_provider.dart';
 
+///Common costum app bar
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   String? photo;

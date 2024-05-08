@@ -10,6 +10,7 @@ class SignupPage extends StatelessWidget {
 
   SignupPage({super.key});
 
+  ///Signup page
   bool _validateEmail(String email) {
     // Regular expression for email validation
     RegExp emailRegex =

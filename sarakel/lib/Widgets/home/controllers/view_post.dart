@@ -6,6 +6,7 @@ import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+///view post when a user clicks on a post
 void viewPost(String postId) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString('token');

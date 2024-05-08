@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
 
+/// forgot password page
 class ForgotPasswordPage extends StatelessWidget {
   final TextEditingController emailOrUsernameController =
       TextEditingController();

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/entry/controllers/google.dart';
 import 'package:sarakel/Widgets/entry/controllers/user_entry_controller.dart';
 
+///Login page
 bool _validateEmail(String email) {
   // Regular expression for email validation
   RegExp emailRegex =

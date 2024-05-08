@@ -3,6 +3,7 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 /// Socket service class to establish socket connection
+/// Establishes a connection to the server when the user logs in
 class SocketService {
   static final SocketService _instance = SocketService._internal();
   static SocketService get instance => _instance;

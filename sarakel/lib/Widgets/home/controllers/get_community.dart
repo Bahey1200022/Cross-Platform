@@ -6,7 +6,7 @@ import 'package:sarakel/constants.dart';
 import 'package:sarakel/models/community.dart';
 import 'package:http/http.dart' as http;
 
-///function that gets the community
+///function that gets the community when the user presses on the community icon
 Future<Community> getCommunity(String CommunityName) async {
   var response = await http.get(Uri.parse(
       '$BASE_URL/api/community/$CommunityName/getCommunityInfoByName'));

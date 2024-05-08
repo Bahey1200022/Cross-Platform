@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
 
+///accept invite to be a moderator in community page
 void acceptInvite(String community, String token, BuildContext context) async {
   try {
     var response = await http.post(

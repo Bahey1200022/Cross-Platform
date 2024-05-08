@@ -23,6 +23,8 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 
 /// all post cards functionality features
+/// like upvote, downvote, save, share, hide, report, block account, lock, unlock, edit, mark spoiler
+/// Our precious widget
 // ignore: must_be_immutable
 class PostCard extends StatefulWidget {
   final Post post;

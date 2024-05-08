@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/constants.dart';
 import 'package:http/http.dart' as http;
 
+///Change email feature
 void changeEmail(String newEmail, String token, BuildContext context) async {
   var response = await http.patch(Uri.parse('$BASE_URL/api/v1/me/prefs'),
       headers: {

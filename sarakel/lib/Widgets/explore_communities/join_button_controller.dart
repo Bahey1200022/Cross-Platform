@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sarakel/constants.dart';
 
+/// join community function
 class JoinCommunityController {
   static String getUsernameFromToken(String token) {
     try {

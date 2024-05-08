@@ -9,6 +9,7 @@ import 'package:sarakel/Widgets/inbox/inbox_page.dart';
 import 'package:sarakel/features/create_post/create_post.dart';
 import 'package:sarakel/models/user.dart';
 
+/// Custom common Bottom Navigation Bar
 class CustomBottomNavigationBar extends StatefulWidget {
   final int currentIndex;
   final String token;

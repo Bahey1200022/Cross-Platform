@@ -120,8 +120,7 @@ class _InfoCommunityState extends State<InfoCommunity> {
                 ),
                 ListTile(
                   title: const Text('Rules'),
-                  subtitle: Text(widget.community.rules.toString() ??
-                      'Sarakel under construction'),
+                  subtitle: Text(widget.community.rules.toString()),
                 ),
                 const ListTile(
                   title: Text('Moderators'),

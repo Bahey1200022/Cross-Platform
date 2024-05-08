@@ -5,7 +5,7 @@ import 'package:sarakel/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-///functions to check if the post is liked or disliked
+///functions to check if the post is liked or disliked to update its UI
 
 void getmarked() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

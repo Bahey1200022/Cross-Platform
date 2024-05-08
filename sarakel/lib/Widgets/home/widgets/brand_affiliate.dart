@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Brand Affiliate reddit tag
 class BrandAffiliate extends StatelessWidget {
   final bool? isBA;
 

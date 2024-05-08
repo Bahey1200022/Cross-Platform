@@ -15,7 +15,7 @@ import 'package:sarakel/models/community.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:sarakel/user_profile/get_userpic.dart';
 
-///explore community page
+///explore community page -not joined random communities
 class ExploreCommunities extends StatefulWidget {
   final String token;
   User user;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/inbox/messaging_service.dart';
 
+///compose message ui class
 class Compose extends StatefulWidget {
   final String token;
   const Compose({super.key, required this.token});

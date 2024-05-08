@@ -9,6 +9,7 @@ import 'package:sarakel/loading_func/loadreplies.dart';
 import 'package:sarakel/models/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Common comment card
 class CommentCard extends StatefulWidget {
   final Comment comment;
   final Function(String, String) onReply;

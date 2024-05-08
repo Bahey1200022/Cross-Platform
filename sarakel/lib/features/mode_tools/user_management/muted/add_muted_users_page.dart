@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sarakel/features/mode_tools/user_management/banned/add_banned_users_controller.dart';
 import 'package:sarakel/features/mode_tools/user_management/muted/add_muted_users_controller.dart';
 
 class MuteUserPage extends StatefulWidget {

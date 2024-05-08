@@ -44,7 +44,7 @@ class _BanUserPageState extends State<BanUserPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Username',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -78,7 +78,7 @@ class _BanUserPageState extends State<BanUserPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Rule broken',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -89,10 +89,10 @@ class _BanUserPageState extends State<BanUserPage> {
                       _selectedOption = value;
                     });
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
-                  items: [
+                  items: const [
                     DropdownMenuItem(
                       value: 'spam',
                       child: Text('Spam'),
@@ -110,14 +110,13 @@ class _BanUserPageState extends State<BanUserPage> {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   final String username = _controller.text.trim();
-                  final String selectedOption = _selectedOption ?? '';
                   banUser(widget.token, username, widget.communityName)
                       .then((bannedUser) {
                     if (bannedUser) {

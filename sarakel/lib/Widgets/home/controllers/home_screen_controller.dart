@@ -7,8 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/post.dart';
 
-///one temporary list of posts
-///getting the username from the token
+///Listing the posts on the home screen
 class HomescreenController {
   final String token; //
   String? profilePic;

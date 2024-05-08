@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sarakel/constants.dart';
 
+///change password feature with old password verification
 void changePassword(
     BuildContext context, String pass, String token, String oldpass) async {
   var response = await http.patch(Uri.parse('$BASE_URL/api/v1/me/prefs'),

@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
+
+///showing full message
+// ignore: must_be_immutable
 class inboxMessage extends StatelessWidget {
   final String recipient;
   String? title;

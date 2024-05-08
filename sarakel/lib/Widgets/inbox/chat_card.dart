@@ -5,6 +5,7 @@ import 'package:sarakel/Widgets/chatting/one_on_one.dart';
 import 'package:sarakel/Widgets/chatting/read_message.dart';
 import 'package:sarakel/Widgets/inbox/message_display.dart';
 
+///chat card for inbox and live messages
 class ButtonCard extends StatelessWidget {
   const ButtonCard({
     super.key,
