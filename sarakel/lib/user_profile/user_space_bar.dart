@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sarakel/models/user.dart';
 import 'package:sarakel/user_profile/edit%20_pic.dart';
 import 'package:sarakel/user_profile/get_userpic.dart';
+import 'package:sarakel/user_profile/member_invite.dart';
 import 'package:sarakel/user_profile/new_chat.dart';
 import 'package:sarakel/user_profile/user_visibility.dart';
 import 'package:sarakel/user_profile/url_sheet.dart';
@@ -44,7 +45,7 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
       widget.user?.photoUrl = photo;
     });
     print('hii');
-    print(widget.user?.photoUrl);
+    //print(widget.user?.photoUrl);
   }
 
   @override
@@ -162,7 +163,9 @@ class _UserSpaceBarState extends State<UserSpaceBar> {
                       ),
                     ),
                     OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        inviteAsmember(context, widget.user!.username!);
+                      },
                       style: OutlinedButton.styleFrom(
                         shape: const CircleBorder(),
                       ),

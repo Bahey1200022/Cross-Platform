@@ -105,8 +105,8 @@ void addSocialLink(String links) async {
     );
     // Check if the request was successful (status code 200)
     if (response.statusCode == 200) {
-      print('-------------------------------------------');
-      print('added social links successfully');
+      // print('-------------------------------------------');
+      // print('added social links successfully');
       // Preferences updated successfully
     } else {
       // Failed to update preferences
@@ -125,8 +125,8 @@ Future<String> getUserUrl() async {
       // Check if the "user" object exists in the JSON data
       if (jsonData.containsKey('user')) {
         var user = jsonData['user'];
-        print('-------------------profile----------SS');
-        print(user);
+        // print('-------------------profile----------SS');
+        // print(user);
 
         // Check if the "socialLinks" field exists within the "user" object
         if (user.containsKey('socialLinks')) {
@@ -134,10 +134,10 @@ Future<String> getUserUrl() async {
 
           // Now you have access to the "socialLinks" array
           // You can loop through it or access specific elements as needed
-          print('Social Links: $socialLinks');
+          // print('Social Links: $socialLinks');
           return socialLinks.join(', ');
         } else {
-          print('Social Links not found in JSON data.');
+          // print('Social Links not found in JSON data.');
           throw Exception(
               'Social Links not found in JSON data.: ${response.body}');
         }
