@@ -11,6 +11,7 @@ import 'package:sarakel/user_profile/url_sheet.dart';
 import 'package:sarakel/user_profile/icon_link.dart';
 import 'package:sarakel/user_profile/user_controller.dart';
 
+// ignore: must_be_immutable
 class UserSpaceBar extends StatefulWidget {
   final User? user;
   Widget? iconUrl;

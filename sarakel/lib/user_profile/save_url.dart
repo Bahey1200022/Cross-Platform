@@ -20,27 +20,26 @@ class _SaveUrlState extends State<SaveUrl> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
-          Center(
-            child: const Text('Add Social Link',
+          const Center(
+            child: Text('Add Social Link',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.bold)),
           ),
-          SizedBox.shrink(), // This is to take up the space at the end
+          const SizedBox.shrink(), // This is to take up the space at the end
         ],
       ),
       const Divider(
         color: Colors.grey,
       ),
       ElevatedButton.icon(
-          icon: widget.icon ??
-              Icon(Icons.add), // default icon if none is provided
+          icon: widget.icon, // default icon if none is provided
           label: Text(widget.title ??
               'Default Title'), // default title if none is provided
           onPressed: () {}
@@ -48,13 +47,13 @@ class _SaveUrlState extends State<SaveUrl> {
           ),
       TextField(
         controller: urlController,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Enter URL',
           border: OutlineInputBorder(),
         ),
       ),
       ElevatedButton(
-        child: Text('Add'),
+        child: const Text('Add'),
         onPressed: () {
           addSocialLink(urlController.text);
           Navigator.pop(context);
