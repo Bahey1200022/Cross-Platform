@@ -81,19 +81,20 @@ class _BannedUsersPageState extends State<BannedUsersPage>
                       .then((unBannedUser) {
                     if (unBannedUser) {
                       // Unbanned user successfully
+                      Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                             content: Text('Unbanned user successfully')),
                       );
                     } else {
                       // Unbanned usser failed
+                      Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                             content: Text('Failed to unban the user')),
                       );
                     }
                   });
-                  Navigator.pop(context);
                 },
               ),
               ListTile(

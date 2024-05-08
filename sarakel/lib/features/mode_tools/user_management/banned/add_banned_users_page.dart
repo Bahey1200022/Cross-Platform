@@ -1,18 +1,15 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/user_management/banned/add_banned_users_controller.dart';
-import 'package:sarakel/features/mode_tools/user_management/moderators/add_moderator_controller.dart';
 
 class BanUserPage extends StatefulWidget {
   final String communityName;
   final String token;
 
   const BanUserPage({
-    super.key,
+    Key? key,
     required this.communityName,
     required this.token,
-  });
+  }) : super(key: key);
 
   @override
   _BanUserPageState createState() => _BanUserPageState();
@@ -21,6 +18,7 @@ class BanUserPage extends StatefulWidget {
 class _BanUserPageState extends State<BanUserPage> {
   final TextEditingController _controller = TextEditingController();
   bool _isFocused = false;
+  String? _selectedOption;
 
   @override
   Widget build(BuildContext context) {
@@ -43,39 +41,83 @@ class _BanUserPageState extends State<BanUserPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: _controller,
-              onChanged: (value) {
-                setState(() {
-                  _isFocused = value.isNotEmpty;
-                });
-              },
-              decoration: InputDecoration(
-                hintText: 'Enter username',
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Username',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
+                TextField(
+                  controller: _controller,
+                  onChanged: (value) {
+                    setState(() {
+                      _isFocused = value.isNotEmpty;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Enter username',
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    errorBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red),
+                    ),
+                    errorText: _isFocused && _controller.text.isEmpty
+                        ? 'Username is required'
+                        : null,
+                    suffixIcon: const Icon(Icons.person),
+                  ),
                 ),
-                errorBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.red),
-                ),
-                errorText: _isFocused && _controller.text.isEmpty
-                    ? 'Username is required'
-                    : null,
-                suffixIcon: const Icon(Icons.person),
-                labelText: _isFocused ? 'Username' : null,
-                labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-              ),
+              ],
             ),
             const SizedBox(height: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Rule broken',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                DropdownButtonFormField<String>(
+                  value: _selectedOption,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _selectedOption = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  items: [
+                    DropdownMenuItem(
+                      value: 'spam',
+                      child: Text('Spam'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'personal',
+                      child: Text('Pesonal and confidential information'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'threatening',
+                      child:
+                          Text('Threatening, harassing, or inciting violence'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            Spacer(),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   final String username = _controller.text.trim();
+                  final String selectedOption = _selectedOption ?? '';
                   banUser(widget.token, username, widget.communityName)
                       .then((bannedUser) {
                     if (bannedUser) {
