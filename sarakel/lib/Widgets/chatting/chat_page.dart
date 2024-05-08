@@ -33,11 +33,11 @@ class _ChatSection extends State<ChatSection> {
     getUserPic();
   }
 
-  Future<void> getUserPic() async {
+    Future<void> getUserPic() async {
     String username = JwtDecoder.decode(widget.token)['username'];
     String picUrl = await getPicUrl(username);
     setState(() {
-      widget.user.photoUrl = picUrl;
+     widget.user.photoUrl = picUrl;
     });
   }
 
@@ -60,6 +60,7 @@ class _ChatSection extends State<ChatSection> {
           // Add end drawer
           user:
               User(username: jwtdecodedtoken['username'], token: widget.token),
+              photo: widget.user.photoUrl,
         ),
         body: FutureBuilder(
           future: loadConversation(),

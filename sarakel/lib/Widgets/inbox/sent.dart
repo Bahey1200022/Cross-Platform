@@ -78,6 +78,7 @@ class _sentState extends State<sent> {
       drawer: CommunityDrawer(token: widget.token),
       endDrawer: ProfileDrawer(
         user: User(username: jwtdecodedtoken['username'], token: widget.token),
+        photo: widget.user.photoUrl,
       ),
       body: Column(children: [
         Expanded(
