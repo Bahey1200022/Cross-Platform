@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class QueueBottomSheet extends StatelessWidget {
+  const QueueBottomSheet({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
+      padding: const EdgeInsets.all(16.0),
+      child: const Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,14 +36,14 @@ class QueueBottomSheet extends StatelessWidget {
 class QueueButton extends StatelessWidget {
   final String title;
 
-  const QueueButton({required this.title});
+  const QueueButton({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.normal),
+        style: const TextStyle(fontWeight: FontWeight.normal),
       ),
       //trailing: Icon(Icons.arrow_forward),
       onTap: () {
