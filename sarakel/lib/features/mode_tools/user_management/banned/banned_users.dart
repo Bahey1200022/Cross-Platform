@@ -1,6 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:sarakel/features/mode_tools/user_management/banned/add_banned_users_controller.dart';
+import 'package:sarakel/features/mode_tools/user_management/banned/add_banned_users_page.dart';
 import 'package:sarakel/features/mode_tools/user_management/banned/banned_users_service.dart';
 import 'package:sarakel/features/mode_tools/user_management/banned/search_banned_users_page.dart';
 import 'package:sarakel/models/user.dart';
@@ -72,9 +74,26 @@ class _BannedUsersPageState extends State<BannedUsersPage>
               ),
               ListTile(
                 leading: const Icon(Icons.remove_circle),
-                title: const Text('Remove'),
+                title: const Text('Unban'),
                 onTap: () {
                   // Implement remove banned logic
+                  unBanUser(widget.token, bannedName, widget.communityName)
+                      .then((unBannedUser) {
+                    if (unBannedUser) {
+                      // Unbanned user successfully
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Unbanned user successfully')),
+                      );
+                    } else {
+                      // Unbanned usser failed
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Failed to unban the user')),
+                      );
+                    }
+                  });
+                  Navigator.pop(context);
                 },
               ),
               ListTile(
@@ -132,7 +151,17 @@ class _BannedUsersPageState extends State<BannedUsersPage>
           ),
           IconButton(
             icon: const Icon(Icons.person_add),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BanUserPage(
+                    token: widget.token,
+                    communityName: widget.communityName,
+                  ),
+                ),
+              );
+            },
           ),
         ],
         bottom: TabBar(
