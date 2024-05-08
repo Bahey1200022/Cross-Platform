@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/widgets/comment_card.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
+import 'package:sarakel/Widgets/settings/search_blocked_accounts.dart';
 import 'package:sarakel/models/comment.dart';
 import 'package:sarakel/models/post.dart';
+import 'package:sarakel/user_profile/invitations.dart';
 import 'package:sarakel/user_profile/user_controller.dart';
 import 'package:sarakel/user_profile/user_space_bar.dart';
 import 'package:sarakel/features/search_bar/search_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user.dart';
 
@@ -124,9 +127,64 @@ class _UserProfile extends State<UserProfile> {
                         },
                       ),
                       IconButton(
-                        icon: const Icon(Icons.share),
+                        icon: const Icon(Icons.mail_rounded),
                         color: Colors.white,
-                        onPressed: () {},
+                        onPressed: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          String? logged = prefs.getString('username');
+                          if (widget.user!.username == logged) {
+                            // getInvitations(widget.user!.username!, context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Invitations(
+                                  username: widget.user!.username!,
+                                ),
+                              ),
+                            );
+                          } else {
+                            // var options = await getBlockedUsers();
+                            // if (options.contains(widget.user!.username!)) {
+                            //   // Do something
+
+                            //   showDialog(
+                            //     context: context,
+                            //     builder: (BuildContext context) {
+                            //       return AlertDialog(
+                            //         title: const Text('Confirmation'),
+                            //         content: const Text(
+                            //             'Are you sure you want to unblock the user?'),
+                            //         actions: [
+                            //           TextButton(
+                            //             child: const Text('Cancel'),
+                            //             onPressed: () {
+                            //               Navigator.of(context).pop();
+                            //             },
+                            //           ),
+                            //           TextButton(
+                            //             child: const Text('Unblock'),
+                            //             onPressed: () {
+                            //               unblockUser(widget.user!.username!);
+                            //               Navigator.of(context).pop();
+                            //             },
+                            //           ),
+                            //         ],
+                            //       );
+                            //     },
+                            //   );
+                            // } else {}
+
+                            //   // Handle the selected option
+                            //     if (state == 'Block User') {
+                            //       blockUser(widget.user!.username!);
+                            //       // Do something for option 1
+                            //     } else {
+                            //       unblockUser(widget.user!.username!);
+                            //     }
+                            // //////////////
+                          }
+                        },
                       ),
                     ],
                   ),
