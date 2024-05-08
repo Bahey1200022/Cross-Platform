@@ -42,7 +42,6 @@ class _ProfileDrawerState extends State<ProfileDrawer> {
         String photoUrl = await getPicUrl(widget.user!.username!);
         widget.user?.photoUrl = photoUrl;
         widget.photo = photoUrl;
-        print(widget.user?.photoUrl);
       } catch (e) {
         print('Failed to get image: $e');
       }

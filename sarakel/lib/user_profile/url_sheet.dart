@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sarakel/user_profile/save_url.dart';
 
 class UrlSheet extends StatelessWidget {
   final String? title;
@@ -29,7 +30,20 @@ class UrlSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: SaveUrl(
+                        icon: Icon(Icons.facebook),
+                        title: 'Facebook',
+                      ),
+                    ),
+                  ),
+                );
+              },
               icon: const Icon(
                 Icons.facebook,
                 color: Colors.blue,
@@ -49,7 +63,23 @@ class UrlSheet extends StatelessWidget {
               ),
             ),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: SaveUrl(
+                        icon: Icon(
+                          Icons.reddit_rounded,
+                          color: Colors.orange,
+                        ),
+                        title: 'Reddit',
+                      ),
+                    ),
+                  ),
+                );
+              },
               icon: const Icon(
                 Icons.reddit_rounded,
                 color: Colors.orange,
@@ -69,7 +99,23 @@ class UrlSheet extends StatelessWidget {
               ),
             ),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: SaveUrl(
+                        icon: Icon(
+                          Icons.tiktok,
+                          color: Colors.black,
+                        ),
+                        title: 'Tiktok',
+                      ),
+                    ),
+                  ),
+                );
+              },
               icon: const Icon(
                 Icons.tiktok,
                 color: Colors.black,
@@ -100,14 +146,27 @@ class UrlSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: SaveUrl(
+                        icon: FaIcon(FontAwesomeIcons.twitter,
+                            color: Colors.blue),
+                        title: 'Twitter',
+                      ),
+                    ),
+                  ),
+                );
+                SaveUrl(
+                  icon: FaIcon(FontAwesomeIcons.twitter, color: Colors.blue),
+                  title: 'Twitter',
+                );
+              },
               icon: const FaIcon(FontAwesomeIcons.twitter,
                   color: Colors.blue, size: 10),
-              // icon: const Icon(
-              //   Icons.facebook,
-              //   color: Colors.blue,
-              //   size: 15,
-              // ),
               label: const Text(
                 'Twitter',
                 style: TextStyle(
@@ -122,9 +181,29 @@ class UrlSheet extends StatelessWidget {
               ),
             ),
             ElevatedButton.icon(
-              onPressed: () {},
-              icon: const FaIcon(FontAwesomeIcons.soundcloud,
-                  color: Colors.orange, size: 10),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: SaveUrl(
+                        icon: const FaIcon(
+                          FontAwesomeIcons.soundcloud,
+                          color: Colors.orange,
+                          size: 10,
+                        ),
+                        title: 'SoundCloud',
+                      ),
+                    ),
+                  ),
+                );
+              },
+              icon: const FaIcon(
+                FontAwesomeIcons.soundcloud,
+                color: Colors.orange,
+                size: 10,
+              ),
               label: const Text(
                 'SoundCloud',
                 style: TextStyle(
@@ -139,7 +218,21 @@ class UrlSheet extends StatelessWidget {
               ),
             ),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: SaveUrl(
+                        icon: const FaIcon(FontAwesomeIcons.youtube,
+                            color: Colors.red, size: 10),
+                        title: 'Youtube',
+                      ),
+                    ),
+                  ),
+                );
+              },
               icon: const FaIcon(FontAwesomeIcons.youtube,
                   color: Colors.red, size: 10),
               label: const Text(
@@ -162,7 +255,22 @@ class UrlSheet extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: SaveUrl(
+                        icon: const FaIcon(FontAwesomeIcons.link,
+                            // color: Colors.red,
+                            size: 15),
+                        title: 'Custom Link',
+                      ),
+                    ),
+                  ),
+                );
+              },
               icon: const FaIcon(FontAwesomeIcons.link,
                   // color: Colors.red,
                   size: 15),

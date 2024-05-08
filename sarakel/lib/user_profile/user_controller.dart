@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/gestures.dart';
 import 'package:sarakel/models/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -80,5 +81,73 @@ Future<List<Comment>> loadUserComments(String username) async {
   } catch (e) {
     // Return an empty list if an error occurs
     return <Comment>[];
+  }
+}
+
+void addSocialLink(String links) async {
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    // Create a map of the preferences you want to update
+    var updateUrl = {
+      'socialLinks': links,
+      // Add other preferences here
+    };
+    var data = json.encode(updateUrl);
+    // Make a PATCH request to update the user's preferences
+    var response = await http.patch(
+      Uri.parse('$BASE_URL/api/v1/me/prefs/?'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: data,
+    );
+    // Check if the request was successful (status code 200)
+    if (response.statusCode == 200) {
+      print('-------------------------------------------');
+      print('added social links successfully');
+      // Preferences updated successfully
+    } else {
+      // Failed to update preferences
+    }
+  } catch (e) {}
+}
+
+Future<String> getUserUrl() async {
+  try {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    var response = await http.get(Uri.parse('$BASE_URL/api/v1/me'),
+        headers: <String, String>{'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+      // Check if the "user" object exists in the JSON data
+      if (jsonData.containsKey('user')) {
+        var user = jsonData['user'];
+        print('-------------------profile----------SS');
+        print(user);
+
+        // Check if the "socialLinks" field exists within the "user" object
+        if (user.containsKey('socialLinks')) {
+          var socialLinks = user['socialLinks'];
+
+          // Now you have access to the "socialLinks" array
+          // You can loop through it or access specific elements as needed
+          print('Social Links: $socialLinks');
+          return socialLinks.join(', ');
+        } else {
+          print('Social Links not found in JSON data.');
+          throw Exception(
+              'Social Links not found in JSON data.: ${response.body}');
+        }
+      } else {
+        throw Exception('User not found in JSON data.');
+      }
+    } else {
+      throw Exception('Failed to load user data');
+    }
+  } catch (e) {
+    return e.toString();
   }
 }

@@ -11,7 +11,7 @@ import 'package:sarakel/features/mode_tools/general/notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'settings_controller.dart';
 import 'package:http/http.dart' as http;
-import 'package:sarakel/Widgets/settings/muted_comunities.dart';
+import 'package:sarakel/Widgets/settings/blocked_account_page.dart';
 import 'package:sarakel/Widgets/settings/chat_permissions.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -177,20 +177,20 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             leading: const Icon(Icons.block_outlined),
             title: const Text('Manage blocked accounts'),
-            onTap: () {},
+            onTap: () {
+              showSearch(context: context, delegate: BlockedSearch());
+            },
           ),
           ListTile(
             leading: const Icon(Icons.volume_off_outlined),
-            title: const Text('Manage muted comuninties'),
+            title: const Text('Manage muted communities'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MutedCommunities(
-                    token: widget.token,
-                  ),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => BlockedSearch(),
+              //   ),
+              // );
             },
           ),
           ListTile(
