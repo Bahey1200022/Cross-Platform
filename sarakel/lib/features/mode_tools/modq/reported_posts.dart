@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/features/mode_tools/modq/getfunc.dart';
@@ -5,7 +7,7 @@ import 'package:sarakel/models/post.dart';
 
 class ReportedPostsPage extends StatefulWidget {
   String community;
-  ReportedPostsPage({Key? key, required this.community}) : super(key: key);
+  ReportedPostsPage({super.key, required this.community});
 
   @override
   State<ReportedPostsPage> createState() => _ReportedPostsPageState();

@@ -179,7 +179,7 @@ class ModeratorTools extends StatelessWidget {
               showModalBottomSheet(
                 context: context,
                 builder: (BuildContext context) {
-                  return const QueueBottomSheet(community: community.name);
+                  return QueueBottomSheet(community: community.name);
                 },
               );
             },

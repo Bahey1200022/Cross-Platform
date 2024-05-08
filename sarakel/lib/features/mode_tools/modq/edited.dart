@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:sarakel/Widgets/home/widgets/post_card.dart';
 import 'package:sarakel/features/mode_tools/modq/getfunc.dart';
@@ -13,8 +15,8 @@ class Edited extends StatefulWidget {
 
 class _EditedState extends State<Edited> {
   List<Post> posts = [];
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     load();
   }
