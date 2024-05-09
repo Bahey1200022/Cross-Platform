@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/features/mode_tools/user_management/banned/add_banned_users_controller.dart';
 
+///show banned users page
 class BanUserPage extends StatefulWidget {
   final String communityName;
   final String token;
@@ -75,40 +76,45 @@ class _BanUserPageState extends State<BanUserPage> {
               ],
             ),
             const SizedBox(height: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Rule broken',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                DropdownButtonFormField<String>(
-                  value: _selectedOption,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _selectedOption = value;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Rule broken',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  items: const [
-                    DropdownMenuItem(
-                      value: 'spam',
-                      child: Text('Spam'),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: DropdownButtonFormField<String>(
+                      value: _selectedOption,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _selectedOption = value;
+                        });
+                      },
+                      // decoration: const InputDecoration(
+                      //   border: OutlineInputBorder(),
+                      // ),
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'spam',
+                          child: Text('Spam'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'personal',
+                          child: Text('Pesonal and confidential information'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'threatening',
+                          child: Text(
+                              'Threatening, harassing, or inciting violence'),
+                        ),
+                      ],
                     ),
-                    DropdownMenuItem(
-                      value: 'personal',
-                      child: Text('Pesonal and confidential information'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'threatening',
-                      child:
-                          Text('Threatening, harassing, or inciting violence'),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             const Spacer(),
             const SizedBox(height: 16),

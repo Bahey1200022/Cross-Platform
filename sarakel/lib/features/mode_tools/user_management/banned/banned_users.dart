@@ -216,7 +216,7 @@ class _BannedUsersPageState extends State<BannedUsersPage>
                       SizedBox(height: 8),
                       Text(
                         'Users banned from the subsarakel will appear here',
-                        style: TextStyle(fontSize: 18), // Increased font size
+                        style: TextStyle(fontSize: 15), // Increased font size
                       ),
                     ],
                   ),
@@ -266,7 +266,7 @@ class _BannedUsersPageState extends State<BannedUsersPage>
                       SizedBox(height: 8),
                       Text(
                         'Users banned from the subsarakel will appear here',
-                        style: TextStyle(fontSize: 18), // Increased font size
+                        style: TextStyle(fontSize: 15), // Increased font size
                       ),
                     ],
                   ),

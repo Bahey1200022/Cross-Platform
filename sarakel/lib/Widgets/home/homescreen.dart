@@ -248,8 +248,10 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
           IconButton(
             icon: Stack(
               children: [
-                Image.network(widget.homescreenController.profilePic ??
-                    'assets/logo_2d.png'),
+                Image.asset(
+                  'assets/logo_2d.png',
+                  width: 30,
+                ),
                 Positioned(
                   bottom: 0,
                   left: 0,
@@ -283,7 +285,7 @@ class _SarakelHomeScreenState extends State<SarakelHomeScreen> {
                 return Image.asset('assets/logo_2d.png', width: 30);
               },
               onRefresh: () async {
-                await widget.homescreenController.loadPosts().then((posts) {
+                await widget.homescreenController.loadNewPosts().then((posts) {
                   setState(() => postsToShow = posts);
                 });
               },

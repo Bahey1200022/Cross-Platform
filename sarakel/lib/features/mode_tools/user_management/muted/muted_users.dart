@@ -215,7 +215,7 @@ class _MutedUsersPageState extends State<MutedUsersPage>
                       SizedBox(height: 8),
                       Text(
                         'Users muted from the subsarakel will appear here',
-                        style: TextStyle(fontSize: 18), // Increased font size
+                        style: TextStyle(fontSize: 15), // Increased font size
                       ),
                     ],
                   ),
@@ -265,7 +265,7 @@ class _MutedUsersPageState extends State<MutedUsersPage>
                       SizedBox(height: 8),
                       Text(
                         'Users muted from the subsarakel will appear here',
-                        style: TextStyle(fontSize: 18), // Increased font size
+                        style: TextStyle(fontSize: 15), // Increased font size
                       ),
                     ],
                   ),

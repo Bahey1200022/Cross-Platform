@@ -13,7 +13,7 @@ import 'package:sarakel/socket.dart';
 
 class ProfileDrawer extends StatefulWidget {
   final User? user;
-  String? photo = '';
+  String? photo;
   ProfileDrawer({
     super.key,
     this.user,
@@ -100,7 +100,7 @@ class _ProfileDrawerState extends State<ProfileDrawer> {
                               ListTile(
                                 leading: CircleAvatar(
                                   radius: 20,
-                                  backgroundImage: NetworkImage(widget.photo??'assets/logo_2d.png'),
+                                  backgroundImage: NetworkImage(widget.photo!),
                                 ),
                                 title: Text(
                                   'u/${widget.user!.username}',

@@ -345,7 +345,7 @@ class _PostCardState extends State<PostCard> {
     if (widget.post.isNSFW != null && _isBlurred) {
       return ImageFiltered(
         imageFilter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: imageContent,
+        child: SizedBox(width: 300, height: 300, child: imageContent),
       );
     }
 

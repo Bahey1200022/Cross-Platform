@@ -200,7 +200,7 @@ class _SarakelPopularScreenState extends State<SarakelPopularScreen> {
           ? Center(child: Image.asset('assets/logo_2d.png', width: 30))
           : CustomMaterialIndicator(
               onRefresh: () async {
-                final posts = await widget.homescreenController.loadNewPosts();
+                final posts = await widget.homescreenController.loadPosts();
                 setState(() => postsToShow = posts);
               },
               indicatorBuilder: (context, controller) {

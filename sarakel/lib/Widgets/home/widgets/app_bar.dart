@@ -45,7 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
             icon: Stack(
               children: [
-                Image.network(photo ?? 'assets/logo_2d.png'),
+                Image.asset('assets/avatar_logo.jpeg'),
                 Positioned(
                   bottom: 0,
                   left: 0,
