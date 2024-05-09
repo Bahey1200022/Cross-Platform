@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:sarakel/user_profile/user_controller.dart';
+import 'package:sarakel/user_profile/user_profile.dart';
+import 'package:sarakel/user_profile/user_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:sarakel/models/user.dart';
 
 class SaveUrl extends StatefulWidget {
+  final User? user;
   final Widget icon;
   final String? title;
-  SaveUrl({Key? key, required this.icon, this.title}) : super(key: key);
+  SaveUrl({Key? key, required this.icon, this.title, required this.user})
+      : super(key: key);
 
   @override
   _SaveUrlState createState() => _SaveUrlState();
@@ -22,7 +28,12 @@ class _SaveUrlState extends State<SaveUrl> {
           IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserProfile(user: widget.user!),
+                ),
+              );
             },
           ),
           const Center(
@@ -56,7 +67,12 @@ class _SaveUrlState extends State<SaveUrl> {
         child: const Text('Add'),
         onPressed: () {
           addSocialLink(urlController.text);
-          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UserProfile(user: widget.user!),
+            ),
+          );
         },
       ),
     ]);
