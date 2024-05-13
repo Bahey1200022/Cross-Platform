@@ -1,11 +1,10 @@
 # Cross-Platform
 Reddit mobile application clone 
-Done with a json-mock server
-to run: cd server 
-npm run run-server (make sure that the ip address written when you run ipconfig is the same as the one written in the package.json and api calls
-then go to sarakel directory
-flutter run
-enter with an email and pass from the mock.json or sign up and create your username
+Team members:
+Ahmed Hafez
+Andro Magued
+Rabie Ashraf
+Ammar Yasser
+Bahey Ismail (Team leader)
 
-tests in the test folder 
-documentation in doc folder
+Documentation:https://drive.google.com/drive/folders/1mIFfXc30mTaUlYBV1_9OSaVZ5fo3WDXb
