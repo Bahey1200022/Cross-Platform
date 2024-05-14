@@ -1,6 +1,5 @@
-# Cross-Platform
-<h1>Reddit mobile application clone<h1>
-Team members:
+<h1>Reddit mobile application clone</h1>
+<h2>Team members:</h2>
 Ahmed Hafez
 Andro Magued
 Rabie Ashraf
